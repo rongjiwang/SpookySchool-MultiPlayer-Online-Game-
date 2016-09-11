@@ -11,6 +11,8 @@ public class Client extends Thread {
 	private InputStreamReader input;
 	private PacketParser parser;
 
+	// Testing commit to repository - ignore comment
+	
 	public Client(Socket sock) throws IOException {
 		this.sock = sock;
 
