@@ -9,7 +9,11 @@ import java.net.Socket;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
+/**
+ * Server should be a clock runner
+ * @author rongjiwang
+ *
+ */
 public class Server extends Thread {
 	// port
 	private InetAddress address;
