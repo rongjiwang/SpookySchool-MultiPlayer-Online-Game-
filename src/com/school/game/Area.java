@@ -30,7 +30,7 @@ public class Area {
 		Scanner gameObjScanner = null;
 
 		try {
-			scan = new Scanner(new File("src/areas/" + areaFile));
+			scan = new Scanner(new File("src/com/school/areas/" + areaFile));
 
 
 			//Scan width and height.

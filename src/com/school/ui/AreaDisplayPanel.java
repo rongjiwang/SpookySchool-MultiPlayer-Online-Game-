@@ -9,7 +9,6 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
-import com.school.areas.*;
 import com.school.game.Area;
 import com.school.game.FloorTile;
 import com.school.game.GameObject;

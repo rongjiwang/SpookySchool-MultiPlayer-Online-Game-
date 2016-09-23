@@ -40,7 +40,7 @@ public class SpookySchool implements Runnable{
 	public void loadAreas() {
 		Scanner scan;
 		try {
-			scan = new Scanner(new File("src/areas/areas.txt"));
+			scan = new Scanner(new File("src/com/school/areas/areas.txt"));
 			while (scan.hasNextLine()) {
 				String areaName = scan.next();
 				String fileName = scan.next();
