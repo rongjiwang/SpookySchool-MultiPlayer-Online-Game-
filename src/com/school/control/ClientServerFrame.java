@@ -1,5 +1,6 @@
 package com.school.control;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
@@ -20,6 +21,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
+import java.awt.SystemColor;
 
 /**
  * setup a server, setup clients from user input data and button confirm
@@ -29,23 +31,32 @@ import javax.swing.SpringLayout;
  */
 public class ClientServerFrame extends JFrame {
 
-	private JLabel ipMsg;
 	private JTextField ipAddress;
-	private JLabel ipMsg2;
-	private JTextField ipAddress1;
 	private JButton okButton;
 	private JRadioButton serverButton;
 	private JRadioButton clientButton;
 	private ButtonGroup buttonGroup;
-	private JTextField textField;
+	private JTextField playerName;
 	private JPanel panel;
 	private JButton btn;
-	private JTextField textField_1;
+	private JTextField inputIpAddress;
+	private ButtonGroup bg2;
+	private JRadioButton join;
+	private JRadioButton single;
+	private JTextArea textArea;
+	private JScrollPane scroll;
+	private InetAddress defaultLocalIpAddress;// eg.192.168.1.1
+	private static boolean serverOn;
+	private static final int port = 31122;
+	public static final int GAME_CLOCK = 20;
+	public static final int BROADCAST_CLOCK = 5;
 
 	public ClientServerFrame() {
 		super("Client-Server");
 		panel = new JPanel();
+		// getContentPane().add(panel);
 		getContentPane().add(panel);
+		panel.setBackground(new Color(230, 230, 250));
 		setResizable(false);
 		init();
 		setMenu();
@@ -57,7 +68,7 @@ public class ClientServerFrame extends JFrame {
 	}
 
 	/**
-	 * 
+	 * setup menu bar
 	 */
 	private void setMenu() {
 		JMenuBar menuBar = new JMenuBar();
@@ -80,9 +91,10 @@ public class ClientServerFrame extends JFrame {
 	}
 
 	/**
-	 * 
+	 * setup client server panel
 	 */
 	private void init() {
+		// setup client server radio button
 		serverButton = new JRadioButton("Server", true);
 		clientButton = new JRadioButton("Client", false);
 		buttonGroup = new ButtonGroup();
@@ -97,34 +109,125 @@ public class ClientServerFrame extends JFrame {
 		panel.add(clientButton);
 
 		// IP text
-		ipMsg = new JLabel("IP Address: ");
-		springLayout.putConstraint(SpringLayout.NORTH, ipMsg, 29, SpringLayout.NORTH, panel);
-		springLayout.putConstraint(SpringLayout.WEST, ipMsg, 10, SpringLayout.WEST, panel);
-		panel.add(ipMsg);
+		JLabel ipLabel = new JLabel("IP Address: ");
+		springLayout.putConstraint(SpringLayout.NORTH, ipLabel, 29, SpringLayout.NORTH, panel);
+		springLayout.putConstraint(SpringLayout.WEST, ipLabel, 10, SpringLayout.WEST, panel);
+		panel.add(ipLabel);
+
 		// set current IP address as default
-		InetAddress defaultLocalIpAddress = null;
 		try {
 			defaultLocalIpAddress = InetAddress.getLocalHost();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 		ipAddress = new JTextField(defaultLocalIpAddress.getHostAddress());
-		springLayout.putConstraint(SpringLayout.NORTH, ipAddress, 0, SpringLayout.NORTH, ipMsg);
-		springLayout.putConstraint(SpringLayout.WEST, ipAddress, 2, SpringLayout.EAST, ipMsg);
+		springLayout.putConstraint(SpringLayout.NORTH, ipAddress, 0, SpringLayout.NORTH, ipLabel);
+		springLayout.putConstraint(SpringLayout.WEST, ipAddress, 2, SpringLayout.EAST, ipLabel);
 		ipAddress.setEditable(false);
 		// hover feature
 		ipAddress.setToolTipText("Current Local IP Address");
 		panel.add(ipAddress);
 
-		// OK button
+		// player text
+		JLabel nameLabel = new JLabel("Player Name: ");
+		springLayout.putConstraint(SpringLayout.NORTH, nameLabel, 147, SpringLayout.NORTH, panel);
+		springLayout.putConstraint(SpringLayout.WEST, nameLabel, 10, SpringLayout.WEST, panel);
+		springLayout.putConstraint(SpringLayout.SOUTH, clientButton, -6, SpringLayout.NORTH, nameLabel);
+		panel.add(nameLabel);
+
+		// user input name
+		playerName = new JTextField();
+		springLayout.putConstraint(SpringLayout.NORTH, playerName, -3, SpringLayout.NORTH, nameLabel);
+		springLayout.putConstraint(SpringLayout.WEST, playerName, 0, SpringLayout.EAST, nameLabel);
+		panel.add(playerName);
+		playerName.setColumns(8);
+
+		// join game or single player game
+		single = new JRadioButton("Single");
+		springLayout.putConstraint(SpringLayout.WEST, single, 0, SpringLayout.WEST, ipLabel);
+		join = new JRadioButton("Join");
+		springLayout.putConstraint(SpringLayout.NORTH, single, 5, SpringLayout.SOUTH, join);
+		springLayout.putConstraint(SpringLayout.NORTH, join, 4, SpringLayout.SOUTH, nameLabel);
+		springLayout.putConstraint(SpringLayout.WEST, join, 0, SpringLayout.WEST, ipLabel);
+		bg2 = new ButtonGroup();
+		bg2.add(single);
+		bg2.add(join);
+		panel.add(single);
+		panel.add(join);
+		single.addActionListener(new ActionListener() {
+			/**
+			 * single player should within client option
+			 */
+			public void actionPerformed(ActionEvent e) {
+				clientButton.setSelected(true);
+			}
+		});
+		join.addActionListener(new ActionListener() {
+			/**
+			 * join server should within client option
+			 */
+			public void actionPerformed(ActionEvent e) {
+				clientButton.setSelected(true);
+			}
+		});
+
+		// port label
+		JLabel lblPort = new JLabel("Port:");
+		springLayout.putConstraint(SpringLayout.NORTH, lblPort, 4, SpringLayout.NORTH, join);
+		springLayout.putConstraint(SpringLayout.WEST, lblPort, 6, SpringLayout.EAST, join);
+		panel.add(lblPort);
+
+		// user input ip address
+		inputIpAddress = new JTextField();
+		springLayout.putConstraint(SpringLayout.NORTH, inputIpAddress, 1, SpringLayout.NORTH, join);
+		springLayout.putConstraint(SpringLayout.WEST, inputIpAddress, 53, SpringLayout.EAST, join);
+		panel.add(inputIpAddress);
+		inputIpAddress.setColumns(5);
+
+		// output area
+		textArea = new JTextArea();
+		springLayout.putConstraint(SpringLayout.WEST, textArea, 0, SpringLayout.WEST, panel);
+		springLayout.putConstraint(SpringLayout.EAST, textArea, -40, SpringLayout.WEST, serverButton);
+		textArea.setEditable(false);
+		springLayout.putConstraint(SpringLayout.NORTH, textArea, 6, SpringLayout.SOUTH, ipAddress);
+		springLayout.putConstraint(SpringLayout.SOUTH, textArea, 0, SpringLayout.NORTH, clientButton);
+		panel.add(textArea);
+
+		// add Scroll to text area
+		scroll = new JScrollPane(textArea);
+		springLayout.putConstraint(SpringLayout.NORTH, scroll, 55, SpringLayout.NORTH, panel);
+		springLayout.putConstraint(SpringLayout.WEST, scroll, 10, SpringLayout.WEST, textArea);
+		springLayout.putConstraint(SpringLayout.SOUTH, scroll, -6, SpringLayout.NORTH, clientButton);
+		springLayout.putConstraint(SpringLayout.EAST, scroll, -10, SpringLayout.EAST, panel);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		panel.add(scroll);
+
+		// // setup comboBox for IP selection
+		// String[] ips = new String[5]; // stores all the available IP address
+		// JComboBox<?> comboBox = new JComboBox<Object>(ips);
+		// springLayout.putConstraint(SpringLayout.NORTH, comboBox, 6,
+		// SpringLayout.SOUTH, textField);
+		// springLayout.putConstraint(SpringLayout.WEST, comboBox, 10,
+		// SpringLayout.WEST, textField);
+		// panel.add(comboBox);
+
+		// confirm button
 		okButton = new JButton("OK");
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// create server, join a server, single player version
+				// create server, client
+				if (serverButton.isSelected()) {
+					runServer(port, GAME_CLOCK, BROADCAST_CLOCK);
+				} else if (clientButton.isSelected()) {
+					runClient(defaultLocalIpAddress, port);
+				} else {
+					// runSingle();
+				}
 			}
 		});
 		panel.add(okButton);
 
+		// exit application
 		btn = new JButton("Cancel");
 		springLayout.putConstraint(SpringLayout.SOUTH, btn, 0, SpringLayout.SOUTH, panel);
 		springLayout.putConstraint(SpringLayout.NORTH, okButton, 0, SpringLayout.NORTH, btn);
@@ -132,6 +235,7 @@ public class ClientServerFrame extends JFrame {
 		springLayout.putConstraint(SpringLayout.EAST, btn, 0, SpringLayout.EAST, panel);
 
 		btn.addActionListener(new ActionListener() {
+			// indeed exit
 			public void actionPerformed(ActionEvent e) {
 				int choice = JOptionPane.showOptionDialog(null, "Close this application?", null,
 						JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
@@ -147,70 +251,14 @@ public class ClientServerFrame extends JFrame {
 		});
 		panel.add(btn);
 
-		JLabel lblNewLabel = new JLabel("Player Name: ");
-		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel, 147, SpringLayout.NORTH, panel);
-		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel, 10, SpringLayout.WEST, panel);
-		springLayout.putConstraint(SpringLayout.SOUTH, clientButton, -6, SpringLayout.NORTH, lblNewLabel);
-		panel.add(lblNewLabel);
+	}
 
-		textField = new JTextField();
-		springLayout.putConstraint(SpringLayout.NORTH, textField, -3, SpringLayout.NORTH, lblNewLabel);
-		springLayout.putConstraint(SpringLayout.WEST, textField, 0, SpringLayout.EAST, lblNewLabel);
-		panel.add(textField);
-		textField.setColumns(8);
-		// ConfirmHandler handler = new ConfirmHandler();
-		// okButton.addMouseListener(handler);
+	private static void runClient(InetAddress defaultLocalIpAddress2, int port2) {
+	}
 
-		// join game or single player
-		JRadioButton single = new JRadioButton("Single");
-		springLayout.putConstraint(SpringLayout.WEST, single, 0, SpringLayout.WEST, ipMsg);
-		JRadioButton join = new JRadioButton("Join");
-		springLayout.putConstraint(SpringLayout.NORTH, single, 5, SpringLayout.SOUTH, join);
-		springLayout.putConstraint(SpringLayout.NORTH, join, 4, SpringLayout.SOUTH, lblNewLabel);
-		springLayout.putConstraint(SpringLayout.WEST, join, 0, SpringLayout.WEST, ipMsg);
-		ButtonGroup bg2 = new ButtonGroup();
-		bg2.add(single);
-		bg2.add(join);
-		panel.add(single);
-		panel.add(join);
-
-		textField_1 = new JTextField();
-		springLayout.putConstraint(SpringLayout.NORTH, textField_1, 6, SpringLayout.SOUTH, lblNewLabel);
-		springLayout.putConstraint(SpringLayout.WEST, textField_1, 0, SpringLayout.WEST, ipAddress);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
-
-		// extra button constraint
-		ButtonGroup bg3 = new ButtonGroup();
-		bg3.add(single);
-		bg3.add(join);
-		bg3.add(serverButton);
-
-		// output area
-		JTextArea textArea = new JTextArea();
-		springLayout.putConstraint(SpringLayout.WEST, textArea, 0, SpringLayout.WEST, panel);
-		springLayout.putConstraint(SpringLayout.EAST, textArea, -40, SpringLayout.WEST, serverButton);
-		textArea.setEditable(false);
-		springLayout.putConstraint(SpringLayout.NORTH, textArea, 6, SpringLayout.SOUTH, ipAddress);
-		springLayout.putConstraint(SpringLayout.SOUTH, textArea, 0, SpringLayout.NORTH, clientButton);
-		panel.add(textArea);
-
-		// add Scroll to text area
-		JScrollPane scroll = new JScrollPane(textArea);
-		springLayout.putConstraint(SpringLayout.NORTH, scroll, 55, SpringLayout.NORTH, panel);
-		springLayout.putConstraint(SpringLayout.WEST, scroll, 10, SpringLayout.WEST, textArea);
-		springLayout.putConstraint(SpringLayout.SOUTH, scroll, -6, SpringLayout.NORTH, clientButton);
-		springLayout.putConstraint(SpringLayout.EAST, scroll, -10, SpringLayout.EAST, panel);
-		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		panel.add(scroll);
-		// // setup comboBox for IP selection
-		// String[] ips = new String[5]; // stores all the available IP address
-		// JComboBox<?> comboBox = new JComboBox<Object>(ips);
-		// springLayout.putConstraint(SpringLayout.NORTH, comboBox, 6,
-		// SpringLayout.SOUTH, textField);
-		// springLayout.putConstraint(SpringLayout.WEST, comboBox, 10,
-		// SpringLayout.WEST, textField);
-		// panel.add(comboBox);
+	private static void runServer(int port2, int gameClock, int broadcastClock) {
+		serverOn = true;
+		// ClockThread clk = new ClockThread(gameClock);
 
 	}
 }
