@@ -9,6 +9,8 @@ import java.net.Socket;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import com.school.game.SpookySchool;
 /**
  * Server should be a clock runner
  * @author rongjiwang
@@ -21,17 +23,23 @@ public class Server extends Thread {
 	private Socket[] sockets = new Socket[5];
 	private boolean exit;
 	// private Game game;
+	private Socket sock;
+	private int uid;
+	private int delay;
+	private SpookySchool game;
 
-	public Server(Object board, int port) {
-		// active the game
-		// game = new Game(... ,... ,...);
+	public Server(Socket sock, int uid, int delay, SpookySchool game) {
+		this.sock = sock;
+		this.uid = uid;
+		this.delay = delay;
+		this.game = game;
 
-		try {
-			server = new ServerSocket(port, 50, InetAddress.getLocalHost());
-			address = server.getInetAddress();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			server = new ServerSocket(port, 50, InetAddress.getLocalHost());
+//			address = server.getInetAddress();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	/**

@@ -1,9 +1,13 @@
 package com.school.control;
 
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.UnknownHostException;
 
 import javax.swing.ButtonGroup;
@@ -21,7 +25,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
-import java.awt.SystemColor;
+
+import com.school.game.SpookySchool;
 
 /**
  * setup a server, setup clients from user input data and button confirm
@@ -45,7 +50,6 @@ public class ClientServerFrame extends JFrame {
 	private JRadioButton single;
 	private JTextArea textArea;
 	private JScrollPane scroll;
-	private InetAddress defaultLocalIpAddress;// eg.192.168.1.1
 	private static boolean serverOn;
 	private static final int port = 31122;
 	public static final int GAME_CLOCK = 20;
@@ -53,6 +57,7 @@ public class ClientServerFrame extends JFrame {
 
 	public ClientServerFrame() {
 		super("Client-Server");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ClientServerFrame.class.getResource("/com/school/ui/images/spooky_cs.png")));
 		panel = new JPanel();
 		// getContentPane().add(panel);
 		getContentPane().add(panel);
@@ -115,6 +120,7 @@ public class ClientServerFrame extends JFrame {
 		panel.add(ipLabel);
 
 		// set current IP address as default
+		InetAddress defaultLocalIpAddress = null;
 		try {
 			defaultLocalIpAddress = InetAddress.getLocalHost();
 		} catch (UnknownHostException e) {
@@ -143,9 +149,9 @@ public class ClientServerFrame extends JFrame {
 		playerName.setColumns(8);
 
 		// join game or single player game
-		single = new JRadioButton("Single");
+		single = new JRadioButton("Single", false);
 		springLayout.putConstraint(SpringLayout.WEST, single, 0, SpringLayout.WEST, ipLabel);
-		join = new JRadioButton("Join");
+		join = new JRadioButton("Join", true);
 		springLayout.putConstraint(SpringLayout.NORTH, single, 5, SpringLayout.SOUTH, join);
 		springLayout.putConstraint(SpringLayout.NORTH, join, 4, SpringLayout.SOUTH, nameLabel);
 		springLayout.putConstraint(SpringLayout.WEST, join, 0, SpringLayout.WEST, ipLabel);
@@ -216,12 +222,19 @@ public class ClientServerFrame extends JFrame {
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// create server, client
+				String name = playerName.getText();
+				SpookySchool game = new SpookySchool();
 				if (serverButton.isSelected()) {
-					runServer(port, GAME_CLOCK, BROADCAST_CLOCK);
-				} else if (clientButton.isSelected()) {
-					runClient(defaultLocalIpAddress, port);
+					runServer(port, GAME_CLOCK, BROADCAST_CLOCK,game);
+				} else if (join.isSelected()) {
+					String ip = ipAddress.getText();
+					try {
+						runClient(ip, port, name,game);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 				} else {
-					// runSingle();
+					runSingle(name,game);
 				}
 			}
 		});
@@ -253,12 +266,40 @@ public class ClientServerFrame extends JFrame {
 
 	}
 
-	private static void runClient(InetAddress defaultLocalIpAddress2, int port2) {
+	protected void runSingle(String name, SpookySchool game) {
+		//set input value back to null
+		//playerName.setText(null);
+		System.out.println("Single player:" + name);
 	}
 
-	private static void runServer(int port2, int gameClock, int broadcastClock) {
+	protected void runClient(String ip, int port, String name, SpookySchool game) throws UnknownHostException, IOException {
+		System.out.println("Client: " + name + " " + ip);
+		Socket s = new Socket(ip,port);
+		new Client(s).run();
+	}
+
+	protected void runServer(int port, int gameClock, int broadcastClock, SpookySchool game) {
 		serverOn = true;
-		// ClockThread clk = new ClockThread(gameClock);
+		System.out.println("Server: " + port);
+		//game.start(); // thread start
+		
+		System.out.println(" SERVER LISTENING ON PORT " + port);
+		try {
+			int index = 1;
+			Server[] connections = new Server[5];
+			
+			ServerSocket ss = new ServerSocket(port);System.out.println("here?...");
+			while(true){
+				//wait for a socket
+				Socket s = ss.accept();
+				System.out.println("ACCEPTED CONNECTION FROM: "+ s.getInetAddress());
+				connections[index++] = new Server(s,index-1,broadcastClock,game);
+				connections[index-1].start();
+				
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 }
