@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class Client extends Thread implements KeyListener {
+public final class Client extends Thread implements KeyListener {
 	private Socket sock;
 	private DataOutputStream output;
 	private DataInputStream input;

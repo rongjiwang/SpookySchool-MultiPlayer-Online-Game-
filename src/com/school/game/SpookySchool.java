@@ -170,7 +170,7 @@ public class SpookySchool implements Runnable {
 	 *            that is to be moved
 	 * @return true if movement to the north is successful, otherwise false.
 	 */
-	private boolean movePlayerNorth(Player player) {
+	public boolean movePlayerNorth(Player player) {
 		int posX = player.getCurrentPosition().getPosX();
 		int potentialPosY = player.getCurrentPosition().getPosY() - 1;
 
@@ -203,7 +203,7 @@ public class SpookySchool implements Runnable {
 	 *            that is to be moved
 	 * @return
 	 */
-	private boolean movePlayerSouth(Player player) {
+	public boolean movePlayerSouth(Player player) {
 		int posX = player.getCurrentPosition().getPosX();
 		int potentialPosY = player.getCurrentPosition().getPosY() + 1;
 
@@ -238,7 +238,7 @@ public class SpookySchool implements Runnable {
 	 * @param player
 	 * @return
 	 */
-	private boolean movePlayerEast(Player player) {
+	public boolean movePlayerEast(Player player) {
 		int potentialPosX = player.getCurrentPosition().getPosX() + 1;
 		int posY = player.getCurrentPosition().getPosY();
 
@@ -271,7 +271,7 @@ public class SpookySchool implements Runnable {
 	 *            that is to be moved
 	 * @return true if movement to the west is successful, otherwise false.
 	 */
-	private boolean movePlayerWest(Player player) {
+	public boolean movePlayerWest(Player player) {
 
 		int potentialPosX = player.getCurrentPosition().getPosX() - 1;
 		int posY = player.getCurrentPosition().getPosY();
