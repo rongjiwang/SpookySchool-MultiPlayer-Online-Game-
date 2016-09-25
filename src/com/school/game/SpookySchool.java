@@ -7,12 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.school.ui.AreaDisplayPanel;
-
 import java.util.Scanner;
 
 import com.school.game.Player.Direction;
+import com.school.ui.AreaDisplayPanel;
 
 /**
  * This class contains all of the logic Spooky School game. This class controls
@@ -23,16 +21,9 @@ import com.school.game.Player.Direction;
  */
 public class SpookySchool implements Runnable {
 
-	private final Position defaultSpawnPosition = new Position(5, 8); // Default
-																		// position
-																		// that
-																		// a
-																		// player
-																		// spawns
-																		// in,
-																		// in a
-																		// spawn
-																		// room.
+	//Test commit
+
+	private final Position defaultSpawnPosition = new Position(5, 8); // Default position that a player spawns in, in a spawn room.
 
 	private Map<String, Area> areas = new HashMap<String, Area>();
 	private List<Player> players = new ArrayList<Player>();
