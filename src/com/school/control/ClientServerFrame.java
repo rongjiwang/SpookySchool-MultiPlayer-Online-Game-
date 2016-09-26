@@ -29,7 +29,7 @@ import javax.swing.SpringLayout;
 import com.school.game.SpookySchool;
 
 /**
- * setup a server, setup clients from user input data and button confirm
+ * setup a server, setup clients from user input data with button confirm
  * 
  * @author rongjiwang
  *
@@ -50,7 +50,7 @@ public class ClientServerFrame extends JFrame {
 	private JRadioButton single;
 	private JTextArea textArea;
 	private JScrollPane scroll;
-	private static boolean serverOn;
+	public static boolean serverOn;
 	private static final int port = 31122;
 	public static final int GAME_CLOCK = 20;
 	public static final int BROADCAST_CLOCK = 5;
@@ -273,33 +273,39 @@ public class ClientServerFrame extends JFrame {
 	}
 
 	protected void runClient(String ip, int port, String name, SpookySchool game) throws UnknownHostException, IOException {
-		System.out.println("Client: " + name + " " + ip);
-		Socket s = new Socket(ip,port);
-		new Client(s).run();
+//		System.out.println("Client: " + name + " " + ip);
+//		Socket s = new Socket(ip,port);
+//		new Client(s).run();
+		serverOn = false;
+		game.start();
 	}
 
 	protected void runServer(int port, int gameClock, int broadcastClock, SpookySchool game) {
 		serverOn = true;
 		System.out.println("Server: " + port);
-		//game.start(); // thread start
 		
+		//start main thread , server game thread
+		//ClockThread clk = new ClockThread(gameClock, game, null);
+		//game.start(); // thread start
+		//clk.start();
 		System.out.println(" SERVER LISTENING ON PORT " + port);
-		try {
-			int index = 1;
-			Server[] connections = new Server[5];
-			
-			ServerSocket ss = new ServerSocket(port);System.out.println("here?...");
-			while(true){
-				//wait for a socket
-				Socket s = ss.accept();
-				System.out.println("ACCEPTED CONNECTION FROM: "+ s.getInetAddress());
-				connections[index++] = new Server(s,index-1,broadcastClock,game);
-				connections[index-1].start();
-				
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		game.start();
+//		try {
+//			int index = 1;
+//			Server[] connections = new Server[5];
+//			
+//			ServerSocket ss = new ServerSocket(port);System.out.println("here?...");
+//			while(true){
+//				//wait for a socket
+//				Socket s = ss.accept();
+//				System.out.println("ACCEPTED CONNECTION FROM: "+ s.getInetAddress());
+//				connections[index++] = new Server(s,index-1,broadcastClock,game);
+//				connections[index-1].start();
+//				
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
 	}
 }

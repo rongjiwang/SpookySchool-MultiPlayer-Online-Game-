@@ -2,17 +2,21 @@ package com.school.game;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.school.ui.AreaDisplayPanel;
-
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
+import com.school.control.Client;
+import com.school.control.ClientServerFrame;
+import com.school.control.Server;
 import com.school.game.Player.Direction;
+import com.school.ui.AreaDisplayPanel;
 
 /**
  * This class contains all of the logic Spooky School game. This class controls
@@ -37,6 +41,11 @@ public class SpookySchool implements Runnable {
 	private Map<String, Area> areas = new HashMap<String, Area>();
 	private List<Player> players = new ArrayList<Player>();
 	private List<String> log = new ArrayList<String>();
+	
+	//----------Client&Server----------
+	private Server socketServer;
+	private Client socketClient;
+	private static boolean serverSwitch;
 
 	public SpookySchool(AreaDisplayPanel display) {
 		this.loadAreas(); // Load maps
@@ -349,6 +358,22 @@ public class SpookySchool implements Runnable {
 		running = true;
 		thread = new Thread(this);
 		thread.start();
+		//*******C&S*******
+//		serverSwitch = ClientServerFrame.serverOn;
+//		
+//		if(serverSwitch){
+//		try {
+//			socketServer = new Server(this);
+//		} catch (SocketException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		socketServer.start();
+//		}
+//		
+//		socketClient = new Client(this,"local");
+//		socketClient.start();
+//		socketClient.sendData("ping".getBytes());
 	}
 
 	public synchronized void stop() {
