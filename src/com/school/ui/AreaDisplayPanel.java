@@ -40,8 +40,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 
 		this.game = new SpookySchool(this);
 		this.playerName = "Test Player";
-		this.game.addPlayerTest(this.playerName);
 		game.start();
+
+		this.game.addPlayerTest(this.playerName);
 	}
 
 	/**

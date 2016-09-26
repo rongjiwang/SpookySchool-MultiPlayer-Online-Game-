@@ -55,21 +55,22 @@ public final class Client extends Thread implements KeyListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			String msg = new String(packet.getData()+" "+packet.getAddress()+" "+packet.getSocketAddress()+" "+packet.getPort());
+			String msg = new String(packet.getData() + " " + packet.getAddress() + " " + packet.getSocketAddress() + " "
+					+ packet.getPort());
 			System.out.println(msg);
-			//System.out.println("SERVER > " + new String(packet.getData()));
-//			if(msg.trim().substring(0, 4).equalsIgnoreCase("pong")){
-//				System.out.println("SERVER **> " + new String(packet.getData()));
-//				sendData("ping".getBytes());
-//			}
-			//this.parsePacket(packet.getData(),packet.getAddress(),packet.getPort());
+			// System.out.println("SERVER > " + new String(packet.getData()));
+			// if(msg.trim().substring(0, 4).equalsIgnoreCase("pong")){
+			// System.out.println("SERVER **> " + new String(packet.getData()));
+			// sendData("ping".getBytes());
+			// }
+			// this.parsePacket(packet.getData(),packet.getAddress(),packet.getPort());
 		}
 
 	}
 
 	private void parsePacket(byte[] data, InetAddress address, int port) {
 		String msg = new String(data).trim();
-		//Player player = new Player("1");
+		// Player player = new Player("1");
 	}
 
 	public void sendData(byte[] data) {

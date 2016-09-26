@@ -1,5 +1,7 @@
 package com.school.game;
 
+import java.net.InetAddress;
+
 /**
  * Represents a player in the Spooky School game and holds all information related to the player.
  * @author Pritesh R. Patel
@@ -13,6 +15,8 @@ public class Player implements GameObject {
 	private Direction direction = Direction.NORTH;
 
 	protected String token;
+	private InetAddress address;
+	private int port;
 
 
 	public enum Direction {
@@ -24,6 +28,12 @@ public class Player implements GameObject {
 		this.setCurrentArea(currentArea);
 		this.setCurrentPosition(currentPosition);
 		this.token = "p0";
+	}
+	
+	public Player(String name, InetAddress address, int port){
+		this.playerName = name;
+		this.address = address;
+		this.port = port;
 	}
 
 	/** GETTERS AND SETTERS **/

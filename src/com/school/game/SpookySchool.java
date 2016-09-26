@@ -420,14 +420,14 @@ public class SpookySchool implements Runnable {
 	}
 
 	// *****************C&S*****************
-	private boolean running;
+	private static boolean running;
 
-	private Thread thread;
+	private static Thread thread;
 
-	private Server socketServer;
+	private static Server socketServer;
 
-	private Client socketClient;
-	private boolean serverSwitch;
+	private static Client socketClient;
+	private static boolean serverSwitch;
 
 	public synchronized void start() {
 		running = true;
@@ -447,27 +447,27 @@ public class SpookySchool implements Runnable {
 		try {
 			socketClient = new Client(this, InetAddress.getLocalHost().getHostAddress());
 			socketClient.start();
-			//this.addPlayer("player2");
+			// this.addPlayer("player2");
 			System.out.println("Client start£¡");
 
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public synchronized void stop(){
+
+	public synchronized void stop() {
 		running = false;
-		
+
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public synchronized void run() {
-		while(running){
+		while (running) {
 			tick();
 			try {
 				Thread.sleep(2000);
@@ -476,11 +476,12 @@ public class SpookySchool implements Runnable {
 			}
 		}
 	}
-	public synchronized void tick(){
+
+	public synchronized void tick() {
 		display.updateDisplay();
-		//System.out.println("tick function");
+		// System.out.println("tick function");
 	}
-	
+
 	public Area findEmptySpawnRoomTest() {
 
 		// Finds an unoccupied/un-owned spawn area and returns it.
@@ -491,12 +492,12 @@ public class SpookySchool implements Runnable {
 		}
 		throw new Error("Error: Could not find an empty spawn room. This should not be possible.");
 	}
-	
+
 	public boolean addPlayerTest(String name) {
 
 		if (this.players.size() < 4) {
 			Area spawnRoom = this.findEmptySpawnRoomTest();
-			System.out.println(spawnRoom.toString()+"**");
+			System.out.println(spawnRoom.toString() + "**");
 			Player newPlayer = new Player(name, spawnRoom, this.defaultSpawnPosition);
 			spawnRoom.setOwner(newPlayer); // Set player as the owner of the
 											// spawn room.

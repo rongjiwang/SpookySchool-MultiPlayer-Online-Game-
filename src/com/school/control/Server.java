@@ -6,7 +6,10 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.school.game.Player;
 import com.school.game.SpookySchool;
 
 /**
@@ -25,6 +28,7 @@ public final class Server extends Thread {
 	private String ipAddress;
 	private DatagramSocket socket;
 	private final int port = 5000;
+	private List<Player> connect = new ArrayList<>();
 
 	public Server(Socket sock, int uid, int delay, SpookySchool game) {
 		this.sock = sock;
@@ -59,8 +63,22 @@ public final class Server extends Thread {
 				System.out.println("CLIENT **> " + msg);
 				sendData("pong".getBytes(),packet.getAddress(), packet.getPort());
 			}
+			
+			this.parsePacket(packet.getData(),packet.getAddress(),packet.getPort());
 		}
 
+	}
+
+	private void parsePacket(byte[] data, InetAddress address, int port) {
+		String msg = new String(data).trim();
+		if(msg.equals("123")){
+			Player player = new Player(msg,address,port);
+			this.addConnection(player);
+		}
+	}
+
+	private void addConnection(Player player) {
+		this.connect.add(player);
 	}
 
 	private void sendData(byte[] data, InetAddress ipAddress, int port) {
