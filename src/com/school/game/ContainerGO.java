@@ -1,6 +1,6 @@
 package com.school.game;
 
-public class ContainerGO extends GameObject {
+public class ContainerGO implements GameObject {
 
 	private final String id;
 	private boolean open;
@@ -8,6 +8,7 @@ public class ContainerGO extends GameObject {
 	private final String keyID;
 	private final int size; // For container size.
 	private final Position position;
+	protected String token;
 
 	public ContainerGO(String id, String token, boolean open, boolean locked, String keyID, int size,
 			Position position) {
@@ -20,6 +21,10 @@ public class ContainerGO extends GameObject {
 		this.position = position;
 	}
 
+	public String getToken() {
+		return this.token;
+	}
+
 	//TODO Need to add functionality here.
-	
+
 }

@@ -5,13 +5,15 @@ package com.school.game;
  * @author Pritesh R. Patel
  *
  */
-public class Player extends GameObject {
+public class Player implements GameObject {
 
 	private final String playerName;
 	private Area currentArea;
 	private Position currentPosition;
 	private Direction direction = Direction.NORTH;
-	
+
+	protected String token;
+
 
 	public enum Direction {
 		NORTH, SOUTH, EAST, WEST;
@@ -53,6 +55,10 @@ public class Player extends GameObject {
 	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}
-	
+
+
+	public String getToken() {
+		return this.token;
+	}
 
 }

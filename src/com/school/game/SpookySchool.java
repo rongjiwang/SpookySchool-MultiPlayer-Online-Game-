@@ -1,8 +1,11 @@
 package com.school.game;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.SocketException;
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,11 +13,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
-import javax.swing.JOptionPane;
-
-import com.school.control.Client;
-import com.school.control.ClientServerFrame;
-import com.school.control.Server;
 import com.school.game.Player.Direction;
 import com.school.ui.AreaDisplayPanel;
 
@@ -40,17 +38,13 @@ public class SpookySchool implements Runnable {
 
 	private Map<String, Area> areas = new HashMap<String, Area>();
 	private List<Player> players = new ArrayList<Player>();
-	private List<String> log = new ArrayList<String>();
-	
-	//----------Client&Server----------
-	private Server socketServer;
-	private Client socketClient;
-	private static boolean serverSwitch;
+	private List<String> chatLog = new ArrayList<String>();
+
+	private Map<String, Bundle> playerBundles = new HashMap<String, Bundle>();
 
 	public SpookySchool(AreaDisplayPanel display) {
 		this.loadAreas(); // Load maps
 		// this.setDoors(); //Sets up doors on the areas.
-		this.display = display;
 	}
 
 	public SpookySchool() {
@@ -93,6 +87,7 @@ public class SpookySchool implements Runnable {
 	 * @return true if player successfully added, otherwise false.
 	 */
 	public boolean addPlayer(String name) {
+
 		if (this.players.size() < 4) {
 			Area spawnRoom = this.findEmptySpawnRoom();
 			Player newPlayer = new Player(name, spawnRoom, this.defaultSpawnPosition);
@@ -105,10 +100,20 @@ public class SpookySchool implements Runnable {
 			assert spawnTile != null;
 
 			spawnTile.setOccupant(newPlayer);
+			this.players.add(newPlayer); // Add the player to the list of
+											// players in the game.
+			this.chatLog.add("Player Added to Game: " + name);
 
-			return this.players.add(newPlayer); // Add the player to the list of
-												// players in the game.
+			// Set up the bundle for the new player.
+			Bundle bundle = new Bundle(name);
+			bundle.setNewArea(spawnRoom);
+			bundle.setLog(this.chatLog);
+
+			this.playerBundles.put(name, bundle);
+
+			return true;
 		}
+
 		return false;
 	}
 
@@ -135,7 +140,7 @@ public class SpookySchool implements Runnable {
 	 *            the name of the player to move.
 	 * @param direction
 	 *            the direction the player needs to move into.
-	 * @return true if player moves to a new tile or changes direction..
+	 * @return true if player moves to a new tile or changes direction,
 	 *         Otherwise false.
 	 */
 	public boolean movePlayer(String playerName, Direction direction) {
@@ -158,13 +163,33 @@ public class SpookySchool implements Runnable {
 		// given direction.
 		switch (direction) {
 		case NORTH:
-			return this.movePlayerNorth(player);
+			if (this.movePlayerNorth(player)) {
+				this.playerBundles.get(playerName).addChange(playerName + " " + "NORTH");
+				return true;
+			}
+			return false;
+		// return this.movePlayerNorth(player);
 		case SOUTH:
-			return this.movePlayerSouth(player);
+			if (this.movePlayerSouth(player)) {
+				this.playerBundles.get(playerName).addChange(playerName + " " + "SOUTH");
+				return true;
+			}
+			return false;
+		// return this.movePlayerSouth(player);
 		case EAST:
-			return this.movePlayerEast(player);
+			if (this.movePlayerEast(player)) {
+				this.playerBundles.get(playerName).addChange(playerName + " " + "EAST");
+				return true;
+			}
+			return false;
+		// return this.movePlayerEast(player);
 		case WEST:
-			return this.movePlayerWest(player);
+			if (this.movePlayerWest(player)) {
+				this.playerBundles.get(playerName).addChange(playerName + " " + "WEST");
+				return true;
+			}
+			return false;
+		// return this.movePlayerWest(player);
 		}
 
 		throw new Error("ERROR in movePlayer() method.");
@@ -179,7 +204,7 @@ public class SpookySchool implements Runnable {
 	 *            that is to be moved
 	 * @return true if movement to the north is successful, otherwise false.
 	 */
-	public boolean movePlayerNorth(Player player) {
+	private boolean movePlayerNorth(Player player) {
 		int posX = player.getCurrentPosition().getPosX();
 		int potentialPosY = player.getCurrentPosition().getPosY() - 1;
 
@@ -212,7 +237,7 @@ public class SpookySchool implements Runnable {
 	 *            that is to be moved
 	 * @return
 	 */
-	public boolean movePlayerSouth(Player player) {
+	private boolean movePlayerSouth(Player player) {
 		int posX = player.getCurrentPosition().getPosX();
 		int potentialPosY = player.getCurrentPosition().getPosY() + 1;
 
@@ -247,7 +272,7 @@ public class SpookySchool implements Runnable {
 	 * @param player
 	 * @return
 	 */
-	public boolean movePlayerEast(Player player) {
+	private boolean movePlayerEast(Player player) {
 		int potentialPosX = player.getCurrentPosition().getPosX() + 1;
 		int posY = player.getCurrentPosition().getPosY();
 
@@ -280,7 +305,7 @@ public class SpookySchool implements Runnable {
 	 *            that is to be moved
 	 * @return true if movement to the west is successful, otherwise false.
 	 */
-	public boolean movePlayerWest(Player player) {
+	private boolean movePlayerWest(Player player) {
 
 		int potentialPosX = player.getCurrentPosition().getPosX() - 1;
 		int posY = player.getCurrentPosition().getPosY();
@@ -335,6 +360,7 @@ public class SpookySchool implements Runnable {
 	 *            name of the player to check for.
 	 * @return the Player object of the given name if one exists, otherwise
 	 *         return null.
+	 * 
 	 */
 	public Player getPlayer(String playerName) {
 		for (int i = 0; i < this.players.size(); i++) {
@@ -346,87 +372,46 @@ public class SpookySchool implements Runnable {
 	}
 
 	/**
-	 * Below is code for reccuring 60fps
+	 * Returns bundle relative to the playerName given.
+	 * 
+	 * @param playerName
+	 *            of the player who's bundle is required
+	 * @return the players bundle in the form of a byte array.
 	 */
-	private AreaDisplayPanel display;
-	private Thread thread;
-	private boolean running;
+	public byte[] getBundle(String playerName) {
 
-	public synchronized void start() {
-		if (running)
-			return;
-		running = true;
-		thread = new Thread(this);
-		thread.start();
-		//*******C&S*******
-//		serverSwitch = ClientServerFrame.serverOn;
-//		
-//		if(serverSwitch){
-//		try {
-//			socketServer = new Server(this);
-//		} catch (SocketException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		socketServer.start();
-//		}
-//		
-//		socketClient = new Client(this,"local");
-//		socketClient.start();
-//		socketClient.sendData("ping".getBytes());
-	}
-
-	public synchronized void stop() {
-		if (!running)
-			return;
-
-		running = true;
+		Bundle playerBundle = this.playerBundles.get(playerName);
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ObjectOutput out = null;
 		try {
-			thread.join();
-		} catch (InterruptedException e) {
+			out = new ObjectOutputStream(bos);
+			out.writeObject(playerBundle);
+			out.flush();
+			byte[] yourBytes = bos.toByteArray();
+
+			playerBundle.clearBundle(); // Clear bundle as bundle has been sent
+										// to client.
+
+			return yourBytes;
+
+		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				bos.close();
+			} catch (IOException ex) {
+				// ignore close exception
+			}
 		}
-		System.exit(1);
+
+		throw new Error("Error: in creating bundle into byte array.");
 	}
 
-	/**
-	 * The game Loop
-	 */
+	// *****************C&S*****************
+
 	public void run() {
+		// TODO Auto-generated method stub
 
-		// initialise variables for keeping game synchronized
-		long lastTime = System.nanoTime();
-		long timer = System.currentTimeMillis();
-		final double amountOfTicks = 60.0;
-		double ns = 1000000000 / amountOfTicks;
-		double delta = 0, updates = 0, frames = 0;
-
-		// main running loop
-		while (running) {
-			long now = System.nanoTime();
-			delta += (now - lastTime) / ns;
-			lastTime = now;
-			if (delta >= 1) {
-				tick();
-				updates++;
-				delta--;
-			}
-			frames++;
-
-			if (System.currentTimeMillis() - timer > 1000) {
-				timer += 1000;
-				System.out.println("Ticks " + updates + ", Fps " + frames);
-				updates = 0;
-				frames = 0;
-			}
-		}
-		stop();
 	}
 
-	/**
-	 * tick is called 60 times per second
-	 */
-	public void tick() {
-		display.updateDisplay();
-	}
 }

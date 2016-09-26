@@ -31,7 +31,7 @@ public class ClockThread extends Thread {
 		while (true) {
 			try {
 				Thread.sleep(delay);
-				game.tick();//???
+				//game.tick();//???
 				
 				if (display != null) {
 					display.repaint();

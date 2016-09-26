@@ -1,11 +1,13 @@
 package com.school.game;
 
+import java.io.Serializable;
+
 /**
  * Represents a basic tile and has the methods that all tiles should have.
  * @author Pritesh R. Patel
  *
  */
-public abstract class Tile {
+public abstract class Tile implements Serializable {
 
 	private final Position position;
 	private GameObject occupant;

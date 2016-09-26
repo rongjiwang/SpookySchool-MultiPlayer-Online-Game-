@@ -2,6 +2,7 @@ package com.school.game;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.Scanner;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Scanner;
  * @author Pritesh R. Patel
  *
  */
-public class Area {
+public class Area implements Serializable {
 
 	public int width;
 	public int height;
@@ -17,6 +18,7 @@ public class Area {
 	private String areaName;
 	private Tile[][] area;
 	private Player owner;
+
 
 	public Area(String areaName, String areaFile) {
 

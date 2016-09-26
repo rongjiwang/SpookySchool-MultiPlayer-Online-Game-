@@ -1,11 +1,13 @@
 package com.school.game;
 
+import java.io.Serializable;
+
 /**
  * Holds X and Y coordinates as integers.
  * @author Pritesh R. Patel
  *
  */
-public class Position {
+public class Position implements Serializable {
 
 	private final int posX;
 	private final int posY;

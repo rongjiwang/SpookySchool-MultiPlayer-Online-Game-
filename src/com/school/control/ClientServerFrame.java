@@ -277,7 +277,7 @@ public class ClientServerFrame extends JFrame {
 //		Socket s = new Socket(ip,port);
 //		new Client(s).run();
 		serverOn = false;
-		game.start();
+		//game.start();
 	}
 
 	protected void runServer(int port, int gameClock, int broadcastClock, SpookySchool game) {
@@ -289,7 +289,7 @@ public class ClientServerFrame extends JFrame {
 		//game.start(); // thread start
 		//clk.start();
 		System.out.println(" SERVER LISTENING ON PORT " + port);
-		game.start();
+		//game.start();
 //		try {
 //			int index = 1;
 //			Server[] connections = new Server[5];

@@ -6,10 +6,12 @@ package com.school.game;
  * @author Pritesh R. Patel
  *
  */
-public class MarkerGO extends GameObject {
+public class MarkerGO implements GameObject {
 
 	private final GameObject baseGO;
 	private final Position position;
+
+	protected String token;
 
 	public MarkerGO(GameObject baseGO, Position pos) {
 		//Throw error if the base object that this tile is a marker for is not a fixed or container game object.
@@ -26,6 +28,10 @@ public class MarkerGO extends GameObject {
 	 */
 	public GameObject getBaseGO() {
 		return this.baseGO;
+	}
+
+	public String getToken() {
+		return this.token;
 	}
 
 }
