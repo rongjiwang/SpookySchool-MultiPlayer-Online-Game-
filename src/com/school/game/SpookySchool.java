@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +16,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
+import com.school.control.Client;
+import com.school.control.ClientServerFrame;
+import com.school.control.Server;
 import com.school.game.Player.Direction;
 import com.school.ui.AreaDisplayPanel;
 
@@ -42,7 +48,12 @@ public class SpookySchool implements Runnable {
 
 	private Map<String, Bundle> playerBundles = new HashMap<String, Bundle>();
 
+	private AreaDisplayPanel display;
+
 	public SpookySchool(AreaDisplayPanel display) {
+		System.out.println("Check display");
+
+		this.display = display;
 		this.loadAreas(); // Load maps
 		// this.setDoors(); //Sets up doors on the areas.
 	}
@@ -144,6 +155,7 @@ public class SpookySchool implements Runnable {
 	 *         Otherwise false.
 	 */
 	public boolean movePlayer(String playerName, Direction direction) {
+		socketClient.sendData("ping".getBytes());
 
 		Player player = this.getPlayer(playerName);
 		// Ensure that the player we are trying to move exists.
@@ -408,10 +420,108 @@ public class SpookySchool implements Runnable {
 	}
 
 	// *****************C&S*****************
+	private boolean running;
 
-	public void run() {
-		// TODO Auto-generated method stub
+	private Thread thread;
 
+	private Server socketServer;
+
+	private Client socketClient;
+	private boolean serverSwitch;
+
+	public synchronized void start() {
+		running = true;
+		thread = new Thread(this, "GameThread");
+		thread.start();
+		serverSwitch = ClientServerFrame.serverOn;
+		if (serverSwitch) {
+			try {
+				socketServer = new Server(this);
+				socketServer.start();
+				System.out.println("Server start£¡");
+			} catch (SocketException e) {
+				e.printStackTrace();
+			}
+		}
+
+		try {
+			socketClient = new Client(this, InetAddress.getLocalHost().getHostAddress());
+			socketClient.start();
+			//this.addPlayer("player2");
+			System.out.println("Client start£¡");
+
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public synchronized void stop(){
+		running = false;
+		
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	public synchronized void run() {
+		while(running){
+			tick();
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public synchronized void tick(){
+		display.updateDisplay();
+		//System.out.println("tick function");
+	}
+	
+	public Area findEmptySpawnRoomTest() {
+
+		// Finds an unoccupied/un-owned spawn area and returns it.
+		for (Entry<String, Area> entry : this.areas.entrySet()) {
+			if (entry.getKey().contains("Spawn") || (entry.getValue().hasOwner())) {
+				return entry.getValue();
+			}
+		}
+		throw new Error("Error: Could not find an empty spawn room. This should not be possible.");
+	}
+	
+	public boolean addPlayerTest(String name) {
+
+		if (this.players.size() < 4) {
+			Area spawnRoom = this.findEmptySpawnRoomTest();
+			System.out.println(spawnRoom.toString()+"**");
+			Player newPlayer = new Player(name, spawnRoom, this.defaultSpawnPosition);
+			spawnRoom.setOwner(newPlayer); // Set player as the owner of the
+											// spawn room.
+
+			// Set the player as the occupant of the tile.
+			FloorTile spawnTile = (FloorTile) spawnRoom.getTile(this.defaultSpawnPosition);
+
+			assert spawnTile != null;
+
+			spawnTile.setOccupant(newPlayer);
+			this.players.add(newPlayer); // Add the player to the list of
+											// players in the game.
+			this.chatLog.add("Player Added to Game: " + name);
+
+			// Set up the bundle for the new player.
+			Bundle bundle = new Bundle(name);
+			bundle.setNewArea(spawnRoom);
+			bundle.setLog(this.chatLog);
+
+			this.playerBundles.put(name, bundle);
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

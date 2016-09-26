@@ -27,6 +27,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 
 import com.school.game.SpookySchool;
+import com.school.ui.MainFrame;
 
 /**
  * setup a server, setup clients from user input data with button confirm
@@ -277,13 +278,15 @@ public class ClientServerFrame extends JFrame {
 //		Socket s = new Socket(ip,port);
 //		new Client(s).run();
 		serverOn = false;
+		new MainFrame("Spooky School");
+
 		//game.start();
 	}
 
 	protected void runServer(int port, int gameClock, int broadcastClock, SpookySchool game) {
 		serverOn = true;
 		System.out.println("Server: " + port);
-		
+		new MainFrame("Spooky School");
 		//start main thread , server game thread
 		//ClockThread clk = new ClockThread(gameClock, game, null);
 		//game.start(); // thread start

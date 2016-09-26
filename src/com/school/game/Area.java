@@ -3,6 +3,7 @@ package com.school.game;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -202,5 +203,13 @@ public class Area implements Serializable {
 	public boolean hasOwner() {
 		return this.owner != null;
 	}
+
+	@Override
+	public String toString() {
+		return "Area [areaName=" + areaName + "]";
+	}
+
+
+	
 
 }

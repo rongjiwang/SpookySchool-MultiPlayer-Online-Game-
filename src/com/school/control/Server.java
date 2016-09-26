@@ -56,7 +56,7 @@ public final class Server extends Thread {
 			}
 			String msg = new String(packet.getData());
 			if(msg.trim().equalsIgnoreCase("ping")){
-				System.out.println("CLIENT > " + msg);
+				System.out.println("CLIENT **> " + msg);
 				sendData("pong".getBytes(),packet.getAddress(), packet.getPort());
 			}
 		}

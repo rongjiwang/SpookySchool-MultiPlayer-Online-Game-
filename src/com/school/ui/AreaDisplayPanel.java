@@ -21,6 +21,10 @@ import com.school.game.WallTile;
 
 public class AreaDisplayPanel extends JPanel implements KeyListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final int offSetX = 150;
 	private final int offSetY = 50;
 	private final int tileSize = 32;
@@ -34,9 +38,10 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		this.requestFocus();
 		this.addKeyListener(this);
 
-		this.game = new SpookySchool();
+		this.game = new SpookySchool(this);
 		this.playerName = "Test Player";
-		this.game.addPlayer(this.playerName);
+		this.game.addPlayerTest(this.playerName);
+		game.start();
 	}
 
 	/**
