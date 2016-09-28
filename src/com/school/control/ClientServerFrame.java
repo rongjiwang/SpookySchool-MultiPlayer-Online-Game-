@@ -5,9 +5,10 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
 import javax.swing.ButtonGroup;
@@ -27,7 +28,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 
 import com.school.game.SpookySchool;
-import com.school.ui.MainFrame;
 
 /**
  * setup a server, setup clients from user input data with button confirm
@@ -51,14 +51,16 @@ public class ClientServerFrame extends JFrame {
 	private JRadioButton single;
 	private JTextArea textArea;
 	private JScrollPane scroll;
+	private Server server;
 	public static boolean serverOn;
-	private static final int port = 31122;
+	private static final int port = 5000;
 	public static final int GAME_CLOCK = 20;
 	public static final int BROADCAST_CLOCK = 5;
 
 	public ClientServerFrame() {
 		super("Client-Server");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ClientServerFrame.class.getResource("/com/school/ui/images/spooky_cs.png")));
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(ClientServerFrame.class.getResource("/com/school/ui/images/spooky_cs.png")));
 		panel = new JPanel();
 		// getContentPane().add(panel);
 		getContentPane().add(panel);
@@ -224,18 +226,22 @@ public class ClientServerFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// create server, client
 				String name = playerName.getText();
-				SpookySchool game = new SpookySchool();
+				// SpookySchool game = new SpookySchool();
 				if (serverButton.isSelected()) {
-					runServer(port, GAME_CLOCK, BROADCAST_CLOCK,game);
+					try {
+						runServer(port, GAME_CLOCK, BROADCAST_CLOCK);
+					} catch (SocketException e1) {
+						e1.printStackTrace();
+					}
 				} else if (join.isSelected()) {
 					String ip = ipAddress.getText();
 					try {
-						runClient(ip, port, name,game);
+						runClient(ip, port, name);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
 				} else {
-					runSingle(name,game);
+					runSingle(name);
 				}
 			}
 		});
@@ -267,48 +273,32 @@ public class ClientServerFrame extends JFrame {
 
 	}
 
-	protected void runSingle(String name, SpookySchool game) {
-		//set input value back to null
-		//playerName.setText(null);
+	protected void runSingle(String name) {
 		System.out.println("Single player:" + name);
 	}
 
-	protected void runClient(String ip, int port, String name, SpookySchool game) throws UnknownHostException, IOException {
-//		System.out.println("Client: " + name + " " + ip);
-//		Socket s = new Socket(ip,port);
-//		new Client(s).run();
-		serverOn = false;
-		new MainFrame("Spooky School");
+	protected void runClient(String ip, int port, String name) throws UnknownHostException, IOException {
+		System.out.println("Client: " + name + " *" + ip + "* " + 5001);
+		DatagramSocket s = new DatagramSocket();
 
-		//game.start();
+		if (server == null) {
+			System.out.println("Can not find server socket");
+		} else {
+			// create client
+			Client c = new Client(s, server, name);
+			c.start();
+			// add client to server's arrayList
+			server.add(c);
+		}
 	}
 
-	protected void runServer(int port, int gameClock, int broadcastClock, SpookySchool game) {
-		serverOn = true;
+	protected void runServer(int port, int gameClock, int broadcastClock) throws SocketException {
 		System.out.println("Server: " + port);
-		new MainFrame("Spooky School");
-		//start main thread , server game thread
-		//ClockThread clk = new ClockThread(gameClock, game, null);
-		//game.start(); // thread start
-		//clk.start();
+		SpookySchool game = new SpookySchool();
+		server = new Server(game, 5001);
+		server.start();
+
 		System.out.println(" SERVER LISTENING ON PORT " + port);
-		//game.start();
-//		try {
-//			int index = 1;
-//			Server[] connections = new Server[5];
-//			
-//			ServerSocket ss = new ServerSocket(port);System.out.println("here?...");
-//			while(true){
-//				//wait for a socket
-//				Socket s = ss.accept();
-//				System.out.println("ACCEPTED CONNECTION FROM: "+ s.getInetAddress());
-//				connections[index++] = new Server(s,index-1,broadcastClock,game);
-//				connections[index-1].start();
-//				
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
 
 	}
 }

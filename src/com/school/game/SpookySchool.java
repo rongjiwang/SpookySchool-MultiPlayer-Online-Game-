@@ -29,7 +29,7 @@ import com.school.ui.AreaDisplayPanel;
  * @author Pritesh R. Patel
  *
  */
-public class SpookySchool implements Runnable {
+public class SpookySchool {
 
 	private final Position defaultSpawnPosition = new Position(5, 8); // Default
 																		// position
@@ -155,7 +155,7 @@ public class SpookySchool implements Runnable {
 	 *         Otherwise false.
 	 */
 	public boolean movePlayer(String playerName, Direction direction) {
-		socketClient.sendData("ping".getBytes());
+		// socketClient.sendData("ping".getBytes());
 
 		Player player = this.getPlayer(playerName);
 		// Ensure that the player we are trying to move exists.
@@ -419,68 +419,12 @@ public class SpookySchool implements Runnable {
 		throw new Error("Error: in creating bundle into byte array.");
 	}
 
-	// *****************C&S*****************
-	private static boolean running;
-
-	private static Thread thread;
-
-	private static Server socketServer;
-
-	private static Client socketClient;
-	private static boolean serverSwitch;
-
-	public synchronized void start() {
-		running = true;
-		thread = new Thread(this, "GameThread");
-		thread.start();
-		serverSwitch = ClientServerFrame.serverOn;
-		if (serverSwitch) {
-			try {
-				socketServer = new Server(this);
-				socketServer.start();
-				System.out.println("Server start£¡");
-			} catch (SocketException e) {
-				e.printStackTrace();
-			}
-		}
-
-		try {
-			socketClient = new Client(this, InetAddress.getLocalHost().getHostAddress());
-			socketClient.start();
-			// this.addPlayer("player2");
-			System.out.println("Client start£¡");
-
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
+	public byte[] getBundleTest(String playerName) {
+		byte[] b = new String(playerName + "*back").getBytes();
+		return b;
 	}
 
-	public synchronized void stop() {
-		running = false;
 
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public synchronized void run() {
-		while (running) {
-			tick();
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public synchronized void tick() {
-		display.updateDisplay();
-		// System.out.println("tick function");
-	}
 
 	public Area findEmptySpawnRoomTest() {
 
@@ -525,4 +469,7 @@ public class SpookySchool implements Runnable {
 		return false;
 	}
 
+	public void respond(String s, String d) {
+		System.out.println("FROM GAME CLASS" + s + d);
+	}
 }

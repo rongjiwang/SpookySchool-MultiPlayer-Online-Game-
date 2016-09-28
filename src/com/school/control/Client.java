@@ -1,7 +1,5 @@
 package com.school.control;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -9,13 +7,11 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
-import com.school.game.Player;
 import com.school.game.SpookySchool;
+import com.school.ui.MainFrame;
 
-public final class Client extends Thread implements KeyListener {
+public final class Client extends Thread {
 	private Socket sock;
 	private DataOutputStream output;
 	private DataInputStream input;
@@ -25,28 +21,23 @@ public final class Client extends Thread implements KeyListener {
 	private DatagramSocket socket;
 	private InetAddress ipAddress;
 	private final int port = 5000;
+	private Server server;
+	private String name;
 
 	// Testing commit to repository - ignore comment
 
-	public Client(Socket sock) throws IOException {
-		this.sock = sock;
-
-		// output = new OutputStreamWriter(sock.getOutputStream());
-		// input = new InputStreamReader(sock.getInputStream());
-		// parser = new PacketParser(this);
+	public Client(DatagramSocket socket,Server server,String name) throws IOException {
+		this.socket = socket;
+		this.server = server;
+		this.name = name;
+		this.ipAddress = InetAddress.getLocalHost();
 	}
 
-	public Client(SpookySchool game, String ipAddress) {
-		this.game = game;
-		try {
-			this.socket = new DatagramSocket();
-			this.ipAddress = InetAddress.getByName(ipAddress);
-		} catch (SocketException | UnknownHostException e) {
-			e.printStackTrace();
-		}
-	}
 
 	public void run() {
+		//create board
+		MainFrame frame = new MainFrame(name,this);// change
+		
 		while (true) {
 			byte[] data = new byte[1024];
 			DatagramPacket packet = new DatagramPacket(data, data.length);
@@ -55,14 +46,14 @@ public final class Client extends Thread implements KeyListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			String msg = new String(packet.getData() + " " + packet.getAddress() + " " + packet.getSocketAddress() + " "
+			String msg = new String("Display receiving message" + " " + packet.getAddress() + " " + packet.getSocketAddress() + " "
 					+ packet.getPort());
-			System.out.println(msg);
-			// System.out.println("SERVER > " + new String(packet.getData()));
-			// if(msg.trim().substring(0, 4).equalsIgnoreCase("pong")){
-			// System.out.println("SERVER **> " + new String(packet.getData()));
-			// sendData("ping".getBytes());
-			// }
+			String msg1 = new String(packet.getData());
+			System.out.println(msg1+"PACKET FROM SERVER : " + msg);
+			//action on frame when receive "pong"
+			if (msg.trim().substring(0, 4).equalsIgnoreCase("pong")) {
+				frame.closeWindow();
+			}
 			// this.parsePacket(packet.getData(),packet.getAddress(),packet.getPort());
 		}
 
@@ -74,61 +65,29 @@ public final class Client extends Thread implements KeyListener {
 	}
 
 	public void sendData(byte[] data) {
-		DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, port);
+		System.out.println("SETUP DATA TOWARDS SERVER");
+		if(data == null){return;}
+		DatagramPacket packet = new DatagramPacket(data, data.length, this.ipAddress, 5001);
+		System.out.println(data.toString()+" "+this.ipAddress);
+
 		try {
+			System.out.println("BEFORE SEND DATA TO SERVER");
+
 			socket.send(packet);
+			System.out.println("AFTER SEND DATA TO SERVER");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// public void run() {
-	//
-	// try {
-	// System.out.println("olleh");
-	//
-	// output = new DataOutputStream(sock.getOutputStream());
-	// input = new DataInputStream(sock.getInputStream());
-	//
-	// uid = input.readInt();
-	// boolean exit = false;
-	// long totalRec = 0;
-	// while (!exit) {
-	// // read event
-	// int amount = input.readInt();
-	// byte[] data = new byte[amount];
-	// input.readFully(data);
-	// // game decode data
-	// // repaint game
-	// totalRec += amount;
-	// // System.out.println("\rREC: " + (totalRec / 1024) + "KB ("
-	// // + (rate(amount) / 1024) + "KB/s) TX: " + totalSent
-	// // + " Bytes");
-	//
-	// }
-	// sock.close();
-	// } catch (IOException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	//
-	// }
-
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
+	public DataOutputStream getOutput() {
+		return output;
 	}
 
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
+	public String getPlayerName() {
+		return name;
 	}
+	
+	
 
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
 }

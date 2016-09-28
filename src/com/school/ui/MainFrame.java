@@ -9,13 +9,18 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import com.school.control.Client;
+
 public class MainFrame extends JFrame implements WindowListener {
 
 	private JPanel areaDisplayPanel; //This pane displays all of the other panels
+	private String name;
 
-	public MainFrame(String title) {
+	public MainFrame(String title, Client client) {
 		super(title); // Set window title.
-
+		//--------------CS
+		this.name = title;
+		//----------------
 		setSize(1024, 768); // default size is 0,0
 		this.setResizable(false); //Do not allow window resizing.
 		this.addWindowListener(this); //This frame also implements window listener so "add it"
@@ -26,7 +31,7 @@ public class MainFrame extends JFrame implements WindowListener {
 		Dimension scrnsize = toolkit.getScreenSize();
 		setBounds((scrnsize.width - getWidth()) / 2, (scrnsize.height - getHeight()) / 2, getWidth(), getHeight());
 
-		this.areaDisplayPanel = new AreaDisplayPanel();
+		this.areaDisplayPanel = new AreaDisplayPanel(client);
 		this.add(this.areaDisplayPanel);
 
 		this.setVisible(true); //Display the window
@@ -68,5 +73,11 @@ public class MainFrame extends JFrame implements WindowListener {
 
 	@Override
 	public void windowOpened(WindowEvent arg0) {}
+
+	public String getName() {
+		return name;
+	}
+	
+	
 
 }

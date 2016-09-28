@@ -4,9 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 
+import com.school.control.Client;
 import com.school.game.Area;
 import com.school.game.DoorGO;
 import com.school.game.FixedGO;
@@ -31,16 +33,17 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 
 	private SpookySchool game;
 	private String playerName;
+	private Client client;
 
-	public AreaDisplayPanel() {
+	public AreaDisplayPanel(Client client) {
+		this.client = client;
 		this.setBackground(Color.darkGray);
 		this.setFocusable(true);
 		this.requestFocus();
 		this.addKeyListener(this);
 
 		this.game = new SpookySchool(this);
-		this.playerName = "Test Player";
-		game.start();
+		this.playerName = "Test";
 
 		this.game.addPlayerTest(this.playerName);
 	}
@@ -107,8 +110,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		int keyCode = e.getKeyCode();
 		switch (keyCode) {
 		case KeyEvent.VK_UP:
-			this.game.movePlayer(this.playerName, Direction.NORTH);
-			this.updateDisplay();
+			//this.game.movePlayer(this.playerName, Direction.NORTH);
+			//send data -> server
+				client.sendData(new String(playerName+" "+"NORTH").getBytes());;
+				this.updateDisplay();
+
 			break;
 		case KeyEvent.VK_DOWN:
 			this.game.movePlayer(this.playerName, Direction.SOUTH);
