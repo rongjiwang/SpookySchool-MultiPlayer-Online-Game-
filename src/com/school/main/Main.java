@@ -1,10 +1,10 @@
 package com.school.main;
-import com.school.ui.MainFrame;
+import com.school.ui.Display;
 
 public class Main {
 
 	public static void main(String[] args) {
-		new MainFrame("Spooky School");
+		new Display();
 	}
 
 }
