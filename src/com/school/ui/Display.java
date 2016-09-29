@@ -1,5 +1,6 @@
 package com.school.ui;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
@@ -52,6 +53,8 @@ public class Display {
 		gameFrame.setVisible(true);
 		gameFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
+		gameFrame.setBackground(Color.BLACK);
+				
 		//ensures if player tries to close frame, that a warning message comes up asking if they want to.
 		gameFrame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -71,7 +74,7 @@ public class Display {
 	 * This method is called to set the default main and side panels upon opening the game.
 	 */
 	public void setPanels(){
-		leftPanel = new GamePanel(gamePanel);
+		leftPanel = new MainPanel(gamePanel, invPanel);
 		gameFrame.add(leftPanel, BorderLayout.WEST);
 		//rightPanel 
 		//gameFrame.add(rightPanel, BorderLayout.EAST);
