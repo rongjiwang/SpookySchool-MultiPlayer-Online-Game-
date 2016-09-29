@@ -27,6 +27,9 @@ public class UIPanel extends JPanel {
 			case 2 : 	width = 262;
 						height = 162;
 						break;
+			case 3 : 	width = 300;
+						height = 500;
+						break;
 			default :	width = 0;
 						height = 0;
 						break;
