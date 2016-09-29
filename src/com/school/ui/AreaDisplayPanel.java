@@ -75,6 +75,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 		// Initialize with default view(0)
 		this.rotate = 0;
 	
+		updateDisplay();
 		game.start();
 	}
 
@@ -98,23 +99,43 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 		int xPos = p.getCurrentPosition().getPosX();
 		int yPos = p.getCurrentPosition().getPosY();
 		
+		System.out.println("xPos " + xPos);
+		System.out.println("yPos " + yPos);
+		System.out.println("Player " + rotate);
+
 		// Determine the players viewed grid position depending on 'rotate'
 		int[] view = getRotatedView(xPos, yPos, area.width, area.height);
 		int viewRow = view[0];
 		int viewCol = view[1];
+		
+		System.out.println("NewxPos " + viewRow);
+		System.out.println("NewyPos " + viewCol);
 
-		// If the Array is rotated 0 or 180 degrees, e.g. width = height
+		
+		int windowCenterX = (this.windowWidth/2) + this.windowOffSetX;
+		int windowCenterY = (this.windowHeight/2) + this.windowOffSetY;
+		
+		int playerX = (viewRow * this.tileWidth) + tileWidth/2;
+		int playerY = (viewCol * this.tileHeight);
+		 //If the Array is rotated 0 or 180 degrees, e.g. width = height
 		if(rotate == 0 || rotate == 2){
-			this.renderOffSetX = (((this.windowWidth/2 + this.windowOffSetX) - (viewRow * this.tileWidth)) - tileWidth/2);
-			this.renderOffSetY = (((this.windowHeight/2 + this.windowOffSetY) - (viewCol * this.tileHeight)) - tileHeight/2);
+			System.out.println("x = " + viewRow + ", y = " + viewCol);
+			this.renderOffSetX = this.windowOffSetX + ((windowWidth/2) - playerX);
+			this.renderOffSetY = this.windowOffSetY + ((windowHeight/2) - playerY);
 		
 		// If the Array is rotated 90 or 270 degrees, e.g. width =! height
 		}else if(rotate == 1 || rotate == 3){
-			viewCol = area.height -1 - viewCol;
-			viewRow = area.width - viewRow + 1;
-			this.renderOffSetX = (((this.windowWidth/2 + this.windowOffSetX) - (viewRow * this.tileWidth)) - tileWidth/2);
-			this.renderOffSetY = (((this.windowHeight/2 + this.windowOffSetY) - (viewCol * this.tileHeight)) - tileHeight/2);
+			//viewCol = (area.height -1) - viewCol;
+			//viewRow = (area.width - 1) - viewRow;
+			System.out.println("x = " + viewRow + ", y = " + viewCol);
+			//playerX = (viewRow * this.tileWidth) + tileWidth/2;
+			//playerY = (viewCol * this.tileHeight);
+			this.renderOffSetX = this.windowOffSetX + ((windowWidth/2) - playerX);
+			this.renderOffSetY = this.windowOffSetY + ((windowHeight/2) - playerY);
+			
 		}
+		
+
 	}
 	
 	@Override
@@ -130,9 +151,40 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 		renderArray(g, 2); // render gameObjects
 		renderArray(g, 3); // render close and side walls
 		
-		addOverlay(g);
+		Player p = game.getPlayer(playerName);
+		Area area = p.getCurrentArea();
 		
-		//addGrid(g);
+		// Determine the players current grid position in the area
+		int xPos = p.getCurrentPosition().getPosX();
+		int yPos = p.getCurrentPosition().getPosY();
+		
+		// Determine the players viewed grid position depending on 'rotate'
+		int[] view = getRotatedView(xPos, yPos, area.width, area.height);
+		int viewRow = view[0];
+		int viewCol = view[1];
+		int windowCenterX = (this.windowWidth/2) + this.windowOffSetX;
+		int windowCenterY = (this.windowHeight/2) + this.windowOffSetY;
+		
+		int playerX = (viewRow * this.tileWidth);
+		int playerY = (viewCol * this.tileHeight);
+		
+		//addGrid2(g);
+		
+		addGrid(g);
+		
+	
+
+		
+		
+		g.setColor(Color.BLUE);
+		g.drawLine(renderOffSetX, playerY, playerX + renderOffSetX, playerY);
+		g.setColor(Color.green);
+		g.drawLine(0, windowCenterY, windowCenterX, windowCenterY);
+		g.drawLine(windowCenterX, 0, windowCenterX, windowCenterY);
+		g.setColor(Color.RED);
+		//g.drawRect(renderOffSetX, renderOffSetY, area.width *tileWidth, area.height * tileHeight);
+
+		addOverlay(g);
 		
 		
 	}
@@ -148,13 +200,54 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 		
 		
 		g.setColor(Color.red);
-		for(int row = 0; row < area.height; row++){
-			for(int col = 0; col < area.width; col++){
+		for(int row = 0; row < area.width; row++){
+			for(int col = 0; col < area.height; col++){
+				
+				
+				
+				
+				// Determine the players viewed grid position depending on 'rotate'
 				int[] view = getRotatedView(row, col, area.width, area.height);
 				int viewRow = view[0];
 				int viewCol = view[1];
 				
-				g.drawRect(this.renderOffSetX + (viewRow * this.tileWidth), this.renderOffSetY + viewCol * this.tileHeight, this.tileWidth, this.tileHeight);
+				int playerX = (viewRow * this.tileWidth) + tileWidth/2;
+				int playerY = (viewCol * this.tileHeight);
+				
+				
+				if(rotate == 0 || rotate == 2){
+					g.drawRect(this.renderOffSetX + (viewRow * this.tileWidth), this.renderOffSetY + viewCol * this.tileHeight, this.tileWidth, this.tileHeight);
+				
+				// If the Array is rotated 90 or 270 degrees, e.g. width =! height
+				}else if(rotate == 1 || rotate == 3){
+					viewCol = area.height -1 - viewCol;
+					viewRow = area.width - viewRow + 3;
+					playerX = (viewRow * this.tileWidth) + tileWidth/2;
+					playerY = (viewCol * this.tileHeight);
+					g.drawRect(this.renderOffSetX + (viewRow * this.tileWidth), this.renderOffSetY + viewCol * this.tileHeight, this.tileWidth, this.tileHeight);
+				}
+			}
+		}	
+	}
+	
+
+	/**
+	 * Draws a grid over the area, helpful for testing
+	 * 
+	 * @param g - Graphics
+	 */
+	private void addGrid2(Graphics g) {
+		Player p = game.getPlayer(playerName);
+		Area area = p.getCurrentArea();
+		
+		
+		g.setColor(Color.magenta);
+		for(int row = 0; row < 11; row++){
+			for(int col = 0; col < 14; col++){
+				int[] view = getRotatedView(row, col, area.width, area.height);
+				int viewRow = view[0];
+				int viewCol = view[1];
+				g.drawRect(this.windowOffSetX + (viewRow * this.tileWidth), this.windowOffSetY + viewCol * this.tileHeight, this.tileWidth, this.tileHeight);				
 			}
 		}	
 	}
@@ -196,14 +289,19 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 		}
 		int originalCol = col;
 		
+		System.out.println("*************************************************");
+
+		
 		// Iterate through the 2D array using the appropriate variables calculated above
 		for(int i = 0; i < rowLength; i++){
 			col = originalCol;
 			for(int j = 0; j < colLength; j++){
-				if(rotate == 0 || rotate == 2)
+				if(rotate == 0 || rotate == 2){
 					renderTile(g,layer, row, col); 
-				else
+				}else{
+					
 					renderTile(g,layer, col, row);
+				}
 			col += changeCol;
 			}
 		row += changeRow;
@@ -217,10 +315,26 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 		// Determine tile at row/col location
 		Tile tile = area.getArea()[row][col];
 		
-		// Determine view grid location for the tile depending on the current view
+		//System.out.print("row: " + row);
+		//System.out.println("    col " + col);
+		System.out.println("tile " + rotate);
+
+		
 		int[] view = getRotatedView(row, col, area.width, area.height);
 		int viewRow = view[0];
 		int viewCol = view[1];
+		
+		//System.out.print("viewRow: " + viewRow);
+		//System.out.println("    viewCol " + viewCol);
+		
+		//if(rotate == 1 || rotate == 3){
+		//	System.out.print("viewRow2: " + (area.width - viewRow + 1));
+		//	System.out.println("    viewCol2 " + (area.height - viewCol - 1));
+		//	
+		//}
+		//Determine view grid location for the tile depending on the current view
+		
+		
 
 		if(tile == null){
 			return;
@@ -347,7 +461,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 		}
 		r[0] = oldX;
 		r[1] = oldY;
+
 		return r;
+		
 
 	}
 	
@@ -414,12 +530,14 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 			move = this.game.movePlayer(this.playerName, direction);
 			break;
 		case KeyEvent.VK_R:
-			rotate(-1);
-			break;
-		case KeyEvent.VK_L:
 			rotate(1);
 			break;
+		case KeyEvent.VK_L:
+			rotate(-1);
+			break;
 		}
+		updateDisplay();
+
 	}
 
 	@Override

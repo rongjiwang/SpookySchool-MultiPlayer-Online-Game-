@@ -1,21 +1,18 @@
-11 13
-n n n n n n n n n n n
-n n n n n w0 w0 w0 n n n
-n n n n w3 c0 c0 c0 w1 n n
-n n n n w3 c0 c0 c0 w1 n n
-n n n w0 W1 c0 c0 c0 w1 n n
-n n w3 c0 c0 c0 c0 c0 w1 n n
-n n w3 c0 c0 c0 c0 c0 w1 n n
-n n w3 c0 c0 c0 c0 c0 w1 n n
-n n w3 c0 c0 c0 c0 c0 w1 n n
-n n w3 c0 c0 c0 c0 c0 w1 n n
-n n w3 c0 c0 c0 c0 c0 w1 n n
-n n n w2 w2 w2 w2 w2 n n n
-n n n n n n n n n n n
+7 11
+n n n w0 w0 w0 n
+n n w3 c0 c0 c0 w1
+n n w3 c0 c0 c0 w1
+n w0 W1 c0 c0 c0 w1
+w3 c0 c0 c0 c0 c0 w1
+w3 c0 c0 c0 c0 c0 w1
+w3 c0 c0 c0 c0 c0 w1
+w3 c0 c0 c0 c0 c0 w1
+w3 c0 c0 c0 c0 c0 w1
+w3 c0 c0 c0 c0 c0 w1
+n w2 w2 w2 w2 w2 n
 
-
-DOOR door1 d0 closed unlocked null 6 1
-FIXED furniture1 f0 3 5 4 5
-FIXED table1 T0 4 8
-FIXED bed1 b1 6 8 7 8
-FIXED table2 t0 7 9
+DOOR door1 d0 closed unlocked null 4 0
+FIXED furniture1 f0 1 4 2 4
+FIXED table1 T0 2 7
+FIXED bed1 b1 4 8 5 8
+FIXED table2 t0 5 9

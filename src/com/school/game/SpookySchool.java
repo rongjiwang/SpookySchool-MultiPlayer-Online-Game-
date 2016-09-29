@@ -23,7 +23,7 @@ public class SpookySchool implements Runnable {
 
 	//Test commit
 
-	private final Position defaultSpawnPosition = new Position(5, 8); // Default position that a player spawns in, in a spawn room.
+	private final Position defaultSpawnPosition = new Position(3,6 ); // 5, 8 Default position that a player spawns in, in a spawn room.
 
 	private Map<String, Area> areas = new HashMap<String, Area>();
 	private List<Player> players = new ArrayList<Player>();
@@ -381,7 +381,7 @@ public class SpookySchool implements Runnable {
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				System.out.println("Ticks " + updates + ", Fps " + frames);
+				//System.out.println("Ticks " + updates + ", Fps " + frames);
 				updates = 0;
 				frames = 0;
 			}
@@ -393,6 +393,6 @@ public class SpookySchool implements Runnable {
 	 * tick is called 60 times per second
 	 */
 	public void tick() {
-		display.updateDisplay();
+		//display.updateDisplay();
 	}
 }
