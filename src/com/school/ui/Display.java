@@ -1,5 +1,6 @@
 package com.school.ui;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
@@ -29,6 +30,7 @@ public class Display {
 	private JPanel rightPanel = null;
 	private AreaDisplayPanel gamePanel;
 	private InventoryPanel invPanel;
+	private ChatPanel chatPanel;
 	private JMenuItem help;
 	private JMenuItem about;
 
@@ -41,6 +43,9 @@ public class Display {
 		//creates inventory panel
 		invPanel = new InventoryPanel();
 		
+		//creates chat panel
+		chatPanel = new ChatPanel(this);
+		
 		//adds menu bar
 		final JMenuBar displayMenuBar = createMenuBar();
 		gameFrame.setJMenuBar(displayMenuBar);
@@ -52,6 +57,8 @@ public class Display {
 		gameFrame.setVisible(true);
 		gameFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
+		gameFrame.setBackground(Color.BLACK);
+				
 		//ensures if player tries to close frame, that a warning message comes up asking if they want to.
 		gameFrame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -67,14 +74,19 @@ public class Display {
 		});
 	}
 
+	public void refocus(){
+		gamePanel.requestFocusInWindow();
+	}
 	/**
 	 * This method is called to set the default main and side panels upon opening the game.
 	 */
 	public void setPanels(){
-		leftPanel = new GamePanel(gamePanel);
+		//leftPanel
+		leftPanel = new MainPanel(gamePanel, invPanel);
 		gameFrame.add(leftPanel, BorderLayout.WEST);
 		//rightPanel 
-		//gameFrame.add(rightPanel, BorderLayout.EAST);
+		rightPanel = new SidePanel(chatPanel);
+		gameFrame.add(rightPanel, BorderLayout.EAST);
 		gameFrame.pack();
 	}
 

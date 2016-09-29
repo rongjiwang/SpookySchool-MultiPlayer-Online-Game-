@@ -1,6 +1,7 @@
 package com.school.ui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -23,8 +24,8 @@ import com.school.game.Tile;
 public class AreaDisplayPanel extends JPanel implements KeyListener{
 
 	// Window size and offset
-	private final int windowOffSetX = 150;
-	private final int windowOffSetY = 50;
+	private final int windowOffSetX = 0;
+	private final int windowOffSetY = 0;
 	private final int windowWidth = 352;
 	private final int windowHeight = 352;
 	
@@ -59,6 +60,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 	 * Constructs a new AreaDisplayPanel
 	 */
 	public AreaDisplayPanel() {
+		//set size
+		this.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		
 		// Setting up JPanel
 		this.setBackground(Color.darkGray);
@@ -130,7 +133,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 		renderArray(g, 2); // render gameObjects
 		renderArray(g, 3); // render close and side walls
 		
-		addOverlay(g);
+	//	addOverlay(g);
 		
 		//addGrid(g);
 		
@@ -311,6 +314,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 	 *
 	 * @param g - Graphics
 	 */
+	/*
 	public void addOverlay(Graphics g){
 		g.setColor(Color.darkGray);
 		g.fillRect(0,0,this.getWidth(), this.windowOffSetY);
@@ -320,7 +324,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 		g.fillRect(this.windowOffSetX, this.windowOffSetY + this.windowHeight, 
 				this.windowWidth, this.getHeight() - (this.windowOffSetY + this.windowHeight));
 	}
-	
+	*/
 	/**
 	 * Determines the new x,y position(where the tile will be drawn) 
 	 * of a tile from it logical position and the current view
@@ -427,14 +431,5 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {}
-
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
