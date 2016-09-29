@@ -30,6 +30,7 @@ public class Display {
 	private JPanel rightPanel = null;
 	private AreaDisplayPanel gamePanel;
 	private InventoryPanel invPanel;
+	private ChatPanel chatPanel;
 	private JMenuItem help;
 	private JMenuItem about;
 
@@ -41,6 +42,9 @@ public class Display {
 		
 		//creates inventory panel
 		invPanel = new InventoryPanel();
+		
+		//creates chat panel
+		chatPanel = new ChatPanel(this);
 		
 		//adds menu bar
 		final JMenuBar displayMenuBar = createMenuBar();
@@ -70,14 +74,19 @@ public class Display {
 		});
 	}
 
+	public void refocus(){
+		gamePanel.requestFocusInWindow();
+	}
 	/**
 	 * This method is called to set the default main and side panels upon opening the game.
 	 */
 	public void setPanels(){
+		//leftPanel
 		leftPanel = new MainPanel(gamePanel, invPanel);
 		gameFrame.add(leftPanel, BorderLayout.WEST);
 		//rightPanel 
-		//gameFrame.add(rightPanel, BorderLayout.EAST);
+		rightPanel = new SidePanel(chatPanel);
+		gameFrame.add(rightPanel, BorderLayout.EAST);
 		gameFrame.pack();
 	}
 
