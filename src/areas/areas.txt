@@ -1,0 +1,6 @@
+Spawn_1 spawn1.txt
+Spawn_2 spawn1.txt
+Spawn_3 spawn2.txt
+Spawn_4 spawn2.txt
+Hallway hallway.txt
+Dormr_room dormRoom.txt
