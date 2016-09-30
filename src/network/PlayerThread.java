@@ -91,7 +91,10 @@ public class PlayerThread extends Thread {
 			objOut.writeObject(bundle);
 			objOut.flush();
 
-			bundle.clearBundle(); //Clear the bundle now that it has been sent.
+			//Clear the bundle now that it has been sent.
+			if (bundle != null) {
+				bundle.clearBundle();
+			}
 
 		} catch (IOException e) {
 			//Close the socket
