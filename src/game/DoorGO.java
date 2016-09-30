@@ -16,9 +16,13 @@ public class DoorGO implements GameObject {
 	private final String keyID;
 	private final Position position;
 
-	//FIXME Should these be transient???
-	private String otherSide; //Name of the area on the otherside
-	private transient Position otherSidePos; //Position on the other side.
+	private String sideA;
+	private String sideB;
+
+	private Position sideAPos;
+	private Position sideBPos;
+
+
 
 	public DoorGO(String id, String token, boolean open, boolean locked, String keyID, Position position) {
 		this.id = id;
@@ -33,32 +37,54 @@ public class DoorGO implements GameObject {
 	//TODO Need to add functionality here.
 
 
-
 	/** GETTERS AND SETTERS **/
+
+	public String getOtherSide(String currentSide) {
+
+		if (currentSide.equals(sideA)) {
+			return this.sideB;
+		}
+		return this.sideA;
+	}
+
+
+	public Position getOtherSidePos(String currentSide) {
+
+		if (currentSide.equals(sideA)) {
+			return this.sideBPos;
+		}
+
+		return this.sideAPos;
+	}
+
+
+
+	public void setSideA(String sideA) {
+		this.sideA = sideA;
+	}
+
+
+	public void setSideB(String sideB) {
+		this.sideB = sideB;
+	}
+
+
+
+	public void setSideAPos(Position sideAPos) {
+		this.sideAPos = sideAPos;
+	}
+
+
+
+	public void setSideBPos(Position sideBPos) {
+		this.sideBPos = sideBPos;
+	}
+
+
 
 	@Override
 	public String getToken() {
 		return this.token;
-	}
-
-
-	public String getOtherSide() {
-		return otherSide;
-	}
-
-
-	public void setOtherSide(String otherSide) {
-		this.otherSide = otherSide;
-	}
-
-
-	public Position getOtherSidePos() {
-		return otherSidePos;
-	}
-
-
-	public void setOtherSidePos(Position otherSidePos) {
-		this.otherSidePos = otherSidePos;
 	}
 
 	public boolean isOpen() {

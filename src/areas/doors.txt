@@ -1,9 +1,4 @@
-Spawn_1 Hallway 6 1 5 3
-Spawn_2 Hallway 6 1 15 3
-Spawn_3 Hallway 4 11 5 1
-Spawn_4 Hallway 4 11 15 1
-Hallway Spawn_1 5 4 6 2
-Hallway Spawn_2 15 4 6 2
-Hallway Spawn_3 5 0 4 10
-Hallway Spawn_4 15 0 4 10
-Hallway dormRoom 0 2 15 8
+6 1 Spawn_1 6 2 Hallway 5 3
+6 1 Spawn_2 6 2 Hallway 15 3
+4 11 Spawn_3 4 10 Hallway 5 1
+4 11 Spawn_3 4 10 Hallway 15 1

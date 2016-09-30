@@ -25,7 +25,6 @@ public class SpookySchool {
 	private List<String> chatLog = new ArrayList<String>();
 
 	private Map<String, Bundle> playerBundles = new HashMap<String, Bundle>();
-		
 
 	public SpookySchool() {
 		this.loadAreas(); //Load maps
@@ -62,26 +61,26 @@ public class SpookySchool {
 		try {
 			scan = new Scanner(new File("src/areas/doors.txt"));
 			while (scan.hasNextLine()) {
-				String currentArea = scan.next(); //Read name of the area that the door object is in.
-				String otherSide = scan.next(); //Read name of the area that this door goes to.
 
-				Area area = this.areas.get(currentArea);
+				Position doorPos = new Position(scan.nextInt(), scan.nextInt());
 
-				//Get X AND Y Position of the door object.
-				int doorPosX = scan.nextInt();
-				int doorPosY = scan.nextInt();
+				String sideA = scan.next();
+				Position sideAPos = new Position(scan.nextInt(), scan.nextInt());
 
-				DoorGO door = (DoorGO) area.getTile(new Position(doorPosX, doorPosY)).getOccupant(); //Get the door object from the tile
-				door.setOtherSide(otherSide);
+				String sideB = scan.next();
+				Position sideBPos = new Position(scan.nextInt(), scan.nextInt());
 
-				//Get X AND Y position of the position the door leads to in the next area.
-				int otherSideX = scan.nextInt();
-				int otherSideY = scan.nextInt();
-				door.setOtherSidePos(new Position(otherSideX, otherSideY));
-				
-				
-					
-				
+				//System.out.println(doorPos + " " + sideA + " " + sideAPos + " " + sideB + " " + sideBPos);
+
+				Area areaA = this.areas.get(sideA);
+
+				DoorGO door = (DoorGO) areaA.getTile(doorPos).getOccupant();
+
+				door.setSideA(sideA);
+				door.setSideAPos(sideAPos);
+				door.setSideB(sideB);
+				door.setSideBPos(sideBPos);
+
 			}
 
 			System.out.println("Doors Setup!");
@@ -89,12 +88,9 @@ public class SpookySchool {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-	
-		
-		
-	
-	
-	
+
+
+
 	}
 
 	/**
@@ -138,8 +134,12 @@ public class SpookySchool {
 	 * FIXME add proper functionality for this.
 	 */
 	public synchronized void removePlayer(String name) {
-		this.players.remove(this.getPlayer(name));
-		this.playerBundles.remove(name);
+		if (this.getPlayer(name).getCurrentArea().getAreaName().contains("Spawn")) {
+			this.getPlayer(name).getCurrentArea().setOwner(null); //Set the players spawn room owner as null
+		}
+		this.getPlayer(name).getCurrentArea().getTile(this.getPlayer(name).getCurrentPosition()).removeOccupant(); //Remove player from the tile
+		this.players.remove(this.getPlayer(name)); //Remove the player from this game by removing them from players list.
+		this.playerBundles.remove(name); //Remove this player's bundle.
 	}
 
 
@@ -217,37 +217,12 @@ public class SpookySchool {
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 			this.movePlayerToTile(player, potentialTile); //Move the player to the new tile.
-			this.getBundle(player.getPlayerName())
-					.addGameObjectChange(player.getPlayerName() + " " + "move NORTH");
+			this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move NORTH");
 			return true; //Player movement complete.
 		}
 
+		return processDoorMovement(potentialTile, player); //Return true if there is a door movement, else false.
 
-		//If the potential tile is a wall tile and has a door game object on it...
-		//FIXME change this code to improve door functionality...
-		if (potentialTile instanceof WallTile && potentialTile.getOccupant() instanceof DoorGO) {
-			DoorGO door = (DoorGO) potentialTile.getOccupant();
-			
-			Tile otherSideTile = this.areas.get(door.getOtherSide()).getTile(door.getOtherSidePos());
-			
-			//If the door is open and the position on the other side is not occupied, then move player.
-			if (door.isOpen() && !otherSideTile.isOccupied()) {
-				player.setCurrentArea(this.areas.get(door.getOtherSide())); //FIXME Set the player's new area.
-				this.getBundle(player.getPlayerName()).setNewArea(player.getCurrentArea());//FIXME Add new area to the bundle. 
-				this.movePlayerToTile(player, otherSideTile);
-				
-				// cam added this
-				this.getBundle(player.getPlayerName()).setPlayerObj(player);
-				
-				// not necessary
-				//this.getBundle(player.getPlayerName())
-				//		.addGameObjectChange(player.getPlayerName() + " " + "newRoom null");
-			
-				return true;
-			}
-		}
-
-		return false; //Not a valid move.
 	}
 
 	/**
@@ -273,38 +248,12 @@ public class SpookySchool {
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 			this.movePlayerToTile(player, potentialTile); //Move the player to the new tile.
-			this.getBundle(player.getPlayerName())
-					.addGameObjectChange(player.getPlayerName() + " " + "move SOUTH");
+			this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move SOUTH");
 			return true; //Player movement complete.
 		}
 
-		//If the potential tile is a wall tile and has a door game object on it...
-		//FIXME change this code to improve door functionality...
-		if (potentialTile instanceof WallTile && potentialTile.getOccupant() instanceof DoorGO) {
-			DoorGO door = (DoorGO) potentialTile.getOccupant();
+		return processDoorMovement(potentialTile, player); //Return true if there is a door movement, else false.
 
-			System.out.println("Door ID " + door.getId() + " " + door.isOpen());
-
-			Tile otherSideTile = this.areas.get(door.getOtherSide()).getTile(door.getOtherSidePos());
-
-			//If the door is open and the position on the other side is not occupied, then move player.
-			if (door.isOpen() && !otherSideTile.isOccupied()) {
-				player.setCurrentArea(this.areas.get(door.getOtherSide())); //FIXME Set the player's new area.
-				this.getBundle(player.getPlayerName()).setNewArea(player.getCurrentArea());//FIXME Add new area to the bundle. 
-				this.movePlayerToTile(player, otherSideTile);
-				
-				// cam added this
-				this.getBundle(player.getPlayerName()).setPlayerObj(player);
-				
-				// not necessary
-				//this.getBundle(player.getPlayerName())
-				//		.addGameObjectChange(player.getPlayerName() + " " + "newRoom null");
-				
-				return true;
-			}
-		}
-
-		return false; //Not a valid move.
 	}
 
 	/**
@@ -336,34 +285,7 @@ public class SpookySchool {
 			return true; //Player movement complete.
 		}
 
-		//If the potential tile is a wall tile and has a door game object on it...
-		//FIXME change this code to improve door functionality...
-		if (potentialTile instanceof WallTile && potentialTile.getOccupant() instanceof DoorGO) {
-
-			DoorGO door = (DoorGO) potentialTile.getOccupant();
-			System.out.println("Door ID " + door.getId() + " " + door.isOpen());
-			Tile otherSideTile = this.areas.get(door.getOtherSide()).getTile(door.getOtherSidePos());
-			System.out.println(otherSideTile.getPosition().toString());
-
-			//If the door is open and the position on the other side is not occupied, then move player.
-			if (door.isOpen() && !otherSideTile.isOccupied()) {
-				player.setCurrentArea(this.areas.get(door.getOtherSide())); //FIXME Set the player's new area.
-				//player.setCurrentPosition(otherSideTile.getPosition());
-				this.getBundle(player.getPlayerName()).setNewArea(player.getCurrentArea());//FIXME Add new area to the bundle. 
-				this.movePlayerToTile(player, otherSideTile);
-				
-				// cam added this
-				this.getBundle(player.getPlayerName()).setPlayerObj(player);
-				
-				// not necessary
-				//this.getBundle(player.getPlayerName())
-				//		.addGameObjectChange(player.getPlayerName() + " " + "newRoom null");
-				
-				return true;
-			}
-		}
-
-		return false; //Not a valid move.
+		return processDoorMovement(potentialTile, player); //Return true if there is a door movement, else false.
 	}
 
 	/**
@@ -394,35 +316,63 @@ public class SpookySchool {
 			return true; //Player movement complete.
 		}
 
+		return processDoorMovement(potentialTile, player); //Return true if there is a door movement, else false.
+
+	}
+
+
+	/**
+	 * Move player to next room if they move through a door.
+	 * @param potentialTile
+	 * @param player
+	 * @return
+	 */
+	public boolean processDoorMovement(Tile potentialTile, Player player) {
+
+		//FIXME get rid of this after testing...?
+		if (potentialTile == null) {
+			throw new Error("potential tile should not be null if we make it here!");
+		}
+
 		//If the potential tile is a wall tile and has a door game object on it...
 		//FIXME change this code to improve door functionality...
 		if (potentialTile instanceof WallTile && potentialTile.getOccupant() instanceof DoorGO) {
+
 			DoorGO door = (DoorGO) potentialTile.getOccupant();
 
-			System.out.println("Door ID " + door.getId() + " " + door.isOpen());
+			String currentSide = player.getCurrentArea().getAreaName();
+			String otherSide = door.getOtherSide(currentSide);
 
-			Tile otherSideTile = this.areas.get(door.getOtherSide()).getTile(door.getOtherSidePos());
+			System.out.println("Current side: " + currentSide);
+			System.out.println("Other side: " + otherSide);
+
+			Area otherSideArea = this.areas.get(otherSide);
+
+			Tile otherSideTile = otherSideArea.getTile(door.getOtherSidePos(currentSide));
 
 			//If the door is open and the position on the other side is not occupied, then move player.
 			if (door.isOpen() && !otherSideTile.isOccupied()) {
-				player.setCurrentArea(this.areas.get(door.getOtherSide())); //FIXME Set the player's new area.
-				//player.setCurrentPosition(otherSideTile.getPosition());
+
+				//player.getCurrentArea().getTile(player.getCurrentPosition()).removeOccupant();
+
+				player.setCurrentArea(this.areas.get(door.getOtherSide(player.getCurrentArea().getAreaName()))); //FIXME Set the player's new area.
+
 				this.getBundle(player.getPlayerName()).setNewArea(player.getCurrentArea());//FIXME Add new area to the bundle. 
+
 				this.movePlayerToTile(player, otherSideTile);
 
-				// cam added this
-				this.getBundle(player.getPlayerName()).setPlayerObj(player);
-				
-				// not necessary
-				//this.getBundle(player.getPlayerName())
-				//		.addGameObjectChange(player.getPlayerName() + " " + "newRoom null");
-				
+				this.getBundle(player.getPlayerName())
+						.addGameObjectChange(player.getPlayerName() + " " + "newRoom null");
+
 				return true;
+
 			}
 		}
 
-		return false; //Not a valid move.
+		return false;
 	}
+
+
 
 	/**
 	 * Move the player to the given tile. Method moves player to new tile and removes them from the old tile. Also sets player's position to
