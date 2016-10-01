@@ -22,17 +22,18 @@ public class FixedGO implements GameObject {
 
 
 	/** GETTERS AND SETTERS **/
-	
+
+	@Override
 	public String getToken() {
 		return this.token;
 	}
 
-	
+	@Override
 	public String getId() {
 		return id;
 	}
 
-	
+	@Override
 	public Position getPosition() {
 		return position;
 	}

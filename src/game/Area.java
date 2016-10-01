@@ -34,11 +34,9 @@ public class Area implements Serializable {
 		try {
 			scan = new Scanner(new File("src/areas/" + areaFile));
 
-
 			//Scan width and height.
 			this.width = scan.nextInt();
 			this.height = scan.nextInt();
-
 
 			this.area = new Tile[height][width];
 
@@ -66,8 +64,6 @@ public class Area implements Serializable {
 					continue;
 				}
 
-				//System.out.println("Reading Game Object Line: " + line);
-
 				gameObjScanner = new Scanner(line);
 
 				//Scan the first three tokens of 
@@ -75,22 +71,8 @@ public class Area implements Serializable {
 				String id = gameObjScanner.next();
 				String token = gameObjScanner.next();
 
-				//Add the appropriate object onto this tile and add marker objects on tiles where applicable.
-				if (objType.equals("DOOR")) {
-					boolean open = gameObjScanner.next().equals("open");
-					boolean locked = gameObjScanner.next().equals("locked");
-					String keyID = gameObjScanner.next();
-					keyID = keyID.equals("null") ? null : keyID;
-					Position pos = (new Position(gameObjScanner.nextInt(), gameObjScanner.nextInt()));
-					GameObject gameObject = new DoorGO(id, token, open, locked, keyID, pos);
-
-					if (!(this.area[pos.getPosY()][pos.getPosX()] instanceof WallTile)) {
-						throw new Error("Error: Can only add doors onto walls/wall tiles.");
-					}
-
-					this.area[pos.getPosY()][pos.getPosX()].setOccupant(gameObject);
-
-				} else if (objType.equals("CONTAINER")) {
+				//FIXME need to implement game objects properly!!
+				if (objType.equals("CONTAINER")) {
 					boolean open = gameObjScanner.next().equals("open");
 					boolean locked = gameObjScanner.next().equals("locked");
 					String keyID = gameObjScanner.next();
@@ -189,11 +171,11 @@ public class Area implements Serializable {
 	public void setOwner(Player owner) {
 		//Throw error if trying to set owner for a non-spawn room.
 		if (!this.areaName.contains("Spawn")) {
-			throw new Error("Can only add an owner to a spawn location!");
+			throw new Error("You can only add an owner to a spawn location!");
 		}
+
 		this.owner = owner;
 	}
-
 
 	/**
 	 * Returns true if this area has an owner. This is used only for the spawn room.

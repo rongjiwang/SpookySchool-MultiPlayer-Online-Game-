@@ -13,6 +13,7 @@ n n w3 c0 c0 c0 w1 n n n n
 n n n w2 w2 w2 n n n n n 
 n n n n n n n n n n n
 
+DOOR door1 d2 open unlocked null 4 11
 FIXED furniture1 f2 7 7 6 7
 FIXED table1 T0 6 4
 FIXED bed1 b3 4 4 3 4

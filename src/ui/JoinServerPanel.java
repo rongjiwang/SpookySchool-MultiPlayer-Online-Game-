@@ -19,7 +19,6 @@ import network.Client;
 
 public class JoinServerPanel extends JPanel {
 
-	private JPanel contentPane;
 	private String playerName = "player1";
 	private String ipAddress = "localhost";
 	private Integer port = 4444;
@@ -30,7 +29,6 @@ public class JoinServerPanel extends JPanel {
 	private JButton joinServerBtn;
 
 	public JoinServerPanel(JPanel contentPane) {
-		this.contentPane = contentPane;
 		this.setLayout(null); //Use no layout manager in this panel.
 		this.setBackground(Color.darkGray);
 
@@ -107,11 +105,12 @@ public class JoinServerPanel extends JPanel {
 				try {
 					//Create a client if we haven't already.
 					if (client == null) {
-						Socket s = new Socket(ipAddress, port);
 
-						updateServerStatusField("Socket Created");
+						Socket s = new Socket(ipAddress, port);
+						updateServerStatusField("Socket created.");
 
 						//FIXME: DISPLAY THAT SERVER IS FULL ON CLIENT SIDE.
+
 
 						client = new Client(playerName, s, JoinServerPanel.this);
 						client.start();

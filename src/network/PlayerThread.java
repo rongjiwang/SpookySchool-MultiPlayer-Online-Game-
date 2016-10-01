@@ -102,7 +102,6 @@ public class PlayerThread extends Thread {
 				this.serverPanel.printToTextPrintArea("Error transmitting bundle: closing socket!");
 				this.socket.close();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -125,7 +124,7 @@ public class PlayerThread extends Thread {
 				} else {
 					this.serverPanel.printToTextPrintArea(
 							"Player name already exists on server, waiting for new name on thread.");
-					this.playerName = "-1"; //FIXME //Set to negative one so that it doesn't send another player's bundle
+					this.playerName = "-1"; //FIXME Set to negative one so that it doesn't send another player's bundle
 					this.transmitBundle(); // Transmit a null bundle. Bundle will be null as long as no player with the name "-1" exists
 				}
 

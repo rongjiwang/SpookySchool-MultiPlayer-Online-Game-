@@ -29,6 +29,8 @@ public class SpookySchool {
 	public SpookySchool() {
 		this.loadAreas(); //Load maps
 		this.setDoors(); //Sets up doors on the areas.
+
+		System.out.println("Game Loaded.");
 	}
 
 	/**
@@ -43,8 +45,6 @@ public class SpookySchool {
 				String fileName = scan.next();
 				this.areas.put(areaName, new Area(areaName, fileName));
 			}
-
-			System.out.println("Areas Loaded!");
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -62,36 +62,43 @@ public class SpookySchool {
 			scan = new Scanner(new File("src/areas/doors.txt"));
 			while (scan.hasNextLine()) {
 
-				Position doorPos = new Position(scan.nextInt(), scan.nextInt());
+				//Scan Door Specific information
+				String doorID = scan.next();
+				String token = scan.next();
+				boolean open = scan.next().equals("open");
+				boolean locked = scan.next().equals("locked");
+				String keyID = scan.next();
+				keyID = keyID.equals("null") ? null : keyID;
 
+				//Scan information about rooms on either side.
 				String sideA = scan.next();
-				Position sideAPos = new Position(scan.nextInt(), scan.nextInt());
+				Position sideADoorPos = new Position(scan.nextInt(), scan.nextInt());
+				Position sideAEntryPos = new Position(scan.nextInt(), scan.nextInt());
 
 				String sideB = scan.next();
-				Position sideBPos = new Position(scan.nextInt(), scan.nextInt());
+				Position sideBDoorPos = new Position(scan.nextInt(), scan.nextInt());
+				Position sideBEntryPos = new Position(scan.nextInt(), scan.nextInt());
 
-				//System.out.println(doorPos + " " + sideA + " " + sideAPos + " " + sideB + " " + sideBPos);
+				//Create the door object.
+				DoorGO door = new DoorGO(doorID, token, open, locked, keyID, sideA, sideADoorPos, sideAEntryPos, sideB,
+						sideBDoorPos, sideBEntryPos);
 
+
+				//Get the area objects of both sides.
 				Area areaA = this.areas.get(sideA);
+				Area areaB = this.areas.get(sideB);
 
-				DoorGO door = (DoorGO) areaA.getTile(doorPos).getOccupant();
-
-				door.setSideA(sideA);
-				door.setSideAPos(sideAPos);
-				door.setSideB(sideB);
-				door.setSideBPos(sideBPos);
+				//Add the door objects onto the appropriate tiles in their area...
+				areaA.getTile(sideADoorPos).setOccupant(door);
+				areaB.getTile(sideBDoorPos).setOccupant(door);
 
 			}
-
-			System.out.println("Doors Setup!");
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
-
-
 	}
+
 
 	/**
 	 * Adds player to the game if the game is not full and player with this name does not already exist.
@@ -100,7 +107,7 @@ public class SpookySchool {
 	 */
 	public synchronized boolean addPlayer(String name) {
 
-		if (this.players.size() < 4 && this.getPlayer(name) == null) {
+		if (this.players.size() < 8 && this.getPlayer(name) == null) {
 			Area spawnRoom = this.findEmptySpawnRoom();
 			Player newPlayer = new Player(name, spawnRoom, this.defaultSpawnPosition);
 			spawnRoom.setOwner(newPlayer); //Set player as the owner of the spawn room.
@@ -127,16 +134,19 @@ public class SpookySchool {
 		return false;
 	}
 
+
 	/**
 	 * Remove player from the game
-	 * @param name
-	 * @return
-	 * FIXME add proper functionality for this.
+	 * @param name of the player to remove from the game
+	 * FIXME Ensure everything relevant to the disconnecting player is removed!
 	 */
 	public synchronized void removePlayer(String name) {
+
+		//Remove player as their spawn area's owner
 		if (this.getPlayer(name).getCurrentArea().getAreaName().contains("Spawn")) {
 			this.getPlayer(name).getCurrentArea().setOwner(null); //Set the players spawn room owner as null
 		}
+
 		this.getPlayer(name).getCurrentArea().getTile(this.getPlayer(name).getCurrentPosition()).removeOccupant(); //Remove player from the tile
 		this.players.remove(this.getPlayer(name)); //Remove the player from this game by removing them from players list.
 		this.playerBundles.remove(name); //Remove this player's bundle.
@@ -148,13 +158,13 @@ public class SpookySchool {
 	 * @return a spawn area that is currently not owned by a player.
 	 */
 	public Area findEmptySpawnRoom() {
-
 		//Finds an unoccupied/un-owned spawn area and returns it.
 		for (Entry<String, Area> entry : this.areas.entrySet()) {
 			if (entry.getKey().contains("Spawn") && (!entry.getValue().hasOwner())) {
 				return entry.getValue();
 			}
 		}
+
 		throw new Error("Error: Could not find an empty spawn room. This should not be possible.");
 	}
 
@@ -195,7 +205,7 @@ public class SpookySchool {
 	}
 
 	/**
-	 * Attempt to move the player NORTH by one tile. Return true if successful, otherwise return false. 
+	 * Attempts to move the player NORTH by one tile.
 	 * This method should be used once the player is facing the correct direction.
 	 * @param player that is to be moved
 	 * @return true if movement to the north is successful, otherwise false.
@@ -226,10 +236,10 @@ public class SpookySchool {
 	}
 
 	/**
-	 * Attempt to move the player SOUTH by one tile. Return true if successful, otherwise return false. 
-	 * This method should be used once the player is facing the correct direction.
+	 * Attempts to move the player SOUTH by one tile.
+	 * This method should be called once the player is facing the correct direction.
 	 * @param player that is to be moved
-	 * @return 
+	 * @return true if successful, otherwise false.
 	 */
 	private boolean movePlayerSouth(Player player) {
 		int posX = player.getCurrentPosition().getPosX();
@@ -257,12 +267,10 @@ public class SpookySchool {
 	}
 
 	/**
-	 * Attempt to move the player EAST by one tile. Return true if successful, otherwise return false. 
+	 * Attempts to move the player EAST by one tile.
 	 * This method should be used once the player is facing the correct direction.
 	 * @param player that is to be moved
 	 * @return true if movement to the east is successful, otherwise false.
-	 * @param player
-	 * @return
 	 */
 	private boolean movePlayerEast(Player player) {
 		int potentialPosX = player.getCurrentPosition().getPosX() + 1;
@@ -289,7 +297,7 @@ public class SpookySchool {
 	}
 
 	/**
-	 * Attempt to move the player WEST by one tile. Return true if successful, otherwise return false. 
+	 * Attempts to move the player WEST by one tile.
 	 * This method should be used once the player is facing the correct direction.
 	 * @param player that is to be moved
 	 * @return true if movement to the west is successful, otherwise false.
@@ -322,57 +330,50 @@ public class SpookySchool {
 
 
 	/**
-	 * Move player to next room if they move through a door.
-	 * @param potentialTile
-	 * @param player
-	 * @return
+	 * Move player to next room if they move on to a door.
+	 * @param potentialTile the tile that the player has tried to move on to.
+	 * @param player the player that has tried to move.
+	 * @return true if player moves to a new room successfully and false otherwise.
 	 */
 	public boolean processDoorMovement(Tile potentialTile, Player player) {
-
-		//FIXME get rid of this after testing...?
-		if (potentialTile == null) {
-			throw new Error("potential tile should not be null if we make it here!");
-		}
 
 		//If the potential tile is a wall tile and has a door game object on it...
 		//FIXME change this code to improve door functionality...
 		if (potentialTile instanceof WallTile && potentialTile.getOccupant() instanceof DoorGO) {
+
+			String playerName = player.getPlayerName();
 
 			DoorGO door = (DoorGO) potentialTile.getOccupant();
 
 			String currentSide = player.getCurrentArea().getAreaName();
 			String otherSide = door.getOtherSide(currentSide);
 
-			System.out.println("Current side: " + currentSide);
-			System.out.println("Other side: " + otherSide);
-
 			Area otherSideArea = this.areas.get(otherSide);
 
-			Tile otherSideTile = otherSideArea.getTile(door.getOtherSidePos(currentSide));
+			Tile otherSideTile = otherSideArea.getTile(door.getOtherSideEntryPos(currentSide)); //The tile on the other side of the door.
 
 			//If the door is open and the position on the other side is not occupied, then move player.
 			if (door.isOpen() && !otherSideTile.isOccupied()) {
 
-				//player.getCurrentArea().getTile(player.getCurrentPosition()).removeOccupant();
+				player.getCurrentArea().getTile(player.getCurrentPosition()).removeOccupant(); //Remove player from this tile.
 
-				player.setCurrentArea(this.areas.get(door.getOtherSide(player.getCurrentArea().getAreaName()))); //FIXME Set the player's new area.
+				player.setCurrentArea(this.areas.get(otherSide)); //Set the player's new area.
 
-				this.getBundle(player.getPlayerName()).setNewArea(player.getCurrentArea());//FIXME Add new area to the bundle. 
+				this.getBundle(playerName).setNewArea(player.getCurrentArea()); //Add new area to the bundle. 
 
-				this.movePlayerToTile(player, otherSideTile);
+				this.movePlayerToTile(player, otherSideTile); //Add player to the new tile.
 
-				this.getBundle(player.getPlayerName())
-						.addGameObjectChange(player.getPlayerName() + " " + "newRoom null");
+				this.getBundle(playerName).addGameObjectChange(playerName + " " + "newRoom null");
+
+				this.getBundle(playerName)
+						.addToLog(playerName + "entered the following room " + otherSide.replace('_', ' '));
 
 				return true;
-
 			}
 		}
 
 		return false;
 	}
-
-
 
 	/**
 	 * Move the player to the given tile. Method moves player to new tile and removes them from the old tile. Also sets player's position to
@@ -385,6 +386,7 @@ public class SpookySchool {
 		newTile.setOccupant(player); //Add player to new tile.
 		player.setCurrentPosition(newTile.getPosition()); //Set the player's new position.
 	}
+
 
 	/**
 	 * Returns the player associated with the given player name.
@@ -399,7 +401,6 @@ public class SpookySchool {
 		}
 		return null; //Player with given name not found.
 	}
-
 
 	/**
 	 * Returns the bundle of the given player name.

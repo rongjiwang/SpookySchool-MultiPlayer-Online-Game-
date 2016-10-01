@@ -13,7 +13,10 @@ import network.Client;
 
 public class GameFrame extends JFrame implements WindowListener {
 
+	private boolean render3D = false;
+
 	private AreaDisplayPanel areaDisplayPanel; //This pane displays all of the other panels
+	private AreaDisplayPanel2D areaDisplayPanel2D; //This pane displays all of the other panels
 
 	private Client client;
 
@@ -32,8 +35,13 @@ public class GameFrame extends JFrame implements WindowListener {
 		Dimension scrnsize = toolkit.getScreenSize();
 		setBounds((scrnsize.width - getWidth()) / 2, (scrnsize.height - getHeight()) / 2, getWidth(), getHeight());
 
-		this.areaDisplayPanel = new AreaDisplayPanel(this.client);
-		this.add(this.areaDisplayPanel);
+		if (this.render3D) {
+			this.areaDisplayPanel = new AreaDisplayPanel(this.client);
+			this.add(this.areaDisplayPanel);
+		} else {
+			this.areaDisplayPanel2D = new AreaDisplayPanel2D(this.client);
+			this.add(this.areaDisplayPanel2D);
+		}
 
 		this.setVisible(true); //Display the window
 	}
@@ -42,7 +50,12 @@ public class GameFrame extends JFrame implements WindowListener {
 	 * Process the bundle by passing its contents to relevant panels.
 	 */
 	public void processBundle(Bundle bundle) {
-		this.areaDisplayPanel.processBundle(bundle);//Temporarily only passing bundle to the renderer.
+
+		if (this.render3D) {
+			this.areaDisplayPanel.processBundle(bundle);//Temporarily only passing bundle to the renderer.
+		} else {
+			this.areaDisplayPanel2D.processBundle(bundle);
+		}
 
 	}
 

@@ -4,13 +4,3 @@ w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
 w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
 w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
 n w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 n
-
-DOOR door1 d0 open unlocked null 5 0
-DOOR door2 d0 closed locked null 10 0
-DOOR door3 d0 open unlocked null 15 0
-DOOR door4 d0 closed locked null 20 0
-DOOR door5 d2 open unlocked null 5 4
-DOOR door6 d2 closed locked null 10 4
-DOOR door7 d2 open unlocked null 15 4
-DOOR door8 d2 closed locked null 20 4
-DOOR door9 d3 open unlocked null 0 2

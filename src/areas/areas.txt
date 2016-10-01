@@ -2,5 +2,9 @@ Spawn_1 spawn1.txt
 Spawn_2 spawn2.txt
 Spawn_3 spawn3.txt
 Spawn_4 spawn4.txt
+Spawn_5 spawn5.txt
+Spawn_6 spawn6.txt
+Spawn_7 spawn7.txt
+Spawn_8 spawn8.txt
 Hallway hallway.txt
-Dormr_room dormRoom.txt
+Dorm_room dormRoom.txt

@@ -12,7 +12,6 @@ public class Player implements GameObject {
 	private Area currentArea;
 	private Position currentPosition;
 
-
 	private String direction = "NORTH";
 	private String token;
 
@@ -51,7 +50,6 @@ public class Player implements GameObject {
 	}
 
 	/** GETTERS AND SETTERS **/
-
 	public String getPlayerName() {
 		return playerName;
 	}
@@ -93,7 +91,7 @@ public class Player implements GameObject {
 
 
 	@Override
-	public Position getPosition(){
+	public Position getPosition() {
 		return currentPosition;
 	}
 

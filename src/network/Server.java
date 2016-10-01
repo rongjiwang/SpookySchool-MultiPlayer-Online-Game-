@@ -11,7 +11,7 @@ import ui.CreateServerPanel;
 public class Server extends Thread {
 
 	private SpookySchool game;
-	private int nclients = 4; //Number of connected that can still connect.
+	private int nclients = 8; //Number of connected that can still connect.
 	private int port;
 	private CreateServerPanel serverPanel;
 
