@@ -13,7 +13,7 @@ import network.Client;
 
 public class GameFrame extends JFrame implements WindowListener {
 
-	private boolean render3D = false;
+	private boolean render3D = true;
 
 	private AreaDisplayPanel areaDisplayPanel; //This pane displays all of the other panels
 	private AreaDisplayPanel2D areaDisplayPanel2D; //This pane displays all of the other panels

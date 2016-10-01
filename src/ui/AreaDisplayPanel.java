@@ -83,7 +83,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 	 */
 	public void processBundle(Bundle bundle) {
 
-		if (bundle.getNewArea() != null) {
+		if (bundle.getPlayerObj() != null) {
+			System.out.println("Once");
 			processAreaChange(bundle.getPlayerObj());
 		}
 
@@ -137,26 +138,27 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 				if (tile != null) {
 					if (tile.isOccupied()) {
 						GameObject go = tile.getOccupant();
-						if (!(go instanceof MarkerGO)) {
-							Boolean isPlayer = false;
-							Boolean mainPlayer = false;
-							if (go instanceof Player) {
-								if (player.getPlayerName().equals(((Player) go).getPlayerName())) {
-									mainPlayer = true;
-								} else {
-									isPlayer = true;
-								}
-							}
-							if (!mainPlayer) {
+						if(go instanceof DoorGO){
+							token = go.getToken();
+							DoorGO doorToken = (DoorGO) go;
+							x = doorToken.getPosition(currentArea.getAreaName()).getPosX();
+							y = doorToken.getPosition(currentArea.getAreaName()).getPosY();
+							rgo = new RenderGameObject("", "", token, x, y, false);
+						}else if (go instanceof Player){
+							Player p = (Player) go;
+							if(!(p.getPlayerName().equals(player.getPlayerName()))){
 								token = go.getToken();
 								x = go.getPosition().getPosX();
 								y = go.getPosition().getPosY();
-								rgo = new RenderGameObject("", "", token, x, y, isPlayer);
-								gameObjects.add(rgo);
+								rgo = new RenderGameObject("", "", token, x, y, true);
 							}
-
-
+						}else if (!(go instanceof MarkerGO)) {
+								token = go.getToken();
+								x = go.getPosition().getPosX();
+								y = go.getPosition().getPosY();
+								rgo = new RenderGameObject("", "", token, x, y, false);
 						}
+						gameObjects.add(rgo);
 					}
 				}
 			}
@@ -186,67 +188,12 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		this.renderOffSetY = windowCenterY - playerY;
 	}
 
+	
+
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
-		//render2D(g);
-
-		render3D(g);
-	}
-
-	/**
-	 * Renders the game in 2D
-	 * 
-	 * @param g - graphics
-	 */
-	public void render2D(Graphics g) {
-
-		Area area = this.currentArea;
-
-
-		for (int x = 0; x < area.width; x++) {
-			for (int y = 0; y < area.height; y++) {
-
-
-				if (area.getArea()[y][x] == null) {
-					g.setColor(Color.black);
-					g.fillRect(this.windowOffSetX + x * 32, this.windowOffSetY + y * 32, 32, 32);
-				} else if (area.getArea()[y][x] instanceof FloorTile) {
-					g.setColor(Color.green);
-					g.fillRect(this.windowOffSetX + x * 32, this.windowOffSetY + y * 32, 32, 32);
-				} else if (area.getArea()[y][x] instanceof WallTile) {
-					g.setColor(Color.orange);
-					g.fillRect(this.windowOffSetX + x * 32, this.windowOffSetY + y * 32, 32, 32);
-				}
-
-				Tile tile = area.getArea()[y][x];
-
-				if (tile != null && (tile.getOccupant() instanceof DoorGO)) {
-					g.setColor(Color.DARK_GRAY);
-					g.fillRect(this.windowOffSetX + x * 32, this.windowOffSetY + y * 32, 32, 32);
-				}
-
-				else if (tile != null
-						&& (tile.getOccupant() instanceof FixedGO || tile.getOccupant() instanceof MarkerGO)) {
-					g.setColor(Color.RED);
-					g.fillRect(this.windowOffSetX + x * 32, this.windowOffSetY + y * 32, 32, 32);
-				} else if (tile != null && (tile.getOccupant() instanceof Player)) {
-					g.setColor(Color.CYAN);
-					g.fillRect(this.windowOffSetX + x * 32, this.windowOffSetY + y * 32, 32, 32);
-				}
-
-			}
-		}
-
-	}
-
-	/**
-	 * Renders the game in 3D
-	 * 
-	 * @param g - graphics
-	 */
-	public void render3D(Graphics g) {
 
 		// add underlay
 		g.setColor(Color.black);

@@ -30,7 +30,7 @@ public class Bundle implements Serializable {
 	public void clearBundle() {
 		this.playerObj = null;
 
-		//this.newArea = null; //COMMENT OUT FOR TESTING 2D!!
+		this.newArea = null; //COMMENT OUT FOR TESTING 2D!!
 
 		this.gameObjectChanges = new ArrayList<String>();
 		this.chatLogChanges = new ArrayList<String>();

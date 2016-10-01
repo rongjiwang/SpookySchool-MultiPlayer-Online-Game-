@@ -359,7 +359,7 @@ public class SpookySchool {
 
 				player.setCurrentArea(this.areas.get(otherSide)); //Set the player's new area.
 
-				this.getBundle(playerName).setNewArea(player.getCurrentArea()); //Add new area to the bundle. 
+				this.getBundle(playerName).setPlayerObj(player);
 
 				this.movePlayerToTile(player, otherSideTile); //Add player to the new tile.
 
