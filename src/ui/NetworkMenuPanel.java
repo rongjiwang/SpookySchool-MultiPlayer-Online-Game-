@@ -2,15 +2,21 @@ package ui;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class NetworkMenuPanel extends JPanel {
 
 	private JPanel contentPane;
+	private BufferedImage uiBackground;
 
 	//Buttons
 	private JButton newServerBtn;
@@ -23,6 +29,15 @@ public class NetworkMenuPanel extends JPanel {
 		this.setBackground(Color.darkGray);
 
 		this.addNetworkMenuButtons(); //Add buttons to this panel
+
+		try {
+			this.uiBackground = ImageIO.read(new File("src/ui/images/networkui_bg.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
 	}
 
 
@@ -69,6 +84,12 @@ public class NetworkMenuPanel extends JPanel {
 		});
 		this.add(this.localGameBtn);
 
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(this.uiBackground, 0, 0, null);
 	}
 
 }

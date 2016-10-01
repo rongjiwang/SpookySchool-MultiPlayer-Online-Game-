@@ -2,11 +2,15 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,12 +31,21 @@ public class JoinServerPanel extends JPanel {
 
 	private JTextField serverStatusField;
 	private JButton joinServerBtn;
+	private BufferedImage uiBackground;
 
 	public JoinServerPanel(JPanel contentPane) {
 		this.setLayout(null); //Use no layout manager in this panel.
 		this.setBackground(Color.darkGray);
 
 		this.setupPanel(); //Sets up this panel. Adds various buttons and input fields.
+
+		try {
+			this.uiBackground = ImageIO.read(new File("src/ui/images/networkui_bg.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
@@ -111,7 +124,6 @@ public class JoinServerPanel extends JPanel {
 
 						//FIXME: DISPLAY THAT SERVER IS FULL ON CLIENT SIDE.
 
-
 						client = new Client(playerName, s, JoinServerPanel.this);
 						client.start();
 					} else {
@@ -148,6 +160,12 @@ public class JoinServerPanel extends JPanel {
 	 */
 	public void updateServerStatusField(String update) {
 		this.serverStatusField.setText(update);
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(this.uiBackground, 0, 0, null);
 	}
 
 }
