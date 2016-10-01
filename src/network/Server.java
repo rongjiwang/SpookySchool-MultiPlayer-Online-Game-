@@ -40,20 +40,22 @@ public class Server extends Thread {
 
 			while (1 == 1) {
 
+				Socket socket = serverSocket.accept(); // Wait for a socket/incoming connection.
+
 				//Listen for new clients if new players can join.
 				if (this.nclients > 0) {
-					this.serverPanel.printToTextPrintArea("Spots Avaliable on server: " + this.nclients);
-					Socket socket = serverSocket.accept(); // Wait for a socket/incoming connection.
 					this.serverPanel.printToTextPrintArea("ACCEPTED CONNECTION FROM: " + socket.getInetAddress());
-
+					this.serverPanel.printToTextPrintArea("Spots Avaliable on server: " + this.nclients);
 					PlayerThread pT = new PlayerThread(socket, game, this.serverPanel); //Create the player thread
 					this.addPlayerThread(pT, connections); //Add the player thread to the array of player threads that exists on this server.
 					pT.start(); //Start the player thread.
+
 				} else {
 					if (this.printFull) {
-						this.serverPanel.printToTextPrintArea("SERVER FULL");
+						this.serverPanel.printToTextPrintArea("SERVER FULL"); //Print full if you haven't already.
 						this.printFull = false;
-					} //Print full if you haven't already.
+					}
+					socket.close();
 				}
 
 				this.removeDisconnectedPlayers(connections); //Remove all players that have been disconnected from this server.

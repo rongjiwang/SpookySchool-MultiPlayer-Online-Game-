@@ -2,9 +2,14 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,10 +23,11 @@ import network.Server;
 public class CreateServerPanel extends JPanel {
 
 	private JPanel contentPane;
-	private Integer port = 4444;
 
+	private Integer port = 4444;
 	private Server server;
 
+	private BufferedImage uiBackground;
 	private JTextField serverStatusField;
 	private JTextArea printTextArea;
 
@@ -31,6 +37,14 @@ public class CreateServerPanel extends JPanel {
 		this.setBackground(Color.darkGray);
 
 		this.setupPanel(); //Sets up this panel. Adds various buttons and input fields.
+
+		try {
+			this.uiBackground = ImageIO.read(new File("src/ui/images/networkui_bg.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
@@ -109,6 +123,12 @@ public class CreateServerPanel extends JPanel {
 		String current = this.printTextArea.getText();
 		this.printTextArea.setText(current + "\n " + update);
 
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(this.uiBackground, 0, 0, null);
 	}
 
 }
