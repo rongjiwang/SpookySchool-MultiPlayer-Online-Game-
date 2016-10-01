@@ -49,7 +49,6 @@ public class Server extends Thread {
 					PlayerThread pT = new PlayerThread(socket, game, this.serverPanel); //Create the player thread
 					this.addPlayerThread(pT, connections); //Add the player thread to the array of player threads that exists on this server.
 					pT.start(); //Start the player thread.
-
 				} else {
 					if (this.printFull) {
 						this.serverPanel.printToTextPrintArea("SERVER FULL");
@@ -85,7 +84,7 @@ public class Server extends Thread {
 	/**
 	 * Add the player thread to the array of player threads running on the server.
 	 * @param pT player thread to add to the connections array.
-	 * @param connections Array of playerthreads running on the server.
+	 * @param connections Array of player threads running on the server.
 	 */
 	private void addPlayerThread(PlayerThread pT, PlayerThread[] connections) {
 
