@@ -97,10 +97,10 @@ public class SpriteMap {
 		spriteMap.put("t3",loadImage("tableSmall3.png"));
 		
 		// player 0
-		spriteMap.put("0p0",loadImage("player0.png"));
-		spriteMap.put("0p1",loadImage("player1.png"));
-		spriteMap.put("0p2",loadImage("player2.png"));
-		spriteMap.put("0p3",loadImage("player3.png"));
+		spriteMap.put("0p0",loadImage("0player0.png"));
+		spriteMap.put("0p1",loadImage("0player1.png"));
+		spriteMap.put("0p2",loadImage("0player2.png"));
+		spriteMap.put("0p3",loadImage("0player3.png"));
 		
 		// player 1
 		spriteMap.put("1p0",loadImage("1player0.png"));
@@ -113,6 +113,12 @@ public class SpriteMap {
 		spriteMap.put("2p1",loadImage("2player1.png"));
 		spriteMap.put("2p2",loadImage("2player2.png"));
 		spriteMap.put("2p3",loadImage("2player3.png"));
+		
+		// player 2
+		spriteMap.put("3p0",loadImage("3player0.png"));
+		spriteMap.put("3p1",loadImage("3player1.png"));
+		spriteMap.put("3p2",loadImage("3player2.png"));
+		spriteMap.put("3p3",loadImage("3player3.png"));
 		
 		
 		
