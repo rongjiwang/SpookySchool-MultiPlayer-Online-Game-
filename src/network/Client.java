@@ -9,6 +9,12 @@ import game.Bundle;
 import ui.GameFrame;
 import ui.JoinServerPanel;
 
+/**
+ * Client handles the communication with the server. It creates a new game window once a connection with the game has been established.
+ * The client sends commands to the server and receives bundles which hold key information about the game.
+ * @author 
+ *
+ */
 public class Client extends Thread {
 
 	private Socket socket;

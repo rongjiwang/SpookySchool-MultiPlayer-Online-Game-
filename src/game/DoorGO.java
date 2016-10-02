@@ -10,7 +10,6 @@ public class DoorGO implements GameObject {
 
 	private static final long serialVersionUID = 2625782518677987399L;
 	private final String id;
-	//private final String token;
 	private boolean open;
 	private boolean locked;
 	private final String keyID;
@@ -41,12 +40,8 @@ public class DoorGO implements GameObject {
 		this.tokenB = tokenB;
 		this.sideBPos = sideBPos;
 		this.sideBEntryPos = sideBEntryPos;
-
-
 	}
 
-
-	//TODO Need to add functionality here.
 
 	/** GETTERS AND SETTERS **/
 

@@ -13,6 +13,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+/**
+ * The game's main menu. This is where you create new servers, join existing servers and load new games.
+ * @author Pritesh R. Patel
+ *
+ */
 public class NetworkMenuPanel extends JPanel {
 
 	private JPanel contentPane;

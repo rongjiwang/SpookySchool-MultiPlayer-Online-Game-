@@ -20,6 +20,11 @@ public class SpookySchool {
 
 	private final Position defaultSpawnPosition = new Position(5, 8); //Default position that a player spawns in, in a spawn room.
 
+	//Should make xml implementation easier?!
+	private String areasFileLoc = "src/areas/areas.txt";
+	private String doorsFileLoc = "src/areas/game_objects/doors.txt";
+	private String movableObjectsFileLoc = "src/areas/game_objects/moveable_objects.txt";
+
 	private Map<String, Area> areas = new HashMap<String, Area>();
 	private List<Player> players = new ArrayList<Player>();
 	private List<String> chatLog = new ArrayList<String>();
@@ -29,9 +34,11 @@ public class SpookySchool {
 	public SpookySchool() {
 		this.loadAreas(); //Load maps
 		this.setDoors(); //Sets up doors on the areas.
+		this.loadRemainingGameObjects(); //Load the remaining game objects.
 
 		System.out.println("Game Loaded.");
 	}
+
 
 	/**
 	 * Load all of the "areas" of the game into the list of areas.
@@ -39,7 +46,7 @@ public class SpookySchool {
 	public void loadAreas() {
 		Scanner scan;
 		try {
-			scan = new Scanner(new File("src/areas/areas.txt"));
+			scan = new Scanner(new File(areasFileLoc));
 			while (scan.hasNextLine()) {
 				String areaName = scan.next();
 				String fileName = scan.next();
@@ -59,7 +66,7 @@ public class SpookySchool {
 		Scanner scan;
 
 		try {
-			scan = new Scanner(new File("src/areas/doors.txt"));
+			scan = new Scanner(new File(doorsFileLoc));
 			while (scan.hasNextLine()) {
 
 				//Scan Door Specific information
@@ -97,6 +104,43 @@ public class SpookySchool {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Load all game objects that are not fixed and not door objects.
+	 */
+	public void loadRemainingGameObjects() {
+
+		Scanner scan;
+
+		//Load movable objects
+
+
+		/*
+		if (objType.equals("CONTAINER")) {
+		
+			boolean open = gameObjScanner.next().equals("open");
+			boolean locked = gameObjScanner.next().equals("locked");
+			String keyID = gameObjScanner.next();
+			keyID = keyID.equals("null") ? null : keyID;
+			int size = gameObjScanner.nextInt();
+			Position pos = (new Position(gameObjScanner.nextInt(), gameObjScanner.nextInt()));
+			GameObject gameObject = new ContainerGO(id, token, open, locked, keyID, size, pos);
+		
+			if (!(this.area[pos.getPosY()][pos.getPosX()] instanceof FloorTile)) {
+				throw new Error("Error: Can only add containers to floor tiles.");
+			}
+		
+			this.area[pos.getPosY()][pos.getPosX()].setOccupant(gameObject);
+		
+			//Set up the rest of the marker tiles that make up this game object.
+			while (gameObjScanner.hasNext()) {
+				Position markerPos = new Position(gameObjScanner.nextInt(), gameObjScanner.nextInt());
+				GameObject markerObj = new MarkerGO(gameObject, markerPos); //Link marker to original game object.
+				this.area[markerPos.getPosY()][markerPos.getPosX()].setOccupant(markerObj);
+			}
+		}
+		*/
 	}
 
 
@@ -150,6 +194,9 @@ public class SpookySchool {
 		this.getPlayer(name).getCurrentArea().getTile(this.getPlayer(name).getCurrentPosition()).removeOccupant(); //Remove player from the tile
 		this.players.remove(this.getPlayer(name)); //Remove the player from this game by removing them from players list.
 		this.playerBundles.remove(name); //Remove this player's bundle.
+
+		//Add player disconnection information to the chatlog
+		this.chatLog.add(name + " has left the game.");
 	}
 
 
@@ -361,15 +408,14 @@ public class SpookySchool {
 
 				this.getBundle(playerName).setPlayerObj(player); //Add the player object to the bundle since they've moved to a new room.
 
-				//this.getBundle(playerName).setNewArea(this.getPlayer(playerName).getCurrentArea()); //Uncomment for testing 2D rendering.
+				//this.getBundle(playerName).setNewArea(this.getPlayer(playerName).getCurrentArea()); //FIXME Uncomment for testing 2D rendering.
 
 				this.movePlayerToTile(player, otherSideTile); //Add player to the new tile.
 
 				this.getBundle(playerName).addGameObjectChange(playerName + " " + "newRoom null");
 
 				//Add movement to new room to the log.
-				this.getBundle(playerName)
-						.addToLog(playerName + "entered the following room " + otherSide.replace('_', ' '));
+				this.chatLog.add(playerName + "entered the following room " + otherSide.replace('_', ' '));
 
 				return true;
 			}

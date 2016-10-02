@@ -82,7 +82,7 @@ public class GameFrame extends JFrame implements WindowListener {
 	 * Force close the game window due to disconnection.
 	 */
 	public void disconnected() {
-		JOptionPane.showMessageDialog(null, "GAME DISCONNECTED FROM SERVER!");
+		JOptionPane.showMessageDialog(this, "GAME DISCONNECTED FROM SERVER!");
 		System.exit(0);
 
 	}

@@ -21,6 +21,11 @@ import javax.swing.SwingUtilities;
 
 import network.Client;
 
+/**
+ * 
+ * @author Pritesh R. Patel
+ *
+ */
 public class JoinServerPanel extends JPanel {
 
 	private String playerName = "player1";
