@@ -20,8 +20,8 @@ import network.Client;
 
 public class AreaDisplayPanel2D extends JPanel implements KeyListener {
 
-	private final int offSetX = 150;
-	private final int offSetY = 50;
+	private final int offSetX = 0;
+	private final int offSetY = 0;
 
 	Area currentArea = null;
 
