@@ -146,8 +146,10 @@ public class JoinServerPanel extends JPanel {
 	 * Used by the client to ask user for a new player name as the one given is already being used on the server.
 	 */
 	public void askForNewName() {
+
 		JOptionPane.showMessageDialog(null,
-				"Another player with this name already exists on the server. Please enter a new name");
+				"Another player with this name already exists on the server. Please enter a new name",
+				"Name already taken", JOptionPane.PLAIN_MESSAGE);
 	}
 
 	/**
