@@ -139,8 +139,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 					if (tile.isOccupied()) {
 						GameObject go = tile.getOccupant();
 						if(go instanceof DoorGO){
-							token = go.getToken();
 							DoorGO doorToken = (DoorGO) go;
+							token = doorToken.getToken(currentArea.getAreaName());
 							x = doorToken.getPosition(currentArea.getAreaName()).getPosX();
 							y = doorToken.getPosition(currentArea.getAreaName()).getPosY();
 							rgo = new RenderGameObject("", "", token, x, y, false);

@@ -6,4 +6,4 @@ sh5 open unlocked null Spawn_5 d0 6 1 6 2 Hallway d2 5 4 5 3
 sh6 open unlocked null Spawn_6 d0 6 1 6 2 Hallway d2 10 4 10 3
 sh7 open unlocked null Spawn_7 d0 6 1 6 2 Hallway d2 15 4 15 3
 sh8 open unlocked null Spawn_8 d0 6 1 6 2 Hallway d2 20 4 20 3
-hd1 open unlocked null Hallway d3 0 2 1 2 Dorm_room d0 16 8 15 8
+hd1 open unlocked null Hallway d3 0 2 1 2 Dorm_room d1 16 8 15 8
