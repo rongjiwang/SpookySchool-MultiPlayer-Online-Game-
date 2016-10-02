@@ -42,7 +42,6 @@ public class JoinServerPanel extends JPanel {
 		try {
 			this.uiBackground = ImageIO.read(new File("src/ui/images/networkui_bg.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

@@ -64,7 +64,6 @@ public class SpookySchool {
 
 				//Scan Door Specific information
 				String doorID = scan.next();
-				String token = scan.next();
 				boolean open = scan.next().equals("open");
 				boolean locked = scan.next().equals("locked");
 				String keyID = scan.next();
@@ -72,17 +71,18 @@ public class SpookySchool {
 
 				//Scan information about rooms on either side.
 				String sideA = scan.next();
+				String tokenA = scan.next();
 				Position sideADoorPos = new Position(scan.nextInt(), scan.nextInt());
 				Position sideAEntryPos = new Position(scan.nextInt(), scan.nextInt());
 
 				String sideB = scan.next();
+				String tokenB = scan.next();
 				Position sideBDoorPos = new Position(scan.nextInt(), scan.nextInt());
 				Position sideBEntryPos = new Position(scan.nextInt(), scan.nextInt());
 
 				//Create the door object.
-				DoorGO door = new DoorGO(doorID, token, open, locked, keyID, sideA, sideADoorPos, sideAEntryPos, sideB,
-						sideBDoorPos, sideBEntryPos);
-
+				DoorGO door = new DoorGO(doorID, open, locked, keyID, sideA, tokenA, sideADoorPos, sideAEntryPos, sideB,
+						tokenB, sideBDoorPos, sideBEntryPos);
 
 				//Get the area objects of both sides.
 				Area areaA = this.areas.get(sideA);
@@ -359,12 +359,15 @@ public class SpookySchool {
 
 				player.setCurrentArea(this.areas.get(otherSide)); //Set the player's new area.
 
-				this.getBundle(playerName).setPlayerObj(player);
+				this.getBundle(playerName).setPlayerObj(player); //Add the player object to the bundle since they've moved to a new room.
+
+				//this.getBundle(playerName).setNewArea(this.getPlayer(playerName).getCurrentArea()); //Uncomment for testing 2D rendering.
 
 				this.movePlayerToTile(player, otherSideTile); //Add player to the new tile.
 
 				this.getBundle(playerName).addGameObjectChange(playerName + " " + "newRoom null");
 
+				//Add movement to new room to the log.
 				this.getBundle(playerName)
 						.addToLog(playerName + "entered the following room " + otherSide.replace('_', ' '));
 

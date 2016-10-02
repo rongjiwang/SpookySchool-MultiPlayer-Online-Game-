@@ -72,7 +72,24 @@ public class Area implements Serializable {
 				String token = gameObjScanner.next();
 
 				//FIXME need to implement game objects properly!!
-				if (objType.equals("CONTAINER")) {
+				if (objType.equals("FIXED")) {
+					Position pos = new Position(gameObjScanner.nextInt(), gameObjScanner.nextInt());
+					GameObject gameObject = new FixedGO(id, token, pos);
+
+					if (!(this.area[pos.getPosY()][pos.getPosX()] instanceof FloorTile)) {
+						throw new Error("Error: Can only add fixed items to floor tiles.");
+					}
+
+					this.area[pos.getPosY()][pos.getPosX()].setOccupant(gameObject);
+
+					//Set up the rest of the marker tiles that make up this game object.
+					while (gameObjScanner.hasNext()) {
+						Position markerPos = new Position(gameObjScanner.nextInt(), gameObjScanner.nextInt());
+						GameObject markerObj = new MarkerGO(gameObject, markerPos); //Link marker to original game object.
+						this.area[markerPos.getPosY()][markerPos.getPosX()].setOccupant(markerObj);
+					}
+				} else if (objType.equals("CONTAINER")) {
+
 					boolean open = gameObjScanner.next().equals("open");
 					boolean locked = gameObjScanner.next().equals("locked");
 					String keyID = gameObjScanner.next();
@@ -93,24 +110,8 @@ public class Area implements Serializable {
 						GameObject markerObj = new MarkerGO(gameObject, markerPos); //Link marker to original game object.
 						this.area[markerPos.getPosY()][markerPos.getPosX()].setOccupant(markerObj);
 					}
-
-				} else if (objType.equals("FIXED")) {
-					Position pos = new Position(gameObjScanner.nextInt(), gameObjScanner.nextInt());
-					GameObject gameObject = new FixedGO(id, token, pos);
-
-					if (!(this.area[pos.getPosY()][pos.getPosX()] instanceof FloorTile)) {
-						throw new Error("Error: Can only add fixed items to floor tiles.");
-					}
-
-					this.area[pos.getPosY()][pos.getPosX()].setOccupant(gameObject);
-
-					//Set up the rest of the marker tiles that make up this game object.
-					while (gameObjScanner.hasNext()) {
-						Position markerPos = new Position(gameObjScanner.nextInt(), gameObjScanner.nextInt());
-						GameObject markerObj = new MarkerGO(gameObject, markerPos); //Link marker to original game object.
-						this.area[markerPos.getPosY()][markerPos.getPosX()].setOccupant(markerObj);
-					}
 				}
+
 			}
 
 		} catch (
