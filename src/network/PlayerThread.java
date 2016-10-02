@@ -10,6 +10,11 @@ import game.Bundle;
 import game.SpookySchool;
 import ui.CreateServerPanel;
 
+/**
+ * 
+ * @author
+ *
+ */
 public class PlayerThread extends Thread {
 
 	private Socket socket;

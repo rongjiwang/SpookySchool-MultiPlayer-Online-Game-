@@ -27,8 +27,8 @@ import network.Client;
 public class AreaDisplayPanel extends JPanel implements KeyListener {
 
 	// Window size and offset
-	private final int windowOffSetX = 150;
-	private final int windowOffSetY = 50;
+	private final int windowOffSetX = 0;
+	private final int windowOffSetY = 0;
 	private final int windowWidth = 352;
 	private final int windowHeight = 352;
 

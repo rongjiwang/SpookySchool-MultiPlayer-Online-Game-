@@ -20,6 +20,11 @@ import javax.swing.SwingConstants;
 
 import network.Server;
 
+/**
+ * 
+ * @author Pritesh R. Patel
+ *
+ */
 public class CreateServerPanel extends JPanel {
 
 	private JPanel contentPane;
@@ -99,6 +104,7 @@ public class CreateServerPanel extends JPanel {
 				server = new Server(port, CreateServerPanel.this);
 				server.start(); //Start the server.
 
+				portField.setEditable(false); //Disable the ability to hange the port field.
 				createServerBtn.setEnabled(false); //Disable create server button
 			}
 		});
