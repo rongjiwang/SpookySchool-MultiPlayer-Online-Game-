@@ -104,6 +104,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 	 * Process the gameObjectChanges from the most recent bundle
 	 */
 	public void processGameObjectChange(String objectID, String changeType, String change) {
+		System.out.println(objectID + " " + changeType + " " + change);
 
 
 		for (RenderGameObject rgo : gameObjects) {

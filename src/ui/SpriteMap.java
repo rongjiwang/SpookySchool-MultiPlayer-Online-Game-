@@ -96,11 +96,31 @@ public class SpriteMap {
 		spriteMap.put("t2",loadImage("tableSmall2.png"));
 		spriteMap.put("t3",loadImage("tableSmall3.png"));
 		
-		// main player
-		spriteMap.put("p0",loadImage("player0.png"));
-		spriteMap.put("p1",loadImage("player1.png"));
-		spriteMap.put("p2",loadImage("player2.png"));
-		spriteMap.put("p3",loadImage("player3.png"));
+		// player 0
+		spriteMap.put("0p0",loadImage("player0.png"));
+		spriteMap.put("0p1",loadImage("player1.png"));
+		spriteMap.put("0p2",loadImage("player2.png"));
+		spriteMap.put("0p3",loadImage("player3.png"));
+		
+		// player 1
+		spriteMap.put("1p0",loadImage("1player0.png"));
+		spriteMap.put("1p1",loadImage("1player1.png"));
+		spriteMap.put("1p2",loadImage("1player2.png"));
+		spriteMap.put("1p3",loadImage("1player3.png"));
+		
+		// player 2
+		spriteMap.put("2p0",loadImage("2player0.png"));
+		spriteMap.put("2p1",loadImage("2player1.png"));
+		spriteMap.put("2p2",loadImage("2player2.png"));
+		spriteMap.put("2p3",loadImage("2player3.png"));
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		//Animated Images for the player
 		/*spriteMap.put("p00",loadImage("player00.png"));
