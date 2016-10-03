@@ -7,13 +7,13 @@ public class MovableGO implements GameObject {
 	private final String id;
 	private final String token;
 
-	private final Area area; //Movable objects cannot be taken out of their room/area.
+	private final String areaName; //Movable objects cannot be taken out of their room/area.
 	private Position position;
 
-	public MovableGO(String id, String token, Area area, Position position) {
+	public MovableGO(String id, String token, String area, Position position) {
 		this.id = id;
 		this.token = token;
-		this.area = area;
+		this.areaName = area;
 		this.position = position;
 	}
 
@@ -35,8 +35,13 @@ public class MovableGO implements GameObject {
 		return this.position;
 	}
 
-	public Area getArea() {
-		return area;
+	@Override
+	public void setCurrentPosition(Position currentPosition) {
+		this.position = currentPosition;
+	}
+
+	public String getAreaName() {
+		return areaName;
 	}
 
 }

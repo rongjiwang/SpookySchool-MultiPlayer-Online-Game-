@@ -23,7 +23,7 @@ public class SpookySchool {
 	//Should make xml implementation easier?!
 	private String areasFileLoc = "src/areas/areas.txt";
 	private String doorsFileLoc = "src/areas/game_objects/doors.txt";
-	private String movableObjectsFileLoc = "src/areas/game_objects/moveable_objects.txt";
+	private String movableObjectsFileLoc = "src/areas/game_objects/movable_objects.txt";
 
 	private Map<String, Area> areas = new HashMap<String, Area>();
 	private List<Player> players = new ArrayList<Player>();
@@ -113,7 +113,29 @@ public class SpookySchool {
 
 		Scanner scan;
 
-		//Load movable objects
+		//Scan and load Movable objects
+		try {
+			scan = new Scanner(new File(movableObjectsFileLoc));
+			while (scan.hasNextLine()) {
+
+				//Scan movable object information.
+				String id = scan.next();
+				String token = scan.next();
+				String areaName = scan.next();
+				Position objPosition = new Position(scan.nextInt(), scan.nextInt());
+
+				//Create the movable object using the scanned information.
+				MovableGO movableGO = new MovableGO(id, token, areaName, objPosition);
+
+				Area area = this.areas.get(areaName);
+				Tile tile = area.getTile(objPosition); //Get the tile of 
+
+				tile.setOccupant(movableGO);
+			}
+
+		} catch (FileNotFoundException e) {
+			throw new Error(e.getMessage());
+		}
 
 
 		/*
@@ -173,7 +195,7 @@ public class SpookySchool {
 			this.addLogToAllBundles(name + " appear " + newPlayer.getCurrentArea().getAreaName() + " "
 					+ newPlayer.getPosition().getPosX() + " " + newPlayer.getPosition().getPosY());
 
-			//bundle.setNewArea(spawnRoom); //FIXME UNCOMMENT for testing 2d rendering
+			bundle.setNewArea(spawnRoom); //FIXME **UNCOMMENT FOR TESTING 2D RENDERING**
 			bundle.setChatLog(this.chatLog);
 
 			this.playerBundles.put(name, bundle);
@@ -282,13 +304,45 @@ public class SpookySchool {
 		//If the potential tile is a floor tile and is not currently occupied, then move the player.
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
-			this.movePlayerToTile(player, potentialTile); //Move the player to the new tile.
+			this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
 
 			//this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move NORTH"); //FIXME get rid once working
 
 			this.addLogToAllBundles(player.getPlayerName() + " " + "move NORTH");
 
 			return true; //Player movement complete.
+		}
+
+		//If the potential tile has a movable object, then attempt to push it.
+		if (potentialTile instanceof FloorTile && potentialTile.getOccupant() instanceof MovableGO) {
+
+			MovableGO movableGO = (MovableGO) potentialTile.getOccupant();
+			int movableX = movableGO.getPosition().getPosX();
+			int potentialMovableY = movableGO.getPosition().getPosY() - 1;
+
+			Tile potentialMovableTile = null;
+
+			//Check if potential new position of the movable object is within the bounds of the array.
+			if (potentialMovableY >= 0) {
+				potentialMovableTile = this.areas.get(movableGO.getAreaName())
+						.getTile(new Position(movableX, potentialMovableY));
+
+			} else {
+				return false; //Not a valid move.
+			}
+
+			//If movable go can be pushed, then move the player and the movable object.
+			if (potentialMovableTile instanceof FloorTile && (!((FloorTile) potentialMovableTile).isOccupied())) {
+				((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
+				this.areas.get(movableGO.getAreaName()).getTile(movableGO.getPosition()).removeOccupant(); //Remove movable tile from the old tile.
+				this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
+				this.addLogToAllBundles(player.getPlayerName() + " " + "move NORTH");
+				this.moveGOToTile(movableGO, potentialMovableTile); //Move the player to the new tile.
+				this.addLogToAllBundles(movableGO.getId() + " " + "move NORTH");
+				return true;
+			}
+
+			return false; //Movable tile cannot be pushed.
 		}
 
 		return processDoorMovement(potentialTile, player); //Return true if there is a door movement, else false.
@@ -317,13 +371,45 @@ public class SpookySchool {
 		//If the potential tile is a floor tile and is not currently occupied, then move the player.
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
-			this.movePlayerToTile(player, potentialTile); //Move the player to the new tile.
+			this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
 
 			//this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move SOUTH"); //FIXME get rid once working
 
 			this.addLogToAllBundles(player.getPlayerName() + " " + "move SOUTH");
 
 			return true; //Player movement complete.
+		}
+
+		//If the potential tile has a movable object, then attempt to push it.
+		if (potentialTile instanceof FloorTile && potentialTile.getOccupant() instanceof MovableGO) {
+
+			MovableGO movableGO = (MovableGO) potentialTile.getOccupant();
+			int movableX = movableGO.getPosition().getPosX();
+			int potentialMovableY = movableGO.getPosition().getPosY() + 1;
+
+			Tile potentialMovableTile = null;
+
+			//Check if potential new position of the movable object is within the bounds of the array.
+			if (potentialMovableY < player.getCurrentArea().height) {
+				potentialMovableTile = this.areas.get(movableGO.getAreaName())
+						.getTile(new Position(movableX, potentialMovableY));
+
+			} else {
+				return false; //Not a valid move.
+			}
+
+			//If movable go can be pushed, then move the player and the movable object.
+			if (potentialMovableTile instanceof FloorTile && (!((FloorTile) potentialMovableTile).isOccupied())) {
+				((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
+				this.areas.get(movableGO.getAreaName()).getTile(movableGO.getPosition()).removeOccupant(); //Remove movable tile from the old tile.
+				this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
+				this.addLogToAllBundles(player.getPlayerName() + " " + "move SOUTH");
+				this.moveGOToTile(movableGO, potentialMovableTile); //Move the player to the new tile.
+				this.addLogToAllBundles(movableGO.getId() + " " + "move SOUTH");
+				return true;
+			}
+
+			return false; //Movable tile cannot be pushed.
 		}
 
 		return processDoorMovement(potentialTile, player); //Return true if there is a door movement, else false.
@@ -352,13 +438,45 @@ public class SpookySchool {
 		//If the potential tile is a floor tile and is not currently occupied, then move the player.
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
-			this.movePlayerToTile(player, potentialTile); //Move the player to the new tile.
+			this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
 
 			//this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move EAST"); //FIXME get rid once working
 
 			this.addLogToAllBundles(player.getPlayerName() + " " + "move EAST");
 
 			return true; //Player movement complete.
+		}
+
+		//If the potential tile has a movable object, then attempt to push it.
+		if (potentialTile instanceof FloorTile && potentialTile.getOccupant() instanceof MovableGO) {
+
+			MovableGO movableGO = (MovableGO) potentialTile.getOccupant();
+			int potentialMovableX = movableGO.getPosition().getPosX() + 1;
+			int movableY = movableGO.getPosition().getPosY();
+
+			Tile potentialMovableTile = null;
+
+			//Check if potential new position of the movable object is within the bounds of the array.
+			if (potentialMovableX < player.getCurrentArea().width) {
+				potentialMovableTile = this.areas.get(movableGO.getAreaName())
+						.getTile(new Position(potentialMovableX, movableY));
+
+			} else {
+				return false; //Not a valid move.
+			}
+
+			//If movable go can be pushed, then move the player and the movable object.
+			if (potentialMovableTile instanceof FloorTile && (!((FloorTile) potentialMovableTile).isOccupied())) {
+				((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
+				this.areas.get(movableGO.getAreaName()).getTile(movableGO.getPosition()).removeOccupant(); //Remove movable tile from the old tile.
+				this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
+				this.addLogToAllBundles(player.getPlayerName() + " " + "move EAST");
+				this.moveGOToTile(movableGO, potentialMovableTile); //Move the player to the new tile.
+				this.addLogToAllBundles(movableGO.getId() + " " + "move EAST");
+				return true;
+			}
+
+			return false; //Movable tile cannot be pushed.
 		}
 
 		return processDoorMovement(potentialTile, player); //Return true if there is a door movement, else false.
@@ -387,14 +505,45 @@ public class SpookySchool {
 		//If the potential tile is a floor tile and is not currently occupied, then move the player.
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
-			this.movePlayerToTile(player, potentialTile); //Move the player to the new tile.
-
+			this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
 
 			//this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move WEST"); //FIXME get rid once working
 
 			this.addLogToAllBundles(player.getPlayerName() + " " + "move WEST");
 
 			return true; //Player movement complete.
+		}
+
+		//If the potential tile has a movable object, then attempt to push it.
+		if (potentialTile instanceof FloorTile && potentialTile.getOccupant() instanceof MovableGO) {
+
+			MovableGO movableGO = (MovableGO) potentialTile.getOccupant();
+			int potentialMovableX = movableGO.getPosition().getPosX() - 1;
+			int movableY = movableGO.getPosition().getPosY();
+
+			Tile potentialMovableTile = null;
+
+			//Check if potential new position of the movable object is within the bounds of the array.
+			if (potentialMovableX >= 0) {
+				potentialMovableTile = this.areas.get(movableGO.getAreaName())
+						.getTile(new Position(potentialMovableX, movableY));
+
+			} else {
+				return false; //Not a valid move.
+			}
+
+			//If movable go can be pushed, then move the player and the movable object.
+			if (potentialMovableTile instanceof FloorTile && (!((FloorTile) potentialMovableTile).isOccupied())) {
+				((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
+				this.areas.get(movableGO.getAreaName()).getTile(movableGO.getPosition()).removeOccupant(); //Remove movable tile from the old tile.
+				this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
+				this.addLogToAllBundles(player.getPlayerName() + " " + "move WEST");
+				this.moveGOToTile(movableGO, potentialMovableTile); //Move the player to the new tile.
+				this.addLogToAllBundles(movableGO.getId() + " " + "move WEST");
+				return true;
+			}
+
+			return false; //Movable tile cannot be pushed.
 		}
 
 		return processDoorMovement(potentialTile, player); //Return true if there is a door movement, else false.
@@ -435,9 +584,9 @@ public class SpookySchool {
 
 				this.getBundle(playerName).setPlayerObj(player); //Add the player object to the bundle since they've moved to a new room.
 
-				//this.getBundle(playerName).setNewArea(this.getPlayer(playerName).getCurrentArea()); //FIXME Uncomment for testing 2D rendering.
+				this.getBundle(playerName).setNewArea(this.getPlayer(playerName).getCurrentArea()); //FIXME **UNCOMMENT FOR TESTING 2D RENDERING**
 
-				this.movePlayerToTile(player, otherSideTile); //Add player to the new tile.
+				this.moveGOToTile(player, otherSideTile); //Add player to the new tile.
 
 				this.addLogToAllBundles(playerName + " appear " + player.getCurrentArea().getAreaName() + " "
 						+ player.getCurrentPosition().getPosX() + " " + player.getCurrentPosition().getPosY());
@@ -455,15 +604,15 @@ public class SpookySchool {
 	}
 
 	/**
-	 * Move the player to the given tile. Method moves player to new tile and removes them from the old tile. Also sets player's position to
-	 * the new position.
-	 * @param player to be moved.
-	 * @param tile that the player needs to be moved onto.
+	 * Move the game object to the given tile. Method moves game object to new tile and removes them from the old tile.
+	 * Also sets game objects position to the new position.
+	 * @param gameObj the game object that is to be moved.
+	 * @param tile that the game object needs to be moved onto.
 	 */
-	public void movePlayerToTile(Player player, Tile tile) {
+	public void moveGOToTile(GameObject gameObj, Tile tile) {
 		FloorTile newTile = (FloorTile) tile;
-		newTile.setOccupant(player); //Add player to new tile.
-		player.setCurrentPosition(newTile.getPosition()); //Set the player's new position.
+		newTile.setOccupant(gameObj); //Add player to new tile.
+		gameObj.setCurrentPosition(newTile.getPosition()); //Set the player's new position.
 	}
 
 

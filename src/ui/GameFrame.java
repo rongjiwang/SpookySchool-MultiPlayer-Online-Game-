@@ -1,22 +1,6 @@
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.MenuBar;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -24,6 +8,7 @@ import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import game.Bundle;
 import network.Client;
@@ -34,8 +19,8 @@ public class GameFrame extends JFrame implements WindowListener {
 	private JPanel rightPanel = null;
 	private InventoryPanel invPanel;
 	private ChatPanel chatPanel;
-	
-	private boolean render3D = true;
+
+	private boolean render3D = true; //FIXME **CHANGE TO FALSE TESTING 2D RENDERING**
 
 	private AreaDisplayPanel areaDisplayPanel; //This pane displays all of the other panels
 	private AreaDisplayPanel2D areaDisplayPanel2D; //This pane displays all of the other panels
@@ -49,22 +34,22 @@ public class GameFrame extends JFrame implements WindowListener {
 
 		//creates inventory panel
 		invPanel = new InventoryPanel();
-				
+
 		//creates chat panel
 		chatPanel = new ChatPanel(this);
-		
+
 		//sets up layout
 		this.setLayout(new BorderLayout());
 		this.setResizable(false); //Do not allow window resizing.
-		
+
 		if (this.render3D) {
 			this.areaDisplayPanel = new AreaDisplayPanel(this.client);
 		} else {
 			this.areaDisplayPanel2D = new AreaDisplayPanel2D(this.client);
 		}
-		
+
 		setPanels();
-		
+
 		this.addWindowListener(this); //This frame also implements window listener so "add it"
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //Don't close window when x button is pressed. Allows us to get user confirmation.
 
@@ -73,25 +58,25 @@ public class GameFrame extends JFrame implements WindowListener {
 		Dimension scrnsize = toolkit.getScreenSize();
 		setBounds((scrnsize.width - getWidth()) / 2, (scrnsize.height - getHeight()) / 2, getWidth(), getHeight());
 
-		
+
 		this.setVisible(true); //Display the window
 	}
-	
+
 	//refocuses on game window (after sending a message)
-	public void refocus(){
-		if(this.render3D){
+	public void refocus() {
+		if (this.render3D) {
 			areaDisplayPanel.requestFocusInWindow();
 		} else {
 			areaDisplayPanel2D.requestFocusInWindow();
 		}
 	}
-	
+
 	/**
 	 * This method is called to set the default main and side panels upon opening the game.
 	 */
-	public void setPanels(){
+	public void setPanels() {
 		//leftPanel
-		if(this.render3D){
+		if (this.render3D) {
 			leftPanel = new MainPanel(areaDisplayPanel, invPanel);
 		} else {
 			leftPanel = new MainPanel(areaDisplayPanel2D, invPanel);

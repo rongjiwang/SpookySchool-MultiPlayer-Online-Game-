@@ -1,6 +1,6 @@
 package game;
 
-public class ContainerGO implements GameObject {
+public class FixedContainerGO implements GameObject {
 
 	private static final long serialVersionUID = 118153527696427133L;
 	private final String id;
@@ -11,7 +11,7 @@ public class ContainerGO implements GameObject {
 	private final int size; // For container size.
 	private final Position position;
 
-	public ContainerGO(String id, String token, boolean open, boolean locked, String keyID, int size,
+	public FixedContainerGO(String id, String token, boolean open, boolean locked, String keyID, int size,
 			Position position) {
 		this.id = id;
 		this.token = token;
@@ -27,16 +27,24 @@ public class ContainerGO implements GameObject {
 
 	/** GETTERS AND SETTERS **/
 
+	@Override
 	public String getToken() {
 		return this.token;
 	}
 
-	
+
+	@Override
 	public String getId() {
 		return id;
 	}
 
+	@Override
 	public Position getPosition() {
 		return position;
+	}
+
+	@Override
+	public void setCurrentPosition(Position position) {
+		throw new Error("Cannot change positions of fixed container game objects!");
 	}
 }

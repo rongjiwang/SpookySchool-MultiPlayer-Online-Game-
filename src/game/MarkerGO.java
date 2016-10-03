@@ -14,7 +14,7 @@ public class MarkerGO implements GameObject {
 
 	public MarkerGO(GameObject baseGO, Position pos) {
 		//Throw error if the base object that this tile is a marker for is not a fixed or container game object.
-		if (!(baseGO instanceof FixedGO || baseGO instanceof ContainerGO)) {
+		if (!(baseGO instanceof FixedGO || baseGO instanceof FixedContainerGO)) {
 			throw new Error("Error: Invalid marker base object.");
 		}
 		this.baseGO = baseGO;
@@ -29,16 +29,24 @@ public class MarkerGO implements GameObject {
 		return this.baseGO;
 	}
 
+	@Override
 	public String getToken() {
 		return null;
 	}
 
+	@Override
 	public String getId() {
 		return null;
 	}
 
+	@Override
 	public Position getPosition() {
 		return null;
+	}
+
+	@Override
+	public void setCurrentPosition(Position position) {
+		throw new Error("Cannot change positions of marker game objects!");
 	}
 
 }

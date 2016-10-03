@@ -116,4 +116,9 @@ public class DoorGO implements GameObject {
 		throw new Error("This method is not avaliavle for door objects! Use getPosition(String areaName) instead!");
 	}
 
+	@Override
+	public void setCurrentPosition(Position position) {
+		throw new Error("Cannot change positions of door game objects!");
+	}
+
 }

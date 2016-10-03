@@ -32,7 +32,7 @@ public class Bundle implements Serializable {
 		this.playerObj = null;
 		this.message = null;
 		this.gameObjectChanges = new ArrayList<String>();
-		this.newArea = null; //FIXME COMMENT OUT FOR TESTING 2D!!
+		//this.newArea = null; //FIXME **COMMENT OUT FOR TESTING 2D!!**
 
 		//this.chatLogChanges = new ArrayList<String>(); //FIXME keep commented out for now. Want to send entire chat log over network (for now!)
 	}

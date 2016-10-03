@@ -13,6 +13,7 @@ import game.DoorGO;
 import game.FixedGO;
 import game.FloorTile;
 import game.MarkerGO;
+import game.MovableGO;
 import game.Player;
 import game.Tile;
 import game.WallTile;
@@ -22,6 +23,10 @@ public class AreaDisplayPanel2D extends JPanel implements KeyListener {
 
 	private final int offSetX = 0;
 	private final int offSetY = 0;
+
+	private int squareSize = 16;
+	private int rowShift = 0;
+	private int colShift = 0;
 
 	Area currentArea = null;
 
@@ -59,35 +64,43 @@ public class AreaDisplayPanel2D extends JPanel implements KeyListener {
 		Area area = this.currentArea;
 
 
-		for (int row = 0; row < area.height; row++) {
-			for (int col = 0; col < area.width; col++) {
+		for (int row = rowShift; row < area.height; row++) {
+			for (int col = colShift; col < area.width; col++) {
 
 
 				if (area.getArea()[row][col] == null) {
 					g.setColor(Color.black);
-					g.fillRect(this.offSetX + col * 32, this.offSetY + row * 32, 32, 32);
+					g.fillRect(this.offSetX + col * squareSize, this.offSetY + row * squareSize, squareSize,
+							squareSize);
 				} else if (area.getArea()[row][col] instanceof FloorTile) {
 					g.setColor(Color.green);
-					g.fillRect(this.offSetX + col * 32, this.offSetY + row * 32, 32, 32);
+					g.fillRect(this.offSetX + col * squareSize, this.offSetY + row * squareSize, squareSize,
+							squareSize);
 				} else if (area.getArea()[row][col] instanceof WallTile) {
 					g.setColor(Color.orange);
-					g.fillRect(this.offSetX + col * 32, this.offSetY + row * 32, 32, 32);
+					g.fillRect(this.offSetX + col * squareSize, this.offSetY + row * squareSize, squareSize,
+							squareSize);
 				}
 
 				Tile tile = area.getArea()[row][col];
 
 				if (tile != null && (tile.getOccupant() instanceof DoorGO)) {
 					g.setColor(Color.DARK_GRAY);
-					g.fillRect(this.offSetX + col * 32, this.offSetY + row * 32, 32, 32);
-				}
-
-				else if (tile != null
+					g.fillRect(this.offSetX + col * squareSize, this.offSetY + row * squareSize, squareSize,
+							squareSize);
+				} else if (tile != null
 						&& (tile.getOccupant() instanceof FixedGO || tile.getOccupant() instanceof MarkerGO)) {
 					g.setColor(Color.RED);
-					g.fillRect(this.offSetX + col * 32, this.offSetY + row * 32, 32, 32);
+					g.fillRect(this.offSetX + col * squareSize, this.offSetY + row * squareSize, squareSize,
+							squareSize);
+				} else if (tile != null && (tile.getOccupant() instanceof MovableGO)) {
+					g.setColor(Color.BLUE);
+					g.fillRect(this.offSetX + col * squareSize, this.offSetY + row * squareSize, squareSize,
+							squareSize);
 				} else if (tile != null && (tile.getOccupant() instanceof Player)) {
 					g.setColor(Color.CYAN);
-					g.fillRect(this.offSetX + col * 32, this.offSetY + row * 32, 32, 32);
+					g.fillRect(this.offSetX + col * squareSize, this.offSetY + row * squareSize, squareSize,
+							squareSize);
 				}
 
 			}

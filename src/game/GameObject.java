@@ -10,6 +10,11 @@ import java.io.Serializable;
 public interface GameObject extends Serializable {
 
 	public String getToken();
+
 	public String getId();
+
 	public Position getPosition();
+
+	public void setCurrentPosition(Position position);
+
 }

@@ -1,7 +1,8 @@
 package game;
 
 /**
- * Represents a "fixed" game object. A game object that does not move and is not interactive.
+ * Represents a "fixed" game object. A game object that does not move and is not interactive. The position of this game object is also 
+ * the base tile that is used when rendering in 3d.
  * @author Pritesh R. Patel
  *
  */
@@ -36,5 +37,10 @@ public class FixedGO implements GameObject {
 	@Override
 	public Position getPosition() {
 		return position;
+	}
+
+	@Override
+	public void setCurrentPosition(Position position) {
+		throw new Error("Canno't change positions of fixed game objects.");
 	}
 }
