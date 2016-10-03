@@ -20,7 +20,7 @@ public class PlayerThread extends Thread {
 	private Socket socket;
 	private String playerName;
 	private final SpookySchool game;
-	private final int broadcastClock = 5;
+	private final int broadcastClock = 20;
 	private DataInputStream input;
 	private ObjectOutputStream objOut;
 	private CreateServerPanel serverPanel;
@@ -129,7 +129,7 @@ public class PlayerThread extends Thread {
 				} else {
 					this.serverPanel.printToTextPrintArea(
 							"Player name already exists on server, waiting for new name on thread.");
-					this.playerName = "-1"; //FIXME Set to negative one so that it doesn't send another player's bundle
+					this.playerName = "-1"; // Set to negative one so that it doesn't send another player's bundle
 					this.transmitBundle(); // Transmit a null bundle. Bundle will be null as long as no player with the name "-1" exists
 				}
 

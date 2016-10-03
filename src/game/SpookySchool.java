@@ -559,7 +559,7 @@ public class SpookySchool {
 	 */
 	public boolean processDoorMovement(Tile potentialTile, Player player) {
 
-		//If the potential tile is a wall tile and has a door game object on it...
+		//If the potential tile is a wall tile and has a door game object on it, attempt to go through.
 		//FIXME change this code to improve door functionality...
 		if (potentialTile instanceof WallTile && potentialTile.getOccupant() instanceof DoorGO) {
 

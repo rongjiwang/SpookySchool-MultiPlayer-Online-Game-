@@ -71,7 +71,6 @@ public class Area implements Serializable {
 				String id = gameObjScanner.next();
 				String token = gameObjScanner.next();
 
-				//FIXME need to implement game objects properly!!
 				if (objType.equals("FIXED")) {
 					Position pos = new Position(gameObjScanner.nextInt(), gameObjScanner.nextInt());
 					GameObject gameObject = new FixedGO(id, token, pos);

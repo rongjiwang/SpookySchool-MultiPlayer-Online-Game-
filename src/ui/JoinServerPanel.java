@@ -119,6 +119,14 @@ public class JoinServerPanel extends JPanel {
 				ipAddress = ipAddressField.getText();
 				port = Integer.parseInt(portField.getText());
 
+				//Player name is not allowed to be -1. Display dialog if player attempts to use "-1" as their player name.
+				if (playerName.equals("-1")) {
+					JOptionPane.showMessageDialog(null,
+							" The player name '-1' is reserved by the game and is not allowed.", "Name not allowed",
+							JOptionPane.PLAIN_MESSAGE);
+					return;
+				}
+
 				try {
 					//Create a client if we haven't already.
 					if (client == null) {
@@ -146,7 +154,6 @@ public class JoinServerPanel extends JPanel {
 	 * Used by the client to ask user for a new player name as the one given is already being used on the server.
 	 */
 	public void askForNewName() {
-
 		JOptionPane.showMessageDialog(null,
 				"Another player with this name already exists on the server. Please enter a new name",
 				"Name already taken", JOptionPane.PLAIN_MESSAGE);
