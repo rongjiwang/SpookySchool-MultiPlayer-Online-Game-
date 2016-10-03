@@ -168,7 +168,12 @@ public class SpookySchool {
 			//Set up the bundle for the new player.
 			Bundle bundle = new Bundle(name);
 			bundle.setPlayerObj(newPlayer);
-			bundle.setNewArea(spawnRoom);
+
+			//Add game object change to all bundles.
+			this.addLogToAllBundles(name + " appear " + newPlayer.getCurrentArea().getAreaName() + " "
+					+ newPlayer.getPosition().getPosX() + " " + newPlayer.getPosition().getPosY());
+
+			//bundle.setNewArea(spawnRoom); //FIXME UNCOMMENT for testing 2d rendering
 			bundle.setChatLog(this.chatLog);
 
 			this.playerBundles.put(name, bundle);
@@ -192,6 +197,9 @@ public class SpookySchool {
 		}
 
 		this.getPlayer(name).getCurrentArea().getTile(this.getPlayer(name).getCurrentPosition()).removeOccupant(); //Remove player from the tile
+
+		this.addLogToAllBundles(name + " disappear " + this.getPlayer(name).getCurrentArea().getAreaName()); //Used to make this GO disappear in game render panel
+
 		this.players.remove(this.getPlayer(name)); //Remove the player from this game by removing them from players list.
 		this.playerBundles.remove(name); //Remove this player's bundle.
 
@@ -231,7 +239,8 @@ public class SpookySchool {
 
 		//If player is facing a different direction than the direction given, make the player face the given direction.
 		if (!player.getDirection().equals(direction)) {
-			this.getBundle(playerName).addGameObjectChange(playerName + " " + "direction " + direction.toString());
+			//this.getBundle(playerName).addGameObjectChange(playerName + " " + "direction " + direction.toString());
+			this.addLogToAllBundles(playerName + " " + "direction " + direction.toString());
 			player.setDirection(direction);
 			return true;
 		}
@@ -274,7 +283,11 @@ public class SpookySchool {
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 			this.movePlayerToTile(player, potentialTile); //Move the player to the new tile.
-			this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move NORTH");
+
+			//this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move NORTH"); //FIXME get rid once working
+
+			this.addLogToAllBundles(player.getPlayerName() + " " + "move NORTH");
+
 			return true; //Player movement complete.
 		}
 
@@ -305,7 +318,11 @@ public class SpookySchool {
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 			this.movePlayerToTile(player, potentialTile); //Move the player to the new tile.
-			this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move SOUTH");
+
+			//this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move SOUTH"); //FIXME get rid once working
+
+			this.addLogToAllBundles(player.getPlayerName() + " " + "move SOUTH");
+
 			return true; //Player movement complete.
 		}
 
@@ -336,7 +353,11 @@ public class SpookySchool {
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 			this.movePlayerToTile(player, potentialTile); //Move the player to the new tile.
-			this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move EAST");
+
+			//this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move EAST"); //FIXME get rid once working
+
+			this.addLogToAllBundles(player.getPlayerName() + " " + "move EAST");
+
 			return true; //Player movement complete.
 		}
 
@@ -367,7 +388,12 @@ public class SpookySchool {
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 			this.movePlayerToTile(player, potentialTile); //Move the player to the new tile.
-			this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move WEST");
+
+
+			//this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move WEST"); //FIXME get rid once working
+
+			this.addLogToAllBundles(player.getPlayerName() + " " + "move WEST");
+
 			return true; //Player movement complete.
 		}
 
@@ -403,6 +429,7 @@ public class SpookySchool {
 			if (door.isOpen() && !otherSideTile.isOccupied()) {
 
 				player.getCurrentArea().getTile(player.getCurrentPosition()).removeOccupant(); //Remove player from this tile.
+				this.addLogToAllBundles(playerName + " disappear " + player.getCurrentArea().getAreaName());
 
 				player.setCurrentArea(this.areas.get(otherSide)); //Set the player's new area.
 
@@ -412,7 +439,10 @@ public class SpookySchool {
 
 				this.movePlayerToTile(player, otherSideTile); //Add player to the new tile.
 
-				this.getBundle(playerName).addGameObjectChange(playerName + " " + "newRoom null");
+				this.addLogToAllBundles(playerName + " appear " + player.getCurrentArea().getAreaName() + " "
+						+ player.getCurrentPosition().getPosX() + " " + player.getCurrentPosition().getPosY());
+
+				//this.getBundle(playerName).addGameObjectChange(playerName + " " + "newRoom null"); //FIXME old code get rid of it once rendering works.
 
 				//Add movement to new room to the log.
 				this.chatLog.add(playerName + "entered the following room " + otherSide.replace('_', ' '));
@@ -458,6 +488,15 @@ public class SpookySchool {
 	 */
 	public synchronized Bundle getBundle(String playerName) {
 		return this.playerBundles.get(playerName);
+	}
+
+	/**
+	 * Adds a change to the game object change log in all bundles.
+	 */
+	public synchronized void addLogToAllBundles(String change) {
+		for (Bundle b : this.playerBundles.values()) {
+			b.addGameObjectChange(change);
+		}
 	}
 
 }
