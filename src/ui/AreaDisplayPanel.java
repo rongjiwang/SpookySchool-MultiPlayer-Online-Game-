@@ -3,11 +3,16 @@ package ui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JPanel;
 
@@ -24,7 +29,7 @@ import game.Tile;
 import game.WallTile;
 import network.Client;
 
-public class AreaDisplayPanel extends JPanel implements KeyListener {
+public class AreaDisplayPanel extends JPanel implements KeyListener{
 
 	// Window size and offset
 	private final int windowOffSetX = 0;
@@ -35,18 +40,31 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 	// Renderer Tile Size
 	private final int tileWidth = 32;
 	private final int tileHeight = 25;
+	
+	private int mainPlayerXBuff;
+	private int mainPlayerYBuff;
 
 	// Map Offset
 	private int renderOffSetX;
 	private int renderOffSetY;
 
-	Area currentArea = null;
+	private String[] commandQueue;
+	
+	// Keep track of system time
+	private long then;
+	private long now;
+	
+	private String currentKey;
+	
+	private Area currentArea = null;
 
 	private Client client;
 	private SpriteMap spriteMap;
 
 	private List<RenderGameObject> gameObjects;
 
+	private Timer timer;
+	
 
 	// Current Rotational view 0-3
 	private int view;
@@ -68,6 +86,15 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		this.client = client;
 		this.spriteMap = new SpriteMap();
 		this.gameObjects = new ArrayList<>();
+		this.commandQueue = new String[2];
+		Timer timer = new Timer();
+		TimerTask tt = new TimerTask(){
+			@Override
+			public void run(){
+				updateKeys();
+			}
+		};
+		timer.schedule(tt, 0, 20); 
 	}
 
 	/**
@@ -78,13 +105,15 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		this.repaint();
 	}
 
+	public void updateKeys(){
+		System.out.println(currentKey);
+	}
 	/**
 	 * Process the received bundle. Display game according to the bundle.
 	 */
 	public void processBundle(Bundle bundle) {
 
 		if (bundle.getPlayerObj() != null) {
-			System.out.println("Once");
 			processAreaChange(bundle.getPlayerObj());
 		}
 
@@ -104,19 +133,22 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 	 * Process the gameObjectChanges from the most recent bundle
 	 */
 	public void processGameObjectChange(String objectID, String changeType, String change) {
-		System.out.println(objectID + " " + changeType + " " + change);
-
-
 		for (RenderGameObject rgo : gameObjects) {
 			if (rgo.getID().equals(objectID)) {
+				System.out.println("recieved command move from bundle");
 				if (changeType.equals("move")) {
-					rgo.move(change);
+					addCommandToQueue(determineDirection(change));
+					executeCommand(rgo);
+					//smoothPlayerMove(rgo, change);
+					//rgo.move(change);
 				} else if (changeType.equals("direction")) {
 					rgo.changeDirection(change);
 				}
 			}
 		}
 	}
+	
+	
 
 
 
@@ -185,8 +217,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		int windowCenterX = (this.windowWidth / 2) + this.windowOffSetX;
 		int windowCenterY = (this.windowHeight / 2) + this.windowOffSetY;
 
-		this.renderOffSetX = windowCenterX - playerX;
-		this.renderOffSetY = windowCenterY - playerY;
+		this.renderOffSetX = (windowCenterX - playerX) - mainPlayerXBuff;
+		this.renderOffSetY = (windowCenterY - playerY) - mainPlayerYBuff;
 	}
 
 	
@@ -268,12 +300,17 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		} else if (layer == 2) {
 			for (RenderGameObject rgo : gameObjects) {
 				if (rgo.getXPos() == x && rgo.getYPos() == y) {
-					Image tileImage = spriteMap.getImage(getRotatedToken(rgo.getToken()));
-					int adjustX = tileImage.getWidth(null) / 2;
-					int adjustY = tileImage.getHeight(null) / 2;
+					int adjustX = 0;
+					int adjustY = 0;
+					Image tileImage = null;
 					if (rgo.isPlayer()) {
-						adjustX = tileImage.getWidth(null) - tileWidth;
-						adjustY = tileImage.getHeight(null) - tileHeight;
+						tileImage = spriteMap.getImage(getRotatedAnimatedToken(rgo.getToken()));
+						adjustX = (tileImage.getWidth(null) - tileWidth) - mainPlayerXBuff;
+						adjustY = (tileImage.getHeight(null) - tileHeight) - mainPlayerYBuff;
+					}else{
+						tileImage = spriteMap.getImage(getRotatedToken(rgo.getToken()));
+						adjustX = tileImage.getWidth(null) / 2;
+						adjustY = tileImage.getHeight(null) / 2;
 					}
 					g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
 
@@ -356,6 +393,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 	/**
 	 * Determine the approriate token string depending on the view
 	 * e.g. "w1" when rotate = 1 should be "w0" 
+	 * 
 	 * @param token
 	 * @return
 	 */
@@ -363,9 +401,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 
 		if (token == null)
 			return null;
-
+		
 		for (int b = 0; b < view; b++) {
+			
 			String j = "" + token.charAt(token.length() - 1);
+			
 			int i = Integer.valueOf(j) + 1;
 			if (i == -3)
 				i = 0;
@@ -376,8 +416,31 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		}
 		return token;
 	}
-
-
+	
+	/**
+	 * Determine the approriate token string depending on the view
+	 * e.g. "w1" when rotate = 1 should be "w0" 
+	 * 
+	 * @param token
+	 * @return
+	 */
+	public String getRotatedAnimatedToken(String token) {
+		if (token == null)
+			return null;
+		
+		for (int b = 0; b < view; b++) {
+			String j = "" + token.charAt(token.length() - 1);
+			String z = "" + token.charAt(token.length() - 2);
+			int i = Integer.valueOf(z) + 1;
+			if (i == -3)
+				i = 0;
+			else if (i == 4)
+				i = 0;
+			String a = token.substring(0, token.length() - 2);
+			token = a + i + j;
+		}
+		return token;
+	}
 
 	/**
 	 * Determine the correct direction depending on the 
@@ -391,6 +454,59 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 			direction = rotateDirection(direction, -1);
 		}
 		return direction;
+	}
+	
+	public void smoothPlayerMove(RenderGameObject rgo, String change){
+		for(int i = 0; i < 25; i++){
+			rgo.setYBuff(rgo.getYBuff() + 1);
+			updateDisplay();
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		rgo.move(change);
+		rgo.setYBuff(0);
+	}
+	
+	public void smoothMainPlayerMove(RenderGameObject rgo, String change){
+		long time = System.currentTimeMillis();
+		
+		if(change.equals("NORTH") || change.equals("SOUTH")){
+			for(int i = 0; i < 25; i++){
+				if(change.equals("NORTH"))
+					mainPlayerYBuff--;
+				else
+					mainPlayerYBuff++;
+				updateDisplay();
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}else{
+			for(int i = 0; i < 32; i++){
+				if(change.equals("EAST"))
+					mainPlayerXBuff++;
+				else
+					mainPlayerXBuff--;
+				updateDisplay();
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		mainPlayerYBuff = 0;
+		mainPlayerXBuff = 0;
+		rgo.move(change);
+		
 	}
 
 	/**
@@ -448,21 +564,63 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 				this.getHeight() - (this.windowOffSetY + this.windowHeight));
 	}
 
-
+	public void addCommandToQueue(String command){
+		commandQueue[1] = command;
+		
+		
+	}
+	
+	public String getCommandFromQueue(){
+		for(int i = 0; i < commandQueue.length; i++){
+			System.out.println(commandQueue[i]);
+		}
+		System.out.println("**************************");
+		if(commandQueue[0] == null && commandQueue[1] != null){
+			commandQueue[0] = commandQueue[1];
+			commandQueue[1] = null;
+		}
+		String toReturn = null;
+		if(commandQueue[0] != null){
+			toReturn = commandQueue[0];
+			commandQueue[0] = null;
+		}
+		
+		
+		return toReturn;
+	}
+	
+	public void executeCommand(RenderGameObject rgo){		
+		smoothMainPlayerMove(rgo, getCommandFromQueue());
+	
+		
+		
+		
+	}
+	
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
+		now = System.currentTimeMillis();
+		
+		if((now - then) < 270)
+			return;
+	
 		switch (keyCode) {
 		case KeyEvent.VK_UP:
 			this.client.sendCommand(determineDirection("NORTH"));
+			//currentKey = determineDirection("NORTH");
 			break;
 		case KeyEvent.VK_DOWN:
 			this.client.sendCommand(determineDirection("SOUTH"));
+			//currentKey = determineDirection("SOUTH");
 			break;
 		case KeyEvent.VK_LEFT:
+			//currentKey = determineDirection("WEST");
 			this.client.sendCommand(determineDirection("WEST"));
 			break;
 		case KeyEvent.VK_RIGHT:
+			//currentKey = determineDirection("EAST");
 			this.client.sendCommand(determineDirection("EAST"));
 			break;
 		case KeyEvent.VK_R:
@@ -472,10 +630,41 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 			rotate(-1);
 			break;
 		}
+		then = System.currentTimeMillis();
+		
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {}
+	public void keyReleased(KeyEvent e) {
+		int keyCode = e.getKeyCode();
+		
+				
+		switch (keyCode) {
+		case KeyEvent.VK_UP:
+			this.client.sendCommand(determineDirection("NORTH"));
+			//currentKey = null;
+			break;
+		case KeyEvent.VK_DOWN:
+			this.client.sendCommand(determineDirection("SOUTH"));
+			//currentKey = null;
+			break;
+		case KeyEvent.VK_LEFT:
+			//currentKey = null;
+			this.client.sendCommand(determineDirection("WEST"));
+			break;
+		case KeyEvent.VK_RIGHT:
+			//currentKey = null;
+			this.client.sendCommand(determineDirection("EAST"));
+			break;
+		case KeyEvent.VK_R:
+			rotate(1);
+			break;
+		case KeyEvent.VK_L:
+			rotate(-1);
+			break;
+		}
+		then = System.currentTimeMillis();
+	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {}

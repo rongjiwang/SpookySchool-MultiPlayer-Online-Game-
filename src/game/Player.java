@@ -20,7 +20,7 @@ public class Player implements GameObject {
 		this.playerName = playerName;
 		this.setCurrentArea(currentArea);
 		this.setCurrentPosition(currentPosition);
-		this.token = "3p2";
+		this.token = "0p20";
 	}
 
 

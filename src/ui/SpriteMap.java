@@ -63,15 +63,6 @@ public class SpriteMap {
 		spriteMap.put("d2",loadImage("door2.png"));
 		spriteMap.put("d3",loadImage("door3.png"));
 		
-		// Animated Images for the door
-		/*spriteMap.put("d00",loadImage("door00.png"));
-		spriteMap.put("d01",loadImage("door01.png"));
-		spriteMap.put("d02",loadImage("door02.png"));
-		spriteMap.put("d03",loadImage("door03.png"));
-		spriteMap.put("d10",loadImage("door10.png"));
-		spriteMap.put("d20",loadImage("door20.png"));
-		spriteMap.put("d30",loadImage("door30.png"));*/
-		
 		// bed
 		spriteMap.put("b0",loadImage("bed0.png"));
 		spriteMap.put("b1",loadImage("bed1.png"));
@@ -96,56 +87,92 @@ public class SpriteMap {
 		spriteMap.put("t2",loadImage("tableSmall2.png"));
 		spriteMap.put("t3",loadImage("tableSmall3.png"));
 		
-		// player 0
-		spriteMap.put("0p0",loadImage("0player0.png"));
-		spriteMap.put("0p1",loadImage("0player1.png"));
-		spriteMap.put("0p2",loadImage("0player2.png"));
-		spriteMap.put("0p3",loadImage("0player3.png"));
+		// player 0 
+		
+		spriteMap.put("0p00",loadImage("0player00.png"));
+		spriteMap.put("0p01",loadImage("0player01.png"));
+		spriteMap.put("0p02",loadImage("0player02.png"));
+		spriteMap.put("0p03",loadImage("0player03.png"));
+		
+		spriteMap.put("0p10",loadImage("0player10.png"));
+		spriteMap.put("0p11",loadImage("0player11.png"));
+		spriteMap.put("0p12",loadImage("0player12.png"));
+		spriteMap.put("0p13",loadImage("0player13.png"));
+		
+		spriteMap.put("0p20",loadImage("0player20.png"));
+		spriteMap.put("0p21",loadImage("0player21.png"));
+		spriteMap.put("0p22",loadImage("0player22.png"));
+		spriteMap.put("0p23",loadImage("0player23.png"));
+		
+		spriteMap.put("0p30",loadImage("0player30.png"));
+		spriteMap.put("0p31",loadImage("0player31.png"));
+		spriteMap.put("0p32",loadImage("0player32.png"));
+		spriteMap.put("0p33",loadImage("0player33.png"));
 		
 		// player 1
-		spriteMap.put("1p0",loadImage("1player0.png"));
-		spriteMap.put("1p1",loadImage("1player1.png"));
-		spriteMap.put("1p2",loadImage("1player2.png"));
-		spriteMap.put("1p3",loadImage("1player3.png"));
+		/*spriteMap.put("1p00",loadImage("1player00.png"));
+		spriteMap.put("1p01",loadImage("1player01.png"));
+		spriteMap.put("1p02",loadImage("1player02.png"));
+		spriteMap.put("1p03",loadImage("1player03.png"));
+		
+		spriteMap.put("1p10",loadImage("1player10.png"));
+		spriteMap.put("1p11",loadImage("1player11.png"));
+		spriteMap.put("1p12",loadImage("1player12.png"));
+		spriteMap.put("1p13",loadImage("1player13.png"));
+		
+		spriteMap.put("1p20",loadImage("1player20.png"));
+		spriteMap.put("1p21",loadImage("1player21.png"));
+		spriteMap.put("1p22",loadImage("1player22.png"));
+		spriteMap.put("1p23",loadImage("1player23.png"));
+		
+		spriteMap.put("1p30",loadImage("1player30.png"));
+		spriteMap.put("1p31",loadImage("1player31.png"));
+		spriteMap.put("1p32",loadImage("1player32.png"));
+		spriteMap.put("1p33",loadImage("1player33.png"));
+		
 		
 		// player 2
-		spriteMap.put("2p0",loadImage("2player0.png"));
-		spriteMap.put("2p1",loadImage("2player1.png"));
-		spriteMap.put("2p2",loadImage("2player2.png"));
-		spriteMap.put("2p3",loadImage("2player3.png"));
+		spriteMap.put("2p00",loadImage("2player00.png"));
+		spriteMap.put("2p01",loadImage("2player01.png"));
+		spriteMap.put("2p02",loadImage("2player02.png"));
+		spriteMap.put("2p03",loadImage("2player03.png"));
+		
+		spriteMap.put("2p10",loadImage("2player10.png"));
+		spriteMap.put("2p11",loadImage("2player11.png"));
+		spriteMap.put("2p12",loadImage("2player12.png"));
+		spriteMap.put("2p13",loadImage("2player13.png"));
+		
+		spriteMap.put("2p20",loadImage("2player20.png"));
+		spriteMap.put("2p21",loadImage("2player21.png"));
+		spriteMap.put("2p22",loadImage("2player22.png"));
+		spriteMap.put("2p23",loadImage("2player23.png"));
+		
+		spriteMap.put("2p30",loadImage("2player30.png"));
+		spriteMap.put("2p31",loadImage("2player31.png"));
+		spriteMap.put("2p32",loadImage("2player32.png"));
+		spriteMap.put("2p33",loadImage("2player33.png"));
 		
 		// player 2
-		spriteMap.put("3p0",loadImage("3player0.png"));
-		spriteMap.put("3p1",loadImage("3player1.png"));
-		spriteMap.put("3p2",loadImage("3player2.png"));
-		spriteMap.put("3p3",loadImage("3player3.png"));
+		spriteMap.put("3p00",loadImage("3player00.png"));
+		spriteMap.put("3p01",loadImage("3player01.png"));
+		spriteMap.put("3p02",loadImage("3player02.png"));
+		spriteMap.put("3p03",loadImage("3player03.png"));
+	
+		spriteMap.put("3p10",loadImage("3player10.png"));
+		spriteMap.put("3p11",loadImage("3player11.png"));
+		spriteMap.put("3p12",loadImage("3player12.png"));
+		spriteMap.put("3p13",loadImage("3player13.png"));
 		
+		spriteMap.put("3p20",loadImage("3player20.png"));
+		spriteMap.put("3p21",loadImage("3player21.png"));
+		spriteMap.put("3p22",loadImage("3player22.png"));
+		spriteMap.put("3p23",loadImage("3player23.png"));
 		
-		
-		
-		
-		
-		
-		
-		
-		//Animated Images for the player
-		/*spriteMap.put("p00",loadImage("player00.png"));
-		spriteMap.put("p01",loadImage("player01.png"));
-		spriteMap.put("p02",loadImage("player02.png"));
-		spriteMap.put("p03",loadImage("player03.png"));
-		spriteMap.put("p10",loadImage("player10.png"));
-		spriteMap.put("p11",loadImage("player11.png"));
-		spriteMap.put("p12",loadImage("player12.png"));
-		spriteMap.put("p13",loadImage("player13.png"));
-		spriteMap.put("p20",loadImage("player20.png"));
-		spriteMap.put("p21",loadImage("player21.png"));
-		spriteMap.put("p22",loadImage("player22.png"));
-		spriteMap.put("p23",loadImage("player23.png"));
-		spriteMap.put("p30",loadImage("player30.png"));
-		spriteMap.put("p31",loadImage("player31.png"));
-		spriteMap.put("p32",loadImage("player32.png"));
-		spriteMap.put("p33",loadImage("player33.png"));*/
-		
+		spriteMap.put("3p30",loadImage("3player30.png"));
+		spriteMap.put("3p31",loadImage("3player31.png"));
+		spriteMap.put("3p32",loadImage("3player32.png"));
+		spriteMap.put("3p33",loadImage("3player33.png"));*/
+
 		
 	}
 

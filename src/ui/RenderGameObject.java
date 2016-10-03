@@ -11,6 +11,8 @@ public class RenderGameObject {
 	private int viewXPos;
 	private int viewYPos;
 	private boolean isPlayer;
+	private int xBuff;
+	private int yBuff;
 	
 	
 	public RenderGameObject(String id, String name, String token, int xPos, int yPos, boolean isPlayer){
@@ -45,21 +47,22 @@ public class RenderGameObject {
 		}
 	}
 	
+	//players only
 	public void changeDirection(String direction){
-		String sub = token.substring(0, token.length()-1);
-	
+		String sub = token.substring(0, token.length()-2);
+		String i = "" + token.charAt(token.length()-1);
 		switch(direction){
 	
-			case "NORTH": token = sub + 2; 
+			case "NORTH": token = sub + 2 + i; 
 			break;
 		
-			case "EAST": token = sub + 3; 
+			case "EAST": token = sub + 3 + i; 
 			break;
 		
-			case "SOUTH": token = sub + 0;
+			case "SOUTH": token = sub + 0 + i;
 			break;
 		
-			case "WEST": token = sub + 1;
+			case "WEST": token = sub + 1 + i;
 			break;	
 		
 		}
@@ -127,7 +130,21 @@ public class RenderGameObject {
 		return isPlayer;
 	}
 	
+	public int getXBuff(){
+		return xBuff;
+	}
 	
+	public void setXBuff(int xBuff){
+		this.xBuff = xBuff;
+	}
+	
+	public int getYBuff(){
+		return yBuff;
+	}
+	
+	public void setYBuff(int yBuff){
+		this.yBuff = yBuff;
+	}
 	
 }
 	
