@@ -183,7 +183,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 								token = go.getToken();
 								x = go.getPosition().getPosX();
 								y = go.getPosition().getPosY();
-								rgo = new RenderGameObject("", "", token, x, y, true);
+								rgo = new RenderGameObject("", "", token, x, y, false);
 							}
 						}else if (!(go instanceof MarkerGO)) {
 								token = go.getToken();
@@ -309,8 +309,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 						adjustY = (tileImage.getHeight(null) - tileHeight) - mainPlayerYBuff;
 					}else{
 						tileImage = spriteMap.getImage(getRotatedToken(rgo.getToken()));
-						adjustX = (tileImage.getWidth(null) / 2) - rgo.getXBuff();
-						adjustY = (tileImage.getHeight(null) / 2) - rgo.getYBuff();
+						adjustX = (tileImage.getWidth(null) / 2) + rgo.getXBuff();
+						adjustY = (tileImage.getHeight(null) / 2) + rgo.getYBuff();
 					}
 					g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
 
@@ -457,22 +457,40 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 	}
 	
 	public void smoothPlayerMove(RenderGameObject rgo, String change){
-		for(int i = 0; i < 25; i++){
-			rgo.setYBuff(rgo.getYBuff() + 1);
-			updateDisplay();
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if(change.equals("NORTH") || change.equals("SOUTH")){
+			for(int i = 0; i < 25; i++){
+				if(change.equals("NORTH"))
+					rgo.setYBuff(rgo.getYBuff() - 1);				
+				else
+					rgo.setYBuff(rgo.getYBuff() + 1);				
+				updateDisplay();
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}else{
+			for(int i = 0; i < 32; i++){
+				if(change.equals("EAST"))
+					rgo.setXBuff(rgo.getXBuff() + 1);				
+				else
+					rgo.setXBuff(rgo.getXBuff() - 1);				
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
+		rgo.setXBuff(0);
+		rgo.setYBuff(0);		
 		rgo.move(change);
-		rgo.setYBuff(0);
 	}
 	
 	public void smoothMainPlayerMove(RenderGameObject rgo, String change){
-		long time = System.currentTimeMillis();
 		
 		if(change.equals("NORTH") || change.equals("SOUTH")){
 			for(int i = 0; i < 25; i++){
