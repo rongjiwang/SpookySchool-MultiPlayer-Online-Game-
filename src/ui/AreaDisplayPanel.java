@@ -106,7 +106,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 	}
 
 	public void updateKeys(){
-		System.out.println(currentKey);
+		//System.out.println(currentKey);
 	}
 	/**
 	 * Process the received bundle. Display game according to the bundle.
@@ -135,7 +135,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 	public void processGameObjectChange(String objectID, String changeType, String change) {
 		for (RenderGameObject rgo : gameObjects) {
 			if (rgo.getID().equals(objectID)) {
-				System.out.println("recieved command move from bundle");
+				System.out.println(objectID + " " + changeType + "" + change);
 				if (changeType.equals("move")) {
 					addCommandToQueue(determineDirection(change));
 					executeCommand(rgo);
@@ -309,8 +309,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 						adjustY = (tileImage.getHeight(null) - tileHeight) - mainPlayerYBuff;
 					}else{
 						tileImage = spriteMap.getImage(getRotatedToken(rgo.getToken()));
-						adjustX = tileImage.getWidth(null) / 2;
-						adjustY = tileImage.getHeight(null) / 2;
+						adjustX = (tileImage.getWidth(null) / 2) - rgo.getXBuff();
+						adjustY = (tileImage.getHeight(null) / 2) - rgo.getYBuff();
 					}
 					g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
 
@@ -603,7 +603,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 		int keyCode = e.getKeyCode();
 		now = System.currentTimeMillis();
 		
-		if((now - then) < 270)
+		if((now - then) < 280)
 			return;
 	
 		switch (keyCode) {
@@ -641,29 +641,29 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 				
 		switch (keyCode) {
 		case KeyEvent.VK_UP:
-			this.client.sendCommand(determineDirection("NORTH"));
+			//this.client.sendCommand(determineDirection("NORTH"));
 			//currentKey = null;
 			break;
 		case KeyEvent.VK_DOWN:
-			this.client.sendCommand(determineDirection("SOUTH"));
+			//this.client.sendCommand(determineDirection("SOUTH"));
 			//currentKey = null;
 			break;
 		case KeyEvent.VK_LEFT:
 			//currentKey = null;
-			this.client.sendCommand(determineDirection("WEST"));
+			//this.client.sendCommand(determineDirection("WEST"));
 			break;
 		case KeyEvent.VK_RIGHT:
 			//currentKey = null;
-			this.client.sendCommand(determineDirection("EAST"));
+			//this.client.sendCommand(determineDirection("EAST"));
 			break;
 		case KeyEvent.VK_R:
-			rotate(1);
+			//rotate(1);
 			break;
 		case KeyEvent.VK_L:
-			rotate(-1);
+			//rotate(-1);
 			break;
 		}
-		then = System.currentTimeMillis();
+		//then = System.currentTimeMillis();
 	}
 
 	@Override
