@@ -7,14 +7,17 @@ import javax.swing.JPanel;
 
 public class SidePanel extends JPanel{
 	private JPanel chat;
+	private JPanel debug;
 
-	public SidePanel(ChatPanel chatPanel){
+	public SidePanel(ChatPanel chatPanel, DebugDisplay debugPanel){
 		setLayout(new BorderLayout(20, 0));
 		
 		chat = new UIPanel(chatPanel, 1);
+		debug = new UIPanel(debugPanel, 2);
 		
 		this.add(chat, BorderLayout.SOUTH);
-
+		this.add(debug, BorderLayout.NORTH);
+		
 		setOpaque(false);
 		setVisible(true);
 		setBackground(Color.BLACK);

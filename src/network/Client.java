@@ -57,7 +57,7 @@ public class Client extends Thread {
 				//Create a game frame if haven't already.
 				if (this.gameFrame == null) {
 					System.out.println("Creating game frame.");
-					this.gameFrame = new GameFrame("Spooky School - " + this.playerName, this); //Valid player has been added to game on server end so show game frame.
+					this.gameFrame = new GameFrame("Spooky School - " + this.playerName, this, playerName); //Valid player has been added to game on server end so show game frame.
 				}
 
 				this.gameFrame.processBundle(bundle); //Send bundle to gameFrame to process and display appropriately.

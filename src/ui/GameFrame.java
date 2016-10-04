@@ -24,19 +24,24 @@ public class GameFrame extends JFrame implements WindowListener {
 
 	private AreaDisplayPanel areaDisplayPanel; //This pane displays all of the other panels
 	private AreaDisplayPanel2D areaDisplayPanel2D; //This pane displays all of the other panels
-
+	private DebugDisplay debugDisplay;
+	
 	private Client client;
+	private String name;
 
-	public GameFrame(String title, Client client) {
+	public GameFrame(String title, Client client, String name) {
 		super(title); // Set window title.
 
+		//temp, delete after
+		debugDisplay = new DebugDisplay(areaDisplayPanel);
+		
 		this.client = client;
 
 		//creates inventory panel
 		invPanel = new InventoryPanel();
 
 		//creates chat panel
-		chatPanel = new ChatPanel(this);
+		chatPanel = new ChatPanel(this, name, client);
 
 		//sets up layout
 		this.setLayout(new BorderLayout());
@@ -57,7 +62,7 @@ public class GameFrame extends JFrame implements WindowListener {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension scrnsize = toolkit.getScreenSize();
 		setBounds((scrnsize.width - getWidth()) / 2, (scrnsize.height - getHeight()) / 2, getWidth(), getHeight());
-
+		debugDisplay.updateDisplay("Yes");
 
 		this.setVisible(true); //Display the window
 	}
@@ -82,8 +87,8 @@ public class GameFrame extends JFrame implements WindowListener {
 			leftPanel = new MainPanel(areaDisplayPanel2D, invPanel);
 		}
 		this.add(leftPanel, BorderLayout.WEST);
-		//rightPanel 
-		rightPanel = new SidePanel(chatPanel);
+		//rightPanel (need to remove DebugDisplay)
+		rightPanel = new SidePanel(chatPanel, debugDisplay);
 		this.add(rightPanel, BorderLayout.EAST);
 		this.pack();
 	}
