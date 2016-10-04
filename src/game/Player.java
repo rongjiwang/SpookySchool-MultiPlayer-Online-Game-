@@ -86,7 +86,7 @@ public class Player implements GameObject {
 
 	@Override
 	public String getId() {
-		return "";
+		return this.playerName;
 	}
 
 
