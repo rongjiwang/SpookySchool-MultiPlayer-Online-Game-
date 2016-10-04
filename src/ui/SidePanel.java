@@ -18,9 +18,10 @@ public class SidePanel extends JPanel{
 		this.add(chat, BorderLayout.SOUTH);
 		this.add(debug, BorderLayout.NORTH);
 		
-		setOpaque(false);
+		setOpaque(true);
 		setVisible(true);
-		setBackground(Color.BLACK);
+		Color newGrey = new Color(49, 45, 43);
+		setBackground(newGrey);
 		validate();
 	}
 }
