@@ -349,7 +349,7 @@ public class SpookySchool {
 
 			return false; //Movable tile cannot be pushed.
 		}
-		
+
 		return processDoorMovement(potentialTile, player); //Return true if there is a door movement, else false.
 
 	}
@@ -631,7 +631,7 @@ public class SpookySchool {
 	 * @param playerName of the player we are getting the bundle for.
 	 * @return bundle of the playerName given.
 	 */
-	public synchronized Bundle getBundle(String playerName) {
+	public Bundle getBundle(String playerName) {
 		return this.playerBundles.get(playerName);
 	}
 
