@@ -18,7 +18,7 @@ public class Bundle implements Serializable {
 	private String message; //Message to be displayed onto the game screen.
 	private Player playerObj;
 	private Area newArea;
-	private List<String> gameObjectChanges = new ArrayList<String>();
+	//private List<String> gameObjectChanges = new ArrayList<String>();
 	private List<String> chatLogChanges = new ArrayList<String>();
 
 	public Bundle(String playerName) {
@@ -31,7 +31,7 @@ public class Bundle implements Serializable {
 	public void clearBundle() {
 		this.playerObj = null;
 		this.message = null;
-		this.gameObjectChanges = new ArrayList<String>();
+		//this.gameObjectChanges = new ArrayList<String>();
 		//this.newArea = null; //FIXME **COMMENT OUT FOR TESTING 2D!!**
 
 		this.chatLogChanges = new ArrayList<String>(); //FIXME keep commented out for now. Want to send entire chat log over network (for now!)
@@ -50,13 +50,15 @@ public class Bundle implements Serializable {
 		this.newArea = newArea;
 	}
 
+	/*
 	public List<String> getGameObjectChanges() {
 		return gameObjectChanges;
 	}
-
+	
 	public void addGameObjectChange(String change) {
 		this.gameObjectChanges.add(change);
 	}
+	*/
 
 	public List<String> getLog() {
 		return this.chatLogChanges;
