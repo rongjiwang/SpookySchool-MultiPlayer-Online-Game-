@@ -67,6 +67,10 @@ public class GameFrame extends JFrame implements WindowListener {
 
 		this.setVisible(true); //Display the window
 	}
+	
+	public void updateDebug(String name){
+		debugDisplay.updateDisplay(name);
+	}
 
 	//refocuses on game window (after sending a message)
 	public void refocus() {
@@ -98,7 +102,10 @@ public class GameFrame extends JFrame implements WindowListener {
 	 * Process the bundle by passing its contents to relevant panels.
 	 */
 	public void processBundle(Bundle bundle) {
-
+		if(bundle.getLog() != null && !bundle.getLog().isEmpty()){
+			chatPanel.addChange(bundle.getLog());
+		}
+		
 		if (this.render3D) {
 			this.areaDisplayPanel.processBundle(bundle);//Temporarily only passing bundle to the renderer.
 		} else {
