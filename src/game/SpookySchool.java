@@ -185,7 +185,7 @@ public class SpookySchool {
 
 			spawnTile.setOccupant(newPlayer);
 			this.players.add(newPlayer); //Add the player to the list of players in the game.
-			this.chatLog.add(name + " entered the game.");
+			this.addChatLogItemToAllBundles(name + " entered the game.");
 
 			//Set up the bundle for the new player.
 			Bundle bundle = new Bundle(name);
@@ -227,7 +227,7 @@ public class SpookySchool {
 		this.playerBundles.remove(name); //Remove this player's bundle.
 
 		//Add player disconnection information to the chatlog
-		this.chatLog.add(name + " has left the game.");
+		this.addChatLogItemToAllBundles(name + " has left the game.");
 	}
 
 
@@ -596,7 +596,8 @@ public class SpookySchool {
 				//this.getBundle(playerName).addGameObjectChange(playerName + " " + "newRoom null"); //FIXME old code get rid of it once rendering works.
 
 				//Add movement to new room to the log.
-				this.chatLog.add(playerName + "entered the following room " + otherSide.replace('_', ' '));
+				this.addChatLogItemToAllBundles(
+						playerName + "entered the following room " + otherSide.replace('_', ' '));
 
 				return true;
 			}
@@ -647,6 +648,17 @@ public class SpookySchool {
 	public synchronized void addLogToAllBundles(String change) {
 		for (Bundle b : this.playerBundles.values()) {
 			b.addGameObjectChange(change);
+		}
+	}
+
+
+	/**
+	 * Add chat string to all bundles so everyone can display the latest chat log.
+	 * @param addition the item to add to the chat log
+	 */
+	public synchronized void addChatLogItemToAllBundles(String addition) {
+		for (Bundle b : this.playerBundles.values()) {
+			b.addToChatLog(addition);
 		}
 	}
 
