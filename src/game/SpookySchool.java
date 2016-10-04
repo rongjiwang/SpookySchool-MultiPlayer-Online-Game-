@@ -249,7 +249,7 @@ public class SpookySchool {
 	 * This is called when a player presses the action button. This method makes any changes that are required to the game state and
 	 * adds changes to game bundles if and when required.
 	 */
-	public void processAction(String playerName) {
+	public synchronized void processAction(String playerName) {
 		Player player = this.getPlayer(playerName);
 	}
 
