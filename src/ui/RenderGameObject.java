@@ -10,21 +10,25 @@ public class RenderGameObject {
 	private int yPos;
 	private int viewXPos;
 	private int viewYPos;
-	private boolean isPlayer;
+	private boolean isMainPlayer;
 	private int xBuff;
 	private int yBuff;
+	private boolean isVisible;
+	private String area;
 	
 	
-	public RenderGameObject(String id, String name, String token, int xPos, int yPos, boolean isPlayer){
-		this.isPlayer = isPlayer;
-		if(isPlayer)
+	public RenderGameObject(String id, String name, String token, int xPos, int yPos, boolean isMainPlayer, String area){
+		this.isMainPlayer = isMainPlayer;
+		if(isMainPlayer)
 			this.id = name;
 		else
 			this.id = id;
+		this.area = area;
 		this.name = name;
 		this.token = token;
 		this.xPos = xPos;
 		this.yPos = yPos;
+		this.isVisible = true;
 		
 	}
 	
@@ -67,8 +71,22 @@ public class RenderGameObject {
 		
 		}
 	}
+	
+	public void appear(String area, String newPos){
+		this.isVisible = true;
+		this.area = area;
+		System.out.println(newPos);
+	}
 
+	public void disappear(){
+		this.isVisible = false;
+	}
+	
 // Getters and Setters
+	
+	public boolean isVisible(){
+		return isVisible;
+	}
 	
 	public String getID(){
 		return id;
@@ -126,8 +144,8 @@ public class RenderGameObject {
 		this.viewYPos = viewYPos;
 	}
 	
-	public boolean isPlayer(){
-		return isPlayer;
+	public boolean isMainPlayer(){
+		return isMainPlayer;
 	}
 	
 	public int getXBuff(){
@@ -144,6 +162,10 @@ public class RenderGameObject {
 	
 	public void setYBuff(int yBuff){
 		this.yBuff = yBuff;
+	}
+	
+	public String getArea(){
+		return area;
 	}
 	
 }

@@ -3,13 +3,10 @@ package ui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,14 +16,12 @@ import javax.swing.JPanel;
 import game.Area;
 import game.Bundle;
 import game.DoorGO;
-import game.FixedGO;
 import game.FloorTile;
 import game.GameObject;
 import game.MarkerGO;
 import game.Player;
 import game.Position;
 import game.Tile;
-import game.WallTile;
 import network.Client;
 
 public class AreaDisplayPanel extends JPanel implements KeyListener{
@@ -123,7 +118,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 			String ObjectID = scan.next();
 			String ChangeType = scan.next();
 			String Change = scan.next();
-			processGameObjectChange(ObjectID, ChangeType, Change);
+			String newPos = scan.next();
+			processGameObjectChange(ObjectID, ChangeType, Change, newPos);
 		}
 
 		this.updateDisplay();
@@ -132,10 +128,10 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 	/**
 	 * Process the gameObjectChanges from the most recent bundle
 	 */
-	public void processGameObjectChange(String objectID, String changeType, String change) {
+	public void processGameObjectChange(String objectID, String changeType, String change, String newPos) {
 		for (RenderGameObject rgo : gameObjects) {
 			if (rgo.getID().equals(objectID)) {
-				System.out.println(objectID + " " + changeType + "" + change);
+				System.out.println(objectID + " " + changeType + " " + change);
 				if (changeType.equals("move")) {
 					addCommandToQueue(determineDirection(change));
 					executeCommand(rgo);
@@ -143,6 +139,14 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 					//rgo.move(change);
 				} else if (changeType.equals("direction")) {
 					rgo.changeDirection(change);
+				} else if (changeType.equals("appear")){
+					rgo.appear(change, newPos);
+				} else if (changeType.equals("disappear")){
+				 	rgo.disappear();
+				} else if (changeType.equals("open")){
+					
+				} else if (changeType.equals("close")){
+					
 				}
 			}
 		}
@@ -153,7 +157,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 
 
 	/**
-	 * Process the gameObjectChanges from the most recent bundle
+	 * Process the gameAreaChange from the most recent bundle
 	 */
 	public void processAreaChange(Player player) {
 		String name = player.getPlayerName();
@@ -162,7 +166,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 		int y = player.getCurrentPosition().getPosY();
 		currentArea = player.getCurrentArea();
 		gameObjects.clear();
-		RenderGameObject rgo = new RenderGameObject("", name, token, x, y, true);
+		RenderGameObject rgo = new RenderGameObject("", name, token, x, y, true, currentArea.toString());
 		gameObjects.add(rgo);
 
 		for (int i = 0; i < currentArea.height; i++) {
@@ -176,20 +180,20 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 							token = doorToken.getToken(currentArea.getAreaName());
 							x = doorToken.getPosition(currentArea.getAreaName()).getPosX();
 							y = doorToken.getPosition(currentArea.getAreaName()).getPosY();
-							rgo = new RenderGameObject("", "", token, x, y, false);
+							rgo = new RenderGameObject("", "", token, x, y, false, currentArea.toString());
 						}else if (go instanceof Player){
 							Player p = (Player) go;
 							if(!(p.getPlayerName().equals(player.getPlayerName()))){
 								token = go.getToken();
 								x = go.getPosition().getPosX();
 								y = go.getPosition().getPosY();
-								rgo = new RenderGameObject("", "", token, x, y, false);
+								rgo = new RenderGameObject("", "", token, x, y, false, currentArea.toString());
 							}
 						}else if (!(go instanceof MarkerGO)) {
 								token = go.getToken();
 								x = go.getPosition().getPosX();
 								y = go.getPosition().getPosY();
-								rgo = new RenderGameObject("", "", token, x, y, false);
+								rgo = new RenderGameObject("", "", token, x, y, false, currentArea.toString());
 						}
 						gameObjects.add(rgo);
 					}
@@ -299,11 +303,12 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 			// Draw GameObjects(including player)
 		} else if (layer == 2) {
 			for (RenderGameObject rgo : gameObjects) {
-				if (rgo.getXPos() == x && rgo.getYPos() == y) {
+				
+				if (rgo.getXPos() == x && rgo.getYPos() == y && rgo.isVisible() && rgo.getArea().equals(currentArea.toString())) {
 					int adjustX = 0;
 					int adjustY = 0;
 					Image tileImage = null;
-					if (rgo.isPlayer()) {
+					if (rgo.isMainPlayer()) {
 						tileImage = spriteMap.getImage(getRotatedAnimatedToken(rgo.getToken()));
 						adjustX = (tileImage.getWidth(null) - tileWidth) - mainPlayerXBuff;
 						adjustY = (tileImage.getHeight(null) - tileHeight) - mainPlayerYBuff;
@@ -589,10 +594,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 	}
 	
 	public String getCommandFromQueue(){
-		for(int i = 0; i < commandQueue.length; i++){
-			System.out.println(commandQueue[i]);
-		}
-		System.out.println("**************************");
+	
 		if(commandQueue[0] == null && commandQueue[1] != null){
 			commandQueue[0] = commandQueue[1];
 			commandQueue[1] = null;
