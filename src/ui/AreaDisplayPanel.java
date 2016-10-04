@@ -56,6 +56,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 	private Client client;
 	private SpriteMap spriteMap;
 
+	private RenderGameObject mainPlayer;
 	private List<RenderGameObject> gameObjects;
 
 	private Timer timer;
@@ -113,13 +114,16 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 		}
 
 		Scanner scan = null;
+		
 		for (String s : bundle.getGameObjectChanges()) {
 			scan = new Scanner(s);
 			String ObjectID = scan.next();
 			String ChangeType = scan.next();
 			String Change = scan.next();
-			String newPos = scan.next();
-			processGameObjectChange(ObjectID, ChangeType, Change, newPos);
+			String x = scan.next();
+			String y = scan.next();
+			String token = scan.next();
+			processGameObjectChange(ObjectID, ChangeType, Change, x, y, token);
 		}
 
 		this.updateDisplay();
@@ -128,10 +132,27 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 	/**
 	 * Process the gameObjectChanges from the most recent bundle
 	 */
-	public void processGameObjectChange(String objectID, String changeType, String change, String newPos) {
+	public void processGameObjectChange(String objectID, String changeType, String change, String x, String y, String token) {
+		if(changeType.equals("appear")){
+			if(!objectID.equals(mainPlayer.getID())){
+				boolean isPlayer = token.contains("p");
+				System.out.println(isPlayer);
+				gameObjects.add(new RenderGameObject(objectID, token, Integer.valueOf(x), Integer.valueOf(y), isPlayer, change));	
+			}
+		}else if(changeType.equals("disappear")){
+			RenderGameObject toRemove = null;
+			for (RenderGameObject rgo : gameObjects) {
+				if (rgo.getID().equals(objectID)) {
+					toRemove = rgo;
+				}
+			}
+			gameObjects.remove(toRemove);
+		}
+		
+		
+		
 		for (RenderGameObject rgo : gameObjects) {
 			if (rgo.getID().equals(objectID)) {
-				System.out.println(objectID + " " + changeType + " " + change);
 				if (changeType.equals("move")) {
 					addCommandToQueue(determineDirection(change));
 					executeCommand(rgo);
@@ -139,10 +160,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 					//rgo.move(change);
 				} else if (changeType.equals("direction")) {
 					rgo.changeDirection(change);
-				} else if (changeType.equals("appear")){
-					rgo.appear(change, newPos);
-				} else if (changeType.equals("disappear")){
-				 	rgo.disappear();
 				} else if (changeType.equals("open")){
 					
 				} else if (changeType.equals("close")){
@@ -150,6 +167,19 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 				}
 			}
 		}
+		
+		if (mainPlayer.getID().equals(objectID)) {
+			if (changeType.equals("move")) {
+				addCommandToQueue(determineDirection(change));
+				executeCommand(mainPlayer);
+				//smoothPlayerMove(rgo, change);
+				//rgo.move(change);
+			} else if (changeType.equals("direction")) {
+				mainPlayer.changeDirection(change);
+			} 
+		}
+			
+		
 	}
 	
 	
@@ -160,15 +190,15 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 	 * Process the gameAreaChange from the most recent bundle
 	 */
 	public void processAreaChange(Player player) {
-		String name = player.getPlayerName();
+		String id = player.getPlayerName();
 		String token = player.getToken();
 		int x = player.getCurrentPosition().getPosX();
 		int y = player.getCurrentPosition().getPosY();
 		currentArea = player.getCurrentArea();
 		gameObjects.clear();
-		RenderGameObject rgo = new RenderGameObject("", name, token, x, y, true, currentArea.toString());
-		gameObjects.add(rgo);
-
+		mainPlayer = new RenderGameObject(id, token, x, y, true, currentArea.getAreaName());
+		RenderGameObject rgo = null;
+		
 		for (int i = 0; i < currentArea.height; i++) {
 			for (int j = 0; j < currentArea.width; j++) {
 				Tile tile = currentArea.getTile(new Position(j, i));
@@ -177,23 +207,26 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 						GameObject go = tile.getOccupant();
 						if(go instanceof DoorGO){
 							DoorGO doorToken = (DoorGO) go;
+							id = go.getId();
 							token = doorToken.getToken(currentArea.getAreaName());
 							x = doorToken.getPosition(currentArea.getAreaName()).getPosX();
 							y = doorToken.getPosition(currentArea.getAreaName()).getPosY();
-							rgo = new RenderGameObject("", "", token, x, y, false, currentArea.toString());
+							rgo = new RenderGameObject(id, token, x, y, false, currentArea.getAreaName());
 						}else if (go instanceof Player){
 							Player p = (Player) go;
 							if(!(p.getPlayerName().equals(player.getPlayerName()))){
+								id = go.getId();
 								token = go.getToken();
 								x = go.getPosition().getPosX();
 								y = go.getPosition().getPosY();
-								rgo = new RenderGameObject("", "", token, x, y, false, currentArea.toString());
+								rgo = new RenderGameObject(id, token, x, y,false, currentArea.getAreaName());
 							}
 						}else if (!(go instanceof MarkerGO)) {
+								id = go.getId();
 								token = go.getToken();
 								x = go.getPosition().getPosX();
 								y = go.getPosition().getPosY();
-								rgo = new RenderGameObject("", "", token, x, y, false, currentArea.toString());
+								rgo = new RenderGameObject(id, token, x, y, false, currentArea.getAreaName());
 						}
 						gameObjects.add(rgo);
 					}
@@ -208,8 +241,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 	 * Centers the player in the window
 	 */
 	public void centerPlayer() {
-		int playerXPos = gameObjects.get(0).getXPos();
-		int playerYPos = gameObjects.get(0).getYPos();
+		int playerXPos = mainPlayer.getXPos();
+		int playerYPos = mainPlayer.getYPos();
 
 		int[] view = getRotatedView(playerXPos, playerYPos, currentArea.width, currentArea.height);
 		int viewX = view[0];
@@ -302,24 +335,29 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 
 			// Draw GameObjects(including player)
 		} else if (layer == 2) {
+			int adjustX = 0;
+			int adjustY = 0;
+			Image tileImage = null;
 			for (RenderGameObject rgo : gameObjects) {
-				
-				if (rgo.getXPos() == x && rgo.getYPos() == y && rgo.isVisible() && rgo.getArea().equals(currentArea.toString())) {
-					int adjustX = 0;
-					int adjustY = 0;
-					Image tileImage = null;
-					if (rgo.isMainPlayer()) {
+				if (rgo.getXPos() == x && rgo.getYPos() == y && rgo.getArea().equals(currentArea.getAreaName())) {
+					if (rgo.isPlayer()) {
+						System.out.println("haps");
 						tileImage = spriteMap.getImage(getRotatedAnimatedToken(rgo.getToken()));
-						adjustX = (tileImage.getWidth(null) - tileWidth) - mainPlayerXBuff;
-						adjustY = (tileImage.getHeight(null) - tileHeight) - mainPlayerYBuff;
+						adjustX = (tileImage.getWidth(null) - tileWidth);
+						adjustY = (tileImage.getHeight(null) - tileHeight);
 					}else{
 						tileImage = spriteMap.getImage(getRotatedToken(rgo.getToken()));
-						adjustX = (tileImage.getWidth(null) / 2) + rgo.getXBuff();
-						adjustY = (tileImage.getHeight(null) / 2) + rgo.getYBuff();
+						adjustX = (tileImage.getWidth(null) / 2);
+						adjustY = (tileImage.getHeight(null) / 2);
 					}
-					g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
-
 				}
+				g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
+			}
+			if (mainPlayer.getXPos() == x && mainPlayer.getYPos() == y && mainPlayer.getArea().equals(currentArea.getAreaName())) {
+				tileImage = spriteMap.getImage(getRotatedAnimatedToken(mainPlayer.getToken()));
+				adjustX = (tileImage.getWidth(null) - tileWidth) - mainPlayerXBuff;
+				adjustY = (tileImage.getHeight(null) - tileHeight) - mainPlayerYBuff;
+				g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
 			}
 		}
 		// Draw Walls(Back and side walls with layer 1, front with layer 3)
@@ -643,6 +681,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 			//currentKey = determineDirection("EAST");
 			this.client.sendCommand(determineDirection("EAST"));
 			break;
+		case KeyEvent.VK_Z:
+			//currentKey = determineDirection("EAST");
+			this.client.sendCommand("ACTION");
 		case KeyEvent.VK_R:
 			rotate(1);
 			break;
