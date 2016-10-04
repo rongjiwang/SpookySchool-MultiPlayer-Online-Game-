@@ -44,8 +44,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 	private int renderOffSetX;
 	private int renderOffSetY;
 
-	private String[] keyQueue;
-	private ArrayDeque<String> gameObjectChanges;
+	String[] keyQueue;
+	
 	
 	// Keep track of system time
 	private long then;
@@ -58,10 +58,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 	private Client client;
 	private SpriteMap spriteMap;
 
-	private RenderGameObject mainPlayer;
-	private List<RenderGameObject> gameObjects;
+	RenderGameObject mainPlayer;
+	List<RenderGameObject> gameObjects;
 
 	private Timer timer;
+	private GameFrame gameFrame;
 	
 
 	// Current Rotational view 0-3
@@ -76,7 +77,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 		  Default view */
 
 
-	public AreaDisplayPanel(Client client) {
+	public AreaDisplayPanel(Client client, GameFrame gf) {
+		this.gameFrame = gf;
 		this.setBackground(Color.darkGray);
 		this.setFocusable(true);
 		this.requestFocus();
@@ -85,43 +87,21 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 		this.spriteMap = new SpriteMap();
 		this.gameObjects = new ArrayList<>();
 		this.keyQueue = new String[2];
-		this.gameObjectChanges = new ArrayDeque<String>();
-		Timer timer = new Timer();
-		TimerTask tt = new TimerTask(){
-			@Override
-			public void run(){
-				executeGameObjectChange();
-			}
-		};
-		timer.schedule(tt, 0, 20); 
+		
+		
 	}
 
 	/**
 	 * Updates the board.
 	 */
 	public void updateDisplay() {
+		if(gameFrame.getDebugDisplay() != null)
+			gameFrame.getDebugDisplay().updateDisplay();
 		centerPlayer();
 		this.repaint();
 	}
 
-	public void executeGameObjectChange(){
-		Scanner scan = null;
-		
-		if(!gameObjectChanges.isEmpty()){
-			System.out.println(gameObjectChanges);
-			String s = gameObjectChanges.poll();
-			scan = new Scanner(s);
-			String ObjectID = scan.next();
-			String ChangeType = scan.next();
-			String Change = scan.next();
-			String x = scan.next();
-			String y = scan.next();
-			String token = scan.next();
-			processGameObjectChange(ObjectID, ChangeType, Change, x, y, token);
-			this.updateDisplay();
-		}
-		
-	}
+	
 	/**
 	 * Process the received bundle. Display game according to the bundle.
 	 */
@@ -135,15 +115,15 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 		Scanner scan = null;
 		
 		for (String s : bundle.getGameObjectChanges()) {
-			gameObjectChanges.push(s);
-			/*scan = new Scanner(s);
+			
+			scan = new Scanner(s);
 			String ObjectID = scan.next();
 			String ChangeType = scan.next();
 			String Change = scan.next();
 			String x = scan.next();
 			String y = scan.next();
 			String token = scan.next();
-			processGameObjectChange(ObjectID, ChangeType, Change, x, y, token);*/
+			processGameObjectChange(ObjectID, ChangeType, Change, x, y, token);
 		}
 
 		
@@ -156,6 +136,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 	 * Process the gameObjectChanges from the most recent bundle
 	 */
 	public void processGameObjectChange(String objectID, String changeType, String change, String x, String y, String token) {
+		
 		if(changeType.equals("appear")){
 			if(!(objectID.equals(mainPlayer.getID()))){
 				if(token.contains("p")){
@@ -167,6 +148,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 				}
 			}
 		}
+		
+		
 		RenderGameObject toRemove = null;
 
 		for (RenderGameObject rgo : gameObjects) {
@@ -761,5 +744,10 @@ public class AreaDisplayPanel extends JPanel implements KeyListener{
 	@Override
 	public void keyTyped(KeyEvent arg0) {}
 
+	
+	
+	public RenderGameObject getMainPlayer(){
+		return mainPlayer;
+	}
 }
 
