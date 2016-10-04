@@ -200,6 +200,7 @@ public class SpookySchool {
 
 			return true;
 		}
+
 		return false;
 	}
 
@@ -210,6 +211,10 @@ public class SpookySchool {
 	 * FIXME Ensure everything relevant to the disconnecting player is removed!
 	 */
 	public synchronized void removePlayer(String name) {
+
+		if (this.getPlayer(name) == null) {
+			return;
+		}
 
 		//Remove player as their spawn area's owner
 		if (this.getPlayer(name).getCurrentArea().getAreaName().contains("Spawn")) {

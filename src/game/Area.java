@@ -155,6 +155,17 @@ public class Area implements Serializable {
 	}
 
 	/**
+	 * @return the owner of this spawn area.
+	 */
+	public Player getOwner() {
+		if (!this.areaName.contains("Spawn")) {
+			throw new Error("You can only get an owner for a spawn location!");
+		}
+
+		return this.owner;
+	}
+
+	/**
 	 * Returns true if this area has an owner. This is used only for the spawn room.
 	 * @return true if this area has an owner and false otherwise.
 	 */

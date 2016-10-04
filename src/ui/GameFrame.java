@@ -33,8 +33,7 @@ public class GameFrame extends JFrame implements WindowListener {
 	public GameFrame(String title, Client client, String name) {
 		super(title); // Set window title.
 
-		//temp, delete after
-		debugDisplay = new DebugDisplay(areaDisplayPanel);
+		
 		
 		this.client = client;
 
@@ -49,11 +48,14 @@ public class GameFrame extends JFrame implements WindowListener {
 		this.setResizable(false); //Do not allow window resizing.
 
 		if (this.render3D) {
-			this.areaDisplayPanel = new AreaDisplayPanel(this.client);
+			this.areaDisplayPanel = new AreaDisplayPanel(this.client, this);
 		} else {
 			this.areaDisplayPanel2D = new AreaDisplayPanel2D(this.client);
 		}
 
+		//temp, delete after
+		debugDisplay = new DebugDisplay(areaDisplayPanel);
+		
 		setPanels();
 
 		this.addWindowListener(this); //This frame also implements window listener so "add it"
@@ -63,7 +65,7 @@ public class GameFrame extends JFrame implements WindowListener {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension scrnsize = toolkit.getScreenSize();
 		setBounds((scrnsize.width - getWidth()) / 2, (scrnsize.height - getHeight()) / 2, getWidth(), getHeight());
-		debugDisplay.updateDisplay("Yes");
+		//debugDisplay.updateDisplay();
 
 		this.setVisible(true); //Display the window
 	}
@@ -114,6 +116,9 @@ public class GameFrame extends JFrame implements WindowListener {
 
 	}
 
+	public DebugDisplay getDebugDisplay(){
+		return debugDisplay;
+	}
 	@Override
 	public void windowClosing(WindowEvent arg0) {
 		this.closeWindow();
