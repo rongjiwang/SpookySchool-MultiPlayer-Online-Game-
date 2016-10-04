@@ -16,13 +16,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import network.Client;
+
 public class ChatPanel extends JPanel{
 	private JTextField typeArea;
 	private JButton sendMessage;
 	private JTextArea messageList;
 	private GameFrame home;
+	private String playerName;
+	private Client client;
 	
-	public ChatPanel(GameFrame display) {
+	public ChatPanel(GameFrame display, String playerName, Client client) {
 		super(new BorderLayout());
 		this.setOpaque(true);
 		home = display;
@@ -76,13 +80,12 @@ public class ChatPanel extends JPanel{
         public void actionPerformed(ActionEvent event) {
             if (typeArea.getText().length() < 1) {
                 // do nothing
-            } else if (typeArea.getText().equals(".clear")) {
-                messageList.setText("Cleared all messages\n");
-                typeArea.setText("");
             } else {
-                messageList.append("<"+ ">:  " + typeArea.getText()
-                        + "\n");
+            	String chat = "CHAT <"+ ">:  " + typeArea.getText();
                 typeArea.setText("");
+                if (client == null)
+                	System.out.println("yes");
+              //  client.sendCommand(chat);
             }
             home.refocus();
         }
