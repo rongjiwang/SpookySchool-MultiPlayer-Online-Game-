@@ -137,9 +137,10 @@ public class PlayerThread extends Thread {
 					|| nextToken.equals("WEST")) {
 				this.game.movePlayer(playerName, nextToken);
 			} else if (nextToken.equals("ACTION")) {
-				System.out.println("MAKE ACTION BUTTON COMMAND WORK! (PlayerThread and Game class)"); //FIXME
+				System.out.println("MAKE ACTION BUTTON COMMAND WORK! (PlayerThread and Game class)"); //FIXME Action command processing
 			} else if (nextToken.equals("CHAT")) {
-				System.out.println("MAKE CHAT COMMAND WORK! (PlayerThread and Game class)"); //FIXME
+				String message = "<" + this.playerName + "> " + scan.nextLine();
+				this.game.addChatLogItemToAllBundles(message);
 			}
 		}
 	}
