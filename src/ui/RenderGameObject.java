@@ -4,31 +4,24 @@ package ui;
 public class RenderGameObject {
 
 	private String id;
-	private String name;
 	private String token;
 	private int xPos;
 	private int yPos;
 	private int viewXPos;
 	private int viewYPos;
-	private boolean isMainPlayer;
 	private int xBuff;
 	private int yBuff;
-	private boolean isVisible;
 	private String area;
+	private boolean isPlayer;
 	
 	
-	public RenderGameObject(String id, String name, String token, int xPos, int yPos, boolean isMainPlayer, String area){
-		this.isMainPlayer = isMainPlayer;
-		if(isMainPlayer)
-			this.id = name;
-		else
-			this.id = id;
+	public RenderGameObject(String id, String token, int xPos, int yPos, boolean isPlayer, String area){
+		this.id = id;
 		this.area = area;
-		this.name = name;
 		this.token = token;
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.isVisible = true;
+		this.isPlayer = isPlayer;
 		
 	}
 	
@@ -47,8 +40,9 @@ public class RenderGameObject {
 		
 			case "WEST": xPos--;
 			break;	
-		
+			
 		}
+		
 	}
 	
 	//players only
@@ -72,20 +66,17 @@ public class RenderGameObject {
 		}
 	}
 	
-	public void appear(String area, String newPos){
-		this.isVisible = true;
+	public void appear(String area, String x, String y){
+		xPos = Integer.valueOf(x);
+		yPos = Integer.valueOf(y);
 		this.area = area;
-		System.out.println(newPos);
+		
 	}
 
-	public void disappear(){
-		this.isVisible = false;
-	}
-	
 // Getters and Setters
 	
-	public boolean isVisible(){
-		return isVisible;
+	public boolean isPlayer(){
+		return isPlayer;
 	}
 	
 	public String getID(){
@@ -94,14 +85,6 @@ public class RenderGameObject {
 	
 	public void setID(String id){
 		this.id = id;
-	}
-	
-	public String getName(){
-		return name;
-	}
-	
-	public void setName(String name){
-		this.name = name;
 	}
 	
 	public String getToken(){
@@ -144,9 +127,6 @@ public class RenderGameObject {
 		this.viewYPos = viewYPos;
 	}
 	
-	public boolean isMainPlayer(){
-		return isMainPlayer;
-	}
 	
 	public int getXBuff(){
 		return xBuff;

@@ -349,7 +349,7 @@ public class SpookySchool {
 
 			return false; //Movable tile cannot be pushed.
 		}
-
+		
 		return processDoorMovement(potentialTile, player); //Return true if there is a door movement, else false.
 
 	}
