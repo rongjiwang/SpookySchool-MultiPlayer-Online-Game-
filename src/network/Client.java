@@ -24,16 +24,11 @@ public class Client extends Thread {
 	private GameFrame gameFrame; //Used to call a processBundle method on the frame.
 	private JoinServerPanel joinServerPanel;
 
-	private boolean connectionEstablished = false;
-
-	private int counter = 0;
-
 	public Client(String playerName, Socket socket, JoinServerPanel joinServerPanel) {
 		this.playerName = playerName;
 		this.socket = socket;
 		this.joinServerPanel = joinServerPanel;
 	}
-
 
 	@Override
 	public void run() {
@@ -62,7 +57,7 @@ public class Client extends Thread {
 				//Create a game frame if haven't already.
 				if (this.gameFrame == null) {
 					System.out.println("Creating game frame.");
-					this.gameFrame = new GameFrame("Spooky School", this); //Valid player has been added to game on server end so show game frame.
+					this.gameFrame = new GameFrame("Spooky School - " + this.playerName, this); //Valid player has been added to game on server end so show game frame.
 				}
 
 				this.gameFrame.processBundle(bundle); //Send bundle to gameFrame to process and display appropriately.

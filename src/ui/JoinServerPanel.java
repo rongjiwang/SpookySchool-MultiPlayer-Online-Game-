@@ -45,6 +45,7 @@ public class JoinServerPanel extends JPanel {
 		this.setLayout(null); //Use no layout manager in this panel.
 		this.setBackground(Color.darkGray);
 
+		//Assign a random name from the list of default names.
 		int nameIndex = (int) (Math.random() * defaultNames.length);
 		this.playerName = defaultNames[nameIndex];
 
@@ -145,6 +146,7 @@ public class JoinServerPanel extends JPanel {
 						client = new Client(playerName, s, JoinServerPanel.this);
 						client.start();
 					} else {
+						client.setPlayerName(playerName);
 						client.sendCommand("newPlayer " + playerName); //Send the new player name
 					}
 
