@@ -41,6 +41,6 @@ public class FixedGO implements GameObject {
 
 	@Override
 	public void setCurrentPosition(Position position) {
-		throw new Error("Canno't change positions of fixed game objects.");
+		throw new Error("Cannot change positions of fixed game objects.");
 	}
 }

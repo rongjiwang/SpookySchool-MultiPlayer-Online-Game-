@@ -37,9 +37,7 @@ public class Bundle implements Serializable {
 		this.chatLogChanges = new ArrayList<String>(); //FIXME keep commented out for now. Want to send entire chat log over network (for now!)
 	}
 
-
 	/** GETTERS AND SETTERS **/
-
 	public String getPlayerName() {
 		return playerName;
 	}

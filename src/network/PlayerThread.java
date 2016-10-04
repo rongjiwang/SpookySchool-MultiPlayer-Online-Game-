@@ -20,7 +20,7 @@ public class PlayerThread extends Thread {
 	private Socket socket;
 	private String playerName;
 	private final SpookySchool game;
-	private final int broadcastClock = 20;
+	private final int broadcastClock = 15;
 	private DataInputStream input;
 	private ObjectOutputStream objOut;
 	private CreateServerPanel serverPanel;
@@ -136,6 +136,13 @@ public class PlayerThread extends Thread {
 			} else if (nextToken.equals("NORTH") || nextToken.equals("SOUTH") || nextToken.equals("EAST")
 					|| nextToken.equals("WEST")) {
 				this.game.movePlayer(playerName, nextToken);
+
+			} else if (nextToken.equals("ACTION")) {
+				this.game.processAction(playerName); //
+
+			} else if (nextToken.equals("CHAT")) {
+				String message = "<" + this.playerName + "> " + scan.nextLine(); //Append the player name before the message
+				this.game.addChatLogItemToAllBundles(message); //Add the message to all player's bundles so they can display in their chat window.
 			}
 		}
 	}

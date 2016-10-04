@@ -27,8 +27,6 @@ public class SpookySchool {
 
 	private Map<String, Area> areas = new HashMap<String, Area>();
 	private List<Player> players = new ArrayList<Player>();
-	private List<String> chatLog = new ArrayList<String>();
-
 	private Map<String, Bundle> playerBundles = new HashMap<String, Bundle>();
 
 	public SpookySchool() {
@@ -197,7 +195,6 @@ public class SpookySchool {
 					+ newPlayer.getToken());
 
 			bundle.setNewArea(spawnRoom); //FIXME **UNCOMMENT FOR TESTING 2D RENDERING**
-			bundle.setChatLog(this.chatLog);
 
 			this.playerBundles.put(name, bundle);
 
@@ -246,6 +243,16 @@ public class SpookySchool {
 
 		throw new Error("Error: Could not find an empty spawn room. This should not be possible.");
 	}
+
+
+	/**
+	 * This is called when a player presses the action button. This method makes any changes that are required to the game state and
+	 * adds changes to game bundles if and when required.
+	 */
+	public void processAction(String playerName) {
+		Player player = this.getPlayer(playerName);
+	}
+
 
 	/**
 	 * Moves player in a given direction if possible.
@@ -307,11 +314,7 @@ public class SpookySchool {
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 			this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-
-			//this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move NORTH"); //FIXME get rid once working
-
-			this.addLogToAllBundles(player.getPlayerName() + " " + "move NORTH null null null");
-
+			this.addLogToAllBundles(player.getPlayerName() + " " + "move NORTH null null null"); //Add GO change to all bundles.
 			return true; //Player movement complete.
 		}
 
@@ -374,11 +377,7 @@ public class SpookySchool {
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 			this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-
-			//this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move SOUTH"); //FIXME get rid once working
-
-			this.addLogToAllBundles(player.getPlayerName() + " " + "move SOUTH null null null");
-
+			this.addLogToAllBundles(player.getPlayerName() + " " + "move SOUTH null null null"); //Add GO change to all bundles.
 			return true; //Player movement complete.
 		}
 
@@ -441,11 +440,7 @@ public class SpookySchool {
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 			this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-
-			//this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move EAST"); //FIXME get rid once working
-
-			this.addLogToAllBundles(player.getPlayerName() + " " + "move EAST null null null");
-
+			this.addLogToAllBundles(player.getPlayerName() + " " + "move EAST null null null"); //Add GO change to all bundles.
 			return true; //Player movement complete.
 		}
 
@@ -508,10 +503,7 @@ public class SpookySchool {
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 			this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-
-			//this.getBundle(player.getPlayerName()).addGameObjectChange(player.getPlayerName() + " " + "move WEST"); //FIXME get rid once working
-
-			this.addLogToAllBundles(player.getPlayerName() + " " + "move WEST null null null");
+			this.addLogToAllBundles(player.getPlayerName() + " " + "move WEST null null null"); //Add GO change to all bundles.
 
 			return true; //Player movement complete.
 		}
@@ -591,11 +583,10 @@ public class SpookySchool {
 
 				this.moveGOToTile(player, otherSideTile); //Add player to the new tile.
 
+				//Add GO change to all bundles.
 				this.addLogToAllBundles(playerName + " appear " + player.getCurrentArea().getAreaName() + " "
 						+ player.getCurrentPosition().getPosX() + " " + player.getCurrentPosition().getPosY() + " "
 						+ player.getToken());
-
-				//this.getBundle(playerName).addGameObjectChange(playerName + " " + "newRoom null"); //FIXME old code get rid of it once rendering works.
 
 				//Add movement to new room to the log.
 				this.addChatLogItemToAllBundles(

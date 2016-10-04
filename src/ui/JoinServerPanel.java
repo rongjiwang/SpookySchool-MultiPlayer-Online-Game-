@@ -28,9 +28,12 @@ import network.Client;
  */
 public class JoinServerPanel extends JPanel {
 
-	private String playerName = "player1";
+	private String playerName;
 	private String ipAddress = "localhost";
 	private Integer port = 4444;
+
+	private String[] defaultNames = { "Bob", "Tony", "Sam", "John", "Marcus", "Susan", "Henry", "Bob", "Jill",
+			"Brandon", "Tom", "Adam", "Daniel", "Alan", "Josh", "Rob", "Alex", "Jim", "Jessica" };
 
 	private Client client;
 
@@ -41,6 +44,9 @@ public class JoinServerPanel extends JPanel {
 	public JoinServerPanel(JPanel contentPane) {
 		this.setLayout(null); //Use no layout manager in this panel.
 		this.setBackground(Color.darkGray);
+
+		int nameIndex = (int) (Math.random() * defaultNames.length);
+		this.playerName = defaultNames[nameIndex];
 
 		this.setupPanel(); //Sets up this panel. Adds various buttons and input fields.
 
