@@ -136,6 +136,10 @@ public class PlayerThread extends Thread {
 			} else if (nextToken.equals("NORTH") || nextToken.equals("SOUTH") || nextToken.equals("EAST")
 					|| nextToken.equals("WEST")) {
 				this.game.movePlayer(playerName, nextToken);
+			} else if (nextToken.equals("ACTION")) {
+				System.out.println("MAKE ACTION BUTTON COMMAND WORK! (PlayerThread and Game class)"); //FIXME
+			} else if (nextToken.equals("CHAT")) {
+				System.out.println("MAKE CHAT COMMAND WORK! (PlayerThread and Game class)"); //FIXME
 			}
 		}
 	}

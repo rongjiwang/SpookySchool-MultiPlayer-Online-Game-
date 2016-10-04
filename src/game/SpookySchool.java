@@ -27,7 +27,8 @@ public class SpookySchool {
 
 	private Map<String, Area> areas = new HashMap<String, Area>();
 	private List<Player> players = new ArrayList<Player>();
-	private List<String> chatLog = new ArrayList<String>();
+
+	//private List<String> chatLog = new ArrayList<String>();
 
 	private Map<String, Bundle> playerBundles = new HashMap<String, Bundle>();
 
@@ -197,7 +198,6 @@ public class SpookySchool {
 					+ newPlayer.getToken());
 
 			bundle.setNewArea(spawnRoom); //FIXME **UNCOMMENT FOR TESTING 2D RENDERING**
-			bundle.setChatLog(this.chatLog);
 
 			this.playerBundles.put(name, bundle);
 
