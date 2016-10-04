@@ -200,6 +200,7 @@ public class SpookySchool {
 
 			return true;
 		}
+		
 		return false;
 	}
 
