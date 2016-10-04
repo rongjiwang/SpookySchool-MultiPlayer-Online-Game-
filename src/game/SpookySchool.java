@@ -262,7 +262,7 @@ public class SpookySchool {
 		//If player is facing a different direction than the direction given, make the player face the given direction.
 		if (!player.getDirection().equals(direction)) {
 			//this.getBundle(playerName).addGameObjectChange(playerName + " " + "direction " + direction.toString());
-			this.addLogToAllBundles(playerName + " " + "direction " + direction.toString() + "null");
+			this.addLogToAllBundles(playerName + " " + "direction " + direction.toString() + " null");
 			player.setDirection(direction);
 			return true;
 		}
