@@ -1,7 +1,6 @@
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -26,15 +25,15 @@ public class GameFrame extends JFrame implements WindowListener {
 	private AreaDisplayPanel areaDisplayPanel; //This pane displays all of the other panels
 	private AreaDisplayPanel2D areaDisplayPanel2D; //This pane displays all of the other panels
 	private DebugDisplay debugDisplay;
-	
+
 	private Client client;
 	private String name;
 
 	public GameFrame(String title, Client client, String name) {
 		super(title); // Set window title.
 
-		
-		
+
+
 		this.client = client;
 
 		//creates inventory panel
@@ -55,7 +54,7 @@ public class GameFrame extends JFrame implements WindowListener {
 
 		//temp, delete after
 		debugDisplay = new DebugDisplay(areaDisplayPanel);
-		
+
 		setPanels();
 
 		this.addWindowListener(this); //This frame also implements window listener so "add it"
@@ -69,9 +68,9 @@ public class GameFrame extends JFrame implements WindowListener {
 
 		this.setVisible(true); //Display the window
 	}
-	
-	public void updateDebug(String name){
-		debugDisplay.updateDisplay(name);
+
+	public void updateDebug(String name) {
+		debugDisplay.updateDisplay();
 	}
 
 	//refocuses on game window (after sending a message)
@@ -104,10 +103,10 @@ public class GameFrame extends JFrame implements WindowListener {
 	 * Process the bundle by passing its contents to relevant panels.
 	 */
 	public void processBundle(Bundle bundle) {
-		if(bundle.getLog() != null && !bundle.getLog().isEmpty()){
+		if (bundle.getLog() != null && !bundle.getLog().isEmpty()) {
 			chatPanel.addChange(bundle.getLog());
 		}
-		
+
 		if (this.render3D) {
 			this.areaDisplayPanel.processBundle(bundle);//Temporarily only passing bundle to the renderer.
 		} else {
@@ -116,9 +115,10 @@ public class GameFrame extends JFrame implements WindowListener {
 
 	}
 
-	public DebugDisplay getDebugDisplay(){
+	public DebugDisplay getDebugDisplay() {
 		return debugDisplay;
 	}
+
 	@Override
 	public void windowClosing(WindowEvent arg0) {
 		this.closeWindow();
