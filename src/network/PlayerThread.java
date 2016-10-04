@@ -136,11 +136,13 @@ public class PlayerThread extends Thread {
 			} else if (nextToken.equals("NORTH") || nextToken.equals("SOUTH") || nextToken.equals("EAST")
 					|| nextToken.equals("WEST")) {
 				this.game.movePlayer(playerName, nextToken);
+
 			} else if (nextToken.equals("ACTION")) {
-				System.out.println("MAKE ACTION BUTTON COMMAND WORK! (PlayerThread and Game class)"); //FIXME Action command processing
+				this.game.processAction(playerName); //
+
 			} else if (nextToken.equals("CHAT")) {
-				String message = "<" + this.playerName + "> " + scan.nextLine();
-				this.game.addChatLogItemToAllBundles(message);
+				String message = "<" + this.playerName + "> " + scan.nextLine(); //Append the player name before the message
+				this.game.addChatLogItemToAllBundles(message); //Add the message to all player's bundles so they can display in their chat window.
 			}
 		}
 	}

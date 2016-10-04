@@ -244,6 +244,16 @@ public class SpookySchool {
 		throw new Error("Error: Could not find an empty spawn room. This should not be possible.");
 	}
 
+
+	/**
+	 * This is called when a player presses the action button. This method makes any changes that are required to the game state and
+	 * adds changes to game bundles if and when required.
+	 */
+	public void processAction(String playerName) {
+		Player player = this.getPlayer(playerName);
+	}
+
+
 	/**
 	 * Moves player in a given direction if possible.
 	 * @param playerName the name of the player to move.
