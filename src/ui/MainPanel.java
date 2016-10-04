@@ -36,12 +36,14 @@ public class MainPanel extends JPanel{
 		setIcons();
 
 		JPanel buttonSort = buttonMenu();
+		buttonSort.setOpaque(false);
 
 		this.add(buttonSort, BorderLayout.SOUTH);
 
-		setOpaque(false);
+		setOpaque(true);
 		setVisible(true);
-		setBackground(Color.BLACK);
+		Color newGrey = new Color(49, 45, 43);
+		setBackground(newGrey);
 		validate();
 	}
 	
@@ -75,7 +77,8 @@ public class MainPanel extends JPanel{
 		toReturn.add(info);
 		toReturn.add(players);
 		toReturn.add(quit);
-
+		
+		
 		return toReturn;
 	}
 

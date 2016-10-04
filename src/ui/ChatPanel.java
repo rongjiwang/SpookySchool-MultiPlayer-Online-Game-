@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,6 +32,8 @@ public class ChatPanel extends JPanel{
 		super(new BorderLayout());
 		this.setOpaque(true);
 		home = display;
+		this.playerName = playerName;
+		this.client = client;
         this.setSize(288, 488);
         JPanel southPanel = new JPanel();
         southPanel.setBackground(Color.BLACK);
@@ -75,17 +79,25 @@ public class ChatPanel extends JPanel{
 
         this.setVisible(true);
     }
-
+	
+	public void addChange(List<String> changes){
+		for(String change: changes)
+			messageList.append(change+"\n");
+	}
+	
+	public Client getClient(){
+		return client;
+	}
+	
     class sendMessageButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             if (typeArea.getText().length() < 1) {
                 // do nothing
             } else {
-            	String chat = "CHAT <"+ ">:  " + typeArea.getText();
+            	String chat = "CHAT :  " + typeArea.getText();
                 typeArea.setText("");
-                if (client == null)
-                	System.out.println("yes");
-              //  client.sendCommand(chat);
+                
+                getClient().sendCommand(chat);
             }
             home.refocus();
         }
