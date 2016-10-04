@@ -29,7 +29,7 @@ public class Bundle implements Serializable {
 	 * Clear relevant fields of this bundle. THis should be called once the bundle has been sent to the respective client.
 	 */
 	public void clearBundle() {
-		this.playerObj = null;
+		//this.playerObj = null;
 		this.message = null;
 		//this.gameObjectChanges = new ArrayList<String>();
 		//this.newArea = null; //FIXME **COMMENT OUT FOR TESTING 2D!!**
