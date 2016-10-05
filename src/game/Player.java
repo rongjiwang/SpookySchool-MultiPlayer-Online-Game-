@@ -10,6 +10,7 @@ public class Player implements GameObject {
 	private static final long serialVersionUID = -347596131285383989L;
 	private final String playerName;
 	private Area currentArea;
+	private final String spawnName;
 	private Position currentPosition;
 
 	private String direction = "NORTH";
@@ -17,38 +18,13 @@ public class Player implements GameObject {
 	private String description;
 
 
-	public Player(String playerName, Area currentArea, Position currentPosition) {
+	public Player(String playerName, String spawnName, Area currentArea, Position currentPosition) {
 		this.playerName = playerName;
+		this.spawnName = spawnName;
 		this.setCurrentArea(currentArea);
 		this.setCurrentPosition(currentPosition);
 		this.token = "0p20";
 		this.description = this.playerName;
-	}
-
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((playerName == null) ? 0 : playerName.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Player other = (Player) obj;
-		if (playerName == null) {
-			if (other.playerName != null)
-				return false;
-		} else if (!playerName.equals(other.playerName))
-			return false;
-		return true;
 	}
 
 	/** GETTERS AND SETTERS **/
@@ -68,6 +44,7 @@ public class Player implements GameObject {
 		return currentPosition;
 	}
 
+	@Override
 	public void setCurrentPosition(Position currentPosition) {
 		this.currentPosition = currentPosition;
 	}
@@ -83,6 +60,10 @@ public class Player implements GameObject {
 	@Override
 	public String getToken() {
 		return this.token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 
@@ -105,6 +86,35 @@ public class Player implements GameObject {
 	@Override
 	public void setDescription(String desc) {
 		this.description = desc;
+	}
+
+	public String getSpawnName() {
+		return spawnName;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Player other = (Player) obj;
+		if (playerName == null) {
+			if (other.playerName != null)
+				return false;
+		} else if (!playerName.equals(other.playerName))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((playerName == null) ? 0 : playerName.hashCode());
+		return result;
 	}
 
 }

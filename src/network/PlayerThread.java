@@ -12,8 +12,8 @@ import ui.CreateServerPanel;
 
 /**
  * 
- * @author
- *
+ * @author Kevin
+ * @author Pritesh R. Patel
  */
 public class PlayerThread extends Thread {
 
@@ -135,7 +135,8 @@ public class PlayerThread extends Thread {
 
 			} else if (nextToken.equals("NORTH") || nextToken.equals("SOUTH") || nextToken.equals("EAST")
 					|| nextToken.equals("WEST")) {
-				this.game.movePlayer(playerName, nextToken);
+
+				this.game.movePlayer(game.getPlayer(playerName), nextToken);
 
 			} else if (nextToken.equals("ACTION")) {
 				this.game.processAction(playerName); //

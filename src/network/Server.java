@@ -10,7 +10,8 @@ import ui.CreateServerPanel;
 
 /**
  * Server actively listens for new connections until server is full. Then stops listening until a player leaves the game.
- * @author
+ * @author Kevin
+ * @author Pritesh R. Patel
  *
  */
 public class Server extends Thread {
