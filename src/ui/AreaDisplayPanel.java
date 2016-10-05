@@ -2,7 +2,6 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -24,7 +23,7 @@ import network.Client;
 public class AreaDisplayPanel extends JPanel implements KeyListener {
 
 	private OverlayPanel overlayPanel;
-	
+
 	// Window size and offset
 	private final int windowOffSetX = 0;
 	private final int windowOffSetY = 0;
@@ -44,7 +43,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 
 	// For access to DebugDisplay
 	private GameFrame gameFrame;
-	
+
 	private Client client;
 	private SpriteMap spriteMap;
 
@@ -66,23 +65,23 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 
 
 	public AreaDisplayPanel(Client client, GameFrame gf) {
-	
+
 		this.setBackground(Color.darkGray);
 		this.setFocusable(true);
 		this.requestFocus();
 		this.addKeyListener(this);
-		
+
 		this.spriteMap = new SpriteMap();
 		this.overlayPanel = new OverlayPanel(this, spriteMap);
-//		overlayPanel.setBackground(Color.BLUE);
+		//		overlayPanel.setBackground(Color.BLUE);
 		overlayPanel.setOpaque(false);
 		this.setLayout(new BorderLayout());
 		add(overlayPanel, BorderLayout.CENTER);
-		
+
 		validate();
-		
+
 		this.client = client;
-		
+
 		this.gameFrame = gf;
 	}
 
@@ -93,20 +92,17 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 	public void processBundle(Bundle bundle) {
 
 		this.mainPlayer = bundle.getPlayerObj();
-		
-		if(currentArea == null){
+
+		if (currentArea == null) {
 			this.currentArea = this.mainPlayer.getCurrentArea();
 			overlayPanel.setHeaderX(-155, currentArea.getAreaName());
-		}else{
+		} else {
 			String oldArea = currentArea.getAreaName();
-			if(!oldArea.equals(bundle.getPlayerObj().getCurrentArea().getArea())){
+			if (!oldArea.equals(this.mainPlayer.getCurrentArea().getAreaName())) {
 				overlayPanel.setHeaderX(-155, currentArea.getAreaName());
 			}
 			this.currentArea = this.mainPlayer.getCurrentArea();
 		}
-		
-		
-		
 
 		this.updateDisplay();
 	}
@@ -239,8 +235,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 				DoorGO door = (DoorGO) roomObj;
 				Position doorPos = door.getPosition(this.mainPlayer.getCurrentArea().getAreaName());
 				if (doorPos.getPosX() == x && doorPos.getPosY() == y) {
-					tileImage = spriteMap
-							.getImage(getAnimatedDoorToken(door.getToken(this.mainPlayer.getCurrentArea().getAreaName()),door.isOpen()));
+					tileImage = spriteMap.getImage(getAnimatedDoorToken(
+							door.getToken(this.mainPlayer.getCurrentArea().getAreaName()), door.isOpen()));
 					adjustX = (tileImage.getWidth(null) / 2);
 					adjustY = (tileImage.getHeight(null) / 2);
 				}
@@ -324,15 +320,15 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 			view = 0;
 	}
 
-	public String getAnimatedDoorToken(String token, boolean unlocked){
+	public String getAnimatedDoorToken(String token, boolean unlocked) {
 		if (token == null) {
 			return null;
 		}
 
-		if(unlocked){
+		if (unlocked) {
 			String a = token.substring(0, token.length() - 1);
 			token = a + 1;
-		}else{
+		} else {
 			String a = token.substring(0, token.length() - 1);
 			token = a + 0;
 		}
@@ -513,7 +509,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 	}
-	
+
 
 	@Override
 	public void keyTyped(KeyEvent e) {
