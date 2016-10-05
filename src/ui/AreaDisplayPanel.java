@@ -1,6 +1,8 @@
 package ui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -21,6 +23,8 @@ import network.Client;
 
 public class AreaDisplayPanel extends JPanel implements KeyListener {
 
+	private OverlayPanel overlayPanel;
+	
 	// Window size and offset
 	private final int windowOffSetX = 0;
 	private final int windowOffSetY = 0;
@@ -68,8 +72,17 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		this.requestFocus();
 		this.addKeyListener(this);
 		
-		this.client = client;
 		this.spriteMap = new SpriteMap();
+		this.overlayPanel = new OverlayPanel(this, spriteMap);
+//		overlayPanel.setBackground(Color.BLUE);
+		overlayPanel.setOpaque(false);
+		this.setLayout(new BorderLayout());
+		add(overlayPanel, BorderLayout.CENTER);
+		
+		validate();
+		
+		this.client = client;
+		
 		this.gameFrame = gf;
 	}
 
@@ -80,7 +93,20 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 	public void processBundle(Bundle bundle) {
 
 		this.mainPlayer = bundle.getPlayerObj();
-		this.currentArea = this.mainPlayer.getCurrentArea();
+		
+		if(currentArea == null){
+			this.currentArea = this.mainPlayer.getCurrentArea();
+			overlayPanel.setHeaderX(-155, currentArea.getAreaName());
+		}else{
+			String oldArea = currentArea.getAreaName();
+			if(!oldArea.equals(bundle.getNewArea().getAreaName())){
+				overlayPanel.setHeaderX(-155, currentArea.getAreaName());
+			}
+			this.currentArea = this.mainPlayer.getCurrentArea();
+		}
+		
+		
+		
 
 		this.updateDisplay();
 	}

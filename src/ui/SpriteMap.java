@@ -190,7 +190,9 @@ public class SpriteMap {
 		spriteMap.put("3p32",loadImage("3player32.png"));
 		spriteMap.put("3p33",loadImage("3player33.png"));*/
 
+		/*       Overlay Window      */
 		
+		spriteMap.put("h0",loadImage("header.png"));
 	}
 
 
