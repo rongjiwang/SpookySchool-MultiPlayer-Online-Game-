@@ -236,7 +236,20 @@ public class SpookySchool {
 		}
 
 		if (!(gameObj instanceof DoorGO)) {
-			this.getBundle(playerName).addToChatLog(gameObj.getDescription());
+			String objDescription = gameObj.getDescription();
+
+			//If it is a spawn room sign then display the owner name.
+			if (objDescription.contains("Spawn_")) {
+				objDescription = objDescription.replaceAll("\\s", "");
+
+				if (this.areas.get(objDescription).getOwner() == null) {
+					objDescription = "No Occupant";
+				} else {
+					objDescription = this.areas.get(objDescription).getOwner().getId() + " 's Room";
+				}
+			}
+
+			this.getBundle(playerName).addToChatLog(objDescription);
 		}
 
 		if (gameObj instanceof DoorGO) {
@@ -251,10 +264,9 @@ public class SpookySchool {
 				door.setOpen(true);
 				this.getBundle(playerName).addToChatLog("You opened the door.");
 			}
-
 		}
-
 	}
+
 
 	/**
 	 * Moves player in a given direction if possible.
