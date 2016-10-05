@@ -24,10 +24,13 @@ public class SpookySchool {
 	private String areasFileLoc = "src/areas/areas.txt";
 	private String doorsFileLoc = "src/areas/game_objects/doors.txt";
 	private String movableObjectsFileLoc = "src/areas/game_objects/movable_objects.txt";
+	private String nonHumanPlayersFileLoc = "src/areas/game_objects/non_human_player_objects.txt";
 
 	private Map<String, Area> areas = new HashMap<String, Area>();
 	private List<Player> players = new ArrayList<Player>();
 	private Map<String, Bundle> playerBundles = new HashMap<String, Bundle>();
+
+	private List<NonHumanPlayer> nonHumanPlayers = new ArrayList<NonHumanPlayer>();
 
 	private Map<String, InventoryGO> inventoryObjects = new HashMap<String, InventoryGO>(); //FIXME Keep track of all inventory game objects in game??
 
@@ -35,6 +38,10 @@ public class SpookySchool {
 		this.loadAreas(); //Load maps
 		this.setDoors(); //Sets up doors on the areas.
 		this.loadRemainingGameObjects(); //Load the remaining game objects.
+
+		//Create a new clock thread and start it.
+		Thread clockThread = new ClockThread(this);
+		clockThread.start();
 
 		System.out.println("Game Loaded.");
 	}
@@ -111,9 +118,9 @@ public class SpookySchool {
 	public void loadRemainingGameObjects() {
 
 		Scanner scan;
-
-		//Scan and load Movable objects
 		try {
+
+			//Scan and load Movable objects
 			scan = new Scanner(new File(movableObjectsFileLoc));
 			while (scan.hasNextLine()) {
 
@@ -132,6 +139,34 @@ public class SpookySchool {
 				tile.setOccupant(movableGO);
 			}
 
+			//Scan the non human player objects.
+			scan = new Scanner(new File(nonHumanPlayersFileLoc));
+			while (scan.hasNextLine()) {
+
+				Scanner lineScanner = new Scanner(scan.nextLine());
+
+				//Scan information about the NPC.
+				String id = lineScanner.next();
+				String token = lineScanner.next();
+				String areaName = lineScanner.next();
+				Area area = this.areas.get(areaName);
+				Position startingPos = new Position(lineScanner.nextInt(), lineScanner.nextInt());
+
+				//List of directions the npc will move.
+				List<String> directions = new ArrayList<String>();
+				while (lineScanner.hasNext()) {
+					directions.add(lineScanner.next());
+				}
+
+				//Create NPC
+				NonHumanPlayer npc = new NonHumanPlayer(id, token, area, startingPos, directions);
+
+				//Move NPC.
+				area.getTile(startingPos).setOccupant(npc);
+				this.nonHumanPlayers.add(npc);
+			}
+
+			scan.close();
 		} catch (FileNotFoundException e) {
 			throw new Error(e.getMessage());
 		}
@@ -147,7 +182,7 @@ public class SpookySchool {
 
 		if (this.players.size() < 8 && this.getPlayer(name) == null) {
 			Area spawnRoom = this.findEmptySpawnRoom();
-			Player newPlayer = new Player(name, spawnRoom, this.defaultSpawnPosition);
+			Player newPlayer = new Player(name, spawnRoom.getAreaName(), spawnRoom, this.defaultSpawnPosition);
 			spawnRoom.setOwner(newPlayer); //Set player as the owner of the spawn room.
 
 			//Set the player as the occupant of the tile.
@@ -223,7 +258,7 @@ public class SpookySchool {
 
 		Player player = this.getPlayer(playerName);
 
-		Tile potentialTile = this.getPotentialTile(player.getCurrentArea(), player, player.getDirection());
+		Tile potentialTile = this.getPotentialTile(player.getCurrentArea(), player, player.getDirection(), 1);
 
 		//Not a valid potential tile so return.
 		if (potentialTile == null) {
@@ -278,13 +313,7 @@ public class SpookySchool {
 	 * @param direction the direction the player needs to move into.
 	 * @return true if player moves to a new tile or changes direction.. Otherwise false.
 	 */
-	public synchronized boolean movePlayer(String playerName, String direction) {
-
-		Player player = this.getPlayer(playerName);
-		//Ensure that the player we are trying to move exists.
-		if (player == null) {
-			throw new Error("Player (" + playerName + ") you are trying to move does not exist in game.");
-		}
+	public synchronized boolean movePlayer(Player player, String direction) {
 
 		//If player is facing a different direction than the direction given, make the player face the given direction.
 		if (!player.getDirection().equals(direction)) {
@@ -293,7 +322,7 @@ public class SpookySchool {
 		}
 
 		//Not a direction change... so player is moving in the direction he is facing.
-		Tile potentialTile = this.getPotentialTile(player.getCurrentArea(), player, player.getDirection()); //Tile where the player can potentially move.
+		Tile potentialTile = this.getPotentialTile(player.getCurrentArea(), player, player.getDirection(), 1); //Tile where the player can potentially move.
 
 		//Invalid move.
 		if (potentialTile == null) {
@@ -312,8 +341,8 @@ public class SpookySchool {
 
 			MovableGO movableGO = (MovableGO) potentialTile.getOccupant();
 
-			Tile potentialMovableTile = this.getPotentialTile(player.getCurrentArea(), movableGO,
-					player.getDirection());
+			Tile potentialMovableTile = this.getPotentialTile(player.getCurrentArea(), movableGO, player.getDirection(),
+					1);
 
 			//If movable go can be pushed, then move the player and the movable object.
 			if (potentialMovableTile instanceof FloorTile && (!((FloorTile) potentialMovableTile).isOccupied())) {
@@ -329,6 +358,12 @@ public class SpookySchool {
 
 		return processDoorMovement(potentialTile, player); //Return true if there is a door movement, else false.
 	}
+
+	/*
+		public synchronized boolean moveNPC(NonHumanPlayer npc) {
+			return false; //FIXME change this at the end!
+		}
+		*/
 
 	/**
 	 * Attempt to move the player to next room if they move on to a door.
@@ -387,26 +422,26 @@ public class SpookySchool {
 	 * @param player who's potential tile you want.
 	 * @return the tile object that is in front of the player in the direction they are facing.
 	 */
-	public Tile getPotentialTile(Area area, GameObject gameObj, String direction) {
+	public Tile getPotentialTile(Area area, GameObject gameObj, String direction, int distance) {
 
 		int posX = -1;
 		int posY = -1;
 
 		if (direction.equals("NORTH")) {
 			posX = gameObj.getPosition().getPosX();
-			posY = gameObj.getPosition().getPosY() - 1;
+			posY = gameObj.getPosition().getPosY() - distance;
 
 		} else if (direction.equals("SOUTH")) {
 
 			posX = gameObj.getPosition().getPosX();
-			posY = gameObj.getPosition().getPosY() + 1;
+			posY = gameObj.getPosition().getPosY() + distance;
 
 		} else if (direction.equals("EAST")) {
-			posX = gameObj.getPosition().getPosX() + 1;
+			posX = gameObj.getPosition().getPosX() + distance;
 			posY = gameObj.getPosition().getPosY();
 
 		} else if (direction.equals("WEST")) {
-			posX = gameObj.getPosition().getPosX() - 1;
+			posX = gameObj.getPosition().getPosX() - distance;
 			posY = gameObj.getPosition().getPosY();
 		}
 
@@ -445,6 +480,60 @@ public class SpookySchool {
 		for (Bundle b : this.playerBundles.values()) {
 			b.addToChatLog(addition);
 		}
+	}
+
+
+	/**
+	 * FIXME: Used to move NPC characters and do other things that need to be done...
+	 */
+	public void tick() {
+
+		int tilesToCheck = 3;
+
+		//Move all NPCs in the game towards their next direction (if possible).
+		outer: for (NonHumanPlayer npc : this.nonHumanPlayers) {
+			if (this.movePlayer(npc, npc.getPotentialDirection())) {
+				npc.directionMoved();
+
+				//Check one tile at a tile, "tilesToCheck" number of times. 
+				//If a player is found, teleport them back to their spawn room!
+				for (int i = 1; i <= tilesToCheck; i++) {
+					Tile tile = this.getPotentialTile(npc.getCurrentArea(), npc, npc.getCurrentDirection(), i);
+
+					//If player caught, teleport them back to their spawn room.
+					if (tile.getOccupant() instanceof Player) {
+
+						try {
+							Thread.sleep(500);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} //FIXME temporary? 
+
+						Player player = (Player) tile.getOccupant();
+						player.getCurrentArea().getTile(player.getCurrentPosition()).removeOccupant(); //Remove player from this tile.
+						player.setCurrentArea(this.areas.get(player.getSpawnName())); //Set player's area back to the spawn room.
+						this.moveGOToTile(player, player.getCurrentArea().getTile(this.defaultSpawnPosition)); //Move player back to original spawn position.
+
+						//Add message to the bundle about what just happened to the player
+						this.getBundle(player.getId())
+								.setMessage("You were caught by a teacher and sent back to your spawn room!");
+
+						//FIXME: Get rid of this once messages work.
+						this.getBundle(player.getId())
+								.addToChatLog("You were caught by a teacher and sent back to your spawn room!");
+
+						continue outer; //Exit to the outer loop.
+					}
+
+				}
+
+
+
+			}
+
+		}
+
 	}
 
 }
