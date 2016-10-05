@@ -75,9 +75,11 @@ public class Area implements Serializable {
 					Position pos = new Position(gameObjScanner.nextInt(), gameObjScanner.nextInt());
 					GameObject gameObject = new FixedGO(id, token, pos);
 
+					/*
 					if (!(this.area[pos.getPosY()][pos.getPosX()] instanceof FloorTile)) {
 						throw new Error("Error: Can only add fixed items to floor tiles.");
 					}
+					*/
 
 					this.area[pos.getPosY()][pos.getPosX()].setOccupant(gameObject);
 
