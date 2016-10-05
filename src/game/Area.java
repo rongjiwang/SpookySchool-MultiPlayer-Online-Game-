@@ -45,6 +45,7 @@ public class Area implements Serializable {
 
 			//Read the areaFile into the 2D area array.
 			while (yPos < this.height) {
+				
 				String tileString = scan.next();
 
 				this.area[yPos][xPos] = createTile(tileString, new Position(xPos, yPos)); //Create appropriate tile and add it to the area 2d array.

@@ -10,3 +10,4 @@ Hallway hallway.txt
 Dorm_room dormRoom.txt
 Dorm_storage dormStorage.txt
 Dorm_toilet dormToilet.txt
+Outside outside.txt
