@@ -58,10 +58,19 @@ public class SpriteMap {
 		spriteMap.put("c3",loadImage("carpet3.png"));
 		
 		// door
-		spriteMap.put("d0",loadImage("door0.png"));
-		spriteMap.put("d1",loadImage("door1.png"));
-		spriteMap.put("d2",loadImage("door2.png"));
-		spriteMap.put("d3",loadImage("door3.png"));
+		//spriteMap.put("d0",loadImage("door0.png"));
+		//spriteMap.put("d1",loadImage("door1.png"));
+		//spriteMap.put("d2",loadImage("door2.png"));
+		//spriteMap.put("d3",loadImage("door3.png"));
+		spriteMap.put("d00",loadImage("door00.png"));
+		spriteMap.put("d10",loadImage("door10.png"));
+		spriteMap.put("d20",loadImage("door20.png"));
+		spriteMap.put("d30",loadImage("door30.png"));
+		spriteMap.put("d01",loadImage("door01.png"));
+		spriteMap.put("d11",loadImage("door11.png"));
+		spriteMap.put("d21",loadImage("door21.png"));
+		spriteMap.put("d31",loadImage("door31.png"));
+		
 		
 		// bed
 		spriteMap.put("b0",loadImage("bed0.png"));

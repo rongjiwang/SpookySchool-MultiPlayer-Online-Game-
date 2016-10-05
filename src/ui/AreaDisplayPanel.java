@@ -214,7 +214,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 				Position doorPos = door.getPosition(this.mainPlayer.getCurrentArea().getAreaName());
 				if (doorPos.getPosX() == x && doorPos.getPosY() == y) {
 					tileImage = spriteMap
-							.getImage(getRotatedToken(door.getToken(this.mainPlayer.getCurrentArea().getAreaName())));
+							.getImage(getAnimatedDoorToken(door.getToken(this.mainPlayer.getCurrentArea().getAreaName()),door.isOpen()));
 					adjustX = (tileImage.getWidth(null) / 2);
 					adjustY = (tileImage.getHeight(null) / 2);
 				}
@@ -298,6 +298,31 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 			view = 0;
 	}
 
+	public String getAnimatedDoorToken(String token, boolean unlocked){
+		if (token == null) {
+			return null;
+		}
+
+		if(unlocked){
+			String a = token.substring(0, token.length() - 1);
+			token = a + 1;
+		}else{
+			String a = token.substring(0, token.length() - 1);
+			token = a + 0;
+		}
+		for (int b = 0; b < view; b++) {
+			String j = "" + token.charAt(token.length() - 1);
+			String z = "" + token.charAt(token.length() - 2);
+			int i = Integer.valueOf(z) + 1;
+			if (i == -3)
+				i = 0;
+			else if (i == 4)
+				i = 0;
+			String a = token.substring(0, token.length() - 2);
+			token = a + i + j;
+		}
+		return token;
+	}
 
 	/**
 	 * Determine the approriate token string depending on the view
@@ -446,6 +471,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 			break;
 		case KeyEvent.VK_Z:
 			this.client.sendCommand("ACTION");
+			break;
 		case KeyEvent.VK_R:
 			rotate(1);
 			this.updateDisplay();
