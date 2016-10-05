@@ -26,7 +26,6 @@ public class FixedContainerGO implements GameObject {
 
 	//TODO Need to add functionality here.
 
-
 	/** GETTERS AND SETTERS **/
 
 	@Override

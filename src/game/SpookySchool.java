@@ -29,6 +29,8 @@ public class SpookySchool {
 	private List<Player> players = new ArrayList<Player>();
 	private Map<String, Bundle> playerBundles = new HashMap<String, Bundle>();
 
+	private Map<String, InventoryGO> inventoryObjects = new HashMap<String, InventoryGO>(); //FIXME Keep track of all inventory game objects in game??
+
 	public SpookySchool() {
 		this.loadAreas(); //Load maps
 		this.setDoors(); //Sets up doors on the areas.
@@ -214,7 +216,8 @@ public class SpookySchool {
 
 	/**
 	 * This is called when a player presses the action button. This method makes any changes that are required to the game state and
-	 * adds changes to game bundles if and when required.
+	 * adds changes to game bundles if and when required. The action is "done" on the tile that the player is facing.
+	 * @param playerName name of the player that pressed the action button.
 	 */
 	public synchronized void processAction(String playerName) {
 
@@ -222,15 +225,14 @@ public class SpookySchool {
 
 		Tile potentialTile = this.getPotentialTile(player.getCurrentArea(), player, player.getDirection());
 
-		//Not a valid totential tile...
+		//Not a valid potential tile so return.
 		if (potentialTile == null) {
 			return;
 		}
 
 		GameObject gameObj = potentialTile.getOccupant();
 
-		//If there is no game object on the potential tile, then return since there is 
-		//no possible action.
+		//If there is no game object on the potential tile, then return since there is no possible action.
 		if (gameObj == null) {
 			return;
 		}
@@ -250,9 +252,10 @@ public class SpookySchool {
 			}
 
 			//this.getBundle(playerName).setMessage(objDescription);
-			this.getBundle(playerName).addToChatLog(objDescription); //FIXME remove once mesages display in rendering
+			this.getBundle(playerName).addToChatLog(objDescription); //FIXME remove once messages display in rendering
 		}
 
+		//If the game object the action is done on is a door game object, then process the action.
 		if (gameObj instanceof DoorGO) {
 			DoorGO door = (DoorGO) gameObj;
 
@@ -289,8 +292,7 @@ public class SpookySchool {
 			return true;
 		}
 
-		//Not a direction change so player is moving in the direction he is facing.
-
+		//Not a direction change... so player is moving in the direction he is facing.
 		Tile potentialTile = this.getPotentialTile(player.getCurrentArea(), player, player.getDirection()); //Tile where the player can potentially move.
 
 		//Invalid move.
@@ -329,7 +331,7 @@ public class SpookySchool {
 	}
 
 	/**
-	 * Move player to next room if they move on to a door.
+	 * Attempt to move the player to next room if they move on to a door.
 	 * @param potentialTile the tile that the player has tried to move on to.
 	 * @param player the player that has tried to move.
 	 * @return true if player moves to a new room successfully and false otherwise.
@@ -337,39 +339,35 @@ public class SpookySchool {
 	public boolean processDoorMovement(Tile potentialTile, Player player) {
 
 		//If the potential tile is a wall tile and has a door game object on it, attempt to go through.
-		//FIXME change this code to improve door functionality...
 		if (potentialTile instanceof WallTile && potentialTile.getOccupant() instanceof DoorGO) {
 
 			String playerName = player.getPlayerName();
+			DoorGO door = (DoorGO) potentialTile.getOccupant(); //Get the door object on the wall.
 
-			DoorGO door = (DoorGO) potentialTile.getOccupant();
-
+			//Names of the areas of both sides of the door.
 			String currentSide = player.getCurrentArea().getAreaName();
 			String otherSide = door.getOtherSide(currentSide);
 
-			Area otherSideArea = this.areas.get(otherSide);
-
+			Area otherSideArea = this.areas.get(otherSide); //The area that is on the other side of the door.
 			Tile otherSideTile = otherSideArea.getTile(door.getOtherSideEntryPos(currentSide)); //The tile on the other side of the door.
 
 			//If the door is open and the position on the other side is not occupied, then move player.
 			if (door.isOpen() && !otherSideTile.isOccupied()) {
 
 				player.getCurrentArea().getTile(player.getCurrentPosition()).removeOccupant(); //Remove player from this tile.
-
 				player.setCurrentArea(this.areas.get(otherSide)); //Set the player's new area.
-
-				this.getBundle(playerName).setPlayerObj(player); //Add the player object to the bundle since they've moved to a new room.
-
+				this.getBundle(playerName).setPlayerObj(player); //Add the player object to the bundle.
 				this.moveGOToTile(player, otherSideTile); //Add player to the new tile.
 
 				//Add movement to new room to the log.
 				this.addChatLogItemToAllBundles(
-						playerName + "entered the following room " + otherSide.replace('_', ' '));
+						playerName + " entered the following room " + otherSide.replace('_', ' '));
 
-				return true;
+				return true; //Movement through door successful
 			}
 		}
-		return false;
+
+		return false; //Movement through door was unsuccessful.
 	}
 
 	/**
@@ -386,12 +384,10 @@ public class SpookySchool {
 
 	/**
 	 * Get the tile that in front of the player.
-	 * @param player
-	 * @return the tile that is in front of the player in the direction they are facing.
+	 * @param player who's potential tile you want.
+	 * @return the tile object that is in front of the player in the direction they are facing.
 	 */
 	public Tile getPotentialTile(Area area, GameObject gameObj, String direction) {
-
-		Tile potentialTile = null;
 
 		int posX = -1;
 		int posY = -1;
