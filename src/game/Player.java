@@ -14,6 +14,7 @@ public class Player implements GameObject {
 
 	private String direction = "NORTH";
 	private String token;
+	private String description;
 
 
 	public Player(String playerName, Area currentArea, Position currentPosition) {
@@ -21,6 +22,7 @@ public class Player implements GameObject {
 		this.setCurrentArea(currentArea);
 		this.setCurrentPosition(currentPosition);
 		this.token = "0p20";
+		this.description = this.playerName;
 	}
 
 
@@ -93,6 +95,16 @@ public class Player implements GameObject {
 	@Override
 	public Position getPosition() {
 		return currentPosition;
+	}
+
+	@Override
+	public String getDescription() {
+		return this.description;
+	}
+
+	@Override
+	public void setDescription(String desc) {
+		this.description = desc;
 	}
 
 }

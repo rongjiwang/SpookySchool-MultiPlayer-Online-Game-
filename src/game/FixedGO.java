@@ -13,6 +13,8 @@ public class FixedGO implements GameObject {
 	private final String token;
 	private final Position position;
 
+	private String description;
+
 	public FixedGO(String id, String token, Position position) {
 		this.id = id;
 		this.token = token;
@@ -42,5 +44,15 @@ public class FixedGO implements GameObject {
 	@Override
 	public void setCurrentPosition(Position position) {
 		throw new Error("Cannot change positions of fixed game objects.");
+	}
+
+	@Override
+	public String getDescription() {
+		return this.description;
+	}
+
+	@Override
+	public void setDescription(String desc) {
+		this.description = desc;
 	}
 }

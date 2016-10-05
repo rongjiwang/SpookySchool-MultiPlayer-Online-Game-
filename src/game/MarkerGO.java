@@ -11,6 +11,7 @@ public class MarkerGO implements GameObject {
 	private static final long serialVersionUID = -5518752175040649624L;
 	private final GameObject baseGO;
 	private final Position position;
+	private String description;
 
 	public MarkerGO(GameObject baseGO, Position pos) {
 		//Throw error if the base object that this tile is a marker for is not a fixed or container game object.
@@ -19,6 +20,8 @@ public class MarkerGO implements GameObject {
 		}
 		this.baseGO = baseGO;
 		this.position = pos;
+
+		this.description = baseGO.getDescription();
 	}
 
 	/**
@@ -47,6 +50,16 @@ public class MarkerGO implements GameObject {
 	@Override
 	public void setCurrentPosition(Position position) {
 		throw new Error("Cannot change positions of marker game objects!");
+	}
+
+	@Override
+	public String getDescription() {
+		return this.description;
+	}
+
+	@Override
+	public void setDescription(String desc) {
+		this.description = desc;
 	}
 
 }

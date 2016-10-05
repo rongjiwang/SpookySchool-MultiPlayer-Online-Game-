@@ -134,33 +134,6 @@ public class SpookySchool {
 		} catch (FileNotFoundException e) {
 			throw new Error(e.getMessage());
 		}
-
-
-		/*
-		if (objType.equals("CONTAINER")) {
-		
-			boolean open = gameObjScanner.next().equals("open");
-			boolean locked = gameObjScanner.next().equals("locked");
-			String keyID = gameObjScanner.next();
-			keyID = keyID.equals("null") ? null : keyID;
-			int size = gameObjScanner.nextInt();
-			Position pos = (new Position(gameObjScanner.nextInt(), gameObjScanner.nextInt()));
-			GameObject gameObject = new ContainerGO(id, token, open, locked, keyID, size, pos);
-		
-			if (!(this.area[pos.getPosY()][pos.getPosX()] instanceof FloorTile)) {
-				throw new Error("Error: Can only add containers to floor tiles.");
-			}
-		
-			this.area[pos.getPosY()][pos.getPosX()].setOccupant(gameObject);
-		
-			//Set up the rest of the marker tiles that make up this game object.
-			while (gameObjScanner.hasNext()) {
-				Position markerPos = new Position(gameObjScanner.nextInt(), gameObjScanner.nextInt());
-				GameObject markerObj = new MarkerGO(gameObject, markerPos); //Link marker to original game object.
-				this.area[markerPos.getPosY()][markerPos.getPosX()].setOccupant(markerObj);
-			}
-		}
-		*/
 	}
 
 
@@ -188,13 +161,6 @@ public class SpookySchool {
 			//Set up the bundle for the new player.
 			Bundle bundle = new Bundle(name);
 			bundle.setPlayerObj(newPlayer);
-
-			//Add game object change to all bundles.
-			/*
-			this.addLogToAllBundles(name + " appear " + newPlayer.getCurrentArea().getAreaName() + " "
-					+ newPlayer.getPosition().getPosX() + " " + newPlayer.getPosition().getPosY() + " "
-					+ newPlayer.getToken());
-			*/
 
 			bundle.setNewArea(spawnRoom); //FIXME **UNCOMMENT FOR TESTING 2D RENDERING**
 
@@ -225,12 +191,6 @@ public class SpookySchool {
 
 		this.getPlayer(name).getCurrentArea().getTile(this.getPlayer(name).getCurrentPosition()).removeOccupant(); //Remove player from the tile
 
-		/*
-		this.addLogToAllBundles(
-				name + " disappear " + this.getPlayer(name).getCurrentArea().getAreaName() + " null null null"); //Used to make this GO disappear in game render panel
-		
-		*/
-
 		this.players.remove(this.getPlayer(name)); //Remove the player from this game by removing them from players list.
 		this.playerBundles.remove(name); //Remove this player's bundle.
 
@@ -260,7 +220,53 @@ public class SpookySchool {
 	 * adds changes to game bundles if and when required.
 	 */
 	public synchronized void processAction(String playerName) {
-		Player player = this.getPlayer(playerName);
+
+		Tile potentialTile = this.getPotentialTile(this.getPlayer(playerName));
+
+		//Not a valid totential tile...
+		if (potentialTile == null) {
+			return;
+		}
+
+		GameObject gameObj = potentialTile.getOccupant();
+
+		if (!(gameObj instanceof DoorGO)) {
+			this.getBundle(playerName).addToChatLog(gameObj.getDescription());
+		}
+
+	}
+
+	/**
+	 * Get the tile that in front of the player.
+	 * @param p
+	 * @return
+	 */
+	public Tile getPotentialTile(Player player) {
+
+		Tile potentialTile = null;
+
+		int posX = -1;
+		int posY = -1;
+
+		if (player.getDirection().equals("NORTH")) {
+			posX = player.getCurrentPosition().getPosX();
+			posY = player.getCurrentPosition().getPosY() - 1;
+
+		} else if (player.getDirection().equals("SOUTH")) {
+
+			posX = player.getCurrentPosition().getPosX();
+			posY = player.getCurrentPosition().getPosY() + 1;
+
+		} else if (player.getDirection().equals("EAST")) {
+			posX = player.getCurrentPosition().getPosX() + 1;
+			posY = player.getCurrentPosition().getPosY();
+
+		} else if (player.getDirection().equals("WEST")) {
+			posX = player.getCurrentPosition().getPosX() - 1;
+			posY = player.getCurrentPosition().getPosY();
+		}
+
+		return player.getCurrentArea().getTile(new Position(posX, posY));
 	}
 
 
@@ -280,8 +286,6 @@ public class SpookySchool {
 
 		//If player is facing a different direction than the direction given, make the player face the given direction.
 		if (!player.getDirection().equals(direction)) {
-			//this.getBundle(playerName).addGameObjectChange(playerName + " " + "direction " + direction.toString());
-			//this.addLogToAllBundles(playerName + " " + "direction " + direction.toString() + " null null null");
 			player.setDirection(direction);
 			return true;
 		}
@@ -324,7 +328,6 @@ public class SpookySchool {
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 			this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-			//this.addLogToAllBundles(player.getPlayerName() + " " + "move NORTH null null null"); //Add GO change to all bundles.
 			return true; //Player movement complete.
 		}
 
@@ -351,9 +354,7 @@ public class SpookySchool {
 				((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 				this.areas.get(movableGO.getAreaName()).getTile(movableGO.getPosition()).removeOccupant(); //Remove movable tile from the old tile.
 				this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-				//this.addLogToAllBundles(player.getPlayerName() + " " + "move NORTH null null null");
 				this.moveGOToTile(movableGO, potentialMovableTile); //Move the player to the new tile.
-				//this.addLogToAllBundles(movableGO.getId() + " " + "move NORTH null null null");
 				return true;
 			}
 
@@ -387,7 +388,6 @@ public class SpookySchool {
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 			this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-			//this.addLogToAllBundles(player.getPlayerName() + " " + "move SOUTH null null null"); //Add GO change to all bundles.
 			return true; //Player movement complete.
 		}
 
@@ -414,9 +414,7 @@ public class SpookySchool {
 				((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 				this.areas.get(movableGO.getAreaName()).getTile(movableGO.getPosition()).removeOccupant(); //Remove movable tile from the old tile.
 				this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-				//this.addLogToAllBundles(player.getPlayerName() + " " + "move SOUTH null null null");
 				this.moveGOToTile(movableGO, potentialMovableTile); //Move the player to the new tile.
-				//this.addLogToAllBundles(movableGO.getId() + " " + "move SOUTH null null null");
 				return true;
 			}
 
@@ -450,7 +448,6 @@ public class SpookySchool {
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 			this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-			//this.addLogToAllBundles(player.getPlayerName() + " " + "move EAST null null null"); //Add GO change to all bundles.
 			return true; //Player movement complete.
 		}
 
@@ -477,9 +474,7 @@ public class SpookySchool {
 				((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 				this.areas.get(movableGO.getAreaName()).getTile(movableGO.getPosition()).removeOccupant(); //Remove movable tile from the old tile.
 				this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-				//this.addLogToAllBundles(player.getPlayerName() + " " + "move EAST null null null");
 				this.moveGOToTile(movableGO, potentialMovableTile); //Move the player to the new tile.
-				//this.addLogToAllBundles(movableGO.getId() + " " + "move EAST null null null");
 				return true;
 			}
 
@@ -513,7 +508,6 @@ public class SpookySchool {
 		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
 			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 			this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-			//this.addLogToAllBundles(player.getPlayerName() + " " + "move WEST null null null"); //Add GO change to all bundles.
 
 			return true; //Player movement complete.
 		}
@@ -541,9 +535,7 @@ public class SpookySchool {
 				((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
 				this.areas.get(movableGO.getAreaName()).getTile(movableGO.getPosition()).removeOccupant(); //Remove movable tile from the old tile.
 				this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-				//this.addLogToAllBundles(player.getPlayerName() + " " + "move WEST null null null");
 				this.moveGOToTile(movableGO, potentialMovableTile); //Move the player to the new tile.
-				//this.addLogToAllBundles(movableGO.getId() + " " + "move WEST null null null");
 				return true;
 			}
 
@@ -583,11 +575,6 @@ public class SpookySchool {
 
 				player.getCurrentArea().getTile(player.getCurrentPosition()).removeOccupant(); //Remove player from this tile.
 
-				/*
-				this.addLogToAllBundles(
-						playerName + " disappear " + player.getCurrentArea().getAreaName() + " null null null");
-				*/
-
 				player.setCurrentArea(this.areas.get(otherSide)); //Set the player's new area.
 
 				this.getBundle(playerName).setPlayerObj(player); //Add the player object to the bundle since they've moved to a new room.
@@ -596,13 +583,6 @@ public class SpookySchool {
 
 				this.moveGOToTile(player, otherSideTile); //Add player to the new tile.
 
-				//Add GO change to all bundles.
-				/*
-				this.addLogToAllBundles(playerName + " appear " + player.getCurrentArea().getAreaName() + " "
-						+ player.getCurrentPosition().getPosX() + " " + player.getCurrentPosition().getPosY() + " "
-						+ player.getToken());
-						*/
-
 				//Add movement to new room to the log.
 				this.addChatLogItemToAllBundles(
 						playerName + "entered the following room " + otherSide.replace('_', ' '));
@@ -610,7 +590,6 @@ public class SpookySchool {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -650,16 +629,6 @@ public class SpookySchool {
 		return this.playerBundles.get(playerName);
 	}
 
-	/**
-	 * Adds a change to the game object change log in all bundles.
-	 */
-	/*
-	public synchronized void addLogToAllBundles(String change) {
-		for (Bundle b : this.playerBundles.values()) {
-			b.addGameObjectChange(change);
-		}
-	}
-	*/
 
 	/**
 	 * Add chat string to all bundles so everyone can display the latest chat log.

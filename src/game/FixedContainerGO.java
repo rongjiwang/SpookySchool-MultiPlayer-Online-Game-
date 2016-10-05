@@ -11,6 +11,8 @@ public class FixedContainerGO implements GameObject {
 	private final int size; // For container size.
 	private final Position position;
 
+	private String description;
+
 	public FixedContainerGO(String id, String token, boolean open, boolean locked, String keyID, int size,
 			Position position) {
 		this.id = id;
@@ -46,5 +48,15 @@ public class FixedContainerGO implements GameObject {
 	@Override
 	public void setCurrentPosition(Position position) {
 		throw new Error("Cannot change positions of fixed container game objects!");
+	}
+
+	@Override
+	public String getDescription() {
+		return this.description;
+	}
+
+	@Override
+	public void setDescription(String desc) {
+		this.description = desc;
 	}
 }

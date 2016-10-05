@@ -6,6 +6,7 @@ public class MovableGO implements GameObject {
 
 	private final String id;
 	private final String token;
+	private String description = "This is a movable object.";
 
 	private final String areaName; //Movable objects cannot be taken out of their room/area.
 	private Position position;
@@ -42,6 +43,17 @@ public class MovableGO implements GameObject {
 
 	public String getAreaName() {
 		return areaName;
+	}
+
+	@Override
+	public String getDescription() {
+		return this.description;
+	}
+
+
+	@Override
+	public void setDescription(String desc) {
+		this.description = desc;
 	}
 
 }

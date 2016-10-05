@@ -13,6 +13,7 @@ public class DoorGO implements GameObject {
 	private boolean open;
 	private boolean locked;
 	private final String keyID;
+	private String description = "This is a Door.";
 
 	private final String sideA;
 	private final String tokenA;
@@ -119,6 +120,16 @@ public class DoorGO implements GameObject {
 	@Override
 	public void setCurrentPosition(Position position) {
 		throw new Error("Cannot change positions of door game objects!");
+	}
+
+	@Override
+	public String getDescription() {
+		return this.description;
+	}
+
+	@Override
+	public void setDescription(String desc) {
+		this.description = desc;
 	}
 
 }

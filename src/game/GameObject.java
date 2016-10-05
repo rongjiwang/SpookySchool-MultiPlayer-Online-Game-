@@ -17,4 +17,8 @@ public interface GameObject extends Serializable {
 
 	public void setCurrentPosition(Position position);
 
+	public String getDescription();
+
+	public void setDescription(String desc);
+
 }

@@ -84,11 +84,19 @@ public class Area implements Serializable {
 					this.area[pos.getPosY()][pos.getPosX()].setOccupant(gameObject);
 
 					//Set up the rest of the marker tiles that make up this game object.
-					while (gameObjScanner.hasNext()) {
+					while (gameObjScanner.hasNextInt()) {
 						Position markerPos = new Position(gameObjScanner.nextInt(), gameObjScanner.nextInt());
 						GameObject markerObj = new MarkerGO(gameObject, markerPos); //Link marker to original game object.
 						this.area[markerPos.getPosY()][markerPos.getPosX()].setOccupant(markerObj);
 					}
+
+					//Set the description of the game object.
+					String description = "";
+					while (gameObjScanner.hasNext()) {
+						description = description + gameObjScanner.nextLine();
+					}
+
+					gameObject.setDescription(description);
 				}
 			}
 
@@ -131,6 +139,13 @@ public class Area implements Serializable {
 	 * @return Tile at the given position
 	 */
 	public Tile getTile(Position position) {
+		int posX = position.getPosX();
+		int posY = position.getPosY();
+
+		if (posY < 0 || posY >= height || posX < 0 || posX >= width) {
+			return null;
+		}
+
 		return this.area[position.getPosY()][position.getPosX()];
 	}
 
