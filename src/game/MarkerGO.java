@@ -21,7 +21,7 @@ public class MarkerGO implements GameObject {
 		this.baseGO = baseGO;
 		this.position = pos;
 
-		this.description = baseGO.getDescription();
+		//this.description = baseGO.getDescription();
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class MarkerGO implements GameObject {
 
 	@Override
 	public String getDescription() {
-		return this.description;
+		return this.baseGO.getDescription();
 	}
 
 	@Override

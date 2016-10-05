@@ -218,7 +218,9 @@ public class SpookySchool {
 	 */
 	public synchronized void processAction(String playerName) {
 
-		Tile potentialTile = this.getPotentialTile(this.getPlayer(playerName));
+		Player player = this.getPlayer(playerName);
+
+		Tile potentialTile = this.getPotentialTile(player.getCurrentArea(), player, player.getDirection());
 
 		//Not a valid totential tile...
 		if (potentialTile == null) {
@@ -226,6 +228,12 @@ public class SpookySchool {
 		}
 
 		GameObject gameObj = potentialTile.getOccupant();
+
+		//If there is no game object on the potential tile, then return since there is 
+		//no possible action.
+		if (gameObj == null) {
+			return;
+		}
 
 		if (!(gameObj instanceof DoorGO)) {
 			this.getBundle(playerName).addToChatLog(gameObj.getDescription());
@@ -270,7 +278,7 @@ public class SpookySchool {
 
 		//Not a direction change so player is moving in the direction he is facing.
 
-		Tile potentialTile = this.getPotentialTile(player); //Tile where the player can potentially move.
+		Tile potentialTile = this.getPotentialTile(player.getCurrentArea(), player, player.getDirection()); //Tile where the player can potentially move.
 
 		//Invalid move.
 		if (potentialTile == null) {
@@ -288,19 +296,9 @@ public class SpookySchool {
 		if (potentialTile instanceof FloorTile && potentialTile.getOccupant() instanceof MovableGO) {
 
 			MovableGO movableGO = (MovableGO) potentialTile.getOccupant();
-			int movableX = movableGO.getPosition().getPosX();
-			int potentialMovableY = movableGO.getPosition().getPosY() - 1;
 
-			Tile potentialMovableTile = null;
-
-			//Check if potential new position of the movable object is within the bounds of the array.
-			if (potentialMovableY >= 0) {
-				potentialMovableTile = this.areas.get(movableGO.getAreaName())
-						.getTile(new Position(movableX, potentialMovableY));
-
-			} else {
-				return false; //Not a valid move.
-			}
+			Tile potentialMovableTile = this.getPotentialTile(player.getCurrentArea(), movableGO,
+					player.getDirection());
 
 			//If movable go can be pushed, then move the player and the movable object.
 			if (potentialMovableTile instanceof FloorTile && (!((FloorTile) potentialMovableTile).isOccupied())) {
@@ -378,32 +376,32 @@ public class SpookySchool {
 	 * @param player
 	 * @return the tile that is in front of the player in the direction they are facing.
 	 */
-	public Tile getPotentialTile(Player player) {
+	public Tile getPotentialTile(Area area, GameObject gameObj, String direction) {
 
 		Tile potentialTile = null;
 
 		int posX = -1;
 		int posY = -1;
 
-		if (player.getDirection().equals("NORTH")) {
-			posX = player.getCurrentPosition().getPosX();
-			posY = player.getCurrentPosition().getPosY() - 1;
+		if (direction.equals("NORTH")) {
+			posX = gameObj.getPosition().getPosX();
+			posY = gameObj.getPosition().getPosY() - 1;
 
-		} else if (player.getDirection().equals("SOUTH")) {
+		} else if (direction.equals("SOUTH")) {
 
-			posX = player.getCurrentPosition().getPosX();
-			posY = player.getCurrentPosition().getPosY() + 1;
+			posX = gameObj.getPosition().getPosX();
+			posY = gameObj.getPosition().getPosY() + 1;
 
-		} else if (player.getDirection().equals("EAST")) {
-			posX = player.getCurrentPosition().getPosX() + 1;
-			posY = player.getCurrentPosition().getPosY();
+		} else if (direction.equals("EAST")) {
+			posX = gameObj.getPosition().getPosX() + 1;
+			posY = gameObj.getPosition().getPosY();
 
-		} else if (player.getDirection().equals("WEST")) {
-			posX = player.getCurrentPosition().getPosX() - 1;
-			posY = player.getCurrentPosition().getPosY();
+		} else if (direction.equals("WEST")) {
+			posX = gameObj.getPosition().getPosX() - 1;
+			posY = gameObj.getPosition().getPosY();
 		}
 
-		return player.getCurrentArea().getTile(new Position(posX, posY));
+		return area.getTile(new Position(posX, posY));
 	}
 
 	/**
