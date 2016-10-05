@@ -21,9 +21,6 @@ public class FixedGO implements GameObject {
 		this.position = position;
 	}
 
-	//TODO Need to add functionality here.
-
-
 	/** GETTERS AND SETTERS **/
 
 	@Override

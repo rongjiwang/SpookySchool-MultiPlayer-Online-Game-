@@ -98,7 +98,6 @@ public class SpookySchool {
 				areaB.getTile(sideBDoorPos).setOccupant(door);
 
 			}
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -161,8 +160,6 @@ public class SpookySchool {
 			//Set up the bundle for the new player.
 			Bundle bundle = new Bundle(name);
 			bundle.setPlayerObj(newPlayer);
-
-			bundle.setNewArea(spawnRoom); //FIXME **UNCOMMENT FOR TESTING 2D RENDERING**
 
 			this.playerBundles.put(name, bundle);
 
@@ -237,40 +234,6 @@ public class SpookySchool {
 	}
 
 	/**
-	 * Get the tile that in front of the player.
-	 * @param p
-	 * @return
-	 */
-	public Tile getPotentialTile(Player player) {
-
-		Tile potentialTile = null;
-
-		int posX = -1;
-		int posY = -1;
-
-		if (player.getDirection().equals("NORTH")) {
-			posX = player.getCurrentPosition().getPosX();
-			posY = player.getCurrentPosition().getPosY() - 1;
-
-		} else if (player.getDirection().equals("SOUTH")) {
-
-			posX = player.getCurrentPosition().getPosX();
-			posY = player.getCurrentPosition().getPosY() + 1;
-
-		} else if (player.getDirection().equals("EAST")) {
-			posX = player.getCurrentPosition().getPosX() + 1;
-			posY = player.getCurrentPosition().getPosY();
-
-		} else if (player.getDirection().equals("WEST")) {
-			posX = player.getCurrentPosition().getPosX() - 1;
-			posY = player.getCurrentPosition().getPosY();
-		}
-
-		return player.getCurrentArea().getTile(new Position(posX, posY));
-	}
-
-
-	/**
 	 * Moves player in a given direction if possible.
 	 * @param playerName the name of the player to move.
 	 * @param direction the direction the player needs to move into.
@@ -290,38 +253,13 @@ public class SpookySchool {
 			return true;
 		}
 
-		//Player is facing the correct direction. attempt to move player in the given direction.
-		switch (direction) {
-		case "NORTH":
-			return this.movePlayerNorth(player);
-		case "SOUTH":
-			return this.movePlayerSouth(player);
-		case "EAST":
-			return this.movePlayerEast(player);
-		case "WEST":
-			return this.movePlayerWest(player);
-		}
+		//Not a direction change so player is moving in the direction he is facing.
 
-		throw new Error("ERROR in movePlayer() method.");
-	}
+		Tile potentialTile = this.getPotentialTile(player); //Tile where the player can potentially move.
 
-	/**
-	 * Attempts to move the player NORTH by one tile.
-	 * This method should be used once the player is facing the correct direction.
-	 * @param player that is to be moved
-	 * @return true if movement to the north is successful, otherwise false.
-	 */
-	private boolean movePlayerNorth(Player player) {
-		int posX = player.getCurrentPosition().getPosX();
-		int potentialPosY = player.getCurrentPosition().getPosY() - 1;
-
-		Tile potentialTile = null;
-
-		//Check if potential new position is within the bounds of the array.
-		if (potentialPosY >= 0) {
-			potentialTile = player.getCurrentArea().getTile(new Position(posX, potentialPosY));
-		} else {
-			return false; //Not a valid move.
+		//Invalid move.
+		if (potentialTile == null) {
+			return false;
 		}
 
 		//If the potential tile is a floor tile and is not currently occupied, then move the player.
@@ -362,190 +300,7 @@ public class SpookySchool {
 		}
 
 		return processDoorMovement(potentialTile, player); //Return true if there is a door movement, else false.
-
 	}
-
-	/**
-	 * Attempts to move the player SOUTH by one tile.
-	 * This method should be called once the player is facing the correct direction.
-	 * @param player that is to be moved
-	 * @return true if successful, otherwise false.
-	 */
-	private boolean movePlayerSouth(Player player) {
-		int posX = player.getCurrentPosition().getPosX();
-		int potentialPosY = player.getCurrentPosition().getPosY() + 1;
-
-		Tile potentialTile = null;
-
-		//Check if potential new position is within the bounds of the array.
-		if (potentialPosY < player.getCurrentArea().height) {
-			potentialTile = player.getCurrentArea().getTile(new Position(posX, potentialPosY));
-		} else {
-			return false; //Not a valid move.
-		}
-
-		//If the potential tile is a floor tile and is not currently occupied, then move the player.
-		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
-			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
-			this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-			return true; //Player movement complete.
-		}
-
-		//If the potential tile has a movable object, then attempt to push it.
-		if (potentialTile instanceof FloorTile && potentialTile.getOccupant() instanceof MovableGO) {
-
-			MovableGO movableGO = (MovableGO) potentialTile.getOccupant();
-			int movableX = movableGO.getPosition().getPosX();
-			int potentialMovableY = movableGO.getPosition().getPosY() + 1;
-
-			Tile potentialMovableTile = null;
-
-			//Check if potential new position of the movable object is within the bounds of the array.
-			if (potentialMovableY < player.getCurrentArea().height) {
-				potentialMovableTile = this.areas.get(movableGO.getAreaName())
-						.getTile(new Position(movableX, potentialMovableY));
-
-			} else {
-				return false; //Not a valid move.
-			}
-
-			//If movable go can be pushed, then move the player and the movable object.
-			if (potentialMovableTile instanceof FloorTile && (!((FloorTile) potentialMovableTile).isOccupied())) {
-				((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
-				this.areas.get(movableGO.getAreaName()).getTile(movableGO.getPosition()).removeOccupant(); //Remove movable tile from the old tile.
-				this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-				this.moveGOToTile(movableGO, potentialMovableTile); //Move the player to the new tile.
-				return true;
-			}
-
-			return false; //Movable tile cannot be pushed.
-		}
-
-		return processDoorMovement(potentialTile, player); //Return true if there is a door movement, else false.
-
-	}
-
-	/**
-	 * Attempts to move the player EAST by one tile.
-	 * This method should be used once the player is facing the correct direction.
-	 * @param player that is to be moved
-	 * @return true if movement to the east is successful, otherwise false.
-	 */
-	private boolean movePlayerEast(Player player) {
-		int potentialPosX = player.getCurrentPosition().getPosX() + 1;
-		int posY = player.getCurrentPosition().getPosY();
-
-		Tile potentialTile = null;
-
-		//Check if potential new position is within the bounds of the array.
-		if (potentialPosX < player.getCurrentArea().width) {
-			potentialTile = player.getCurrentArea().getTile(new Position(potentialPosX, posY));
-		} else {
-			return false; //Not a valid move.
-		}
-
-		//If the potential tile is a floor tile and is not currently occupied, then move the player.
-		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
-			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
-			this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-			return true; //Player movement complete.
-		}
-
-		//If the potential tile has a movable object, then attempt to push it.
-		if (potentialTile instanceof FloorTile && potentialTile.getOccupant() instanceof MovableGO) {
-
-			MovableGO movableGO = (MovableGO) potentialTile.getOccupant();
-			int potentialMovableX = movableGO.getPosition().getPosX() + 1;
-			int movableY = movableGO.getPosition().getPosY();
-
-			Tile potentialMovableTile = null;
-
-			//Check if potential new position of the movable object is within the bounds of the array.
-			if (potentialMovableX < player.getCurrentArea().width) {
-				potentialMovableTile = this.areas.get(movableGO.getAreaName())
-						.getTile(new Position(potentialMovableX, movableY));
-
-			} else {
-				return false; //Not a valid move.
-			}
-
-			//If movable go can be pushed, then move the player and the movable object.
-			if (potentialMovableTile instanceof FloorTile && (!((FloorTile) potentialMovableTile).isOccupied())) {
-				((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
-				this.areas.get(movableGO.getAreaName()).getTile(movableGO.getPosition()).removeOccupant(); //Remove movable tile from the old tile.
-				this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-				this.moveGOToTile(movableGO, potentialMovableTile); //Move the player to the new tile.
-				return true;
-			}
-
-			return false; //Movable tile cannot be pushed.
-		}
-
-		return processDoorMovement(potentialTile, player); //Return true if there is a door movement, else false.
-	}
-
-	/**
-	 * Attempts to move the player WEST by one tile.
-	 * This method should be used once the player is facing the correct direction.
-	 * @param player that is to be moved
-	 * @return true if movement to the west is successful, otherwise false.
-	 */
-	private boolean movePlayerWest(Player player) {
-
-		int potentialPosX = player.getCurrentPosition().getPosX() - 1;
-		int posY = player.getCurrentPosition().getPosY();
-
-		Tile potentialTile = null;
-
-		//Check if potential new position is within the bounds of the array.
-		if (potentialPosX >= 0) {
-			potentialTile = player.getCurrentArea().getTile(new Position(potentialPosX, posY));
-		} else {
-			return false; //Not a valid Move
-		}
-
-		//If the potential tile is a floor tile and is not currently occupied, then move the player.
-		if (potentialTile instanceof FloorTile && (!((FloorTile) potentialTile).isOccupied())) {
-			((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
-			this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-
-			return true; //Player movement complete.
-		}
-
-		//If the potential tile has a movable object, then attempt to push it.
-		if (potentialTile instanceof FloorTile && potentialTile.getOccupant() instanceof MovableGO) {
-
-			MovableGO movableGO = (MovableGO) potentialTile.getOccupant();
-			int potentialMovableX = movableGO.getPosition().getPosX() - 1;
-			int movableY = movableGO.getPosition().getPosY();
-
-			Tile potentialMovableTile = null;
-
-			//Check if potential new position of the movable object is within the bounds of the array.
-			if (potentialMovableX >= 0) {
-				potentialMovableTile = this.areas.get(movableGO.getAreaName())
-						.getTile(new Position(potentialMovableX, movableY));
-
-			} else {
-				return false; //Not a valid move.
-			}
-
-			//If movable go can be pushed, then move the player and the movable object.
-			if (potentialMovableTile instanceof FloorTile && (!((FloorTile) potentialMovableTile).isOccupied())) {
-				((FloorTile) player.getCurrentArea().getTile(player.getCurrentPosition())).removeOccupant(); //Remove player from old tile
-				this.areas.get(movableGO.getAreaName()).getTile(movableGO.getPosition()).removeOccupant(); //Remove movable tile from the old tile.
-				this.moveGOToTile(player, potentialTile); //Move the player to the new tile.
-				this.moveGOToTile(movableGO, potentialMovableTile); //Move the player to the new tile.
-				return true;
-			}
-
-			return false; //Movable tile cannot be pushed.
-		}
-
-		return processDoorMovement(potentialTile, player); //Return true if there is a door movement, else false.
-
-	}
-
 
 	/**
 	 * Move player to next room if they move on to a door.
@@ -579,8 +334,6 @@ public class SpookySchool {
 
 				this.getBundle(playerName).setPlayerObj(player); //Add the player object to the bundle since they've moved to a new room.
 
-				this.getBundle(playerName).setNewArea(this.getPlayer(playerName).getCurrentArea()); //FIXME **UNCOMMENT FOR TESTING 2D RENDERING**
-
 				this.moveGOToTile(player, otherSideTile); //Add player to the new tile.
 
 				//Add movement to new room to the log.
@@ -605,6 +358,38 @@ public class SpookySchool {
 		gameObj.setCurrentPosition(newTile.getPosition()); //Set the player's new position.
 	}
 
+	/**
+	 * Get the tile that in front of the player.
+	 * @param player
+	 * @return the tile that is in front of the player in the direction they are facing.
+	 */
+	public Tile getPotentialTile(Player player) {
+
+		Tile potentialTile = null;
+
+		int posX = -1;
+		int posY = -1;
+
+		if (player.getDirection().equals("NORTH")) {
+			posX = player.getCurrentPosition().getPosX();
+			posY = player.getCurrentPosition().getPosY() - 1;
+
+		} else if (player.getDirection().equals("SOUTH")) {
+
+			posX = player.getCurrentPosition().getPosX();
+			posY = player.getCurrentPosition().getPosY() + 1;
+
+		} else if (player.getDirection().equals("EAST")) {
+			posX = player.getCurrentPosition().getPosX() + 1;
+			posY = player.getCurrentPosition().getPosY();
+
+		} else if (player.getDirection().equals("WEST")) {
+			posX = player.getCurrentPosition().getPosX() - 1;
+			posY = player.getCurrentPosition().getPosY();
+		}
+
+		return player.getCurrentArea().getTile(new Position(posX, posY));
+	}
 
 	/**
 	 * Returns the player associated with the given player name.

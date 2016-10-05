@@ -136,12 +136,13 @@ public class Area implements Serializable {
 	/**
 	 * Returns the tile at given position.
 	 * @param position of the tile
-	 * @return Tile at the given position
+	 * @return Tile at the given positio. If the position given is out of bounds, return null.
 	 */
 	public Tile getTile(Position position) {
 		int posX = position.getPosX();
 		int posY = position.getPosY();
 
+		//If the position is not within the bounds of the array, return null
 		if (posY < 0 || posY >= height || posX < 0 || posX >= width) {
 			return null;
 		}
