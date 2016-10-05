@@ -53,7 +53,7 @@ public class OverlayPanel  extends JPanel{
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		g.drawImage(spriteMap.getImage("h0"), headerX, headerY, null);
+		g.drawImage(spriteMap.getImage("H0"), headerX, headerY, null);
 		g.drawString(headerName, headerX + 10, headerY + 17);
 	}
 

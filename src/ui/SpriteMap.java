@@ -196,7 +196,7 @@ public class SpriteMap {
 
 		/*       Overlay Window      */
 		
-		spriteMap.put("h0",loadImage("header.png"));
+		spriteMap.put("H0",loadImage("header.png"));
 	}
 
 
