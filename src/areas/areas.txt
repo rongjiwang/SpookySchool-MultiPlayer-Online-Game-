@@ -8,5 +8,3 @@ Spawn_7 spawn7.txt
 Spawn_8 spawn8.txt
 Hallway hallway.txt
 Dorm_room dormRoom.txt
-Dorm_storage dormStorage.txt
-Dorm_toilet dormToilet.txt
