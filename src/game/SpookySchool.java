@@ -231,6 +231,21 @@ public class SpookySchool {
 			this.getBundle(playerName).addToChatLog(gameObj.getDescription());
 		}
 
+		if (gameObj instanceof DoorGO) {
+			DoorGO door = (DoorGO) gameObj;
+
+			//FIXME add code here to check if locked. If it is attempt to unlock it etc...
+
+			if (door.isOpen()) {
+				door.setOpen(false);
+				this.getBundle(playerName).addToChatLog("You closed the door.");
+			} else {
+				door.setOpen(true);
+				this.getBundle(playerName).addToChatLog("You opened the door.");
+			}
+
+		}
+
 	}
 
 	/**

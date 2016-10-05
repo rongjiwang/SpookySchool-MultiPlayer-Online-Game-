@@ -73,6 +73,18 @@ public class DoorGO implements GameObject {
 		return this.open;
 	}
 
+	public void setOpen(boolean change) {
+		this.open = change;
+	}
+
+	public boolean isLocked() {
+		return this.locked;
+	}
+
+	public void setLocked(boolean change) {
+		this.locked = change;
+	}
+
 	/**
 	 * Return the name of the area on the other side of this door.
 	 * @param currentSide the name of the area the player is currently in.
