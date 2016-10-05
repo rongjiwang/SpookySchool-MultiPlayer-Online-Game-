@@ -87,6 +87,14 @@ public class SpriteMap {
 		spriteMap.put("t2",loadImage("tableSmall2.png"));
 		spriteMap.put("t3",loadImage("tableSmall3.png"));
 		
+		// sign
+		spriteMap.put("s0",loadImage("sign0.png"));
+		spriteMap.put("s1",loadImage("sign1.png"));
+		spriteMap.put("s2",loadImage("sign2.png"));
+		spriteMap.put("s3",loadImage("sign3.png"));
+
+		
+		
 		// player 0 
 		
 		spriteMap.put("0p00",loadImage("0player00.png"));

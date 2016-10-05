@@ -37,7 +37,7 @@ public class DebugDisplay extends JPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 	
-		String client = null;
+		/*String client = null;
 		String area = null;
 		String viewX = null;
 		String viewY = null;
@@ -72,7 +72,7 @@ public class DebugDisplay extends JPanel{
 		g.drawString("Area: " + area, 20, 40);
 		g.drawString("ViewX: " + viewX, 20, 60);
 		g.drawString("ViewY: " + viewY, 20, 80);
-		g.drawString("command: " + viewY, 20, 80);
+		g.drawString("command: " + viewY, 20, 80);*/
 		
 		
 		

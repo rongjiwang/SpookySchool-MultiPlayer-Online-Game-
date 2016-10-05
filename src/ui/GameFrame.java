@@ -20,7 +20,7 @@ public class GameFrame extends JFrame implements WindowListener {
 	private InventoryPanel invPanel;
 	private ChatPanel chatPanel;
 
-	private boolean render3D = false; //FIXME **CHANGE TO FALSE TESTING 2D RENDERING**
+	private boolean render3D = true; //FIXME **CHANGE TO FALSE TESTING 2D RENDERING**
 
 	private AreaDisplayPanel areaDisplayPanel; //This pane displays all of the other panels
 	private AreaDisplayPanel2D areaDisplayPanel2D; //This pane displays all of the other panels
