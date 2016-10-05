@@ -249,7 +249,7 @@ public class SpookySchool {
 				}
 			}
 
-			this.getBundle(objDescription).setMessage(objDescription);
+			//this.getBundle(playerName).setMessage(objDescription);
 			this.getBundle(playerName).addToChatLog(objDescription); //FIXME remove once mesages display in rendering
 		}
 
