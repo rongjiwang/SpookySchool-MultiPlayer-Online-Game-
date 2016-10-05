@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -68,6 +70,13 @@ public class GameFrame extends JFrame implements WindowListener {
 		//debugDisplay.updateDisplay();
 
 		this.setVisible(true); //Display the window
+		
+		List<String> itemsToAdd = new ArrayList<String>();
+		itemsToAdd.add("key");
+		itemsToAdd.add("coin");
+		itemsToAdd.add("box");
+		
+		invPanel.addItems(itemsToAdd);
 	}
 
 	public void updateDebug(String name) {

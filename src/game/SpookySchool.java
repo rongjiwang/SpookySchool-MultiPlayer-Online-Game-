@@ -286,7 +286,7 @@ public class SpookySchool {
 				}
 			}
 
-			//this.getBundle(playerName).setMessage(objDescription);
+			this.getBundle(playerName).setMessage(objDescription);
 			this.getBundle(playerName).addToChatLog(objDescription); //FIXME remove once messages display in rendering
 		}
 
@@ -295,13 +295,12 @@ public class SpookySchool {
 			DoorGO door = (DoorGO) gameObj;
 
 			//FIXME add code here to check if locked. If it is attempt to unlock it etc...
-
 			if (door.isOpen()) {
 				door.setOpen(false);
-				this.getBundle(playerName).addToChatLog("You closed the door.");
+				this.getBundle(playerName).addToChatLog("You closed the door."); //FIXME remove later.
 			} else {
 				door.setOpen(true);
-				this.getBundle(playerName).addToChatLog("You opened the door.");
+				this.getBundle(playerName).addToChatLog("You opened the door."); //FIXME remove later.
 			}
 		}
 	}
@@ -418,9 +417,13 @@ public class SpookySchool {
 	}
 
 	/**
-	 * Get the tile that in front of the player.
-	 * @param player who's potential tile you want.
-	 * @return the tile object that is in front of the player in the direction they are facing.
+	 * 
+	 * Get the tile that in front of the player given a distance.
+	 * @param area the area that the game object is in.
+	 * @param gameObj the game object that you want to move.
+	 * @param direction the direction you want to move the game object in.
+	 * @param distance which tile to get in front of the player.
+	 * @return the tile object that is in "distance" tiles in front of the player in the direction they are facing.
 	 */
 	public Tile getPotentialTile(Area area, GameObject gameObj, String direction, int distance) {
 
@@ -484,11 +487,11 @@ public class SpookySchool {
 
 
 	/**
-	 * FIXME: Used to move NPC characters and do other things that need to be done...
+	 * This method is called periodically by the Clock Thread and is used to move NPC objects.
 	 */
 	public void tick() {
 
-		int tilesToCheck = 3;
+		int tilesToCheck = 3; //Number of tiles the npc needs to check in front of them for a player.
 
 		//Move all NPCs in the game towards their next direction (if possible).
 		outer: for (NonHumanPlayer npc : this.nonHumanPlayers) {
@@ -502,14 +505,6 @@ public class SpookySchool {
 
 					//If player caught, teleport them back to their spawn room.
 					if (tile.getOccupant() instanceof Player) {
-
-						try {
-							Thread.sleep(500);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} //FIXME temporary? 
-
 						Player player = (Player) tile.getOccupant();
 						player.getCurrentArea().getTile(player.getCurrentPosition()).removeOccupant(); //Remove player from this tile.
 						player.setCurrentArea(this.areas.get(player.getSpawnName())); //Set player's area back to the spawn room.
@@ -525,15 +520,8 @@ public class SpookySchool {
 
 						continue outer; //Exit to the outer loop.
 					}
-
 				}
-
-
-
 			}
-
 		}
-
 	}
-
 }
