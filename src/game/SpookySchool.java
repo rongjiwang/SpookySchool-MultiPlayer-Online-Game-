@@ -502,14 +502,6 @@ public class SpookySchool {
 
 					//If player caught, teleport them back to their spawn room.
 					if (tile.getOccupant() instanceof Player) {
-
-						try {
-							Thread.sleep(500);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} //FIXME temporary? 
-
 						Player player = (Player) tile.getOccupant();
 						player.getCurrentArea().getTile(player.getCurrentPosition()).removeOccupant(); //Remove player from this tile.
 						player.setCurrentArea(this.areas.get(player.getSpawnName())); //Set player's area back to the spawn room.
