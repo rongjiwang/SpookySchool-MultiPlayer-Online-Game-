@@ -249,7 +249,8 @@ public class SpookySchool {
 				}
 			}
 
-			this.getBundle(playerName).addToChatLog(objDescription);
+			this.getBundle(objDescription).setMessage(objDescription);
+			this.getBundle(playerName).addToChatLog(objDescription); //FIXME remove once mesages display in rendering
 		}
 
 		if (gameObj instanceof DoorGO) {
