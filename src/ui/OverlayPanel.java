@@ -45,6 +45,7 @@ public class OverlayPanel  extends JPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.drawImage(spriteMap.getImage("h0"), headerX, headerY, null);
+		g.drawString(headerName, headerX + 10, headerY + 17);
 	}
 
 	public void move(){

@@ -99,7 +99,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 			overlayPanel.setHeaderX(-155, currentArea.getAreaName());
 		}else{
 			String oldArea = currentArea.getAreaName();
-			if(!oldArea.equals(bundle.getPlayerObj().getCurrentArea().getArea())){
+			if(!oldArea.equals(this.mainPlayer.getCurrentArea().getAreaName())){
+				this.currentArea = this.mainPlayer.getCurrentArea();
 				overlayPanel.setHeaderX(-155, currentArea.getAreaName());
 			}
 			this.currentArea = this.mainPlayer.getCurrentArea();
