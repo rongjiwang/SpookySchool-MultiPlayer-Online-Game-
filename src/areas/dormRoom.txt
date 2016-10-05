@@ -1,4 +1,4 @@
-17 12
+17 17
 n w0 w0 w0 w0 w0 w0 w0 w0 w0 w0 w0 w0 w0 w0 w0 n
 w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
 w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
@@ -7,7 +7,12 @@ w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
 w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
 w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
 w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
-n w2 w2 W0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
-n n n w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
-n n n w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
-n n n n w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 n
+w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
+w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
+w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
+w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
+w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
+w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
+w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
+w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
+n w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 n
