@@ -41,20 +41,11 @@ public class AreaDisplayPanel2D extends JPanel implements KeyListener {
 	}
 
 	/**
-	 * Updates the board.
-	 */
-	public void updateDisplay() {
-		this.repaint();
-	}
-
-	/**
 	 * Process the received bundle. Display game according to the bundle.
 	 */
 	public void processBundle(Bundle bundle) {
-
 		this.currentArea = bundle.getPlayerObj().getCurrentArea();
-
-		this.updateDisplay();
+		this.repaint();
 	}
 
 	@Override
@@ -63,10 +54,8 @@ public class AreaDisplayPanel2D extends JPanel implements KeyListener {
 
 		Area area = this.currentArea;
 
-
 		for (int row = rowShift; row < area.height; row++) {
 			for (int col = colShift; col < area.width; col++) {
-
 
 				if (area.getArea()[row][col] == null) {
 					g.setColor(Color.black);
@@ -129,11 +118,9 @@ public class AreaDisplayPanel2D extends JPanel implements KeyListener {
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-	}
+	public void keyReleased(KeyEvent arg0) {}
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {
-	}
+	public void keyTyped(KeyEvent arg0) {}
 
 }
