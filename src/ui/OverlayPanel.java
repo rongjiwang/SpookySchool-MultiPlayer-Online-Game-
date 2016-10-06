@@ -22,13 +22,12 @@ public class OverlayPanel extends JPanel {
 	private boolean firstHeaderReceived = false; //To stop the null pointer at the start of the game.
 
 	//Footer Message box
-	private int footerX = 25;
-	private int footerY = 550;
+	private int footerX = 50;
+	private int footerY = 580;
 	private String footerMessage;
 	private int footerIncrement;
 	private long footerThen; //holds time
 	private boolean firstFooterReceived = false; //To stop the null pointer at the start of the game.
-
 
 	public OverlayPanel(AreaDisplayPanel panel, SpriteMap spriteMap) {
 		this.panel = panel;
@@ -53,7 +52,6 @@ public class OverlayPanel extends JPanel {
 			Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
 			setFont(font.deriveFont(Font.TRUETYPE_FONT, 12f));
 
-
 		} catch (Exception e) {
 		}
 
@@ -69,8 +67,8 @@ public class OverlayPanel extends JPanel {
 
 	public void setFooterMessage(String message) {
 		this.footerMessage = message;
-		this.footerY = 550;
-		this.footerIncrement = -3;
+		this.footerY = 580;
+		this.footerIncrement = -4;
 		this.firstFooterReceived = true;
 	}
 
@@ -83,16 +81,18 @@ public class OverlayPanel extends JPanel {
 		g.drawString(headerMessage, headerX + 10, headerY + 17);
 
 		//Draw the footer
-		g.drawImage(spriteMap.getImage("H0"), footerX, footerY, null);
-		//String wrappedString = wrap(footerMessage);
-		g.drawString(footerMessage, footerX + 10, footerY + 17);
-
+		if (this.footerMessage != null) {
+			g.drawImage(spriteMap.getImage("F0"), footerX, footerY, null);
+			g.drawString(this.footerMessage, footerX + 10, footerY + 25);
+		}
 	}
 
 	public void tick() {
 
 		now = System.currentTimeMillis();
 
+		//Display the header message. The boolean is there so that we don't try to print 
+		//a message when we have never had one before yet as this can cause null pointer.
 		if (firstHeaderReceived) {
 			headerX += headerIncrement;
 			if (headerX == 5) {
@@ -107,20 +107,21 @@ public class OverlayPanel extends JPanel {
 			}
 		}
 
+		//Display the footer message. The boolean is there so that we don't try to print 
+		//a message when we have never had one before yet as this can cause null pointer.
 		if (this.firstFooterReceived) {
 			this.footerY = this.footerY + footerIncrement;
-			if (footerY == 460) {
-				this.footerY = 461;
+			if (footerY == 420) {
+				this.footerY = 421;
 				this.footerIncrement = 0;
-				this.footerThen = now + 5000; //Pause for 5secs.
+				this.footerThen = now + 3500; //Pause for 3.5secs.
 			} else if (this.footerIncrement == 0) {
 				if (now > footerThen) {
-					this.footerY = 461;
-					this.footerIncrement = 3;
+					this.footerY = 421;
+					this.footerIncrement = 4;
 				}
 			}
 		}
-
 	}
 
 }

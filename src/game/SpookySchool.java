@@ -351,7 +351,6 @@ public class SpookySchool {
 			}
 
 			this.getBundle(playerName).setMessage(objDescription);
-			this.getBundle(playerName).addToChatLog(objDescription); //FIXME remove once messages display in rendering
 
 			return; //Finished 
 
@@ -366,26 +365,21 @@ public class SpookySchool {
 				for (InventoryGO item : player.getInventory()) {
 					if (item.getId().contains(door.getId())) {
 						door.setLocked(false); //Unlock the door.
-
-						this.getBundle(playerName).addToChatLog("You unlocked the door using a key in your inventory"); //FIXME remove later
-						this.getBundle(playerName).setMessage("You unlocked the door using a key in your inventory");
+						this.getBundle(playerName).setMessage("You unlocked the door using the key in your inventory");
 						return;
 					}
 				}
 
-				this.getBundle(playerName).addToChatLog("You dont have the key to open this door."); //FIXME remove later
 				this.getBundle(playerName).setMessage("You dont have the key to open this door.");
 
 				return; //Door unlocked
 			}
 
-			//FIXME add code here to check if locked. If it is attempt to unlock it etc...
+			//Open or close the door depending on current door state
 			if (door.isOpen()) {
 				door.setOpen(false);
-				this.getBundle(playerName).addToChatLog("You closed the door."); //FIXME remove later.
 			} else {
 				door.setOpen(true);
-				this.getBundle(playerName).addToChatLog("You opened the door."); //FIXME remove later.
 			}
 
 			return; //finished
@@ -409,7 +403,7 @@ public class SpookySchool {
 
 				Tile potentialTile = this.getPotentialTile(area, player, direction, 1); //Get the tile in fron of the player
 
-				if (potentialTile != null && !potentialTile.isOccupied()) {
+				if (potentialTile != null && potentialTile instanceof FloorTile && !potentialTile.isOccupied()) {
 					item.setAreaName(area.getAreaName());
 					item.setCurrentPosition(potentialTile.getPosition());
 					potentialTile.setOccupant(item);
@@ -417,12 +411,11 @@ public class SpookySchool {
 					this.getBundle(playerName).setMessage("You dropped the item.");
 					return;
 				}
-				this.getBundle(playerName).setMessage("You cannot drop the tile here.");
+				this.getBundle(playerName).setMessage("You cannot drop the item here.");
 				return;
 			}
 		}
 
-		this.getBundle(playerName).addToChatLog("The item you tried to drop is no longer in your inventory."); //FIXME: Remove this once message works.
 		this.getBundle(playerName).setMessage("The item you tried to drop is no longer in your inventory.");
 
 	}
@@ -510,7 +503,7 @@ public class SpookySchool {
 
 				//Add movement to new room to the log.
 				this.addChatLogItemToAllBundles(
-						playerName + " entered the following room " + otherSide.replace('_', ' '));
+						playerName + " entered the following room: " + otherSide.replace('_', ' '));
 
 				return true; //Movement through door successful
 			}
@@ -641,10 +634,6 @@ public class SpookySchool {
 						//Add message to the bundle about what just happened to the player
 						this.getBundle(player.getId())
 								.setMessage("You were caught by a teacher and sent back to your spawn room!");
-
-						//FIXME: Get rid of this once messages work.
-						this.getBundle(player.getId())
-								.addToChatLog("You were caught by a teacher and sent back to your spawn room!");
 
 						continue outer; //Exit to the outer loop.
 					}

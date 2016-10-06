@@ -53,7 +53,6 @@ public class InventoryGO implements GameObject {
 	}
 
 	@Override
-	//FIXME: NEED TO SET INVENTORY POSITION PREPERLY.
 	public void setCurrentPosition(Position position) {
 		this.position = position;
 	}
