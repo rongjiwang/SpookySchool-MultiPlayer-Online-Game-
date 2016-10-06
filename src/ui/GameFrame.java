@@ -21,6 +21,7 @@ public class GameFrame extends JFrame implements WindowListener {
 	private JPanel southPanel;
 	private InventoryPanel invPanel;
 	private ChatPanel chatPanel;
+	private UIImageMap imageMap;
 
 
 	private boolean render3D = true; //FIXME **CHANGE TO FALSE TESTING 2D RENDERING**
@@ -34,15 +35,13 @@ public class GameFrame extends JFrame implements WindowListener {
 
 	public GameFrame(String title, Client client, String name) {
 		super(title); // Set window title.
-
-
-
+		
+		this.imageMap = new UIImageMap();
+		
 		this.client = client;
 
 		//creates inventory panel
-		invPanel = new InventoryPanel();
-
-		
+		invPanel = new InventoryPanel(imageMap);
 
 		//sets up layout
 		this.setLayout(new BorderLayout());
@@ -55,7 +54,7 @@ public class GameFrame extends JFrame implements WindowListener {
 		}
 		
 		//creates chat panel
-		chatPanel = new ChatPanel(this, name, client);
+		chatPanel = new ChatPanel(this, name, client, imageMap);
 
 		//temp, delete after
 		debugDisplay = new DebugDisplay(areaDisplayPanel);
@@ -100,13 +99,13 @@ public class GameFrame extends JFrame implements WindowListener {
 	public void setPanels() {
 		//leftPanel
 		if (this.render3D) {
-			northPanel = new MainPanel(areaDisplayPanel);
+			northPanel = new MainPanel(areaDisplayPanel, imageMap);
 		} else {
-			northPanel = new MainPanel(areaDisplayPanel2D);
+			northPanel = new MainPanel(areaDisplayPanel2D, imageMap);
 		}
 		this.add(northPanel, BorderLayout.NORTH);
 
-		southPanel = new SidePanel(chatPanel, invPanel);
+		southPanel = new SidePanel(chatPanel, invPanel, imageMap);
 		this.add(southPanel, BorderLayout.SOUTH);
 		this.pack();
 	}
