@@ -2,22 +2,31 @@ package parser;
 
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 import org.xml.sax.InputSource;
+
+import com.sun.org.apache.xml.internal.serialize.*;
+
 
 import game.Area;
 import game.FloorTile;
 import game.InventoryGO;
+import game.Player;
 import game.Position;
 import game.SpookySchool;
 import game.Tile;
@@ -36,7 +45,8 @@ public class Parser {
 	//Fields
 	private Document load;
 	private Tile[][] area;
-
+	private Element root;
+	private Document save;
 
 	/** Constructor for the Parser, creates a Parser object to be used in the game
 	 * 
@@ -92,81 +102,102 @@ public class Parser {
 			}
 		}
 	}
-		
-		/** Takes all the information of the current state of the game and saves it to
-		 * an XML file. This can be read from later when needed to be loaded
-		 * 
-		 * @param game -- SpookySchool instance to be saved. Contains all information
-		 * 				  about the game that needs to be saved.
-		 * @param player -- name of the player that requested the save. This is the player
-		 * 					whose inventory and character will be saved.
-		 */
-		public void save(SpookySchool game, String player){
-			
-			/*
-			 * for every area in the areas map,
-			 * get the Tile[][] area and save whats at every tile
-			 * 
-			 * only save invent objects that are on the floor
-			 * 
-			 * 
-			 */
-			//Map<String, Area> areas = game.getAreas();
-			//List<String> players = game.getPlayers();
-			//Map<String, InventoryGO> inventObjects = game.getInventoryObjects();
-			
-			String path = "src/saves/" + player + "save.xml";
-			
-			//creates new XML file
-			Document save = createXML();
-			
-			Element root = save.createElement("game");
-			//saveMap(areas);
-			
-					
-			
-			
-			
-		}
-		
 	
 		
+	/** Takes all the information of the current state of the game and saves it to
+	 * an XML file. This can be read from later when needed to be loaded
+	 * 
+	 * @param game -- SpookySchool instance to be saved. Contains all information
+	 * 				  about the game that needs to be saved.
+	 * @param player -- name of the player that requested the save. This is the player
+	 * 					whose inventory and character will be saved.
+	 * @throws IOException 
+	 */
+	public void save(SpookySchool game, String player) throws IOException{
 		
-		
-		
-		public Document createXML(){
-			try{
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();	//Implements the static class to properly manage a file
-				factory.setIgnoringComments(true);										//Ignore comments
-				factory.setIgnoringElementContentWhitespace(true);						//Ignore whitespace
-				//factory.setValidating(true);
-				DocumentBuilder builder =  factory.newDocumentBuilder();				//Build the document in memory for the program to use
-				Document save = builder.newDocument();
-				return save;
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-			return null; 	//to compile, should never reach this point
-			
-		}
-		
-
-		
-		/**
-		 * Allows for a workable integer to be extracted from an XML Node. Rather than extracting the value as a 
-		 * String, the String is parsed and converted into an integer primitive type.
+		/*
+		 * for every area in the areas map,
+		 * get the Tile[][] area and save whats at every tile
 		 * 
-		 * @param nodeName -- name of the Node in question
-		 * @return int -- integer value of the Node in question
+		 * only save invent objects that are on the floor
+		 * 
+		 * 
 		 */
-		public int extractIntFromNode(String nodeName) {
-			int value = Integer.parseInt(extractStringFromNode(nodeName));	//Determines String value and converts to int
-			return value;
+		Map<String, Area> areas = game.getAreas();
+		List<Player> players = game.getPlayers();
+		Map<String, InventoryGO> inventObjects = game.getInventoryObjects();
+		
+		String path = "src/saves/" + player + "save.xml";
+		
+		
+		//creates new XML file
+		save = createXMLDom();
+		OutputFormat outFormat = new OutputFormat(save);
+		outFormat.setIndenting(true);
+		File savedFile = new File(path);
+		FileOutputStream outStream = new FileOutputStream(savedFile);
+		XMLSerializer serializer = new XMLSerializer(outStream, outFormat);
+		
+		
+		root = save.createElement("game");
+		
+		//Saves the each area in the Map areas into the XML
+		
+		for (String key : areas.keySet()){
+			Element tagName = save.createElement("area");
+			Text contents = save.createTextNode(key);
+			tagName.appendChild(contents);
+			root.appendChild(tagName);
+			saveTilesOfArea(areas.get(key), tagName);
 		}
-		
-		
+		serializer.serialize(save);
+	}
+	
 
+	public void saveTilesOfArea(Area area, Element currentParent){
 		
+		for(int i = 0; i < area.getArea().length; i++){
+			for (int j = 0; j < area.getArea()[i].length; j++){
+				Element tagName = save.createElement("tile");
+				Text contents = save.createTextNode(area.getArea()[i][j].toString());
+				tagName.appendChild(contents);
+				currentParent.appendChild(tagName);
+			}
+		}
+	}
+	
+	
+	public Document createXMLDom(){
+		try{
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();	//Implements the static class to properly manage a file
+			factory.setIgnoringComments(true);										//Ignore comments
+			factory.setIgnoringElementContentWhitespace(true);						//Ignore whitespace
+			//factory.setValidating(true);
+			DocumentBuilder builder =  factory.newDocumentBuilder();				//Build the document in memory for the program to use
+			Document save = builder.newDocument();
+			return save;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null; 	//to compile, should never reach this point
+		
+	}
+	
+
+	/**
+	 * Allows for a workable integer to be extracted from an XML Node. Rather than extracting the value as a 
+	 * String, the String is parsed and converted into an integer primitive type.
+	 * 
+	 * @param nodeName -- name of the Node in question
+	 * @return int -- integer value of the Node in question
+	 */
+	public int extractIntFromNode(String nodeName) {
+		int value = Integer.parseInt(extractStringFromNode(nodeName));	//Determines String value and converts to int
+		return value;
+	}
+	
+	
+	
 	/**
 	 * Allows the string value of the Node in question to be extracted as a String. Additionally, the string 
 	 * is formatted to remove any unwanted default characters.
@@ -185,9 +216,7 @@ public class Parser {
 		return value;
 	}
 
-
-
-
+	
 	/**Allows the string value of the Node in question to be extracted as a String. Additionally, the string 
 	 * is formatted to remove any unwanted default characters. 
 	 * 
