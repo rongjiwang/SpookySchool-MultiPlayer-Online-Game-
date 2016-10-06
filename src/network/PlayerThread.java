@@ -12,7 +12,7 @@ import ui.CreateServerPanel;
 
 /**
  * 
- * @author Kevin
+ * @author Rongji Wang
  * @author Pritesh R. Patel
  */
 public class PlayerThread extends Thread {
