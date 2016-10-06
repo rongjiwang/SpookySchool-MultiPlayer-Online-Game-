@@ -206,7 +206,7 @@ public class SpriteMap {
 	 * @param filename
 	 * @return
 	 */
-	public Image loadImage(String filename) {
+	public static Image loadImage(String filename) {
 		// using the URL means the image loads when stored
 		// in a jar or expanded into individual files.
 		java.net.URL imageURL = SpriteMap.class.getResource(IMAGE_PATH + filename);
