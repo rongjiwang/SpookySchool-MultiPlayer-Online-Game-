@@ -107,10 +107,10 @@ public class SpriteMap {
 		spriteMap.put("f3", loadImage("furniture3.png"));
 
 		// trees
-		spriteMap.put("r0", loadImage("treeOne0.png"));
-		spriteMap.put("r1", loadImage("treeOne1.png"));
-		spriteMap.put("r2", loadImage("treeOne2.png"));
-		spriteMap.put("r3", loadImage("treeOne3.png"));
+		spriteMap.put("u0", loadImage("treeOne0.png"));
+		spriteMap.put("u1", loadImage("treeOne1.png"));
+		spriteMap.put("u2", loadImage("treeOne2.png"));
+		spriteMap.put("u3", loadImage("treeOne3.png"));
 		spriteMap.put("e0", loadImage("treeTwo0.png"));
 		spriteMap.put("e1", loadImage("treeTwo1.png"));
 		spriteMap.put("e2", loadImage("treeTwo2.png"));
@@ -150,6 +150,10 @@ public class SpriteMap {
 		spriteMap.put("Q1", loadImage("buildingCorner1.png"));
 		spriteMap.put("Q2", loadImage("buildingCorner2.png"));
 		spriteMap.put("Q3", loadImage("buildingCorner3.png"));
+		spriteMap.put("R0", loadImage("roof0.png"));
+		spriteMap.put("R1", loadImage("roof1.png"));
+		spriteMap.put("R2", loadImage("roof2.png"));
+		spriteMap.put("R3", loadImage("roof3.png"));
 
 
 

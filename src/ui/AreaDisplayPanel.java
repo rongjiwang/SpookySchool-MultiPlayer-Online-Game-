@@ -158,7 +158,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		g.setColor(Color.black);
 		g.fillRect(this.windowOffSetX, this.windowOffSetY, this.windowWidth, this.windowHeight);
 		
-		if(currentArea.getAreaName().equals("Outside"))
+		if(currentArea != null)
+			if(currentArea.getAreaName().equals("Outside"))
 			g.drawImage(spriteMap.getImage(getRotatedToken("G0")), (this.renderOffSetX - this.windowWidth)/2, (this.renderOffSetY - this.windowHeight)/2,null);
 		
 		renderArray(g, 0); // render floor tiles		
