@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -11,12 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
 
 public class InventoryPanel extends JPanel implements MouseListener, MouseMotionListener{
-	//private List<InvButton> invButtons;
 	private List<ItemDisplay> itemList;
 	private List<ItemDisplay> itemsShown;
 	final static Dimension boardSize = new Dimension(250,150);
@@ -39,17 +42,10 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 		this.setPreferredSize(boardSize);
 		highLight = new ImageIcon(this.getClass().getResource("UIimages/highlight.png")).getImage();
 		background = new ImageIcon(this.getClass().getResource("UIimages/invBackground.png")).getImage();
-		//	invButtons = new ArrayList<InvButton>();
+
 		addMouseListener(this);
 		addMouseMotionListener(this);
-		//create buttons, which will then populate the gridlayout, passing the correct coordinates 
-		/*for(int i = 0; i < 3; i ++){
-			for(int j = 0; j < 5; j++){
-				InvButton iButton = new InvButton(i, j, this);
-				invButtons.add(iButton);
-				add(iButton);
-			}
-		}*/
+
 
 		setOpaque(false);
 		setVisible(true);
@@ -128,14 +124,24 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 				break;
 			item = itemList.get(i);
 			image = new ImageIcon(this.getClass().getResource("itemimages/"+item.getName()+".png")).getImage();
-			//if(dragged != i){
+			if(dragged != i){
 				g.drawImage(image, item.getX(), item.getY(), image.getWidth(null), image.getHeight(null), null);
-			//} 
-					
+			} 
+
 		}
 		//if(dragged != -1){
 		//	g.drawImage(image, item.getTempX(), item.getTempY(), image.getWidth(null), image.getHeight(null), null);
 		//}
+	}
+
+	/**
+	 * Popup menu
+	 * 
+	 * @param e
+	 */
+	private void doPop(MouseEvent e, boolean container){
+		PopUpMenu menu = new PopUpMenu(container);
+		menu.show(e.getComponent(), e.getX(), e.getY());
 	}
 
 
@@ -143,9 +149,9 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	public void mouseDragged(MouseEvent e) {
 		highlightedX=(e.getX()/50)*50;
 		highlightedY=(e.getY()/50)*50;
-	/**	if(dragged != -1){
+		/**	if(dragged != -1){
 			itemsShown.get(dragged).setTemp(e.getX()-25, e.getY()-25);
-			
+
 			System.out.println("Loc: "+itemsShown.get(dragged).getTempX()+","+itemsShown.get(dragged).getTempY());
 		}**/
 		repaint();
@@ -162,7 +168,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(SwingUtilities.isRightMouseButton(e)){
-			System.out.println("Right mouse is pressed");
+			doPop(e, false);
 		}
 
 	}
@@ -170,11 +176,11 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	@Override
 	public void mousePressed(MouseEvent e) {
 		int index = e.getX()/50 + ((e.getY()/50)*5);
-	//	System.out.println(index);
+		//	System.out.println(index);
 		if(itemsShown.size() > index && index >= 0){
 			dragged = index;
 			//itemsShown.get(dragged).changeDragging();
-		//	System.out.println(itemsShown.get(dragged).getName());
+			//	System.out.println(itemsShown.get(dragged).getName());
 		}
 	}
 
@@ -186,7 +192,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 		} else {
 			System.out.print("Dragged "+itemsShown.get(dragged).getName()+" onto ");
 		}
-		
+
 		int secondIndexs = e.getX()/50 + ((e.getY()/50)*5);
 		if(itemsShown.size() > secondIndexs && secondIndexs >= 0){
 			System.out.println(itemsShown.get(secondIndexs).getName());
@@ -195,7 +201,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 		}
 		//	System.out.println(itemsShown.get(secondIndexs).getName());
 		//System.out.println(e.getX()/50 + ((e.getY()/50)*5));
-		
+
 		//if we are dragging an item
 		if(dragged != -1){
 			//itemsShown.get(dragged).changeDragging();
@@ -224,5 +230,40 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 
 	}
 
+	/**
+	 * Popupmenu will be a menu when a player right clicks on an inventory item
+	 * 
+	 * @author Andy
+	 *
+	 */
+	class PopUpMenu extends JPopupMenu {
+		JMenuItem inspect;
+		JMenuItem drop;
+		JMenuItem open;
+
+		public PopUpMenu(boolean value){
+			ActionListener popUpListener = new ActionListener() {
+				public void actionPerformed(ActionEvent event) {
+					System.out.println("Popup menu item ["
+							+ event.getActionCommand() + "] was pressed.");
+				}
+			};
+
+			inspect = new JMenuItem("Inspect");
+			inspect.addActionListener(popUpListener);
+			add(inspect);
+			drop = new JMenuItem("Drop");
+			drop.addActionListener(popUpListener);
+			add(drop);
+			if(value){
+				open = new JMenuItem("Open");
+				open.addActionListener(popUpListener);
+				add(open);
+			}
+
+		}
+
+
+	}
 
 }
