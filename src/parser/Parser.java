@@ -187,7 +187,19 @@ public class Parser {
 				if (currentTile == null){
 					contents = save.createTextNode("null");
 				}if (currentTile instanceof Tile){
-					
+					if(currentTile instanceof FloorTile){
+						Element pos = save.createElement("pos");
+						Element x = save.createElement("x");
+						Text xVal = save.createTextNode("" + currentTile.getPosition().getPosX());
+						Element y = save.createElement("y");
+						Text yVal = save.createTextNode("" + currentTile.getPosition().getPosY());
+						
+						x.appendChild(xVal);
+						y.appendChild(yVal);
+						pos.appendChild(x);
+						pos.appendChild(y);
+						
+					}
 					
 				}
 				else{
