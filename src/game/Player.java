@@ -1,5 +1,8 @@
 package game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents a player in the Spooky School game and holds all information related to the player.
  * @author Pritesh R. Patel
@@ -12,6 +15,7 @@ public class Player implements GameObject {
 	private Area currentArea;
 	private final String spawnName;
 	private Position currentPosition;
+	private List<InventoryGO> inventory = new ArrayList<InventoryGO>();
 
 	private String direction = "NORTH";
 	private String token;
@@ -90,6 +94,21 @@ public class Player implements GameObject {
 
 	public String getSpawnName() {
 		return spawnName;
+	}
+
+	/**
+	 * @return the player's inventory
+	 */
+	public List<InventoryGO> getInventory() {
+		return inventory;
+	}
+
+	/**
+	 * Add an item to the player's inventory.
+	 * @param item the inventory item to add to the player's inventory.
+	 */
+	public void addToInventory(InventoryGO item) {
+		this.inventory.add(item);
 	}
 
 	@Override

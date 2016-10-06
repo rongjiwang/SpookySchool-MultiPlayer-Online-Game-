@@ -6,6 +6,7 @@ package game;
  * @author Pritesh R. Patel
  *
  */
+
 public class DoorGO implements GameObject {
 
 	private static final long serialVersionUID = 2625782518677987399L;

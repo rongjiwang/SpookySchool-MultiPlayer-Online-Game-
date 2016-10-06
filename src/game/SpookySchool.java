@@ -487,8 +487,8 @@ public class SpookySchool {
 
 
 	/**
-	 * This method is called periodically by the Clock Thread and is used to move NPC objects.
-	 */
+		 * This method is called periodically by the Clock Thread and is used to move NPC objects.
+		 */
 	public void tick() {
 
 		int tilesToCheck = 3; //Number of tiles the npc needs to check in front of them for a player.
@@ -523,5 +523,8 @@ public class SpookySchool {
 				}
 			}
 		}
+
+		return;
 	}
 }
+

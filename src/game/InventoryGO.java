@@ -4,15 +4,28 @@ public class InventoryGO implements GameObject {
 
 	private static final long serialVersionUID = -1272721150110182719L;
 
+	private final String name;
 	private final String id;
 	private final String token;
-	private String description = "Seems to be some kind of item you can pick up. Try pressing 'z'.";
-
+	private final int size;
 	private Position position;
 
-	public InventoryGO(String id, String token) {
+	private String description = "Seems to be some kind of item you can pick up. Try pressing 'z'.";
+
+	public InventoryGO(String name, String id, String token, int size, Position pos, String description) {
+		this.name = name;
 		this.id = id;
 		this.token = token;
+		this.size = size;
+		this.position = pos;
+		this.description = description;
+	}
+
+
+	/** GETTERS AND SETTERS **/
+
+	public String getName() {
+		return name;
 	}
 
 	@Override
@@ -25,6 +38,10 @@ public class InventoryGO implements GameObject {
 		return this.id;
 	}
 
+	public int getSize() {
+		return size;
+	}
+
 	@Override
 	public Position getPosition() {
 		return this.position;
@@ -33,8 +50,7 @@ public class InventoryGO implements GameObject {
 	@Override
 	//FIXME: NEED TO SET INVENTORY POSITION PREPERLY.
 	public void setCurrentPosition(Position position) {
-		// TODO Auto-generated method stub
-
+		this.position = position;
 	}
 
 	@Override
@@ -47,7 +63,5 @@ public class InventoryGO implements GameObject {
 		this.description = desc;
 
 	}
-
-
 
 }

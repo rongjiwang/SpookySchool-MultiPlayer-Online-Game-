@@ -23,7 +23,7 @@ public class GameFrame extends JFrame implements WindowListener {
 	private ChatPanel chatPanel;
 
 
-	private boolean render3D = true; //FIXME **CHANGE TO FALSE TESTING 2D RENDERING**
+	private boolean render3D = false; //FIXME **CHANGE TO FALSE TESTING 2D RENDERING**
 
 	private AreaDisplayPanel areaDisplayPanel; //This pane displays all of the other panels
 	private AreaDisplayPanel2D areaDisplayPanel2D; //This pane displays all of the other panels
@@ -70,12 +70,12 @@ public class GameFrame extends JFrame implements WindowListener {
 		//debugDisplay.updateDisplay();
 
 		this.setVisible(true); //Display the window
-		
+
 		List<String> itemsToAdd = new ArrayList<String>();
 		itemsToAdd.add("key");
 		itemsToAdd.add("coin");
 		itemsToAdd.add("box");
-		
+
 		invPanel.addItems(itemsToAdd);
 	}
 
@@ -159,22 +159,28 @@ public class GameFrame extends JFrame implements WindowListener {
 
 	// UNUSED WINDOW LISTENER METHODS
 	@Override
-	public void windowActivated(WindowEvent arg0) {}
+	public void windowActivated(WindowEvent arg0) {
+	}
 
 	@Override
-	public void windowClosed(WindowEvent arg0) {}
+	public void windowClosed(WindowEvent arg0) {
+	}
 
 	@Override
-	public void windowDeactivated(WindowEvent arg0) {}
+	public void windowDeactivated(WindowEvent arg0) {
+	}
 
 	@Override
-	public void windowDeiconified(WindowEvent arg0) {}
+	public void windowDeiconified(WindowEvent arg0) {
+	}
 
 	@Override
-	public void windowIconified(WindowEvent arg0) {}
+	public void windowIconified(WindowEvent arg0) {
+	}
 
 	@Override
-	public void windowOpened(WindowEvent arg0) {}
+	public void windowOpened(WindowEvent arg0) {
+	}
 
 
 }
