@@ -31,7 +31,7 @@ public class SidePanel extends JPanel{
 		
 		left.add(inven, BorderLayout.CENTER);
 		left.add(buttons,BorderLayout.SOUTH);
-		
+		this.add(Box.createRigidArea(new Dimension(1,10)), BorderLayout.NORTH);
 		this.add(left, BorderLayout.WEST);
 		this.add(chat, BorderLayout.EAST);
 			
