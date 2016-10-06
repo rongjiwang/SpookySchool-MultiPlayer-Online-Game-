@@ -83,7 +83,7 @@ public class SpriteMap {
 		spriteMap.put("b2",loadImage("bed2.png"));
 		spriteMap.put("b3",loadImage("bed3.png"));
 		
-		// bed
+		// key
 		spriteMap.put("k0",loadImage("key0.png"));
 		spriteMap.put("k1",loadImage("key1.png"));
 		spriteMap.put("k2",loadImage("key2.png"));
