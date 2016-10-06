@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.IOException;
 import java.util.HashMap;
 
+import static ui.SpriteMap.loadImage;
 import javax.imageio.ImageIO;
 
 
@@ -81,6 +82,12 @@ public class SpriteMap {
 		spriteMap.put("b1",loadImage("bed1.png"));
 		spriteMap.put("b2",loadImage("bed2.png"));
 		spriteMap.put("b3",loadImage("bed3.png"));
+		
+		// bed
+		spriteMap.put("k0",loadImage("key0.png"));
+		spriteMap.put("k1",loadImage("key1.png"));
+		spriteMap.put("k2",loadImage("key2.png"));
+		spriteMap.put("k3",loadImage("key3.png"));
 		
 		// furniture
 		spriteMap.put("f0",loadImage("furniture0.png"));
