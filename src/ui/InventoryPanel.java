@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -12,11 +13,13 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
+
+import game.InventoryGO;
+import network.Client;
 
 
 public class InventoryPanel extends JPanel implements MouseListener, MouseMotionListener{
@@ -24,25 +27,37 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	private List<ItemDisplay> itemsShown;
 	final static Dimension boardSize = new Dimension(250,150);
 	private boolean highlighted;
+	private boolean processing;
 	private int highlightedX;
 	private int highlightedY;
 	private Image highLight;
 	private Image background;
-	
+
+	private List<InventoryGO> tempStore;
+	private boolean tempStored;
+
 	private UIImageMap imageMap;
 	private ItemImageMap itemMap;
-	
+
 	private int dragged = -1;
 
 	//used when up/down buttons pressed
 	private int level;
 
+	private Client client;
 
-	public InventoryPanel(UIImageMap imageMap){
+
+	public InventoryPanel(UIImageMap imageMap, Client client){
 		super(new GridLayout(3,5));
+
+		this.client = client;
 		this.imageMap = imageMap;
 		this.itemMap = new ItemImageMap();
-		
+		this.tempStore = new ArrayList<InventoryGO>();
+		this.tempStored = false;
+
+		processing = false;
+
 		itemList = new ArrayList<ItemDisplay>();
 		itemsShown = new ArrayList<ItemDisplay>();
 		this.level = 0;
@@ -53,35 +68,81 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 		addMouseListener(this);
 		addMouseMotionListener(this);
 
-
 		setOpaque(false);
 		setVisible(true);
 		validate();
 	}
 
-	public void addItems(List<String> items){
-		itemList.clear();
-		for(String item : items){
-			if(item.equals("box"))
-				itemList.add(new ItemDisplay(item, true));
-			else
-				itemList.add(new ItemDisplay(item, false));
+
+	public void upOne(){
+		if(level > 0){
+			level-=5;
+			processItems();
+			repaint();
 		}
-		System.out.println("Items added");
-		processItems();
+	}
+	
+	public void downOne(){
+		if(level < (itemList.size()+5)){
+			level+=5;
+			processItems();
+			repaint();
+		}
+	}
+	/**
+	 * Checks if the user is currently right clicked or dragging. If so, stores the inventory to pass after the user is finished, otherwise processes inventory as normal
+	 * 
+	 * @param items
+	 */
+	public void updateInventory(List<InventoryGO> items){
+		
+		//if(!processing)
+			addItems(items);
+	//	else{
+		//	tempStore = items;
+		//	tempStored = true;
+		//}
+
+	}
+
+	public boolean itemsChanged(List<InventoryGO> items){
+		if(items.size() != itemList.size())
+			return true;
+
+		for(InventoryGO item: items){
+			if(itemList.contains(item))
+				return true;
+		}
+
+		return false;
+	}
+
+	public void addItems(List<InventoryGO> items){
+		if(items != null){
+			if(itemsChanged(items)){
+
+				for(ItemDisplay item : itemsShown){
+					item.removeDisplay();
+				}
+				itemsShown.clear();
+
+				itemList.clear();
+
+				for(InventoryGO item : items){
+					itemList.add(new ItemDisplay(item));
+				}
+
+				processItems();
+				repaint();
+			}
+		}
 	}
 
 	/**
 	 * place items onto correct x,y coordinates, in the 5x3 grid
 	 */
 	public void processItems(){
-		//clear current items
-		for(ItemDisplay item : itemsShown){
-			item.removeDisplay();
-		}
-		itemsShown.clear();
-
-		int i = 0;
+		int i = level;
 
 		ItemDisplay toAdd = null;
 		for(int j = 0; j < 3; j++){ //row
@@ -97,6 +158,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 				i++;
 			}
 		}	
+		
 	}
 
 	/**
@@ -120,6 +182,18 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 		repaint();
 	}
 
+	
+	//public void processTemp(){
+	//	if(processing){
+	//		processing = false;
+	//		if(tempStored){
+	//			addItems(tempStore);
+	//			tempStore.clear();
+	//			tempStored = false;
+	//		}
+	//	}
+	//}
+	
 	@Override
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -133,14 +207,14 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 			if(i >= itemsShown.size())
 				break;
 			item = itemsShown.get(i);
-			image = itemMap.getImage(item.getName());
+			image = itemMap.getImage(item.getToken());
 			if(dragged != i){
 				g.drawImage(image, item.getX(), item.getY(), image.getWidth(null), image.getHeight(null), null);
 			} 
 
 		}
 		if(dragged != -1){
-			Image dragImage = itemMap.getImage(itemsShown.get(dragged).getName());
+			Image dragImage = itemMap.getImage(itemsShown.get(dragged).getToken());
 			g.drawImage(dragImage, itemsShown.get(dragged).getTempX(), itemsShown.get(dragged).getTempY(), image.getWidth(null), image.getHeight(null), null);
 		}
 	}
@@ -150,8 +224,8 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	 * 
 	 * @param e
 	 */
-	private void doPop(MouseEvent e, boolean container, String name){
-		PopUpMenu menu = new PopUpMenu(container, name);
+	private void doPop(MouseEvent e, ItemDisplay item){
+		PopUpMenu menu = new PopUpMenu(item);
 		menu.show(e.getComponent(), e.getX(), e.getY());
 	}
 
@@ -177,14 +251,14 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(SwingUtilities.isRightMouseButton(e)){ //if right mouse button
-			
+
 			int index = e.getX()/50 + ((e.getY()/50)*5);
-			
+
 			//if item is there
 			if(itemsShown.size() > index && index >= 0){
-				doPop(e, itemsShown.get(index).isContainer(), itemsShown.get(index).getName());
+				doPop(e, /**itemsShown.get(index).isContainer(), **/itemsShown.get(index));
 			}
-				
+
 		}
 
 	}
@@ -195,6 +269,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 		//	System.out.println(index);
 		if(itemsShown.size() > index && index >= 0 && !SwingUtilities.isRightMouseButton(e)){
 			dragged = index;
+			//processing = true;
 			itemsShown.get(dragged).changeDragging();
 
 		}
@@ -203,24 +278,25 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		//ensure if e.getX() or e.getY() out of bounds that it does something
-		if(dragged != -1)
-			System.out.print("Dragged "+itemsShown.get(dragged).getName()+" onto ");
-
-
-		int secondIndexs = e.getX()/50 + ((e.getY()/50)*5);
+		String firstID = "";
+		String secondID = "";
 
 		if(dragged != -1){
-			if(itemsShown.size() > secondIndexs && secondIndexs >= 0){
-				System.out.println(itemsShown.get(secondIndexs).getName());
-			} else {
-				System.out.println("nothing");
-			}
-		}
+			firstID += itemsShown.get(dragged).getID();
 
-		if(dragged != -1){
+			int secondIndexs = e.getX()/50 + ((e.getY()/50)*5);
+
+			if(itemsShown.size() > secondIndexs && secondIndexs >= 0)
+				secondID += itemsShown.get(secondIndexs).getID();
+
 			itemsShown.get(dragged).changeDragging();
+			
 			dragged = -1;
-		} 
+			//processTemp();
+		}
+		if(!firstID.equals("") && !secondID.equals("")){
+			//client.sendCommand("DRAG "+firstID+" "+secondID);
+		}
 		repaint();
 	}
 
@@ -236,9 +312,11 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	@Override
 	public void mouseExited(MouseEvent e) {
 		highlighted = false;
+		
 		if(dragged != -1){
 			itemsShown.get(dragged).changeDragging();
 			dragged = -1;
+			//processTemp();
 		} 
 		repaint();
 
@@ -255,25 +333,40 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 		JMenuItem drop;
 		JMenuItem open;
 
-		public PopUpMenu(boolean value, String name){
+		public PopUpMenu(ItemDisplay item){
 			ActionListener popUpListener = new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
-					System.out.println("Popup menu item ["
-							+ event.getActionCommand() + "] was pressed on item "+name+".");
+					if(event.getActionCommand().equals("Inspect")){
+						System.out.println(item.getDescription());
+					} else if(event.getActionCommand().equals("Drop")){
+						client.sendCommand("DROP "+item.getID());
+					} else {
+						client.sendCommand("OPEN "+item.getID());
+					}
 				}
+				
 			};
+			
+			try {
+				inspect = new JMenuItem("Inspect");
+				drop = new JMenuItem("Drop");
+				Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
+				inspect.setFont(font.deriveFont(Font.TRUETYPE_FONT, 13f));
+				drop.setFont(font.deriveFont(Font.TRUETYPE_FONT, 13f));
 
-			inspect = new JMenuItem("Inspect");
+			} catch (Exception e) {}
+			
+			
 			inspect.addActionListener(popUpListener);
 			add(inspect);
-			drop = new JMenuItem("Drop");
+			
 			drop.addActionListener(popUpListener);
 			add(drop);
-			if(value){
-				open = new JMenuItem("Open");
-				open.addActionListener(popUpListener);
-				add(open);
-			}
+		//	if(value){
+			//	open = new JMenuItem("Open");
+				//open.addActionListener(popUpListener);
+				//add(open);
+			//}
 
 		}
 	}

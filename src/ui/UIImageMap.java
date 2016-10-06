@@ -63,6 +63,10 @@ public class UIImageMap {
 		spriteMap.put("qbhi",loadImage("quithighlight.png"));
 		spriteMap.put("sb",loadImage("send.png"));
 		spriteMap.put("sbhi",loadImage("sendhighlight.png"));
+		spriteMap.put("ub", loadImage("uparrow.png"));
+		spriteMap.put("ubhi",loadImage("uparrowhigh.png"));
+		spriteMap.put("db",loadImage("downarrow.png"));
+		spriteMap.put("dbhi", loadImage("downarrowhigh.png"));
 		
 		//inv background
 		spriteMap.put("invBack",loadImage("invBackground.png"));

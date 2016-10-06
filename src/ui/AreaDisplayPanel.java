@@ -28,8 +28,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 	private final int windowOffSetX = 0;
 	private final int windowOffSetY = 0;
 	private final int windowWidth = 600; //352
-	private final int windowHeight = 500
-			;
+	private final int windowHeight = 500;
 
 	// Renderer Tile Size
 	private final int tileWidth = 32;
@@ -96,16 +95,20 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 
 		if (currentArea == null) {
 			this.currentArea = this.mainPlayer.getCurrentArea();
-			overlayPanel.setHeaderX(-155, currentArea.getAreaName());
+			overlayPanel.setHeaderMessage(-155, currentArea.getAreaName());
 		} else {
 			String oldArea = currentArea.getAreaName();
 
-			if(!oldArea.equals(this.mainPlayer.getCurrentArea().getAreaName())){
+			if (!oldArea.equals(this.mainPlayer.getCurrentArea().getAreaName())) {
 				this.currentArea = this.mainPlayer.getCurrentArea();
-				overlayPanel.setHeaderX(-155, currentArea.getAreaName());
+				overlayPanel.setHeaderMessage(-155, currentArea.getAreaName());
 			}
-			
+
 			this.currentArea = this.mainPlayer.getCurrentArea();
+		}
+
+		if (bundle.getMessage() != null) {
+			overlayPanel.setFooterMessage(bundle.getMessage());
 		}
 
 		this.updateDisplay();
@@ -155,7 +158,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		g.setColor(Color.black);
 		g.fillRect(this.windowOffSetX, this.windowOffSetY, this.windowWidth, this.windowHeight);
 
-		renderArray(g, 0); // render carpet tiles		
+		renderArray(g, 0); // render floor tiles		
 		renderArray(g, 1); // render far walls
 		renderArray(g, 2); // render gameObjects
 		renderArray(g, 3); // render close and side walls
@@ -266,15 +269,16 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		}
 
 		// Draw Walls(Back and side walls with layer 1, front with layer 3)
-		if (((token.equals("w0") || token.equals("W1") || token.equals("W2")) && layer == 1)
-				|| ((!(token.equals("w0") || token.equals("W1") || token.equals("W2"))) && layer == 3)) {
-			if (token.contains("w") || token.contains("W")) {
+		if (((token.equals("w0") || token.equals("W1")  || token.equals("B0") || token.equals("Q1") || token.equals("Q2")) && layer == 1)
+				|| ((!(token.equals("w0") || token.equals("W1") || token.equals("W2") || token.equals("B0") || token.equals("Q1") || token.equals("Q2"))) && layer == 3)) {
+			if (token.contains("w") || token.contains("W") || token.contains("B") || token.contains("Q")) {
 				Image tileImage = spriteMap.getImage(token);
 				int adjustX = tileImage.getWidth(null) - tileWidth;
 				int adjustY = tileImage.getHeight(null) - tileHeight;
 				g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
 			}
 		}
+	
 	}
 
 	/**
@@ -514,12 +518,10 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-	}
+	public void keyReleased(KeyEvent e) {}
 
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-	}
+	public void keyTyped(KeyEvent e) {}
 
 }

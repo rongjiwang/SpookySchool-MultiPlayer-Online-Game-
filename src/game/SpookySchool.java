@@ -2,6 +2,7 @@ package game;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -350,7 +351,6 @@ public class SpookySchool {
 			}
 
 			this.getBundle(playerName).setMessage(objDescription);
-			this.getBundle(playerName).addToChatLog(objDescription); //FIXME remove once messages display in rendering
 
 			return; //Finished 
 
@@ -365,32 +365,60 @@ public class SpookySchool {
 				for (InventoryGO item : player.getInventory()) {
 					if (item.getId().contains(door.getId())) {
 						door.setLocked(false); //Unlock the door.
-
-						this.getBundle(playerName).addToChatLog("You unlocked the door using a key in your inventory"); //FIXME remove later
-						this.getBundle(playerName).setMessage("You unlocked the door using a key in your inventory");
+						this.getBundle(playerName).setMessage("You unlocked the door using the key in your inventory");
 						return;
 					}
 				}
 
-				this.getBundle(playerName).addToChatLog("You dont have the key to open this door."); //FIXME remove later
 				this.getBundle(playerName).setMessage("You dont have the key to open this door.");
 
 				return; //Door unlocked
 			}
 
-			//FIXME add code here to check if locked. If it is attempt to unlock it etc...
+			//Open or close the door depending on current door state
 			if (door.isOpen()) {
 				door.setOpen(false);
-				this.getBundle(playerName).addToChatLog("You closed the door."); //FIXME remove later.
 			} else {
 				door.setOpen(true);
-				this.getBundle(playerName).addToChatLog("You opened the door."); //FIXME remove later.
 			}
 
 			return; //finished
 		}
 	}
 
+	/**
+	 * 
+	 * @param playerName name of the player who would like to drop an inventory GO.
+	 * @param itemID the id of the item the player wishes to drop.
+	 */
+	public void processDrop(String playerName, String itemID) {
+
+		Player player = this.getPlayer(playerName);
+
+		for (InventoryGO item : player.getInventory()) {
+			if (item.getId().equals(itemID)) {
+
+				Area area = player.getCurrentArea();
+				String direction = player.getDirection();
+
+				Tile potentialTile = this.getPotentialTile(area, player, direction, 1); //Get the tile in fron of the player
+
+				if (potentialTile != null && potentialTile instanceof FloorTile && !potentialTile.isOccupied()) {
+					item.setAreaName(area.getAreaName());
+					item.setCurrentPosition(potentialTile.getPosition());
+					potentialTile.setOccupant(item);
+					player.getInventory().remove(item);
+					this.getBundle(playerName).setMessage("You dropped the item.");
+					return;
+				}
+				this.getBundle(playerName).setMessage("You cannot drop the item here.");
+				return;
+			}
+		}
+
+		this.getBundle(playerName).setMessage("The item you tried to drop is no longer in your inventory.");
+
+	}
 
 	/**
 	 * Moves player in a given direction if possible.
@@ -475,7 +503,7 @@ public class SpookySchool {
 
 				//Add movement to new room to the log.
 				this.addChatLogItemToAllBundles(
-						playerName + " entered the following room " + otherSide.replace('_', ' '));
+						playerName + " entered the following room: " + otherSide.replace('_', ' '));
 
 				return true; //Movement through door successful
 			}
@@ -542,6 +570,7 @@ public class SpookySchool {
 				return this.players.get(i);
 			}
 		}
+
 		return null; //Player with given name not found.
 	}
 
@@ -568,9 +597,13 @@ public class SpookySchool {
 	/**
 	 * FIXME: for saving gmae to xml
 	 */
-	public void saveGame(String playerName) {
+	public synchronized void saveGame(String playerName) {
 		System.out.println("Saving game...");
-		this.parser.save(this, playerName);
+		try {
+			this.parser.save(this, playerName);
+		} catch (IOException e) {
+			this.getBundle(playerName).setMessage("Failed to save game");
+		}
 	}
 
 
@@ -601,10 +634,6 @@ public class SpookySchool {
 						//Add message to the bundle about what just happened to the player
 						this.getBundle(player.getId())
 								.setMessage("You were caught by a teacher and sent back to your spawn room!");
-
-						//FIXME: Get rid of this once messages work.
-						this.getBundle(player.getId())
-								.addToChatLog("You were caught by a teacher and sent back to your spawn room!");
 
 						continue outer; //Exit to the outer loop.
 					}

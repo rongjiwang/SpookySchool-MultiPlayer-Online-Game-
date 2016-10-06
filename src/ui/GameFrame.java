@@ -41,7 +41,7 @@ public class GameFrame extends JFrame implements WindowListener {
 		this.client = client;
 
 		//creates inventory panel
-		invPanel = new InventoryPanel(imageMap);
+		invPanel = new InventoryPanel(imageMap, this.client);
 
 		//sets up layout
 		this.setLayout(new BorderLayout());
@@ -71,13 +71,6 @@ public class GameFrame extends JFrame implements WindowListener {
 		//debugDisplay.updateDisplay();
 
 		this.setVisible(true); //Display the window
-
-		List<String> itemsToAdd = new ArrayList<String>();
-		itemsToAdd.add("key");
-		itemsToAdd.add("coin");
-		itemsToAdd.add("box");
-
-		invPanel.addItems(itemsToAdd);
 	}
 
 	public void updateDebug(String name) {
@@ -114,10 +107,14 @@ public class GameFrame extends JFrame implements WindowListener {
 	 * Process the bundle by passing its contents to relevant panels.
 	 */
 	public void processBundle(Bundle bundle) {
-		if (bundle.getLog() != null && !bundle.getLog().isEmpty()) {
+		
+		if (bundle.getLog() != null && !bundle.getLog().isEmpty()) 
 			chatPanel.addChange(bundle.getLog());
-		}
-
+		
+		//passes bundle's player's inventory to inventory panel
+		invPanel.updateInventory(bundle.getPlayerObj().getInventory());
+		
+		//passes bundle to render window
 		if (this.render3D) {
 			this.areaDisplayPanel.processBundle(bundle);//Temporarily only passing bundle to the renderer.
 		} else {

@@ -39,9 +39,9 @@ public class ItemImageMap {
 	public void loadMap(){
 		spriteMap = new HashMap<String, Image>();
 		
-		spriteMap.put("box",loadImage("box.png"));
-		spriteMap.put("coin",loadImage("coin.png"));
-		spriteMap.put("key",loadImage("key.png"));
+		spriteMap.put("b0",loadImage("box.png"));
+		spriteMap.put("c0",loadImage("coin.png"));
+		spriteMap.put("k0",loadImage("key.png"));
 		
 	}
 

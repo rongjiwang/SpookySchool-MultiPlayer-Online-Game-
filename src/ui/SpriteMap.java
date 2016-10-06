@@ -4,7 +4,6 @@ import java.awt.Image;
 import java.io.IOException;
 import java.util.HashMap;
 
-import static ui.SpriteMap.loadImage;
 import javax.imageio.ImageIO;
 
 
@@ -15,11 +14,11 @@ import javax.imageio.ImageIO;
  *
  */
 public class SpriteMap {
-	
+
 	private static final String IMAGE_PATH = "images/";
 	private HashMap<String, Image> spriteMap;
-	
-	public SpriteMap(){
+
+	public SpriteMap() {
 		loadMap();
 	}
 
@@ -29,29 +28,30 @@ public class SpriteMap {
 	 * @param - token
 	 * @return - Image
 	 */
-	public Image getImage(String token){
+	public Image getImage(String token) {
 		Image image = spriteMap.get(token);
-		if(image == null){
+		if (image == null) {
 			System.out.println("null image on input " + token);
 		}
-		return image;	
+		return image;
 	}
-	public void loadMap(){
-		
+
+	public void loadMap() {
+
 		spriteMap = new HashMap<String, Image>();
-		
+
 		//regular wall
-		spriteMap.put("w0",loadImage("wall0.png"));
-		spriteMap.put("w1",loadImage("wall1.png"));
-		spriteMap.put("w2",loadImage("wall2.png"));
-		spriteMap.put("w3",loadImage("wall3.png"));
-		
+		spriteMap.put("w0", loadImage("wall0.png"));
+		spriteMap.put("w1", loadImage("wall1.png"));
+		spriteMap.put("w2", loadImage("wall2.png"));
+		spriteMap.put("w3", loadImage("wall3.png"));
+
 		// corner wall
-		spriteMap.put("W0",loadImage("wallCorner0.png"));
-		spriteMap.put("W1",loadImage("wallCorner1.png"));
-		spriteMap.put("W2",loadImage("wallCorner2.png"));
-		spriteMap.put("W3",loadImage("wallCorner3.png"));
-		
+		spriteMap.put("W0", loadImage("wallCorner0.png"));
+		spriteMap.put("W1", loadImage("wallCorner1.png"));
+		spriteMap.put("W2", loadImage("wallCorner2.png"));
+		spriteMap.put("W3", loadImage("wallCorner3.png"));
+
 		// floors
 		spriteMap.put("c0",loadImage("carpet0.png"));
 		spriteMap.put("c1",loadImage("carpet1.png"));
@@ -66,7 +66,7 @@ public class SpriteMap {
 		spriteMap.put("h2",loadImage("hard2.png"));
 		spriteMap.put("h3",loadImage("hard3.png"));
 		
-		// door
+		// doors/windows
 		spriteMap.put("d00",loadImage("door00.png"));
 		spriteMap.put("d10",loadImage("door10.png"));
 		spriteMap.put("d20",loadImage("door20.png"));
@@ -75,68 +75,93 @@ public class SpriteMap {
 		spriteMap.put("d11",loadImage("door11.png"));
 		spriteMap.put("d21",loadImage("door21.png"));
 		spriteMap.put("d31",loadImage("door31.png"));
-		
+		spriteMap.put("w00",loadImage("window00.png"));
+		spriteMap.put("w10",loadImage("window10.png"));
+		spriteMap.put("w20",loadImage("window20.png"));
+		spriteMap.put("w30",loadImage("window30.png"));
+		spriteMap.put("w01",loadImage("window01.png"));
+		spriteMap.put("w11",loadImage("window11.png"));
+		spriteMap.put("w21",loadImage("window21.png"));
+		spriteMap.put("w31",loadImage("window31.png"));
 		
 		// bed
-		spriteMap.put("b0",loadImage("bed0.png"));
-		spriteMap.put("b1",loadImage("bed1.png"));
-		spriteMap.put("b2",loadImage("bed2.png"));
-		spriteMap.put("b3",loadImage("bed3.png"));
-		
+		spriteMap.put("b0", loadImage("bed0.png"));
+		spriteMap.put("b1", loadImage("bed1.png"));
+		spriteMap.put("b2", loadImage("bed2.png"));
+		spriteMap.put("b3", loadImage("bed3.png"));
+
 		// key
-		spriteMap.put("k0",loadImage("key0.png"));
-		spriteMap.put("k1",loadImage("key1.png"));
-		spriteMap.put("k2",loadImage("key2.png"));
-		spriteMap.put("k3",loadImage("key3.png"));
-		
+		spriteMap.put("k0", loadImage("key0.png"));
+		spriteMap.put("k1", loadImage("key1.png"));
+		spriteMap.put("k2", loadImage("key2.png"));
+		spriteMap.put("k3", loadImage("key3.png"));
+
 		// furniture
-		spriteMap.put("f0",loadImage("furniture0.png"));
-		spriteMap.put("f1",loadImage("furniture1.png"));
-		spriteMap.put("f2",loadImage("furniture2.png"));
-		spriteMap.put("f3",loadImage("furniture3.png"));
+		spriteMap.put("f0", loadImage("furniture0.png"));
+		spriteMap.put("f1", loadImage("furniture1.png"));
+		spriteMap.put("f2", loadImage("furniture2.png"));
+		spriteMap.put("f3", loadImage("furniture3.png"));
+
+		// trees
+		spriteMap.put("r0", loadImage("treeOne0.png"));
+		spriteMap.put("r1", loadImage("treeOne1.png"));
+		spriteMap.put("r2", loadImage("treeOne2.png"));
+		spriteMap.put("r3", loadImage("treeOne3.png"));
 		
 		// table - big
-		spriteMap.put("T0",loadImage("tableRound0.png"));
-		spriteMap.put("T1",loadImage("tableRound1.png"));
-		spriteMap.put("T2",loadImage("tableRound2.png"));
-		spriteMap.put("T3",loadImage("tableRound3.png"));
-		
-		// table - small
-		spriteMap.put("t0",loadImage("tableSmall0.png"));
-		spriteMap.put("t1",loadImage("tableSmall1.png"));
-		spriteMap.put("t2",loadImage("tableSmall2.png"));
-		spriteMap.put("t3",loadImage("tableSmall3.png"));
-		
-		// sign
-		spriteMap.put("s0",loadImage("sign0.png"));
-		spriteMap.put("s1",loadImage("sign1.png"));
-		spriteMap.put("s2",loadImage("sign2.png"));
-		spriteMap.put("s3",loadImage("sign3.png"));
+		spriteMap.put("T0", loadImage("tableRound0.png"));
+		spriteMap.put("T1", loadImage("tableRound1.png"));
+		spriteMap.put("T2", loadImage("tableRound2.png"));
+		spriteMap.put("T3", loadImage("tableRound3.png"));
 
-		
-		
+		// table - small
+		spriteMap.put("t0", loadImage("tableSmall0.png"));
+		spriteMap.put("t1", loadImage("tableSmall1.png"));
+		spriteMap.put("t2", loadImage("tableSmall2.png"));
+		spriteMap.put("t3", loadImage("tableSmall3.png"));
+
+		// sign
+		spriteMap.put("s0", loadImage("sign0.png"));
+		spriteMap.put("s1", loadImage("sign1.png"));
+		spriteMap.put("s2", loadImage("sign2.png"));
+		spriteMap.put("s3", loadImage("sign3.png"));
+
+		// Building
+		spriteMap.put("B0", loadImage("building0.png"));
+		spriteMap.put("B1", loadImage("building1.png"));
+		spriteMap.put("B2", loadImage("building2.png"));
+		spriteMap.put("B3", loadImage("building3.png"));
+
+		// Building walls
+		spriteMap.put("Q0", loadImage("buildingCorner0.png"));
+		spriteMap.put("Q1", loadImage("buildingCorner1.png"));
+		spriteMap.put("Q2", loadImage("buildingCorner2.png"));
+		spriteMap.put("Q3", loadImage("buildingCorner3.png"));
+
+
+
 		// player 0 
-		
-		spriteMap.put("0p00",loadImage("0player00.png"));
-		spriteMap.put("0p01",loadImage("0player01.png"));
-		spriteMap.put("0p02",loadImage("0player02.png"));
-		spriteMap.put("0p03",loadImage("0player03.png"));
-		
-		spriteMap.put("0p10",loadImage("0player10.png"));
-		spriteMap.put("0p11",loadImage("0player11.png"));
-		spriteMap.put("0p12",loadImage("0player12.png"));
-		spriteMap.put("0p13",loadImage("0player13.png"));
-		
-		spriteMap.put("0p20",loadImage("0player20.png"));
-		spriteMap.put("0p21",loadImage("0player21.png"));
-		spriteMap.put("0p22",loadImage("0player22.png"));
-		spriteMap.put("0p23",loadImage("0player23.png"));
-		
-		spriteMap.put("0p30",loadImage("0player30.png"));
-		spriteMap.put("0p31",loadImage("0player31.png"));
-		spriteMap.put("0p32",loadImage("0player32.png"));
-		spriteMap.put("0p33",loadImage("0player33.png"));
-		
+
+		spriteMap.put("0p00", loadImage("0player00.png"));
+		spriteMap.put("0p01", loadImage("0player01.png"));
+		spriteMap.put("0p02", loadImage("0player02.png"));
+		spriteMap.put("0p03", loadImage("0player03.png"));
+
+		spriteMap.put("0p10", loadImage("0player10.png"));
+		spriteMap.put("0p11", loadImage("0player11.png"));
+		spriteMap.put("0p12", loadImage("0player12.png"));
+		spriteMap.put("0p13", loadImage("0player13.png"));
+
+		spriteMap.put("0p20", loadImage("0player20.png"));
+		spriteMap.put("0p21", loadImage("0player21.png"));
+		spriteMap.put("0p22", loadImage("0player22.png"));
+		spriteMap.put("0p23", loadImage("0player23.png"));
+
+		spriteMap.put("0p30", loadImage("0player30.png"));
+		spriteMap.put("0p31", loadImage("0player31.png"));
+		spriteMap.put("0p32", loadImage("0player32.png"));
+		spriteMap.put("0p33", loadImage("0player33.png"));
+
 		// player 1
 		/*spriteMap.put("1p00",loadImage("1player00.png"));
 		spriteMap.put("1p01",loadImage("1player01.png"));
@@ -185,7 +210,7 @@ public class SpriteMap {
 		spriteMap.put("3p01",loadImage("3player01.png"));
 		spriteMap.put("3p02",loadImage("3player02.png"));
 		spriteMap.put("3p03",loadImage("3player03.png"));
-	
+		
 		spriteMap.put("3p10",loadImage("3player10.png"));
 		spriteMap.put("3p11",loadImage("3player11.png"));
 		spriteMap.put("3p12",loadImage("3player12.png"));
@@ -202,8 +227,9 @@ public class SpriteMap {
 		spriteMap.put("3p33",loadImage("3player33.png"));*/
 
 		/*       Overlay Window      */
-		
-		spriteMap.put("H0",loadImage("header.png"));
+
+		spriteMap.put("H0", loadImage("header.png"));
+		spriteMap.put("F0", loadImage("footer.png"));
 	}
 
 
