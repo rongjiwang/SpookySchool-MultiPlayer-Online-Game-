@@ -2,7 +2,6 @@ package game;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -599,11 +598,9 @@ public class SpookySchool {
 	 */
 	public synchronized void saveGame(String playerName) {
 		System.out.println("Saving game...");
-		try {
-			this.parser.save(this, playerName);
-		} catch (IOException e) {
-			this.getBundle(playerName).setMessage("Failed to save game");
-		}
+		this.parser.save(this, playerName);
+		this.getBundle(playerName).setMessage("Failed to save game");
+
 	}
 
 
