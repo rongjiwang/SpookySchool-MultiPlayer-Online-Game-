@@ -22,6 +22,7 @@ public class GameFrame extends JFrame implements WindowListener {
 	private InventoryPanel invPanel;
 	private ChatPanel chatPanel;
 	private UIImageMap imageMap;
+	private SpriteMap spriteMap;
 
 
 	private boolean render3D = true; //FIXME **CHANGE TO FALSE TESTING 2D RENDERING**
@@ -32,11 +33,13 @@ public class GameFrame extends JFrame implements WindowListener {
 
 	private Client client;
 	private String name;
+	private OverlayPanel overlayPanel;
 
 	public GameFrame(String title, Client client, String name) {
 		super(title); // Set window title.
 		
 		this.imageMap = new UIImageMap();
+		this.spriteMap = new SpriteMap();
 		
 		this.client = client;
 
@@ -48,10 +51,13 @@ public class GameFrame extends JFrame implements WindowListener {
 		this.setResizable(false); //Do not allow window resizing.
 
 		if (this.render3D) {
-			this.areaDisplayPanel = new AreaDisplayPanel(this.client, this);
+			this.areaDisplayPanel = new AreaDisplayPanel(this.client, this, spriteMap);
+			this.overlayPanel = new OverlayPanel(areaDisplayPanel, spriteMap);
+			this.areaDisplayPanel.setOverLay(this.overlayPanel);
 		} else {
 			this.areaDisplayPanel2D = new AreaDisplayPanel2D(this.client);
 		}
+		
 		
 		//creates chat panel
 		chatPanel = new ChatPanel(this, name, client, imageMap);

@@ -64,19 +64,18 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		  Default view */
 
 
-	public AreaDisplayPanel(Client client, GameFrame gf) {
+	public AreaDisplayPanel(Client client, GameFrame gf, SpriteMap spriteMap) {
 
 		this.setBackground(Color.darkGray);
 		this.setFocusable(true);
 		this.requestFocus();
 		this.addKeyListener(this);
-
-		this.spriteMap = new SpriteMap();
-		this.overlayPanel = new OverlayPanel(this, spriteMap);
+		
+		this.spriteMap = spriteMap;
 		//		overlayPanel.setBackground(Color.BLUE);
-		overlayPanel.setOpaque(false);
+		
 		this.setLayout(new BorderLayout());
-		add(overlayPanel, BorderLayout.CENTER);
+		
 
 		validate();
 
@@ -84,7 +83,12 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 
 		this.gameFrame = gf;
 	}
-
+	
+	public void setOverLay(OverlayPanel overlayPanel){
+		this.overlayPanel = overlayPanel;
+		overlayPanel.setOpaque(false);
+		this.add(overlayPanel, BorderLayout.CENTER);
+	}
 
 	/**
 	 * Process the received bundle. Display game according to the bundle.
