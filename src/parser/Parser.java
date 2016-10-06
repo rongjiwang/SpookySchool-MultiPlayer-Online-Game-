@@ -1,5 +1,7 @@
 package parser;
 
+import java.io.File;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -80,8 +82,41 @@ public class Parser {
 		
 		/** Takes all the information of the current state of the game and saves it to
 		 * an XML file. This can be read from later when needed to be loaded
+		 * 
+		 * @param game -- SpookySchool instance to be saved. Contains all information
+		 * 				  about the game that needs to be saved.
+		 * @param player -- name of the player that requested the save. This is the player
+		 * 					whose inventory and character will be saved.
 		 */
-		public void save(){
+		public void save(SpookySchool game, String player){
+			
+			/*
+			 * for every area in the areas map,
+			 * get the Tile[][] area and save whats at every tile
+			 * 
+			 * only save invent objects that are on the floor
+			 * 
+			 * 
+			 */
+			Map<String, Area> areas = game.getAreas();
+			List<String> players = game.getPlayers();
+			Map<String, InventoryGO> inventObjects = game.getInventory();
+			
+			String path = "src/saves/" + player + "save.xml";
+			try{
+				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();	//Implements the static class to properly manage a file
+				factory.setIgnoringComments(true);										//Ignore comments
+				factory.setIgnoringElementContentWhitespace(true);						//Ignore whitespace
+				//factory.setValidating(true);
+				DocumentBuilder builder =  factory.newDocumentBuilder();				//Build the document in memory for the program to use
+				Document save;
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			
+			
+			
 			
 		}
 		
