@@ -28,8 +28,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 	private final int windowOffSetX = 0;
 	private final int windowOffSetY = 0;
 	private final int windowWidth = 600; //352
-	private final int windowHeight = 500
-			;
+	private final int windowHeight = 500;
 
 	// Renderer Tile Size
 	private final int tileWidth = 32;
@@ -96,16 +95,20 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 
 		if (currentArea == null) {
 			this.currentArea = this.mainPlayer.getCurrentArea();
-			overlayPanel.setHeaderX(-155, currentArea.getAreaName());
+			overlayPanel.setHeaderMessage(-155, currentArea.getAreaName());
 		} else {
 			String oldArea = currentArea.getAreaName();
 
-			if(!oldArea.equals(this.mainPlayer.getCurrentArea().getAreaName())){
+			if (!oldArea.equals(this.mainPlayer.getCurrentArea().getAreaName())) {
 				this.currentArea = this.mainPlayer.getCurrentArea();
-				overlayPanel.setHeaderX(-155, currentArea.getAreaName());
+				overlayPanel.setHeaderMessage(-155, currentArea.getAreaName());
 			}
-			
+
 			this.currentArea = this.mainPlayer.getCurrentArea();
+		}
+
+		if (bundle.getMessage() != null) {
+			overlayPanel.setFooterMessage(bundle.getMessage());
 		}
 
 		this.updateDisplay();
@@ -514,12 +517,10 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-	}
+	public void keyReleased(KeyEvent e) {}
 
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-	}
+	public void keyTyped(KeyEvent e) {}
 
 }
