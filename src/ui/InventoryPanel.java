@@ -93,7 +93,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 			return true;
 
 		for(InventoryGO item: items){
-			if(!itemList.contains(item))
+			if(itemList.contains(item))
 				return true;
 		}
 
@@ -113,10 +113,11 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 
 				for(InventoryGO item : items){
 					itemList.add(new ItemDisplay(item));
-					System.out.println(item.getName());
+					System.out.println(item.getName()+", "+item.getToken());
 				}
 
 				processItems();
+				repaint();
 			}
 		}
 	}
@@ -141,6 +142,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 				i++;
 			}
 		}	
+		
 	}
 
 	/**
@@ -165,16 +167,16 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	}
 
 	
-	public void processTemp(){
-		if(processing){
-			processing = false;
-			if(tempStored){
-				addItems(tempStore);
-				tempStore.clear();
-				tempStored = false;
-			}
-		}
-	}
+	//public void processTemp(){
+	//	if(processing){
+	//		processing = false;
+	//		if(tempStored){
+	//			addItems(tempStore);
+	//			tempStore.clear();
+	//			tempStored = false;
+	//		}
+	//	}
+	//}
 	
 	@Override
 	protected void paintComponent(Graphics g){
@@ -251,7 +253,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 		//	System.out.println(index);
 		if(itemsShown.size() > index && index >= 0 && !SwingUtilities.isRightMouseButton(e)){
 			dragged = index;
-			processing = true;
+			//processing = true;
 			itemsShown.get(dragged).changeDragging();
 
 		}
@@ -274,7 +276,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 			itemsShown.get(dragged).changeDragging();
 			
 			dragged = -1;
-			processTemp();
+			//processTemp();
 		}
 		if(!firstID.equals("") && !secondID.equals("")){
 			//client.sendCommand("DRAG "+firstID+" "+secondID);
@@ -298,7 +300,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 		if(dragged != -1){
 			itemsShown.get(dragged).changeDragging();
 			dragged = -1;
-			processTemp();
+			//processTemp();
 		} 
 		repaint();
 
