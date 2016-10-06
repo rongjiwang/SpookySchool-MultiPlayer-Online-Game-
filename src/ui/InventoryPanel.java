@@ -130,7 +130,6 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 
 				for(InventoryGO item : items){
 					itemList.add(new ItemDisplay(item));
-					System.out.println(item.getName()+", "+item.getToken());
 				}
 
 				processItems();
