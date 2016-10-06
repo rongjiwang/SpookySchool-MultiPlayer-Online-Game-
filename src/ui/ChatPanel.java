@@ -41,6 +41,8 @@ public class ChatPanel extends JPanel{
 	private ImageIcon[] send;
 	private JLabel sendButton;
 	private ButtonListen listen;
+	
+	private JButton tempSendButton;
 
 	public ChatPanel(GameFrame display, String playerName, Client client) {
 		super(new BorderLayout());
@@ -52,16 +54,22 @@ public class ChatPanel extends JPanel{
 		JPanel southPanel = new JPanel();
 		southPanel.setBackground(Color.BLACK);
 		southPanel.setLayout(new GridBagLayout());
-		setIcons();
+		
+		//setIcons();
 
 		listen = new ButtonListen();
-
+		
+		//temp button
+		tempSendButton = new JButton("Send");
+		tempSendButton.addMouseListener(listen);
 
 		typeArea = new JTextField(30);
 
+		/**
 		sendButton = new JLabel(send[0]);
 		sendButton.addMouseListener(listen);
-
+		**/
+		
 		messageList = new JTextPane();
 		messageList.setEditable(false);
 		messageList.setOpaque(true);
@@ -104,20 +112,23 @@ public class ChatPanel extends JPanel{
 		right.weighty = 1.0D;
 
 		southPanel.add(typeArea, left);
-		southPanel.add(sendButton, right);
+		// change back to "send button"
+		southPanel.add(tempSendButton, right);
 
 		this.add(BorderLayout.SOUTH, southPanel);
 
 		this.setVisible(true);
 	}
 
+	/**
 	public void setIcons(){
 		send = new ImageIcon[6];
 
 		send[0] = new ImageIcon(this.getClass().getResource("UIImages/send.png"));
 		send[1] = new ImageIcon(this.getClass().getResource("UIImages/sendhighlight.png"));
 	}
-
+	**/
+	
 	public void addChange(List<String> changes){
 		for(String change: changes){
 			if(change != null){
@@ -159,13 +170,13 @@ public class ChatPanel extends JPanel{
 		
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			sendButton.setIcon(send[1]);
+			//sendButton.setIcon(send[1]);
 
 		}
 		
 		@Override
 		public void mouseExited(MouseEvent e) {
-			sendButton.setIcon(send[0]);
+		//	sendButton.setIcon(send[0]);
 		}
 
 		//UNUSED

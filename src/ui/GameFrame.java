@@ -42,8 +42,7 @@ public class GameFrame extends JFrame implements WindowListener {
 		//creates inventory panel
 		invPanel = new InventoryPanel();
 
-		//creates chat panel
-		chatPanel = new ChatPanel(this, name, client);
+		
 
 		//sets up layout
 		this.setLayout(new BorderLayout());
@@ -54,6 +53,9 @@ public class GameFrame extends JFrame implements WindowListener {
 		} else {
 			this.areaDisplayPanel2D = new AreaDisplayPanel2D(this.client);
 		}
+		
+		//creates chat panel
+		chatPanel = new ChatPanel(this, name, client);
 
 		//temp, delete after
 		debugDisplay = new DebugDisplay(areaDisplayPanel);
@@ -70,12 +72,12 @@ public class GameFrame extends JFrame implements WindowListener {
 		//debugDisplay.updateDisplay();
 
 		this.setVisible(true); //Display the window
-		
+
 		List<String> itemsToAdd = new ArrayList<String>();
 		itemsToAdd.add("key");
 		itemsToAdd.add("coin");
 		itemsToAdd.add("box");
-		
+
 		invPanel.addItems(itemsToAdd);
 	}
 
@@ -103,7 +105,7 @@ public class GameFrame extends JFrame implements WindowListener {
 			northPanel = new MainPanel(areaDisplayPanel2D);
 		}
 		this.add(northPanel, BorderLayout.NORTH);
-		
+
 		southPanel = new SidePanel(chatPanel, invPanel);
 		this.add(southPanel, BorderLayout.SOUTH);
 		this.pack();
@@ -159,22 +161,28 @@ public class GameFrame extends JFrame implements WindowListener {
 
 	// UNUSED WINDOW LISTENER METHODS
 	@Override
-	public void windowActivated(WindowEvent arg0) {}
+	public void windowActivated(WindowEvent arg0) {
+	}
 
 	@Override
-	public void windowClosed(WindowEvent arg0) {}
+	public void windowClosed(WindowEvent arg0) {
+	}
 
 	@Override
-	public void windowDeactivated(WindowEvent arg0) {}
+	public void windowDeactivated(WindowEvent arg0) {
+	}
 
 	@Override
-	public void windowDeiconified(WindowEvent arg0) {}
+	public void windowDeiconified(WindowEvent arg0) {
+	}
 
 	@Override
-	public void windowIconified(WindowEvent arg0) {}
+	public void windowIconified(WindowEvent arg0) {
+	}
 
 	@Override
-	public void windowOpened(WindowEvent arg0) {}
+	public void windowOpened(WindowEvent arg0) {
+	}
 
 
 }

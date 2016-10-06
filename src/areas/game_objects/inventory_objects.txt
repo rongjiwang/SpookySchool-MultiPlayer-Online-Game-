@@ -1,0 +1,9 @@
+//Inventory items that are on the floor...
+Key key_sh1 xx 1 Spawn_1 5 2 The key for Spawn_1 room
+Key key_sh2 xx 1 Spawn_2 5 2 The key for Spawn_2 room
+Key key_sh3 xx 1 Spawn_3 5 2 The key for Spawn_3 room
+Key key_sh4 xx 1 Spawn_4 5 2 The key for Spawn_4 room
+Key key_sh5 xx 1 Spawn_5 3 5 The key for Spawn_5 room
+Key key_sh6 xx 1 Spawn_6 3 5 The key for Spawn_6 room
+Key key_sh7 xx 1 Spawn_7 3 5 The key for Spawn_7 room
+Key key_sh8 xx 1 Spawn_8 3 5 The key for Spawn_8 room
