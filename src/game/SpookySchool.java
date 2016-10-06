@@ -413,10 +413,11 @@ public class SpookySchool {
 					item.setAreaName(area.getAreaName());
 					item.setCurrentPosition(potentialTile.getPosition());
 					potentialTile.setOccupant(item);
+					player.getInventory().remove(item);
 					this.getBundle(playerName).setMessage("You dropped the item.");
 					return;
 				}
-
+				this.getBundle(playerName).setMessage("You cannot drop the tile here.");
 				return;
 			}
 		}
