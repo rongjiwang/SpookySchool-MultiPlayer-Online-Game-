@@ -9,6 +9,6 @@ sh8 closed unlocked null Spawn_8 d00 6 1 6 2 Hallway d20 20 4 20 3
 hd1 closed unlocked null Hallway d30 0 2 1 2 Dorm_room d10 16 4 15 4
 dd1 closed unlocked null Dorm_room d00 5 0 5 1 Dorm_storage d20 5 6 5 5
 dd2 closed unlocked null Dorm_room d00 11 0 11 1 Dorm_toilet d20 2 6 2 5
-dd3 closed unlocked null Dorm_room d30 0 4 1 4 Outside d10 9 5 8 5
-od1 closed unlocked null Outside d10 26 10 25 10 Staff_room d30 0 2 1 2
+od1 closed unlocked null Outside d10 18 10 17 10 Staff_room d30 0 2 1 2
+dd3 closed unlocked null Dorm_room d30 0 4 1 4 Outside d10 4 3 3 3
 Sd1 closed unlocked null Staff_room d20 2 9 2 8 Staff_hallway d00 2 0 2 1

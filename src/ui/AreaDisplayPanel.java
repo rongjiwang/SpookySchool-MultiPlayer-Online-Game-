@@ -158,7 +158,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		g.setColor(Color.black);
 		g.fillRect(this.windowOffSetX, this.windowOffSetY, this.windowWidth, this.windowHeight);
 
-		renderArray(g, 0); // render carpet tiles		
+		renderArray(g, 0); // render floor tiles		
 		renderArray(g, 1); // render far walls
 		renderArray(g, 2); // render gameObjects
 		renderArray(g, 3); // render close and side walls
@@ -269,15 +269,16 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		}
 
 		// Draw Walls(Back and side walls with layer 1, front with layer 3)
-		if (((token.equals("w0") || token.equals("W1") || token.equals("W2")) && layer == 1)
-				|| ((!(token.equals("w0") || token.equals("W1") || token.equals("W2"))) && layer == 3)) {
-			if (token.contains("w") || token.contains("W")) {
+		if (((token.equals("w0") || token.equals("W1")  || token.equals("B0") || token.equals("Q1") || token.equals("Q2")) && layer == 1)
+				|| ((!(token.equals("w0") || token.equals("W1") || token.equals("W2") || token.equals("B0") || token.equals("Q1") || token.equals("Q2"))) && layer == 3)) {
+			if (token.contains("w") || token.contains("W") || token.contains("B") || token.contains("Q")) {
 				Image tileImage = spriteMap.getImage(token);
 				int adjustX = tileImage.getWidth(null) - tileWidth;
 				int adjustY = tileImage.getHeight(null) - tileHeight;
 				g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
 			}
 		}
+	
 	}
 
 	/**

@@ -84,10 +84,9 @@ public class OverlayPanel extends JPanel {
 
 		//Draw the footer
 		g.drawImage(spriteMap.getImage("H0"), footerX, footerY, null);
-
-		String wrappedString = wrap(footerMessage);
-
+		//String wrappedString = wrap(footerMessage);
 		g.drawString(footerMessage, footerX + 10, footerY + 17);
+
 	}
 
 	public void tick() {
