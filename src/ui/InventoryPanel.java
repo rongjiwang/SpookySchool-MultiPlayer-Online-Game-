@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -73,18 +74,34 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	}
 
 
+	public void upOne(){
+		if(level > 0){
+			level-=5;
+			processItems();
+			repaint();
+		}
+	}
+	
+	public void downOne(){
+		if(level < (itemList.size()+5)){
+			level+=5;
+			processItems();
+			repaint();
+		}
+	}
 	/**
 	 * Checks if the user is currently right clicked or dragging. If so, stores the inventory to pass after the user is finished, otherwise processes inventory as normal
 	 * 
 	 * @param items
 	 */
 	public void updateInventory(List<InventoryGO> items){
-		if(!processing)
+		
+		//if(!processing)
 			addItems(items);
-		else{
-			tempStore = items;
-			tempStored = true;
-		}
+	//	else{
+		//	tempStore = items;
+		//	tempStored = true;
+		//}
 
 	}
 
@@ -126,7 +143,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	 * place items onto correct x,y coordinates, in the 5x3 grid
 	 */
 	public void processItems(){
-		int i = 0;
+		int i = level;
 
 		ItemDisplay toAdd = null;
 		for(int j = 0; j < 3; j++){ //row
@@ -328,12 +345,22 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 						client.sendCommand("OPEN "+item.getID());
 					}
 				}
+				
 			};
+			
+			try {
+				inspect = new JMenuItem("Inspect");
+				drop = new JMenuItem("Drop");
+				Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
+				inspect.setFont(font.deriveFont(Font.TRUETYPE_FONT, 13f));
+				drop.setFont(font.deriveFont(Font.TRUETYPE_FONT, 13f));
 
-			inspect = new JMenuItem("Inspect");
+			} catch (Exception e) {}
+			
+			
 			inspect.addActionListener(popUpListener);
 			add(inspect);
-			drop = new JMenuItem("Drop");
+			
 			drop.addActionListener(popUpListener);
 			add(drop);
 		//	if(value){
