@@ -2,6 +2,7 @@ package game;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -391,6 +392,39 @@ public class SpookySchool {
 		}
 	}
 
+	/**
+	 * 
+	 * @param playerName name of the player who would like to drop an inventory GO.
+	 * @param itemID the id of the item the player wishes to drop.
+	 */
+	public void processDrop(String playerName, String itemID) {
+
+		Player player = this.getPlayer(playerName);
+
+		for (InventoryGO item : player.getInventory()) {
+			if (item.getId().equals(itemID)) {
+
+				Area area = player.getCurrentArea();
+				String direction = player.getDirection();
+
+				Tile potentialTile = this.getPotentialTile(area, player, direction, 1); //Get the tile in fron of the player
+
+				if (potentialTile != null && !potentialTile.isOccupied()) {
+					item.setAreaName(area.getAreaName());
+					item.setCurrentPosition(potentialTile.getPosition());
+					potentialTile.setOccupant(item);
+					this.getBundle(playerName).setMessage("You dropped the item.");
+					return;
+				}
+
+				return;
+			}
+		}
+
+		this.getBundle(playerName).addToChatLog("The item you tried to drop is no longer in your inventory."); //FIXME: Remove this once message works.
+		this.getBundle(playerName).setMessage("The item you tried to drop is no longer in your inventory.");
+
+	}
 
 	/**
 	 * Moves player in a given direction if possible.
@@ -542,6 +576,7 @@ public class SpookySchool {
 				return this.players.get(i);
 			}
 		}
+
 		return null; //Player with given name not found.
 	}
 
@@ -568,9 +603,13 @@ public class SpookySchool {
 	/**
 	 * FIXME: for saving gmae to xml
 	 */
-	public void saveGame(String playerName) {
+	public synchronized void saveGame(String playerName) {
 		System.out.println("Saving game...");
-		this.parser.save(this, playerName);
+		try {
+			this.parser.save(this, playerName);
+		} catch (IOException e) {
+			this.getBundle(playerName).setMessage("Failed to save game");
+		}
 	}
 
 

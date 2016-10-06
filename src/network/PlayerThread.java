@@ -148,6 +148,10 @@ public class PlayerThread extends Thread {
 			} else if (nextToken.equals("SAVE")) {
 				this.game.saveGame(playerName);
 			}
+
+			else if (nextToken.equals("DROP")) {
+				this.game.processDrop(playerName, scan.next());
+			}
 		}
 	}
 
