@@ -83,9 +83,6 @@ public class ChatPanel extends JPanel{
 		systemMessage = messageList.addStyle("System Message", null);
 		StyleConstants.setForeground(systemMessage, Color.RED);
 
-
-
-
 		try {
 			Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
 			typeArea.setFont(font.deriveFont(Font.TRUETYPE_FONT, 12f));

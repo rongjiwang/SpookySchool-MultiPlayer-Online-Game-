@@ -8,13 +8,19 @@ public class ItemDisplay {
 	private int tempY;
 	private boolean dragging;
 	private boolean display;
+	private boolean container;
 	
-	public ItemDisplay(String name){
+	public ItemDisplay(String name, boolean container){
 		this.name = name;
+		this.container = container;
 		x = 0;
 		y = 0;
 		dragging = false;
 		display = false;
+	}
+	
+	public boolean isContainer(){
+		return this.container;
 	}
 	
 	public void setTemp(int x, int y){
