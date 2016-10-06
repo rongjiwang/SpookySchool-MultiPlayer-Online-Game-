@@ -22,6 +22,8 @@ public class SpookySchool {
 
 	private final Position defaultSpawnPosition = new Position(5, 8); //Default position that a player spawns in, in a spawn room.
 
+	private Parser parser;
+
 	//Should make xml implementation easier?!
 	private String areasFileLoc = "src/areas/areas.txt";
 	private String doorsFileLoc = "src/areas/game_objects/doors.txt";
@@ -47,6 +49,8 @@ public class SpookySchool {
 		this.loadAreas(); //Load maps
 		this.setDoors(); //Sets up doors on the areas.
 		this.loadRemainingGameObjects(); //Load the remaining game objects.
+
+		this.parser = new Parser();
 
 		//Create a new clock thread and start it. Used for NPCs.
 		Thread clockThread = new ClockThread(this);
@@ -565,8 +569,8 @@ public class SpookySchool {
 	 * FIXME: for saving gmae to xml
 	 */
 	public void saveGame(String playerName) {
-		Parser parser = new Parser();
-		parser.save(this, playerName);
+		System.out.println("Saving game...");
+		this.parser.save(this, playerName);
 	}
 
 
