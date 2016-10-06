@@ -1,18 +1,20 @@
 package ui;
 
+import game.InventoryGO;
+
 public class ItemDisplay {
-	private String name;
+	private InventoryGO item;
 	private int x;
 	private int y;
 	private int tempX;
 	private int tempY;
 	private boolean dragging;
 	private boolean display;
-	private boolean container;
+	boolean container = false;
 	
-	public ItemDisplay(String name, boolean container){
-		this.name = name;
-		this.container = container;
+	public ItemDisplay(InventoryGO item){
+		this.item = item;
+		
 		x = 0;
 		y = 0;
 		dragging = false;
@@ -53,9 +55,20 @@ public class ItemDisplay {
 	}
 
 	public String getName(){
-		return name;
+		return item.getName();
 	}
 	
+	public String getID(){
+		return item.getId();
+	}
+	
+	public String getToken(){
+		return item.getToken();
+	}
+	
+	public String getDescription(){
+		return item.getDescription();
+	}
 	
 	public void changeDragging(){
 		this.dragging = !this.dragging;
@@ -71,5 +84,9 @@ public class ItemDisplay {
 		setX(x);
 		setY(y);
 		this.display=true;
+	}
+	
+	public boolean equals(InventoryGO item){
+		return item.getId().equals(this.getID());
 	}
 }
