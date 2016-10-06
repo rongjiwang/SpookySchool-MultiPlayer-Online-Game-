@@ -1,12 +1,12 @@
 32 23
 n n n n n n n n n n n n n n n n n n n n n n n n n n n n n n n n
-g0 g0 g0 g0 g0 g0 g0 g0 g0 w1 n n n n n n n n n n n w3 g0 g0 g0 g0 g0 g0 g0 g0 g0 g0
-g0 g0 g0 g0 g0 g0 g0 g0 g0 w1 n n n n n n n n n n n w3 g0 g0 g0 g0 g0 g0 g0 g0 g0 g0
-g0 g0 g0 g0 g0 g0 g0 g0 g0 w1 n n n n n n n n n n n w3 g0 g0 g0 g0 g0 g0 g0 g0 g0 g0
-g0 g0 g0 g0 g0 g0 g0 g0 g0 w1 n n n n n n n n n n n w3 g0 g0 g0 g0 g0 g0 g0 g0 g0 g0
-g0 g0 g0 g0 g0 g0 g0 g0 g0 w1 n n n n n n n n n n n w3 g0 g0 g0 g0 g0 g0 g0 g0 g0 g0
-g0 g0 g0 g0 g0 g0 g0 g0 g0 w1 n n n n n n n n n n n w3 g0 g0 g0 g0 g0 g0 g0 g0 g0 g0
-g0 g0 g0 g0 g0 g0 g0 g0 g0 W2 w0 w0 w0 w0 w0 w0 w0 w0 w0 w0 w0 W1 g0 g0 g0 g0 g0 g0 g0 g0 g0 g0
+g0 g0 g0 g0 g0 g0 g0 g0 n n n n n n n n n n n n n n g0 g0 g0 g0 g0 g0 g0 g0 g0 g0
+g0 g0 g0 g0 g0 g0 g0 g0 n n n n n n n n n n n n n n g0 g0 g0 g0 g0 g0 g0 g0 g0 g0
+g0 g0 g0 g0 g0 g0 g0 g0 n n n n n n n n n n n n n n g0 g0 g0 g0 g0 g0 g0 g0 g0 g0
+g0 g0 g0 g0 g0 g0 g0 g0 n n n n n n n n n n n n n n g0 g0 g0 g0 g0 g0 g0 g0 g0 g0
+g0 g0 g0 g0 g0 g0 g0 g0 n w2 n n n n n n n n n n n n g0 g0 g0 g0 g0 g0 g0 g0 g0 g0
+g0 g0 g0 g0 g0 g0 g0 g0 n n n n n n n n n n n n n n g0 g0 g0 g0 g0 g0 g0 g0 g0 g0
+g0 g0 g0 g0 g0 g0 g0 g0 n n n n n n n n n n n n n n g0 g0 g0 g0 g0 g0 g0 g0 g0 g0
 g0 g0 g0 g0 g0 g0 g0 g0 g0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 W3 w2 w2 w2 w2 W0
 g0 g0 g0 g0 g0 g0 g0 g0 g0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 w1 n n n n w3
 g0 g0 g0 g0 g0 g0 g0 g0 g0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 h0 w1 n n n n w3

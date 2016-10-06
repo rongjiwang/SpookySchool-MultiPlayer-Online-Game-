@@ -32,11 +32,15 @@ public class UIPanel extends JPanel {
 	private JLabel topBorder;
 	private JLabel bottomBorder;
 	
-	private BufferedImage[] backgroundAssets;
+	private UIImageMap imageMap;
+	
+	//private BufferedImage[] backgroundAssets;
 			
-	public UIPanel(JPanel panel, int num ){
+	public UIPanel(JPanel panel, int num, UIImageMap imageMap){
 		super();
 		this.panelNum = num;
+		this.imageMap = imageMap;
+		
 		JLayeredPane layers = new JLayeredPane();
 		layers.setLayout(null);
 		
@@ -56,7 +60,7 @@ public class UIPanel extends JPanel {
 		}
 		layers.setPreferredSize(new Dimension(width, height));
 		
-		setBackgroundAssets();
+	//	setBackgroundAssets();
 		setLabels();
 		
 		//gets background image and assigns it to JLabel background
@@ -101,6 +105,7 @@ public class UIPanel extends JPanel {
 	/**
 	 * Sets up array of BufferedImages for each background pieace
 	 */
+	/**
 	public void setBackgroundAssets(){
 		backgroundAssets = new BufferedImage[8];
 				
@@ -117,7 +122,7 @@ public class UIPanel extends JPanel {
 		    e.printStackTrace();
 		}
 
-	}
+	}**/
 	
 	/**
 	 * Sets up the JLabels that make up the border of a UI Panel
@@ -128,13 +133,13 @@ public class UIPanel extends JPanel {
 		Dimension vertical = new Dimension(7, height-14);
 		
 		//corner panels
-		topLeft = new JLabel(new ImageIcon(backgroundAssets[0]));
+		topLeft = new JLabel(new ImageIcon(imageMap.getImage("tL")));
 		topLeft.setSize(new Dimension(corner));
-		topRight = new JLabel(new ImageIcon(backgroundAssets[1]));
+		topRight = new JLabel(new ImageIcon(imageMap.getImage("tR")));
 		topRight.setSize(new Dimension(corner));
-		bottomLeft = new JLabel(new ImageIcon(backgroundAssets[2]));
+		bottomLeft = new JLabel(new ImageIcon(imageMap.getImage("bL")));
 		bottomLeft.setSize(new Dimension(corner));
-		bottomRight = new JLabel(new ImageIcon(backgroundAssets[3]));
+		bottomRight = new JLabel(new ImageIcon(imageMap.getImage("bR")));
 		bottomRight.setSize(new Dimension(corner));
 		
 		//side panels
@@ -148,19 +153,19 @@ public class UIPanel extends JPanel {
 		leftBorder.setSize(new Dimension(horizontal));
 		
 		//scales border image to border panel size
-		Image topImage = backgroundAssets[6].getScaledInstance(width-14, 7, Image.SCALE_SMOOTH);
+		Image topImage = imageMap.getImage("tB").getScaledInstance(width-14, 7, Image.SCALE_SMOOTH);
 		ImageIcon topIcon = new ImageIcon(topImage);
 		topBorder.setIcon(topIcon);
 		
-		Image leftImage = backgroundAssets[5].getScaledInstance(7, height-14, Image.SCALE_SMOOTH);
+		Image leftImage = imageMap.getImage("lB").getScaledInstance(7, height-14, Image.SCALE_SMOOTH);
 		ImageIcon leftIcon= new ImageIcon(leftImage);
 		leftBorder.setIcon(leftIcon);
 		
-		Image bottomImage = backgroundAssets[4].getScaledInstance(width-14, 7, Image.SCALE_SMOOTH);
+		Image bottomImage = imageMap.getImage("bB").getScaledInstance(width-14, 7, Image.SCALE_SMOOTH);
 		ImageIcon bottomIcon = new ImageIcon(bottomImage);
 		bottomBorder.setIcon(bottomIcon);
 		
-		Image rightImage = backgroundAssets[7].getScaledInstance(7, height-14, Image.SCALE_SMOOTH);
+		Image rightImage = imageMap.getImage("rB").getScaledInstance(7, height-14, Image.SCALE_SMOOTH);
 		ImageIcon rightIcon = new ImageIcon(rightImage);
 		rightBorder.setIcon(rightIcon);
 	}

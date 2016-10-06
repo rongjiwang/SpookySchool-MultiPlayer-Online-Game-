@@ -498,6 +498,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		case KeyEvent.VK_Z:
 			this.client.sendCommand("ACTION");
 			break;
+		case KeyEvent.VK_S:
+			this.client.sendCommand("SAVE");
+			break;
 		case KeyEvent.VK_R:
 			rotate(1);
 			this.updateDisplay();
