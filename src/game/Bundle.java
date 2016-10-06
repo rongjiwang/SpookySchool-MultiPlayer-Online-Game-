@@ -28,9 +28,8 @@ public class Bundle implements Serializable {
 	 */
 	public void clearBundle() {
 		//this.playerObj = null;
-		this.setMessage(null);
 		//this.gameObjectChanges = new ArrayList<String>();
-
+		this.setMessage(null);
 		this.chatLogChanges = new ArrayList<String>(); //FIXME keep commented out for now. Want to send entire chat log over network (for now!)
 	}
 

@@ -26,20 +26,26 @@ public class SpookySchool {
 	private String movableObjectsFileLoc = "src/areas/game_objects/movable_objects.txt";
 	private String nonHumanPlayersFileLoc = "src/areas/game_objects/non_human_player_objects.txt";
 
+	//Default Load files - these never change.
 	private Map<String, Area> areas = new HashMap<String, Area>();
-	private List<Player> players = new ArrayList<Player>();
-	private Map<String, Bundle> playerBundles = new HashMap<String, Bundle>();
-
 	private List<NonHumanPlayer> nonHumanPlayers = new ArrayList<NonHumanPlayer>();
 
+	private List<Player> players = new ArrayList<Player>();
+
+	//Mainly for XML
+	private List<MovableGO> movableObjects = new ArrayList<MovableGO>(); //FIXME add for xml
+	private List<DoorGO> doorObjects = new ArrayList<DoorGO>(); //FIXME add for XML
 	private Map<String, InventoryGO> inventoryObjects = new HashMap<String, InventoryGO>(); //FIXME Keep track of all inventory game objects in game??
+
+	//For networking
+	private Map<String, Bundle> playerBundles = new HashMap<String, Bundle>();
 
 	public SpookySchool() {
 		this.loadAreas(); //Load maps
 		this.setDoors(); //Sets up doors on the areas.
 		this.loadRemainingGameObjects(); //Load the remaining game objects.
 
-		//Create a new clock thread and start it.
+		//Create a new clock thread and start it. Used for NPCs.
 		Thread clockThread = new ClockThread(this);
 		clockThread.start();
 
@@ -358,12 +364,6 @@ public class SpookySchool {
 		return processDoorMovement(potentialTile, player); //Return true if there is a door movement, else false.
 	}
 
-	/*
-		public synchronized boolean moveNPC(NonHumanPlayer npc) {
-			return false; //FIXME change this at the end!
-		}
-		*/
-
 	/**
 	 * Attempt to move the player to next room if they move on to a door.
 	 * @param potentialTile the tile that the player has tried to move on to.
@@ -526,5 +526,29 @@ public class SpookySchool {
 
 		return;
 	}
+
+
+	/** GETTERS AND SETTERS FOR XML **/
+
+	public Map<String, Area> getAreas() {
+		return this.areas;
+	}
+
+	public List<Player> getPlayers() {
+		return this.players;
+	}
+
+	public List<MovableGO> getMovableObjects() {
+		return movableObjects;
+	}
+
+	public List<DoorGO> getDoorObjects() {
+		return doorObjects;
+	}
+
+	public Map<String, InventoryGO> getInventoryObjects() {
+		return inventoryObjects;
+	}
+
 }
 
