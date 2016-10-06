@@ -144,6 +144,9 @@ public class PlayerThread extends Thread {
 			} else if (nextToken.equals("CHAT")) {
 				String message = "<" + this.playerName + "> " + scan.nextLine(); //Append the player name before the message
 				this.game.addChatLogItemToAllBundles(message); //Add the message to all player's bundles so they can display in their chat window.
+
+			} else if (nextToken.contentEquals("SAVE")) {
+				this.game.saveGame(playerName);
 			}
 		}
 	}

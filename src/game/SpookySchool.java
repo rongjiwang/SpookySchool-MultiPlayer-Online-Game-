@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
+import parser.Parser;
+
 
 /**
  * This class contains all of the logic Spooky School game. This class controls game state and provides various helper methods
@@ -557,6 +559,14 @@ public class SpookySchool {
 		for (Bundle b : this.playerBundles.values()) {
 			b.addToChatLog(addition);
 		}
+	}
+
+	/**
+	 * FIXME: for saving gmae to xml
+	 */
+	public void saveGame(String playerName) {
+		Parser parser = new Parser();
+		parser.save(this, playerName);
 	}
 
 
