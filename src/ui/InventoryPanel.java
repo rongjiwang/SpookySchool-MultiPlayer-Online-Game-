@@ -24,6 +24,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	private int highlightedX;
 	private int highlightedY;
 	private Image highLight;
+	private Image background;
 	private int dragged = -1;
 
 	//used when up/down buttons pressed
@@ -37,7 +38,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 		this.level = 0;
 		this.setPreferredSize(boardSize);
 		highLight = new ImageIcon(this.getClass().getResource("UIimages/highlight.png")).getImage();
-
+		background = new ImageIcon(this.getClass().getResource("UIimages/invBackground.png")).getImage();
 		//	invButtons = new ArrayList<InvButton>();
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -116,6 +117,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	@Override
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
+		g.drawImage(background, 0, 0, background.getWidth(null), background.getHeight(null), null);
 		if(highlighted){
 			g.drawImage(highLight, highlightedX, highlightedY, highLight.getWidth(null), highLight.getHeight(null), null);
 		}

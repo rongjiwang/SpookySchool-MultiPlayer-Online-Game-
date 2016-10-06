@@ -27,8 +27,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 	// Window size and offset
 	private final int windowOffSetX = 0;
 	private final int windowOffSetY = 0;
-	private final int windowWidth = 352;
-	private final int windowHeight = 352;
+	private final int windowWidth = 600; //352
+	private final int windowHeight = 500
+			;
 
 	// Renderer Tile Size
 	private final int tileWidth = 32;

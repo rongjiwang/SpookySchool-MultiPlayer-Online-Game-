@@ -8,14 +8,16 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -28,7 +30,6 @@ import network.Client;
 
 public class ChatPanel extends JPanel{
 	private JTextField typeArea;
-	private JButton sendMessage;
 	private JTextPane messageList;
 	private GameFrame home;
 	private String playerName;
@@ -36,6 +37,10 @@ public class ChatPanel extends JPanel{
 	private StyledDocument styled;
 	private Style message;
 	private Style systemMessage;
+
+	private ImageIcon[] send;
+	private JLabel sendButton;
+	private ButtonListen listen;
 
 	public ChatPanel(GameFrame display, String playerName, Client client) {
 		super(new BorderLayout());
@@ -47,18 +52,22 @@ public class ChatPanel extends JPanel{
 		JPanel southPanel = new JPanel();
 		southPanel.setBackground(Color.BLACK);
 		southPanel.setLayout(new GridBagLayout());
+		setIcons();
+
+		listen = new ButtonListen();
+
 
 		typeArea = new JTextField(30);
 
-		sendMessage = new JButton("Send");
-		sendMessage.addActionListener(new sendMessageButtonListener());
+		sendButton = new JLabel(send[0]);
+		sendButton.addMouseListener(listen);
 
 		messageList = new JTextPane();
 		messageList.setEditable(false);
 		messageList.setOpaque(true);
 		DefaultCaret caret = (DefaultCaret)messageList.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-		
+
 		styled = messageList.getStyledDocument();
 
 		message = messageList.addStyle("Message Style", null);
@@ -95,11 +104,18 @@ public class ChatPanel extends JPanel{
 		right.weighty = 1.0D;
 
 		southPanel.add(typeArea, left);
-		southPanel.add(sendMessage, right);
+		southPanel.add(sendButton, right);
 
 		this.add(BorderLayout.SOUTH, southPanel);
 
 		this.setVisible(true);
+	}
+
+	public void setIcons(){
+		send = new ImageIcon[6];
+
+		send[0] = new ImageIcon(this.getClass().getResource("UIImages/send.png"));
+		send[1] = new ImageIcon(this.getClass().getResource("UIImages/sendhighlight.png"));
 	}
 
 	public void addChange(List<String> changes){
@@ -122,8 +138,12 @@ public class ChatPanel extends JPanel{
 		return client;
 	}
 
-	class sendMessageButtonListener implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
+
+
+	private class ButtonListen implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
 			if (typeArea.getText().length() < 1) {
 				// do nothing
 			} else {
@@ -133,6 +153,30 @@ public class ChatPanel extends JPanel{
 				getClient().sendCommand(chat);
 			}
 			home.refocus();
+
 		}
+		
+		
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			sendButton.setIcon(send[1]);
+
+		}
+		
+		@Override
+		public void mouseExited(MouseEvent e) {
+			sendButton.setIcon(send[0]);
+		}
+
+		//UNUSED
+		@Override
+		public void mousePressed(MouseEvent e) {}
+		
+		@Override
+		public void mouseReleased(MouseEvent e) {}
 	}
+
+
 }
+
+

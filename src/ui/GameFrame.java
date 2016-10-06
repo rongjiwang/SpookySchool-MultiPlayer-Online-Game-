@@ -17,8 +17,8 @@ import network.Client;
 
 public class GameFrame extends JFrame implements WindowListener {
 
-	private JPanel leftPanel = null;
-	private JPanel rightPanel = null;
+	private JPanel northPanel;
+	private JPanel southPanel;
 	private InventoryPanel invPanel;
 	private ChatPanel chatPanel;
 
@@ -98,14 +98,14 @@ public class GameFrame extends JFrame implements WindowListener {
 	public void setPanels() {
 		//leftPanel
 		if (this.render3D) {
-			leftPanel = new MainPanel(areaDisplayPanel, invPanel);
+			northPanel = new MainPanel(areaDisplayPanel);
 		} else {
-			leftPanel = new MainPanel(areaDisplayPanel2D, invPanel);
+			northPanel = new MainPanel(areaDisplayPanel2D);
 		}
-		this.add(leftPanel, BorderLayout.WEST);
-		//rightPanel (need to remove DebugDisplay)
-		rightPanel = new SidePanel(chatPanel, debugDisplay);
-		this.add(rightPanel, BorderLayout.EAST);
+		this.add(northPanel, BorderLayout.NORTH);
+		
+		southPanel = new SidePanel(chatPanel, invPanel);
+		this.add(southPanel, BorderLayout.SOUTH);
 		this.pack();
 	}
 
