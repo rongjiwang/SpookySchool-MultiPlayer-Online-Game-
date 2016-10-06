@@ -45,12 +45,14 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	private int level;
 
 	private Client client;
+	private OverlayPanel overlayPanel;
 
 
-	public InventoryPanel(UIImageMap imageMap, Client client){
+	public InventoryPanel(UIImageMap imageMap, Client client, OverlayPanel overlayPanel){
 		super(new GridLayout(3,5));
 
 		this.client = client;
+		this.overlayPanel = overlayPanel;
 		this.imageMap = imageMap;
 		this.itemMap = new ItemImageMap();
 		this.tempStore = new ArrayList<InventoryGO>();
@@ -318,6 +320,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 			dragged = -1;
 			//processTemp();
 		} 
+		
 		repaint();
 
 	}
@@ -337,7 +340,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 			ActionListener popUpListener = new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					if(event.getActionCommand().equals("Inspect")){
-						System.out.println(item.getDescription());
+						overlayPanel.setFooterMessage(item.getDescription());
 					} else if(event.getActionCommand().equals("Drop")){
 						client.sendCommand("DROP "+item.getID());
 					} else {
