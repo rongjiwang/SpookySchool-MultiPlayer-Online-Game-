@@ -55,7 +55,10 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	public void addItems(List<String> items){
 		itemList.clear();
 		for(String item : items){
-			itemList.add(new ItemDisplay(item));
+			if(item.equals("box"))
+				itemList.add(new ItemDisplay(item, true));
+			else
+				itemList.add(new ItemDisplay(item, false));
 		}
 		System.out.println("Items added");
 		processItems();
@@ -120,18 +123,19 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 		Image image = null;
 		ItemDisplay item = null;
 		for(int i = (level*5); i < (level*5)+15; i++){
-			if(i >= itemList.size())
+			if(i >= itemsShown.size())
 				break;
-			item = itemList.get(i);
+			item = itemsShown.get(i);
 			image = new ImageIcon(this.getClass().getResource("itemimages/"+item.getName()+".png")).getImage();
 			if(dragged != i){
 				g.drawImage(image, item.getX(), item.getY(), image.getWidth(null), image.getHeight(null), null);
 			} 
 
 		}
-		//if(dragged != -1){
-		//	g.drawImage(image, item.getTempX(), item.getTempY(), image.getWidth(null), image.getHeight(null), null);
-		//}
+		if(dragged != -1){
+			Image dragImage = new ImageIcon(this.getClass().getResource("itemimages/"+itemsShown.get(dragged).getName()+".png")).getImage();
+			g.drawImage(dragImage, itemsShown.get(dragged).getTempX(), itemsShown.get(dragged).getTempY(), image.getWidth(null), image.getHeight(null), null);
+		}
 	}
 
 	/**
@@ -139,8 +143,8 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	 * 
 	 * @param e
 	 */
-	private void doPop(MouseEvent e, boolean container){
-		PopUpMenu menu = new PopUpMenu(container);
+	private void doPop(MouseEvent e, boolean container, String name){
+		PopUpMenu menu = new PopUpMenu(container, name);
 		menu.show(e.getComponent(), e.getX(), e.getY());
 	}
 
@@ -149,11 +153,9 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	public void mouseDragged(MouseEvent e) {
 		highlightedX=(e.getX()/50)*50;
 		highlightedY=(e.getY()/50)*50;
-		/**	if(dragged != -1){
+		if(dragged != -1){
 			itemsShown.get(dragged).setTemp(e.getX()-25, e.getY()-25);
-
-			System.out.println("Loc: "+itemsShown.get(dragged).getTempX()+","+itemsShown.get(dragged).getTempY());
-		}**/
+		}
 		repaint();
 	}
 
@@ -167,8 +169,15 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(SwingUtilities.isRightMouseButton(e)){
-			doPop(e, false);
+		if(SwingUtilities.isRightMouseButton(e)){ //if right mouse button
+			
+			int index = e.getX()/50 + ((e.getY()/50)*5);
+			
+			//if item is there
+			if(itemsShown.size() > index && index >= 0){
+				doPop(e, itemsShown.get(index).isContainer(), itemsShown.get(index).getName());
+			}
+				
 		}
 
 	}
@@ -177,34 +186,32 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	public void mousePressed(MouseEvent e) {
 		int index = e.getX()/50 + ((e.getY()/50)*5);
 		//	System.out.println(index);
-		if(itemsShown.size() > index && index >= 0){
+		if(itemsShown.size() > index && index >= 0 && !SwingUtilities.isRightMouseButton(e)){
 			dragged = index;
-			//itemsShown.get(dragged).changeDragging();
-			//	System.out.println(itemsShown.get(dragged).getName());
+			itemsShown.get(dragged).changeDragging();
+
 		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		//ensure if e.getX() or e.getY() out of bounds that it does something
-		if(dragged == -1){
-			System.out.print("Dragged nothing onto ");
-		} else {
+		if(dragged != -1)
 			System.out.print("Dragged "+itemsShown.get(dragged).getName()+" onto ");
-		}
+
 
 		int secondIndexs = e.getX()/50 + ((e.getY()/50)*5);
-		if(itemsShown.size() > secondIndexs && secondIndexs >= 0){
-			System.out.println(itemsShown.get(secondIndexs).getName());
-		} else {
-			System.out.println("nothing");
-		}
-		//	System.out.println(itemsShown.get(secondIndexs).getName());
-		//System.out.println(e.getX()/50 + ((e.getY()/50)*5));
 
-		//if we are dragging an item
 		if(dragged != -1){
-			//itemsShown.get(dragged).changeDragging();
+			if(itemsShown.size() > secondIndexs && secondIndexs >= 0){
+				System.out.println(itemsShown.get(secondIndexs).getName());
+			} else {
+				System.out.println("nothing");
+			}
+		}
+
+		if(dragged != -1){
+			itemsShown.get(dragged).changeDragging();
 			dragged = -1;
 		} 
 		repaint();
@@ -223,7 +230,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	public void mouseExited(MouseEvent e) {
 		highlighted = false;
 		if(dragged != -1){
-			//itemsShown.get(dragged).changeDragging();
+			itemsShown.get(dragged).changeDragging();
 			dragged = -1;
 		} 
 		repaint();
@@ -241,11 +248,11 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 		JMenuItem drop;
 		JMenuItem open;
 
-		public PopUpMenu(boolean value){
+		public PopUpMenu(boolean value, String name){
 			ActionListener popUpListener = new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					System.out.println("Popup menu item ["
-							+ event.getActionCommand() + "] was pressed.");
+							+ event.getActionCommand() + "] was pressed on item "+name+".");
 				}
 			};
 
@@ -262,8 +269,5 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 			}
 
 		}
-
-
 	}
-
 }
