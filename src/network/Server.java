@@ -1,9 +1,13 @@
 package network;
 
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+import java.util.Enumeration;
 
 import game.SpookySchool;
 import ui.CreateServerPanel;
@@ -43,6 +47,9 @@ public class Server extends Thread {
 			ServerSocket serverSocket = new ServerSocket(port);
 			this.serverPanel
 					.updateServerStatusField("Server running on: " + InetAddress.getLocalHost().getHostAddress());
+
+			this.displayAddresses();
+
 
 			while (1 == 1) {
 
@@ -101,6 +108,21 @@ public class Server extends Thread {
 				connections[i] = pT; //Add this thread to player
 				this.nclients--;
 				return;
+			}
+		}
+	}
+
+	public void displayAddresses() throws SocketException {
+		Enumeration<NetworkInterface> ifaces = NetworkInterface.getNetworkInterfaces();
+		while (ifaces.hasMoreElements()) {
+			NetworkInterface iface = ifaces.nextElement();
+			Enumeration<InetAddress> addresses = iface.getInetAddresses();
+
+			while (addresses.hasMoreElements()) {
+				InetAddress addr = addresses.nextElement();
+				if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
+					this.serverPanel.printToTextPrintArea(addr.getHostAddress());
+				}
 			}
 		}
 	}
