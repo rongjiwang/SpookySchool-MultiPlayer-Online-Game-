@@ -25,7 +25,7 @@ public class GameFrame extends JFrame implements WindowListener {
 	private SpriteMap spriteMap;
 
 
-	private boolean render3D = true; //FIXME **CHANGE TO FALSE TESTING 2D RENDERING**
+	//private boolean render3D = true; //FIXME **CHANGE TO FALSE TESTING 2D RENDERING**
 
 	private AreaDisplayPanel areaDisplayPanel; //This pane displays all of the other panels
 	private AreaDisplayPanel2D areaDisplayPanel2D; //This pane displays all of the other panels
@@ -37,28 +37,29 @@ public class GameFrame extends JFrame implements WindowListener {
 
 	public GameFrame(String title, Client client, String name) {
 		super(title); // Set window title.
-		
+
 		this.imageMap = new UIImageMap();
 		this.spriteMap = new SpriteMap();
-		
+
 		this.client = client;
 
-		//creates inventory panel
-		invPanel = new InventoryPanel(imageMap, this.client);
+
 
 		//sets up layout
 		this.setLayout(new BorderLayout());
 		this.setResizable(false); //Do not allow window resizing.
 
-		if (this.render3D) {
-			this.areaDisplayPanel = new AreaDisplayPanel(this.client, this, spriteMap);
-			this.overlayPanel = new OverlayPanel(areaDisplayPanel, spriteMap);
-			this.areaDisplayPanel.setOverLay(this.overlayPanel);
-		} else {
-			this.areaDisplayPanel2D = new AreaDisplayPanel2D(this.client);
-		}
-		
-		
+		//if (this.render3D) {
+		this.areaDisplayPanel = new AreaDisplayPanel(this.client, this, spriteMap);
+		this.overlayPanel = new OverlayPanel(areaDisplayPanel, spriteMap);
+		this.areaDisplayPanel.setOverLay(this.overlayPanel);
+		//} else {
+		//		this.areaDisplayPanel2D = new AreaDisplayPanel2D(this.client);
+		//	}
+
+		//creates inventory panel
+		invPanel = new InventoryPanel(imageMap, this.client, this.overlayPanel);
+
 		//creates chat panel
 		chatPanel = new ChatPanel(this, name, client, imageMap);
 
@@ -85,11 +86,11 @@ public class GameFrame extends JFrame implements WindowListener {
 
 	//refocuses on game window (after sending a message)
 	public void refocus() {
-		if (this.render3D) {
-			areaDisplayPanel.requestFocusInWindow();
-		} else {
-			areaDisplayPanel2D.requestFocusInWindow();
-		}
+		//	if (this.render3D) {
+		areaDisplayPanel.requestFocusInWindow();
+		//} else {
+		//areaDisplayPanel2D.requestFocusInWindow();
+		//}
 	}
 
 	/**
@@ -97,11 +98,11 @@ public class GameFrame extends JFrame implements WindowListener {
 	 */
 	public void setPanels() {
 		//leftPanel
-		if (this.render3D) {
-			northPanel = new MainPanel(areaDisplayPanel, imageMap);
-		} else {
-			northPanel = new MainPanel(areaDisplayPanel2D, imageMap);
-		}
+		//if (this.render3D) {
+		northPanel = new MainPanel(areaDisplayPanel, imageMap);
+		//} else {
+		//		northPanel = new MainPanel(areaDisplayPanel2D, imageMap);
+		//	}
 		this.add(northPanel, BorderLayout.NORTH);
 
 		southPanel = new SidePanel(chatPanel, invPanel, imageMap);
@@ -113,19 +114,19 @@ public class GameFrame extends JFrame implements WindowListener {
 	 * Process the bundle by passing its contents to relevant panels.
 	 */
 	public void processBundle(Bundle bundle) {
-		
+
 		if (bundle.getLog() != null && !bundle.getLog().isEmpty()) 
 			chatPanel.addChange(bundle.getLog());
-		
+
 		//passes bundle's player's inventory to inventory panel
 		invPanel.updateInventory(bundle.getPlayerObj().getInventory());
-		
+
 		//passes bundle to render window
-		if (this.render3D) {
-			this.areaDisplayPanel.processBundle(bundle);//Temporarily only passing bundle to the renderer.
-		} else {
-			this.areaDisplayPanel2D.processBundle(bundle);
-		}
+		//	if (this.render3D) {
+		this.areaDisplayPanel.processBundle(bundle);//Temporarily only passing bundle to the renderer.
+		//	} else {
+		//		this.areaDisplayPanel2D.processBundle(bundle);
+		//}
 
 	}
 
