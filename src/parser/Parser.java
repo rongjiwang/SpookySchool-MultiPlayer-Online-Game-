@@ -12,6 +12,11 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -113,7 +118,7 @@ public class Parser {
 	 * 					whose inventory and character will be saved.
 	 * @throws IOException 
 	 */
-	public void save(SpookySchool game, String player) throws IOException{
+	public void save(SpookySchool game, String player){
 		
 		/*
 		 * for every area in the areas map,
@@ -123,34 +128,50 @@ public class Parser {
 		 * 
 		 * 
 		 */
-		Map<String, Area> areas = game.getAreas();
-		List<Player> players = game.getPlayers();
-		Map<String, InventoryGO> inventObjects = game.getInventoryObjects();
 		
-		String path = "src/saves/" + player + "save.xml";
-		
-		
-		//creates new XML file
-		save = createXMLDom();
-		OutputFormat outFormat = new OutputFormat(save);
-		outFormat.setIndenting(true);
-		File savedFile = new File(path);
-		FileOutputStream outStream = new FileOutputStream(savedFile);
-		XMLSerializer serializer = new XMLSerializer(outStream, outFormat);
-		
-		
-		root = save.createElement("game");
-		
-		//Saves the each area in the Map areas into the XML
-		
-		for (String key : areas.keySet()){
-			Element tagName = save.createElement("area");
-			Text contents = save.createTextNode(key);
-			tagName.appendChild(contents);
-			root.appendChild(tagName);
-			saveTilesOfArea(areas.get(key), tagName);
+		if(game.getAreas().keySet() == null){
+			System.err.println("its null oi");
 		}
-		serializer.serialize(save);
+		
+		System.err.println(game.getAreas().keySet());
+		Map<String, Area> areas = game.getAreas();
+		Map<String, Player> players = null;
+		Map<String, InventoryGO> inventObjects = game.getInventoryObjects();
+			
+
+	    save = createXMLDom();
+	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    try {
+	        Node root = save.createElement("root");
+	        Node one = save.createElement("LevelOne");
+	        Text t = save.createTextNode("Value");
+	        one.appendChild(t);
+	        root.appendChild(one);
+	        save.appendChild(root);
+	        
+	        System.err.println(save);
+	        
+	        Transformer tr = TransformerFactory.newInstance().newTransformer();
+            tr.setOutputProperty(OutputKeys.INDENT, "yes");
+            tr.setOutputProperty(OutputKeys.METHOD, "xml");
+            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
+            tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+            // send DOM to file
+            tr.transform(new DOMSource(save), 
+                                 new StreamResult(new FileOutputStream("Test.xml")));
+	        
+	    }catch(Exception ex){
+	    	
+	    }
+
+		
+		
+		
+		
+		
+		
 	}
 	
 
@@ -159,7 +180,15 @@ public class Parser {
 		for(int i = 0; i < area.getArea().length; i++){
 			for (int j = 0; j < area.getArea()[i].length; j++){
 				Element tagName = save.createElement("tile");
-				Text contents = save.createTextNode(area.getArea()[i][j].toString());
+				Text contents = null;
+				if (area.getArea()[i][j] == null){
+					contents = save.createTextNode("null");
+				}else{
+					contents = save.createTextNode(area.getArea()[i][j].toString());
+				}
+				
+				
+				
 				tagName.appendChild(contents);
 				currentParent.appendChild(tagName);
 			}
