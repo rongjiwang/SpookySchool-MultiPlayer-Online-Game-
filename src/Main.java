@@ -1,7 +1,7 @@
 import ui.NetworkFrame;
 
 /**
- * Initiate the network menu here. 
+ * Initiates the network menu.
  * @author Pritesh R. Patel
  *
  */
