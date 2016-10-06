@@ -112,6 +112,19 @@ public class SpriteMap {
 		spriteMap.put("s1",loadImage("sign1.png"));
 		spriteMap.put("s2",loadImage("sign2.png"));
 		spriteMap.put("s3",loadImage("sign3.png"));
+		
+		// Building
+		spriteMap.put("B0",loadImage("building0.png"));
+		spriteMap.put("B1",loadImage("building1.png"));
+		spriteMap.put("B2",loadImage("building2.png"));
+		spriteMap.put("B3",loadImage("building3.png"));
+		
+		// Building walls
+		spriteMap.put("Q0",loadImage("buildingCorner0.png"));
+		spriteMap.put("Q1",loadImage("buildingCorner1.png"));
+		spriteMap.put("Q2",loadImage("buildingCorner2.png"));
+		spriteMap.put("Q3",loadImage("buildingCorner3.png"));
+
 
 		
 		
