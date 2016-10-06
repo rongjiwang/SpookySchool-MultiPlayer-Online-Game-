@@ -42,8 +42,7 @@ public class GameFrame extends JFrame implements WindowListener {
 		//creates inventory panel
 		invPanel = new InventoryPanel();
 
-		//creates chat panel
-		chatPanel = new ChatPanel(this, name, client);
+		
 
 		//sets up layout
 		this.setLayout(new BorderLayout());
@@ -54,6 +53,9 @@ public class GameFrame extends JFrame implements WindowListener {
 		} else {
 			this.areaDisplayPanel2D = new AreaDisplayPanel2D(this.client);
 		}
+		
+		//creates chat panel
+		chatPanel = new ChatPanel(this, name, client);
 
 		//temp, delete after
 		debugDisplay = new DebugDisplay(areaDisplayPanel);
