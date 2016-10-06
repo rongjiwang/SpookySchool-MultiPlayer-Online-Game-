@@ -25,6 +25,7 @@ public class SpookySchool {
 	private String doorsFileLoc = "src/areas/game_objects/doors.txt";
 	private String movableObjectsFileLoc = "src/areas/game_objects/movable_objects.txt";
 	private String nonHumanPlayersFileLoc = "src/areas/game_objects/non_human_player_objects.txt";
+	private String inventoryObjFileLoc = "src/areas/game_objects/inventory_objects.txt";
 
 	//Default Load files - these never change.
 	private Map<String, Area> areas = new HashMap<String, Area>();
@@ -112,6 +113,9 @@ public class SpookySchool {
 				areaA.getTile(sideADoorPos).setOccupant(door);
 				areaB.getTile(sideBDoorPos).setOccupant(door);
 
+				//Add door to doors list
+				this.doorObjects.add(door);
+
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -169,7 +173,35 @@ public class SpookySchool {
 
 				//Move NPC.
 				area.getTile(startingPos).setOccupant(npc);
+
 				this.nonHumanPlayers.add(npc);
+			}
+
+			//Scan all of the inventory objects on the floors.
+
+			scan = new Scanner(new File(inventoryObjFileLoc));
+			while (scan.hasNextLine()) {
+
+				Scanner lineScanner = new Scanner(scan.nextLine());
+
+				//Scan information about the inventory object
+				String name = lineScanner.next();
+				String id = lineScanner.next();
+				String token = lineScanner.next();
+				int size = lineScanner.nextInt();
+				String areaName = lineScanner.next();
+				Position pos = new Position(lineScanner.nextInt(), lineScanner.nextInt());
+				String description = lineScanner.nextLine();
+
+				//Create the inventory object
+				InventoryGO item = new InventoryGO(name, id, token, size, areaName, pos, description);
+
+				//Place the item on the tile in the given area.
+				Area area = this.areas.get(areaName);
+				area.getTile(pos).setOccupant(item);
+
+				this.inventoryObjects.put(id, item);
+
 			}
 
 			scan.close();
@@ -180,10 +212,10 @@ public class SpookySchool {
 
 
 	/**
-	 * Adds player to the game if the game is not full and player with this name does not already exist.
-	 * @param name of the player being added to the game.
-	 * @return true if player successfully added, otherwise false.
-	 */
+	* Adds player to the game if the game is not full and player with this name does not already exist.
+	* @param name of the player being added to the game.
+	* @return true if player successfully added, otherwise false.
+	*/
 	public synchronized boolean addPlayer(String name) {
 
 		if (this.players.size() < 8 && this.getPlayer(name) == null) {
@@ -278,6 +310,25 @@ public class SpookySchool {
 			return;
 		}
 
+		//
+		if (gameObj instanceof InventoryGO) {
+
+			InventoryGO item = (InventoryGO) gameObj;
+
+			//Remove the item from the area.
+			Area area = this.areas.get(item.getAreaName());
+			area.getTile(item.getPosition()).removeOccupant();
+
+			item.setAreaName(null);
+			item.setCurrentPosition(null);
+
+			this.getBundle(playerName).setMessage("You picked up a " + item.getName() + ".");
+			player.addToInventory(item);
+
+			return;
+		}
+
+
 		if (!(gameObj instanceof DoorGO)) {
 			String objDescription = gameObj.getDescription();
 
@@ -294,11 +345,32 @@ public class SpookySchool {
 
 			this.getBundle(playerName).setMessage(objDescription);
 			this.getBundle(playerName).addToChatLog(objDescription); //FIXME remove once messages display in rendering
+
+			return; //Finished 
+
 		}
 
 		//If the game object the action is done on is a door game object, then process the action.
 		if (gameObj instanceof DoorGO) {
 			DoorGO door = (DoorGO) gameObj;
+
+			if (door.isLocked()) {
+				//Attempt to unlock it.
+				for (InventoryGO item : player.getInventory()) {
+					if (item.getId().contains(door.getId())) {
+						door.setLocked(false); //Unlock the door.
+
+						this.getBundle(playerName).addToChatLog("You unlocked the door using a key in your inventory"); //FIXME remove later
+						this.getBundle(playerName).setMessage("You unlocked the door using a key in your inventory");
+						return;
+					}
+				}
+
+				this.getBundle(playerName).addToChatLog("You dont have the key to open this door."); //FIXME remove later
+				this.getBundle(playerName).setMessage("You dont have the key to open this door.");
+
+				return; //Door unlocked
+			}
 
 			//FIXME add code here to check if locked. If it is attempt to unlock it etc...
 			if (door.isOpen()) {
@@ -308,6 +380,8 @@ public class SpookySchool {
 				door.setOpen(true);
 				this.getBundle(playerName).addToChatLog("You opened the door."); //FIXME remove later.
 			}
+
+			return; //finished
 		}
 	}
 

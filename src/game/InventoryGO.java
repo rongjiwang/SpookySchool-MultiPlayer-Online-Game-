@@ -8,14 +8,19 @@ public class InventoryGO implements GameObject {
 	private final String id;
 	private final String token;
 	private final int size;
+
+	private String areaName;
 	private Position position;
 
 	private String description = "Seems to be some kind of item you can pick up. Try pressing 'z'.";
 
-	public InventoryGO(String name, String id, String token, int size, Position pos, String description) {
+	public InventoryGO(String name, String id, String token, int size, String areaName, Position pos,
+			String description) {
+
 		this.name = name;
 		this.id = id;
 		this.token = token;
+		this.areaName = areaName;
 		this.size = size;
 		this.position = pos;
 		this.description = description;
@@ -62,6 +67,16 @@ public class InventoryGO implements GameObject {
 	public void setDescription(String desc) {
 		this.description = desc;
 
+	}
+
+
+	public String getAreaName() {
+		return areaName;
+	}
+
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
 	}
 
 }
