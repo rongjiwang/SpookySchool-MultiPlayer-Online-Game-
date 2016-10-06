@@ -157,7 +157,10 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		// add underlay
 		g.setColor(Color.black);
 		g.fillRect(this.windowOffSetX, this.windowOffSetY, this.windowWidth, this.windowHeight);
-
+		
+		if(currentArea.getAreaName().equals("Outside"))
+			g.drawImage(spriteMap.getImage(getRotatedToken("G0")), (this.renderOffSetX - this.windowWidth)/2, (this.renderOffSetY - this.windowHeight)/2,null);
+		
 		renderArray(g, 0); // render floor tiles		
 		renderArray(g, 1); // render far walls
 		renderArray(g, 2); // render gameObjects

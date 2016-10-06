@@ -65,6 +65,10 @@ public class SpriteMap {
 		spriteMap.put("h1",loadImage("hard1.png"));
 		spriteMap.put("h2",loadImage("hard2.png"));
 		spriteMap.put("h3",loadImage("hard3.png"));
+		spriteMap.put("G0",loadImage("grassLarge0.png"));
+		spriteMap.put("G1",loadImage("grassLarge1.png"));
+		spriteMap.put("G2",loadImage("grassLarge2.png"));
+		spriteMap.put("G3",loadImage("grassLarge3.png"));
 		
 		// doors/windows
 		spriteMap.put("d00",loadImage("door00.png"));
@@ -107,6 +111,15 @@ public class SpriteMap {
 		spriteMap.put("r1", loadImage("treeOne1.png"));
 		spriteMap.put("r2", loadImage("treeOne2.png"));
 		spriteMap.put("r3", loadImage("treeOne3.png"));
+		spriteMap.put("e0", loadImage("treeTwo0.png"));
+		spriteMap.put("e1", loadImage("treeTwo1.png"));
+		spriteMap.put("e2", loadImage("treeTwo2.png"));
+		spriteMap.put("e3", loadImage("treeTwo3.png"));
+		spriteMap.put("l0", loadImage("treeThree0.png"));
+		spriteMap.put("l1", loadImage("treeThree1.png"));
+		spriteMap.put("l2", loadImage("treeThree2.png"));
+		spriteMap.put("l3", loadImage("treeThree3.png"));
+		
 		
 		// table - big
 		spriteMap.put("T0", loadImage("tableRound0.png"));
