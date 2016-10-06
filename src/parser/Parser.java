@@ -14,6 +14,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -30,6 +31,7 @@ import com.sun.org.apache.xml.internal.serialize.*;
 
 import game.Area;
 import game.FloorTile;
+import game.GameObject;
 import game.InventoryGO;
 import game.Player;
 import game.Position;
@@ -129,61 +131,66 @@ public class Parser {
 		 * 
 		 */
 		
-		if(game.getAreas().keySet() == null){
-			System.err.println("its null oi");
-		}
+
 		
 		System.err.println(game.getAreas().keySet());
+		System.err.println(game.getAreas().entrySet());
 		Map<String, Area> areas = game.getAreas();
 		Map<String, Player> players = null;
 		Map<String, InventoryGO> inventObjects = game.getInventoryObjects();
 			
 
 	    save = createXMLDom();
-	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-	    try {
-	        Node root = save.createElement("root");
-	        Node one = save.createElement("LevelOne");
-	        Text t = save.createTextNode("Value");
-	        one.appendChild(t);
-	        root.appendChild(one);
-	        save.appendChild(root);
-	        
-	        System.err.println(save);
-	        
-	        Transformer tr = TransformerFactory.newInstance().newTransformer();
-            tr.setOutputProperty(OutputKeys.INDENT, "yes");
-            tr.setOutputProperty(OutputKeys.METHOD, "xml");
-            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-            tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
-            tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-
-            // send DOM to file
-            tr.transform(new DOMSource(save), 
-                                 new StreamResult(new FileOutputStream("Test.xml")));
-	        
-	    }catch(Exception ex){
-	    	
-	    }
-
-		
-		
-		
-		
-		
+	    root = save.createElement("game");
+	    saveMap(areas);
+	    
+	    outputFile();
 		
 	}
 	
-
+	public void saveMap(Map<String, Area> areas){
+		for(String key : areas.keySet()){
+			Element tagName = save.createElement("area");
+			Text contents = save.createTextNode(key);
+			tagName.appendChild(contents);
+			root.appendChild(tagName);
+			saveTilesOfArea(areas.get(key), tagName);
+		}
+		save.appendChild(root);
+	}
+	
+	public void outputFile(){
+         
+		try{
+	        Transformer tr = TransformerFactory.newInstance().newTransformer();
+	        tr.setOutputProperty(OutputKeys.INDENT, "yes");
+	        tr.setOutputProperty(OutputKeys.METHOD, "xml");
+	        tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+	        tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
+	        tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+	
+	        // send DOM to file
+			tr.transform(new DOMSource(save), new StreamResult(new FileOutputStream("Test.xml")));
+		}catch (FileNotFoundException | TransformerException e) {
+			e.printStackTrace();
+		}	
+		
+	}
+	
 	public void saveTilesOfArea(Area area, Element currentParent){
 		
 		for(int i = 0; i < area.getArea().length; i++){
 			for (int j = 0; j < area.getArea()[i].length; j++){
 				Element tagName = save.createElement("tile");
 				Text contents = null;
-				if (area.getArea()[i][j] == null){
+				Tile currentTile = area.getArea()[i][j];
+				if (currentTile == null){
 					contents = save.createTextNode("null");
-				}else{
+				}if (currentTile instanceof Tile){
+					
+					
+				}
+				else{
 					contents = save.createTextNode(area.getArea()[i][j].toString());
 				}
 				
@@ -199,8 +206,8 @@ public class Parser {
 	public Document createXMLDom(){
 		try{
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();	//Implements the static class to properly manage a file
-			factory.setIgnoringComments(true);										//Ignore comments
-			factory.setIgnoringElementContentWhitespace(true);						//Ignore whitespace
+			//factory.setIgnoringComments(true);										//Ignore comments
+			//factory.setIgnoringElementContentWhitespace(true);						//Ignore whitespace
 			//factory.setValidating(true);
 			DocumentBuilder builder =  factory.newDocumentBuilder();				//Build the document in memory for the program to use
 			Document save = builder.newDocument();
