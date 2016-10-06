@@ -75,14 +75,14 @@ public class SpriteMap {
 		spriteMap.put("d11",loadImage("door11.png"));
 		spriteMap.put("d21",loadImage("door21.png"));
 		spriteMap.put("d31",loadImage("door31.png"));
-		spriteMap.put("j00",loadImage("window00.png"));
-		spriteMap.put("j10",loadImage("window10.png"));
-		spriteMap.put("j20",loadImage("window20.png"));
-		spriteMap.put("j30",loadImage("window30.png"));
-		spriteMap.put("j01",loadImage("window01.png"));
-		spriteMap.put("j11",loadImage("window11.png"));
-		spriteMap.put("j21",loadImage("window21.png"));
-		spriteMap.put("j31",loadImage("window31.png"));
+		spriteMap.put("w00",loadImage("window00.png"));
+		spriteMap.put("w10",loadImage("window10.png"));
+		spriteMap.put("w20",loadImage("window20.png"));
+		spriteMap.put("w30",loadImage("window30.png"));
+		spriteMap.put("w01",loadImage("window01.png"));
+		spriteMap.put("w11",loadImage("window11.png"));
+		spriteMap.put("w21",loadImage("window21.png"));
+		spriteMap.put("w31",loadImage("window31.png"));
 		
 		// bed
 		spriteMap.put("b0", loadImage("bed0.png"));
@@ -102,6 +102,12 @@ public class SpriteMap {
 		spriteMap.put("f2", loadImage("furniture2.png"));
 		spriteMap.put("f3", loadImage("furniture3.png"));
 
+		// trees
+		spriteMap.put("r0", loadImage("treeOne0.png"));
+		spriteMap.put("r1", loadImage("treeOne1.png"));
+		spriteMap.put("r2", loadImage("treeOne2.png"));
+		spriteMap.put("r3", loadImage("treeOne3.png"));
+		
 		// table - big
 		spriteMap.put("T0", loadImage("tableRound0.png"));
 		spriteMap.put("T1", loadImage("tableRound1.png"));
