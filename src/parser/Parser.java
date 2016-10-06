@@ -1,11 +1,14 @@
 package parser;
 
 import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -98,25 +101,42 @@ public class Parser {
 			 * 
 			 * 
 			 */
-			Map<String, Area> areas = game.getAreas();
-			List<String> players = game.getPlayers();
-			Map<String, InventoryGO> inventObjects = game.getInventory();
+			//Map<String, Area> areas = game.getAreas();
+			//List<String> players = game.getPlayers();
+			//Map<String, InventoryGO> inventObjects = game.getInventoryObjects();
 			
 			String path = "src/saves/" + player + "save.xml";
+			
+			//creates new XML file
+			Document save = createXML();
+			
+			Element root = save.createElement("game");
+			//saveMap(areas);
+			
+					
+			
+			
+			
+		}
+		
+	
+		
+		
+		
+		
+		public Document createXML(){
 			try{
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();	//Implements the static class to properly manage a file
 				factory.setIgnoringComments(true);										//Ignore comments
 				factory.setIgnoringElementContentWhitespace(true);						//Ignore whitespace
 				//factory.setValidating(true);
 				DocumentBuilder builder =  factory.newDocumentBuilder();				//Build the document in memory for the program to use
-				Document save;
+				Document save = builder.newDocument();
+				return save;
 			}catch(Exception e){
 				e.printStackTrace();
 			}
-			
-			
-			
-			
+			return null; 	//to compile, should never reach this point
 			
 		}
 		
