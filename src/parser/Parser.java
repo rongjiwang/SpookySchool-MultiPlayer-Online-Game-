@@ -199,7 +199,7 @@ public class Parser {
 						pos.appendChild(x);
 						pos.appendChild(y);
 						
-						contents = save.createElement("floortile");//
+						
 					}
 					
 				}
