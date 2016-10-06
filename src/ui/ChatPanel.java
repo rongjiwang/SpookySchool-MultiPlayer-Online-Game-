@@ -43,9 +43,12 @@ public class ChatPanel extends JPanel{
 	private ButtonListen listen;
 	
 	private JButton tempSendButton;
+	
+	private UIImageMap imageMap;
 
-	public ChatPanel(GameFrame display, String playerName, Client client) {
+	public ChatPanel(GameFrame display, String playerName, Client client, UIImageMap imageMap) {
 		super(new BorderLayout());
+		this.imageMap = imageMap;
 		this.setOpaque(true);
 		home = display;
 		this.playerName = playerName;
@@ -55,20 +58,19 @@ public class ChatPanel extends JPanel{
 		southPanel.setBackground(Color.BLACK);
 		southPanel.setLayout(new GridBagLayout());
 		
-		//setIcons();
-
+		setSend();
+		
 		listen = new ButtonListen();
 		
 		//temp button
-		tempSendButton = new JButton("Send");
-		tempSendButton.addMouseListener(listen);
+		//tempSendButton = new JButton("Send");
+		//tempSendButton.addMouseListener(listen);
 
 		typeArea = new JTextField(30);
 
-		/**
 		sendButton = new JLabel(send[0]);
 		sendButton.addMouseListener(listen);
-		**/
+		
 		
 		messageList = new JTextPane();
 		messageList.setEditable(false);
@@ -110,21 +112,12 @@ public class ChatPanel extends JPanel{
 
 		southPanel.add(typeArea, left);
 		// change back to "send button"
-		southPanel.add(tempSendButton, right);
+		southPanel.add(sendButton, right);
 
 		this.add(BorderLayout.SOUTH, southPanel);
 
 		this.setVisible(true);
-	}
-
-	/**
-	public void setIcons(){
-		send = new ImageIcon[6];
-
-		send[0] = new ImageIcon(this.getClass().getResource("UIImages/send.png"));
-		send[1] = new ImageIcon(this.getClass().getResource("UIImages/sendhighlight.png"));
-	}
-	**/
+	}	
 	
 	public void addChange(List<String> changes){
 		for(String change: changes){
@@ -140,6 +133,13 @@ public class ChatPanel extends JPanel{
 				}
 			}
 		}
+	}
+	
+	public void setSend(){
+		send = new ImageIcon[2];
+				
+		send[0] = new ImageIcon(imageMap.getImage("sb"));
+		send[1] = new ImageIcon(imageMap.getImage("sbhi"));
 	}
 
 	public Client getClient(){
@@ -167,13 +167,13 @@ public class ChatPanel extends JPanel{
 		
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			//sendButton.setIcon(send[1]);
+			sendButton.setIcon(send[1]);
 
 		}
 		
 		@Override
 		public void mouseExited(MouseEvent e) {
-		//	sendButton.setIcon(send[0]);
+			sendButton.setIcon(send[0]);
 		}
 
 		//UNUSED

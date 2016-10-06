@@ -17,11 +17,10 @@ public class MainPanel extends JPanel{
 	private JPanel game;
 	
 	
-	public MainPanel(JPanel gamePanel){
+	public MainPanel(JPanel gamePanel, UIImageMap imageMap){
 		setLayout(new BorderLayout(20, 0));
 		
-
-		game = new UIPanel(gamePanel, 1);
+		game = new UIPanel(gamePanel, 1, imageMap);
 		
 		this.add(game, BorderLayout.CENTER);
 		

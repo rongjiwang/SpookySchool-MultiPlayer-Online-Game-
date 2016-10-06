@@ -18,9 +18,13 @@ public class ButtonPanel extends JPanel{
 	private JLabel info;
 	private JLabel quit;
 	private JLabel players;
+	
+	private UIImageMap imageMap;
 		
-	public ButtonPanel(){
+	public ButtonPanel(UIImageMap imageMap){
 		setLayout(new FlowLayout());
+		
+		this.imageMap = imageMap;
 		
 		setIcons();
 		
@@ -44,12 +48,12 @@ public class ButtonPanel extends JPanel{
 	public void setIcons(){
 		icons = new ImageIcon[6];
 
-		icons[0] = new ImageIcon(this.getClass().getResource("UIImages/info.png"));
-		icons[1] = new ImageIcon(this.getClass().getResource("UIImages/infohighlight.png"));
-		icons[2] = new ImageIcon(this.getClass().getResource("UIImages/players.png"));
-		icons[3] = new ImageIcon(this.getClass().getResource("UIImages/playershighlight.png"));
-		icons[4] = new ImageIcon(this.getClass().getResource("UIImages/quit.png"));
-		icons[5] = new ImageIcon(this.getClass().getResource("UIImages/quithighlight.png"));
+		icons[0] = new ImageIcon(imageMap.getImage("ib"));
+		icons[1] = new ImageIcon(imageMap.getImage("ibhi"));
+		icons[2] = new ImageIcon(imageMap.getImage("pb"));
+		icons[3] = new ImageIcon(imageMap.getImage("pbhi"));
+		icons[4] = new ImageIcon(imageMap.getImage("qb"));
+		icons[5] = new ImageIcon(imageMap.getImage("qbhi"));
 	}
 	
 	private class ButtonListen implements MouseListener{

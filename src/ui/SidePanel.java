@@ -11,12 +11,12 @@ public class SidePanel extends JPanel{
 	private JPanel inv;
 	private JPanel buttons;
 	
-	public SidePanel(ChatPanel chatPanel, InventoryPanel invPanel){
+	public SidePanel(ChatPanel chatPanel, InventoryPanel invPanel, UIImageMap imageMap){
 		setLayout(new BorderLayout(20, 0));
-		buttons = new ButtonPanel();
+		buttons = new ButtonPanel(imageMap);
 				
-		chat = new UIPanel(chatPanel, 3);
-		inv = new UIPanel(invPanel, 2);
+		chat = new UIPanel(chatPanel, 3, imageMap);
+		inv = new UIPanel(invPanel, 2, imageMap);
 		
 		JPanel left = new JPanel(new BorderLayout(20, 0));
 		left.setOpaque(false);

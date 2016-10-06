@@ -28,20 +28,27 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	private int highlightedY;
 	private Image highLight;
 	private Image background;
+	
+	private UIImageMap imageMap;
+	private ItemImageMap itemMap;
+	
 	private int dragged = -1;
 
 	//used when up/down buttons pressed
 	private int level;
 
 
-	public InventoryPanel(){
+	public InventoryPanel(UIImageMap imageMap){
 		super(new GridLayout(3,5));
+		this.imageMap = imageMap;
+		this.itemMap = new ItemImageMap();
+		
 		itemList = new ArrayList<ItemDisplay>();
 		itemsShown = new ArrayList<ItemDisplay>();
 		this.level = 0;
 		this.setPreferredSize(boardSize);
-		highLight = new ImageIcon(this.getClass().getResource("UIimages/highlight.png")).getImage();
-		background = new ImageIcon(this.getClass().getResource("UIimages/invBackground.png")).getImage();
+		highLight = imageMap.getImage("hi");
+		background = imageMap.getImage("invBack");
 
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -126,14 +133,14 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 			if(i >= itemsShown.size())
 				break;
 			item = itemsShown.get(i);
-			image = new ImageIcon(this.getClass().getResource("itemimages/"+item.getName()+".png")).getImage();
+			image = itemMap.getImage(item.getName());
 			if(dragged != i){
 				g.drawImage(image, item.getX(), item.getY(), image.getWidth(null), image.getHeight(null), null);
 			} 
 
 		}
 		if(dragged != -1){
-			Image dragImage = new ImageIcon(this.getClass().getResource("itemimages/"+itemsShown.get(dragged).getName()+".png")).getImage();
+			Image dragImage = itemMap.getImage(itemsShown.get(dragged).getName());
 			g.drawImage(dragImage, itemsShown.get(dragged).getTempX(), itemsShown.get(dragged).getTempY(), image.getWidth(null), image.getHeight(null), null);
 		}
 	}
