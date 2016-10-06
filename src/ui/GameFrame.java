@@ -23,7 +23,7 @@ public class GameFrame extends JFrame implements WindowListener {
 	private ChatPanel chatPanel;
 
 
-	private boolean render3D = false; //FIXME **CHANGE TO FALSE TESTING 2D RENDERING**
+	private boolean render3D = true; //FIXME **CHANGE TO FALSE TESTING 2D RENDERING**
 
 	private AreaDisplayPanel areaDisplayPanel; //This pane displays all of the other panels
 	private AreaDisplayPanel2D areaDisplayPanel2D; //This pane displays all of the other panels
@@ -103,7 +103,7 @@ public class GameFrame extends JFrame implements WindowListener {
 			northPanel = new MainPanel(areaDisplayPanel2D);
 		}
 		this.add(northPanel, BorderLayout.NORTH);
-		
+
 		southPanel = new SidePanel(chatPanel, invPanel);
 		this.add(southPanel, BorderLayout.SOUTH);
 		this.pack();
