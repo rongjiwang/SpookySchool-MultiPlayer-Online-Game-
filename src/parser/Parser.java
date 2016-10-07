@@ -201,6 +201,10 @@ public class Parser {
 						tagName.appendChild(positions);
 						currentParent.appendChild(tagName);
 						
+						Element token = saveToken(currentTile, "");
+						tagName.appendChild(token);
+						currentParent.appendChild(tagName);
+						
 						if (currentTile.getOccupant() != null){
 							GameObject occupant = currentTile.getOccupant();
 							
@@ -211,19 +215,19 @@ public class Parser {
 								Element description = saveDescription(occupant);
 								
 							}else if (occupant instanceof DoorGO){
-								//Element open = saveOpen();
-								//Element locked = saveLocked();
-								//Element keyID = saveKeyID();
-								//Element description = saveDescription();
+								Element open = saveOpen(occupant);
+								Element locked = saveLocked(occupant);
+								Element keyID = saveKeyID(occupant);
+								Element description = saveDescription(occupant);
 								
-								//Element sideA = saveSideA();
-								//Element tokenA = saveTokenA();
-								//Element sideAPos = saveSideAPos();
+								Element sideA = saveSide(occupant, "a");
+								Element tokenA = saveToken(currentTile, "a");
+								Element sideAPos = saveSidePos(occupant, "a");
 								//Element sideAEntryPos = saveSideAEntryPos();
 								
-								//Element sideB = saveSideB();
-								//Element tokenB = saveTokenB();
-								//Element sideBPos = saveSideBPos();
+								Element sideB = saveSide(occupant, "b");
+								Element tokenB = saveToken(currentTile, "b");
+								Element sideBPos = saveSidePos(occupant, "b");
 								//Element sideBEntryPos = saveSideBEntryPos();								
 								
 							}else if (occupant instanceof FixedContainerGO){
@@ -283,7 +287,7 @@ public class Parser {
 	public Element saveAreaName(GameObject occupant){
 		if(occupant instanceof InventoryGO){
 			Text value = save.createTextNode(((InventoryGO) occupant).getAreaName());
-			Element areaName = save.createElement("name");
+			Element areaName = save.createElement("areaName");
 			areaName.appendChild(value);
 			return areaName;
 		}
@@ -293,22 +297,131 @@ public class Parser {
 	public Element saveSize(GameObject occupant){
 		if(occupant instanceof InventoryGO){
 			Text value = save.createTextNode("" + ((InventoryGO) occupant).getSize());
-			Element saveSize = save.createElement("name");
-			saveSize.appendChild(value);
-			return saveSize;
+			Element size = save.createElement("size");
+			size.appendChild(value);
+			return size;
 		}
 		return null;
 	}
 	
 	public Element saveDescription(GameObject occupant){
+		Text value = null;
 		if(occupant instanceof InventoryGO){
-			Text value = save.createTextNode(((InventoryGO) occupant).getDescription());
-			Element description = save.createElement("name");
+			value = save.createTextNode(((InventoryGO) occupant).getDescription());
+		}else if (occupant instanceof DoorGO){
+			value = save.createTextNode(((DoorGO) occupant).getDescription());
+		}
+			Element description = save.createElement("description");
 			description.appendChild(value);
 			return description;
+	}
+	
+	public Element saveOpen(GameObject occupant){
+		if(occupant instanceof DoorGO){
+			Text value = save.createTextNode("" + ((DoorGO) occupant).isOpen());
+			Element open = save.createElement("open");
+			open.appendChild(value);
+			return open;
 		}
 		return null;
 	}
+	
+	public Element saveLocked(GameObject occupant){
+		if(occupant instanceof DoorGO){
+			Text value = save.createTextNode("" + ((DoorGO) occupant).isLocked());
+			Element locked = save.createElement("locked");
+			locked.appendChild(value);
+			return locked;
+		}
+		return null;
+	}
+	
+	public Element saveKeyID(GameObject occupant){
+		if(occupant instanceof DoorGO){
+			Text value = save.createTextNode(((DoorGO) occupant).getKeyID());
+			Element keyID = save.createElement("keyID");
+			keyID.appendChild(value);
+			return keyID;
+		}
+		return null;
+	}
+	
+	public Element saveSide(GameObject occupant, String side){
+		if(occupant instanceof DoorGO){
+			if(side.equals("a")){
+				Text value = save.createTextNode(((DoorGO) occupant).getSideA());
+				Element sideA = save.createElement("sideA");
+				sideA.appendChild(value);
+				return sideA;
+			}else{
+				Text value = save.createTextNode(((DoorGO) occupant).getSideB());
+				Element sideB = save.createElement("sideB");
+				sideB.appendChild(value);
+				return sideB;
+			}
+		}
+	}
+	
+	public Element saveToken(Tile currentTile, String side){
+		GameObject occupant = currentTile.getOccupant();
+		
+		if(occupant instanceof DoorGO){
+			if(side.equals("a")){
+				Text value = save.createTextNode(occupant.getTokenA());
+				Element tokenA = save.createElement("tokenA");
+				tokenA.appendChild(value);
+				return tokenA;
+			}else if(side.equals("b")){
+				Text value = save.createTextNode(occupant.getTokenB());
+				Element tokenB = save.createElement("tokenB");
+				tokenB.appendChild(value);
+				return tokenB;
+			}
+		}else{
+			Text value = save.createTextNode(occupant.getToken());
+			Element token = save.createElement("token");
+			token.appendChild(value);
+			return token;
+		}	
+	}
+	
+	public Element saveSidePos(GameObject occupant, String side){
+		if(occupant instanceof DoorGO){
+			
+			Text xVal = null;
+			Text yVal = null;
+			
+			if(side.equals("a")){
+				Position posA = occupant.getSideAPos();
+				xVal = save.createTextNode("" + posA.getPosX());
+				yVal = save.createTextNode("" + posA.getPosY());
+				
+			}else{
+				Position posB = occupant.getSideBPos();
+				xVal = save.createTextNode("" + posB.getPosX());
+				yVal = save.createTextNode("" + posB.getPosY());
+			
+			}
+			Element x = save.createElement("x");
+			Element y = save.createElement("y");
+			x.appendChild(xVal);
+			y.appendChild(yVal);
+			
+			if(side.equals("a")){
+				Element sideAPos = save.createElement("sideAPos");
+				sideAPos.appendChild(x);
+				sideAPos.appendChild(y);
+			}else{
+				Element sideBPos = save.createElement("sideBPos");
+				sideBPos.appendChild(x);
+				sideBPos.appendChild(y);
+			}
+		}
+	}
+	
+	public 
+	
+	
 	
 	
 	
