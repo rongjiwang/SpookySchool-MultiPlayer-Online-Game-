@@ -502,7 +502,7 @@ public class SpookySchool {
 
 				//Add movement to new room to the log.
 				this.addChatLogItemToAllBundles(
-						playerName + " entered the following room: " + otherSide.replace('_', ' '));
+						playerName + " entered the following area: " + otherSide.replace('_', ' '));
 
 				return true; //Movement through door successful
 			}

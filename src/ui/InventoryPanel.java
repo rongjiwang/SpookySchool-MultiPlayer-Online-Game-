@@ -47,7 +47,6 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	private Client client;
 	private OverlayPanel overlayPanel;
 
-
 	public InventoryPanel(UIImageMap imageMap, Client client, OverlayPanel overlayPanel){
 		super(new GridLayout(3,5));
 
@@ -119,6 +118,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 		return false;
 	}
 
+	
 	public void addItems(List<InventoryGO> items){
 		if(items != null){
 			if(itemsChanged(items)){
@@ -335,6 +335,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 		JMenuItem inspect;
 		JMenuItem drop;
 		JMenuItem open;
+		JMenuItem pass;
 
 		public PopUpMenu(ItemDisplay item){
 			ActionListener popUpListener = new ActionListener() {
@@ -343,8 +344,10 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 						overlayPanel.setFooterMessage(item.getDescription());
 					} else if(event.getActionCommand().equals("Drop")){
 						client.sendCommand("DROP "+item.getID());
-					} else {
+					} else if (event.getActionCommand().equals("Open")){
 						client.sendCommand("OPEN "+item.getID());
+					} else if (event.getActionCommand().equals("Pass")){
+						//client.sendCommand("OPEN "+item.getID());
 					}
 				}
 				
@@ -353,9 +356,11 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 			try {
 				inspect = new JMenuItem("Inspect");
 				drop = new JMenuItem("Drop");
+				pass = new JMenuItem("Pass Item");
 				Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
 				inspect.setFont(font.deriveFont(Font.TRUETYPE_FONT, 13f));
 				drop.setFont(font.deriveFont(Font.TRUETYPE_FONT, 13f));
+				pass.setFont(font.deriveFont(Font.TRUETYPE_FONT, 13f));
 
 			} catch (Exception e) {}
 			
@@ -365,6 +370,9 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 			
 			drop.addActionListener(popUpListener);
 			add(drop);
+			
+			pass.addActionListener(popUpListener);
+			add(pass);
 		//	if(value){
 			//	open = new JMenuItem("Open");
 				//open.addActionListener(popUpListener);
