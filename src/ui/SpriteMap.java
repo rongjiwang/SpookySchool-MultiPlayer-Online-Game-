@@ -261,7 +261,14 @@ public class SpriteMap {
 		spriteMap.put("P0", loadImage("footer.png"));
 
 		/* Rain */
-		spriteMap.put("Rain0", loadImage("rainStatic.png"));
+		spriteMap.put("Rain0", loadImage("rain0.png"));
+		spriteMap.put("Rain1", loadImage("rain1.png"));
+		spriteMap.put("Rain2", loadImage("rain2.png"));
+		spriteMap.put("Rain3", loadImage("rain3.png"));
+		spriteMap.put("Rain4", loadImage("rain4.png"));
+		spriteMap.put("Rain5", loadImage("rain5.png"));
+		spriteMap.put("Rain6", loadImage("rain6.png"));
+		spriteMap.put("Rain7", loadImage("rain7.png"));
 	}
 
 
