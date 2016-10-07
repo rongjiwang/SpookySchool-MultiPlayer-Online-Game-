@@ -66,7 +66,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		  Default view */
 
 
-	public AreaDisplayPanel(Client client, GameFrame gf) {
+	public AreaDisplayPanel(Client client, GameFrame gf, SpriteMap spriteMap) {
 
 		this.setBackground(Color.darkGray);
 		this.setFocusable(true);
@@ -76,10 +76,12 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		this.spriteMap = new SpriteMap();
 		this.overlayPanel = new OverlayPanel(this, spriteMap);
+
+		this.spriteMap = spriteMap;
 		//		overlayPanel.setBackground(Color.BLUE);
-		overlayPanel.setOpaque(false);
+
 		this.setLayout(new BorderLayout());
-		add(overlayPanel, BorderLayout.CENTER);
+
 
 		validate();
 
@@ -88,6 +90,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		this.gameFrame = gf;
 	}
 
+	public void setOverLay(OverlayPanel overlayPanel) {
+		this.overlayPanel = overlayPanel;
+		overlayPanel.setOpaque(false);
+		this.add(overlayPanel, BorderLayout.CENTER);
+	}
 
 	/**
 	 * Process the received bundle. Display game according to the bundle.
@@ -160,6 +167,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		// add underlay
 		g.setColor(Color.black);
 		g.fillRect(this.windowOffSetX, this.windowOffSetY, this.windowWidth, this.windowHeight);
+
+		if (currentArea != null)
+			if (currentArea.getAreaName().equals("Outside"))
+				g.drawImage(spriteMap.getImage(getRotatedToken("G0")), (this.renderOffSetX - this.windowWidth) / 2,
+						(this.renderOffSetY - this.windowHeight) / 2, null);
 
 		renderArray(g, 0); // render floor tiles		
 		renderArray(g, 1); // render far walls
