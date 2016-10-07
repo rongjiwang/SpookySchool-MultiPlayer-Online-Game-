@@ -170,7 +170,7 @@ public class Parser {
 	        tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 	
 	        // send DOM to file
-			tr.transform(new DOMSource(save), new StreamResult(new FileOutputStream("Test.xml")));
+			tr.transform(new DOMSource(save), new StreamResult(new FileOutputStream("Save.xml")));
 		}catch (FileNotFoundException | TransformerException e) {
 			e.printStackTrace();
 		}	
@@ -186,33 +186,30 @@ public class Parser {
 				Tile currentTile = area.getArea()[i][j];
 				if (currentTile == null){
 					contents = save.createTextNode("null");
-				}if (currentTile instanceof Tile){
-					if(currentTile instanceof FloorTile){
-						Element pos = save.createElement("pos");
-						Element x = save.createElement("x");
-						Text xVal = save.createTextNode("" + currentTile.getPosition().getPosX());
-						Element y = save.createElement("y");
-						Text yVal = save.createTextNode("" + currentTile.getPosition().getPosY());
-						
-						x.appendChild(xVal);
-						y.appendChild(yVal);
-						pos.appendChild(x);
-						pos.appendChild(y);
-						
-						
-					}
-					//refer to the sheet to see which things are left to be done
-				}
+				}	
 				else{
 					contents = save.createTextNode(area.getArea()[i][j].toString());
 				}
-				
-				
 				
 				tagName.appendChild(contents);
 				currentParent.appendChild(tagName);
 			}
 		}
+	}
+	
+	public void savePosition(Tile currentTile){
+		Element pos = save.createElement("pos");
+		Element x = save.createElement("x");
+		Text xVal = save.createTextNode("" + currentTile.getPosition().getPosX());
+		Element y = save.createElement("y");
+		Text yVal = save.createTextNode("" + currentTile.getPosition().getPosY());
+		
+		x.appendChild(xVal);
+		y.appendChild(yVal);
+		pos.appendChild(x);
+		pos.appendChild(y);
+		
+		
 	}
 	
 	
