@@ -30,6 +30,7 @@ public class OverlayPanel extends JPanel {
 	private boolean firstFooterReceived = false; //To stop the null pointer at the start of the game.
 
 	public OverlayPanel(AreaDisplayPanel panel, SpriteMap spriteMap) {
+
 		this.panel = panel;
 		this.spriteMap = spriteMap;
 		this.thread = new Thread() {
@@ -82,7 +83,7 @@ public class OverlayPanel extends JPanel {
 
 		//Draw the footer
 		if (this.footerMessage != null) {
-			g.drawImage(spriteMap.getImage("F0"), footerX, footerY, null);
+			g.drawImage(spriteMap.getImage("P0"), footerX, footerY, null);
 			g.drawString(this.footerMessage, footerX + 10, footerY + 25);
 		}
 	}

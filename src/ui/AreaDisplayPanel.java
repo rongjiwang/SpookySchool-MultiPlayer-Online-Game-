@@ -177,6 +177,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		renderArray(g, 2); // render gameObjects
 		renderArray(g, 3); // render close and side walls
 
+		g.drawImage(spriteMap.getImage("Rain0"), 0, 0, 600, 600, null);
 
 	}
 
@@ -284,10 +285,13 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		// Draw Walls(Back and side walls with layer 1, front with layer 3)
 
-		if (((token.equals("w0") || token.equals("W1") || token.equals("f0") || token.equals("F1")  || token.equals("B0") || token.equals("Q1")|| token.equals("Q2")) && layer == 1)
-				|| ((!(token.equals("w0") || token.equals("W1") || token.equals("W2") || token.equals("f0") || token.equals("F1") || token.equals("F2") || token.equals("B0")
-						|| token.equals("Q1") || token.equals("Q2"))) && layer == 3)) {
-			if (token.contains("w") || token.contains("W") || token.contains("B") || token.contains("Q") || token.contains("f") || token.contains("F")) {
+		if (((token.equals("w0") || token.equals("W1") || token.equals("f0") || token.equals("F1") || token.equals("B0")
+				|| token.equals("Q1") || token.equals("Q2")) && layer == 1)
+				|| ((!(token.equals("w0") || token.equals("W1") || token.equals("W2") || token.equals("f0")
+						|| token.equals("F1") || token.equals("F2") || token.equals("B0") || token.equals("Q1")
+						|| token.equals("Q2"))) && layer == 3)) {
+			if (token.contains("w") || token.contains("W") || token.contains("B") || token.contains("Q")
+					|| token.contains("f") || token.contains("F")) {
 				Image tileImage = spriteMap.getImage(token);
 				int adjustX = tileImage.getWidth(null) - tileWidth;
 				int adjustY = tileImage.getHeight(null) - tileHeight;
