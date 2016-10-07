@@ -19,6 +19,8 @@ public class Bundle implements Serializable {
 	private Player playerObj;
 	private List<String> chatLogChanges = new ArrayList<String>();
 
+	private List<GameObject> areaObjects = new ArrayList<GameObject>();
+
 	public Bundle(String playerName) {
 		this.playerName = playerName;
 	}
@@ -29,6 +31,7 @@ public class Bundle implements Serializable {
 	public void clearBundle() {
 		//this.playerObj = null;
 		//this.gameObjectChanges = new ArrayList<String>();
+		this.areaObjects.clear();
 		this.setMessage(null);
 		this.chatLogChanges = new ArrayList<String>(); //FIXME keep commented out for now. Want to send entire chat log over network (for now!)
 	}
@@ -66,6 +69,12 @@ public class Bundle implements Serializable {
 		this.message = message;
 	}
 
+	public void addMapObject(GameObject obj) {
+		this.areaObjects.add(obj);
+	}
 
+	public List<GameObject> getAreaObjects() {
+		return this.areaObjects;
+	}
 
 }

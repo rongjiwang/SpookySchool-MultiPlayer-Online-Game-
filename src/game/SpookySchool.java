@@ -328,7 +328,7 @@ public class SpookySchool {
 			item.setAreaName(null);
 			item.setCurrentPosition(null);
 
-			this.getBundle(playerName).setMessage("You picked up a " + item.getName() + ".");
+			this.getBundle(playerName, false).setMessage("You picked up a " + item.getName() + ".");
 			player.addToInventory(item);
 
 			return;
@@ -349,7 +349,7 @@ public class SpookySchool {
 				}
 			}
 
-			this.getBundle(playerName).setMessage(objDescription);
+			this.getBundle(playerName, false).setMessage(objDescription);
 
 			return; //Finished 
 
@@ -364,12 +364,13 @@ public class SpookySchool {
 				for (InventoryGO item : player.getInventory()) {
 					if (item.getId().contains(door.getId())) {
 						door.setLocked(false); //Unlock the door.
-						this.getBundle(playerName).setMessage("You unlocked the door using the key in your inventory");
+						this.getBundle(playerName, false)
+								.setMessage("You unlocked the door using the key in your inventory");
 						return;
 					}
 				}
 
-				this.getBundle(playerName).setMessage("You dont have the key to open this door.");
+				this.getBundle(playerName, false).setMessage("You dont have the key to open this door.");
 
 				return; //Door unlocked
 			}
@@ -407,15 +408,15 @@ public class SpookySchool {
 					item.setCurrentPosition(potentialTile.getPosition());
 					potentialTile.setOccupant(item);
 					player.getInventory().remove(item);
-					this.getBundle(playerName).setMessage("You dropped the item.");
+					this.getBundle(playerName, false).setMessage("You dropped the item.");
 					return;
 				}
-				this.getBundle(playerName).setMessage("You cannot drop the item here.");
+				this.getBundle(playerName, false).setMessage("You cannot drop the item here.");
 				return;
 			}
 		}
 
-		this.getBundle(playerName).setMessage("The item you tried to drop is no longer in your inventory.");
+		this.getBundle(playerName, false).setMessage("The item you tried to drop is no longer in your inventory.");
 
 	}
 
@@ -497,7 +498,7 @@ public class SpookySchool {
 
 				player.getCurrentArea().getTile(player.getCurrentPosition()).removeOccupant(); //Remove player from this tile.
 				player.setCurrentArea(this.areas.get(otherSide)); //Set the player's new area.
-				this.getBundle(playerName).setPlayerObj(player); //Add the player object to the bundle.
+				this.getBundle(playerName, false).setPlayerObj(player); //Add the player object to the bundle.
 				this.moveGOToTile(player, otherSideTile); //Add player to the new tile.
 
 				//Add movement to new room to the log.
@@ -578,8 +579,28 @@ public class SpookySchool {
 	 * @param playerName of the player we are getting the bundle for.
 	 * @return bundle of the playerName given.
 	 */
-	public Bundle getBundle(String playerName) {
-		return this.playerBundles.get(playerName);
+	public Bundle getBundle(String playerName, boolean transmitting) {
+
+		Bundle bundle = this.playerBundles.get(playerName);
+
+		//If the bundle is about to get transmitted, then add all of the game objects in the players current area to the bundle.
+		if (transmitting) {
+			Area area = this.getPlayer(playerName).getCurrentArea();
+			for (int y = 0; y < area.height; y++) {
+				for (int x = 0; x < area.width; x++) {
+					Tile tile = area.getTile(new Position(x, y));
+					if (tile instanceof FloorTile && tile.getOccupant() instanceof Player) {
+						bundle.addMapObject(tile.getOccupant());
+					}
+				}
+			}
+		}
+
+		return bundle;
+	}
+
+	public synchronized void clearBundle(String playerName) {
+		this.playerBundles.get(playerName).clearBundle();
 	}
 
 
@@ -599,7 +620,7 @@ public class SpookySchool {
 	public synchronized void saveGame(String playerName) {
 		System.out.println("Saving game...");
 		this.parser.save(this, playerName);
-		this.getBundle(playerName).setMessage("Failed to save game");
+		this.getBundle(playerName, false).setMessage("Failed to save game");
 
 	}
 
@@ -629,7 +650,7 @@ public class SpookySchool {
 						this.moveGOToTile(player, player.getCurrentArea().getTile(this.defaultSpawnPosition)); //Move player back to original spawn position.
 
 						//Add message to the bundle about what just happened to the player
-						this.getBundle(player.getId())
+						this.getBundle(player.getId(), false)
 								.setMessage("You were caught by a teacher and sent back to your spawn room!");
 
 						continue outer; //Exit to the outer loop.

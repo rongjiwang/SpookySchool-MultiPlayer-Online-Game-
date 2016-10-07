@@ -92,13 +92,13 @@ public class PlayerThread extends Thread {
 	public void transmitBundle() {
 		try {
 			this.objOut = new ObjectOutputStream(socket.getOutputStream());
-			Bundle bundle = game.getBundle(playerName);
+			Bundle bundle = game.getBundle(playerName, true);
 			objOut.writeObject(bundle);
 			objOut.flush();
 
 			//Clear the bundle now that it has been sent.
 			if (bundle != null) {
-				bundle.clearBundle();
+				game.clearBundle(playerName);
 			}
 
 		} catch (IOException e) {

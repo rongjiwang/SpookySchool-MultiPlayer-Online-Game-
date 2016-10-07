@@ -8,6 +8,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JPanel;
 
@@ -53,8 +57,14 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	private Client client;
 	private SpriteMap spriteMap;
 
-	private Area currentArea;
 	private Player mainPlayer;
+
+	private Area currentArea;
+
+	private List<GameObject> currentAreaObjects = new ArrayList<GameObject>();
+	private List<GameObject> previousAreaObjects = new ArrayList<GameObject>();
+
+	private Map<String, AnimationObject> toAnimate = new HashMap<String, AnimationObject>();
 
 
 
@@ -104,10 +114,15 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	 */
 	public void processBundle(Bundle bundle) {
 
+		this.toAnimate.clear();
+
 		this.mainPlayer = bundle.getPlayerObj();
+
+		this.previousAreaObjects = this.currentAreaObjects;
 
 		if (currentArea == null) {
 			this.currentArea = this.mainPlayer.getCurrentArea();
+			this.currentAreaObjects = bundle.getAreaObjects();
 			overlayPanel.setHeaderMessage(-155, currentArea.getAreaName());
 		} else {
 			String oldArea = currentArea.getAreaName();
@@ -116,7 +131,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 				this.currentArea = this.mainPlayer.getCurrentArea();
 				overlayPanel.setHeaderMessage(-155, currentArea.getAreaName());
 			}
-
+			this.currentAreaObjects = bundle.getAreaObjects();
 			this.currentArea = this.mainPlayer.getCurrentArea();
 		}
 
@@ -124,18 +139,48 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			overlayPanel.setFooterMessage(bundle.getMessage());
 		}
 
+		this.findChanges();
+
 		this.updateDisplay();
 	}
 
+
+	public void findChanges() {
+
+		if (this.previousAreaObjects == null) {
+			//*********************DISPLAY THE OBJECTS ***///////
+			return;
+		}
+
+		for (int i = 0; i < this.currentAreaObjects.size(); i++) {
+			for (int j = 0; j < this.previousAreaObjects.size(); j++) {
+				if (this.previousAreaObjects.get(j).getId().equals(this.currentAreaObjects.get(i).getId())) {
+					
+					GameObject previousObj = this.previousAreaObjects.get(j);
+					GameObject currentObj = this.currentAreaObjects.get(i);
+					
+					if ()
+					
+					//AnimationObject aObj = new AnimationObject();
+				}
+			}
+		}
+
+
+	}
+
+
+
+	private void displayAnimation() {
+		// TODO Auto-generated method stub
+
+	}
 
 	/**
 	 * Updates the board.
 	 */
 	public void updateDisplay() {
-		if (gameFrame.getDebugDisplay() != null) {
-			gameFrame.getDebugDisplay().updateDisplay();
-		}
-		centerPlayer();
+		//centerPlayer();
 		this.repaint();
 	}
 
@@ -176,10 +221,14 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 				g.drawImage(spriteMap.getImage(getRotatedToken("G0")), (this.renderOffSetX - this.windowWidth) / 2,
 						(this.renderOffSetY - this.windowHeight) / 2, null);
 
+
+
 		renderArray(g, 0); // render floor tiles		
 		renderArray(g, 1); // render far walls
 		renderArray(g, 2); // render gameObjects
 		renderArray(g, 3); // render close and side walls
+
+
 
 		if (currentArea != null && currentArea.getAreaName().equals("Outside")) {
 			if (Math.random() < 0.96) {
@@ -274,8 +323,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 
 
-			} else if ((!(roomObj instanceof MarkerGO)) && roomObj.getPosition().getPosX() == x
-					&& roomObj.getPosition().getPosY() == y) {
+			} else if ((!(roomObj instanceof MarkerGO)) && (!(roomObj instanceof Player))
+					&& roomObj.getPosition().getPosX() == x && roomObj.getPosition().getPosY() == y) {
 
 				if (roomObj instanceof Player /*&& roomObj.getId().equals(this.mainPlayer.getId())*/) {
 					Player p = (Player) roomObj;
@@ -287,6 +336,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					adjustX = (tileImage.getWidth(null) / 2);
 					adjustY = (tileImage.getHeight(null) / 2);
 				}
+			} else if () {
+				//Go through and draw next image token at correct place if this object is in the aniatelist.
+				//Use view x and y depending on the 
+				
+				//If not, then just draw the image in the current place.
 			}
 
 			g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
