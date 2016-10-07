@@ -186,18 +186,31 @@ public class Parser {
 				Tile currentTile = area.getArea()[i][j];
 				if (currentTile == null){
 					contents = save.createTextNode("null");
-				}	
-				else{
-					contents = save.createTextNode(area.getArea()[i][j].toString());
+					tagName.appendChild(contents);
+					currentParent.appendChild(tagName);
 				}
-				
-				tagName.appendChild(contents);
-				currentParent.appendChild(tagName);
+				else if (currentTile instanceof Tile){
+					Element positions = savePosition(currentTile);
+					tagName.appendChild(positions);
+					currentParent.appendChild(tagName);
+				}
+				else if (currentTile instanceof FloorTile){
+					
+				}
+				else {
+					try{
+						contents = save.createTextNode(currentTile.toString());
+						tagName.appendChild(contents);
+						currentParent.appendChild(tagName);
+					}catch(NullPointerException e){
+						
+					}
+				}
 			}
 		}
 	}
 	
-	public void savePosition(Tile currentTile){
+	public Element savePosition(Tile currentTile){
 		Element pos = save.createElement("pos");
 		Element x = save.createElement("x");
 		Text xVal = save.createTextNode("" + currentTile.getPosition().getPosX());
@@ -208,6 +221,9 @@ public class Parser {
 		y.appendChild(yVal);
 		pos.appendChild(x);
 		pos.appendChild(y);
+		
+		return pos;
+		
 		
 		
 	}
