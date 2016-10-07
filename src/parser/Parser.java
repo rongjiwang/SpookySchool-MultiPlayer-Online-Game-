@@ -139,8 +139,8 @@ public class Parser {
 		
 
 		
-		System.err.println(game.getAreas().keySet());
-		System.err.println(game.getAreas().entrySet());
+		//System.err.println(game.getAreas().keySet());
+		//System.err.println(game.getAreas().entrySet());
 		Map<String, Area> areas = game.getAreas();
 		Map<String, Player> players = null;
 		Map<String, InventoryGO> inventObjects = game.getInventoryObjects();
@@ -187,9 +187,11 @@ public class Parser {
 		
 		for(int i = 0; i < area.getArea().length; i++){
 			for (int j = 0; j < area.getArea()[i].length; j++){
+				
 				Element tagName = save.createElement("tile");
 				Text contents = null;
 				Tile currentTile = area.getArea()[i][j];
+				
 				if (currentTile == null){
 					contents = save.createTextNode("null");
 					tagName.appendChild(contents);
@@ -385,12 +387,12 @@ public class Parser {
 			value = save.createTextNode(((DoorGO) occupant).getKeyID());
 		}else if (occupant instanceof FixedContainerGO){
 			//value = save.createTextNode(((FixedContainerGO) occupant).getKeyID());
+			value = save.createTextNode("chet");
 		}
 		
 		Element keyID = save.createElement("keyID");
 		keyID.appendChild(value);
-		return keyID;
-		
+		return keyID; 
 		
 	}
 	
@@ -408,6 +410,8 @@ public class Parser {
 				return sideB;
 			}
 		}
+		
+		return null;
 	}
 	
 	public Element saveToken(Tile currentTile, String side){
@@ -415,12 +419,12 @@ public class Parser {
 		
 		if(occupant instanceof DoorGO){
 			if(side.equals("a")){
-				Text value = save.createTextNode(occupant.getTokenA());
+				Text value = save.createTextNode(((DoorGO)occupant).getTokenA());
 				Element tokenA = save.createElement("tokenA");
 				tokenA.appendChild(value);
 				return tokenA;
 			}else if(side.equals("b")){
-				Text value = save.createTextNode(occupant.getTokenB());
+				Text value = save.createTextNode(((DoorGO)occupant).getTokenB());
 				Element tokenB = save.createElement("tokenB");
 				tokenB.appendChild(value);
 				return tokenB;
@@ -431,6 +435,7 @@ public class Parser {
 			token.appendChild(value);
 			return token;
 		}	
+		return null;
 	}
 	
 	public Element saveSidePos(GameObject occupant, String side){
@@ -440,12 +445,12 @@ public class Parser {
 			Text yVal = null;
 			
 			if(side.equals("a")){
-				Position posA = occupant.getSideAPos();
+				Position posA = ((DoorGO)occupant).getSideAPos();
 				xVal = save.createTextNode("" + posA.getPosX());
 				yVal = save.createTextNode("" + posA.getPosY());
 				
 			}else{
-				Position posB = occupant.getSideBPos();
+				Position posB = ((DoorGO)occupant).getSideBPos();
 				xVal = save.createTextNode("" + posB.getPosX());
 				yVal = save.createTextNode("" + posB.getPosY());
 			
@@ -465,10 +470,11 @@ public class Parser {
 				Element sideBPos = save.createElement("sideBPos");
 				sideBPos.appendChild(x);
 				sideBPos.appendChild(y);
-				return sideBPos;
+				return sideBPos; 
 				
 			}
-		}
+		} 
+		return null;
 	}
 	
 	public Element saveSideEntryPos(GameObject occupant, String side){
@@ -478,12 +484,12 @@ public class Parser {
 			Text yVal = null;
 			
 			if(side.equals("a")){
-				Position posA = save.createTextNode(occupant.getSideAEntryPos());
+				Position posA = ((DoorGO)occupant).getSideAEntryPos();
 				xVal = save.createTextNode("" + posA.getPosX());
 				yVal = save.createTextNode("" + posA.getPosY());
 				
 			}else{
-				Position posB = save.createTextNode(occupant.getSideBEntryPos());
+				Position posB = ((DoorGO)occupant).getSideBEntryPos();
 				xVal = save.createTextNode("" + posB.getPosX());
 				yVal = save.createTextNode("" + posB.getPosY());
 			}
@@ -506,6 +512,7 @@ public class Parser {
 				
 			}
 		}
+		return null;
 	}
 	
 	
