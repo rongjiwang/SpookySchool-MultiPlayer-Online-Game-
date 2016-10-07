@@ -179,7 +179,10 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 
 		if (currentArea != null && currentArea.getAreaName().equals("Outside")) {
-			g.drawImage(spriteMap.getImage("Rain0"), 0, 0, 600, 600, null);
+			if(Math.random() < 0.96){
+				g.drawImage(spriteMap.getImage(getRotatedToken("N0")), 0, 0, null);
+			}
+			//g.drawImage(spriteMap.getImage("Rain0"), 0, 0, 600, 600, null);
 		}
 
 

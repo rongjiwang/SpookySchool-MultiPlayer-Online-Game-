@@ -1,5 +1,5 @@
 23 17
-F1 f2 f2 f2 f2 Q3 B2 B2 B2 B2 B2 B2 B2 B2 Q0 f2 f2 f2 f2 f2 f2 f2 F0
+F1 f2 f2 f2 f2 Q3 B2 B2 B2 B2 B2 B2 B2 B2 Q0 f2 f2 f2 f2 f2 f2 f2 F2
 f1 g0 g0 g0 g0 B1 R0 R0 R0 R0 R0 R0 R0 R0 B3 g0 g0 g0 g0 g0 g0 g0 f3
 f1 g0 g0 g0 g0 B1 R0 R0 R0 R0 R0 R0 R0 R0 B3 g0 g0 g0 g0 g0 g0 g0 f3
 f1 g0 g0 g0 g0 B1 R0 R0 R0 R0 R0 R0 R0 R0 B3 g0 g0 g0 g0 g0 g0 g0 f3
