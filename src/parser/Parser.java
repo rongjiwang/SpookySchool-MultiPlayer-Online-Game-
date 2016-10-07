@@ -30,9 +30,15 @@ import com.sun.org.apache.xml.internal.serialize.*;
 
 
 import game.Area;
+import game.DoorGO;
+import game.FixedContainerGO;
+import game.FixedGO;
 import game.FloorTile;
 import game.GameObject;
 import game.InventoryGO;
+import game.MarkerGO;
+import game.MovableGO;
+import game.NonHumanPlayer;
 import game.Player;
 import game.Position;
 import game.SpookySchool;
@@ -166,7 +172,7 @@ public class Parser {
 	        tr.setOutputProperty(OutputKeys.INDENT, "yes");
 	        tr.setOutputProperty(OutputKeys.METHOD, "xml");
 	        tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-	        tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
+	        tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "save.dtd");
 	        tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 	
 	        // send DOM to file
@@ -190,13 +196,56 @@ public class Parser {
 					currentParent.appendChild(tagName);
 				}
 				else if (currentTile instanceof Tile){
-					Element positions = savePosition(currentTile);
-					tagName.appendChild(positions);
-					currentParent.appendChild(tagName);
-				}
-				else if (currentTile instanceof FloorTile){
 					
+						Element positions = savePosition(currentTile);
+						tagName.appendChild(positions);
+						currentParent.appendChild(tagName);
+						
+						if (currentTile.getOccupant() != null){
+							GameObject occupant = currentTile.getOccupant();
+							
+							if(occupant instanceof InventoryGO){
+								Element name = saveName();
+								Element areaName = saveAreaName();
+								Element size = saveSize();
+								Element description = saveDescription();
+								
+							}else if (occupant instanceof DoorGO){
+								Element open = saveOpen();
+								Element locked = saveLocked();
+								Element keyID = saveKeyID();
+								Element description = saveDescription();
+								
+								Element sideA = saveSideA();
+								Element tokenA = saveTokenA();
+								Element sideAPos = saveSideAPos();
+								Element sideAEntryPos = saveSideAEntryPos();
+								
+								Element sideB = saveSideB();
+								Element tokenB = saveTokenB();
+								Element sideBPos = saveSideBPos();
+								Element sideBEntryPos = saveSideBEntryPos();								
+								
+							}else if (occupant instanceof FixedContainerGO){
+								
+								
+							}else if (occupant instanceof FixedGO){
+								
+							}else if (occupant instanceof MarkerGO){
+								
+							}else if (occupant instanceof MovableGO){
+								
+							}else if (occupant instanceof Player){
+								
+							}else if (occupant instanceof NonHumanPlayer){
+								
+							}
+						}
+						/*Element occupant = saveOccupant(currentTile);
+						tagName.appendChild(occupant);
+						currentParent.appendChild(tagName);*/
 				}
+				
 				else {
 					try{
 						contents = save.createTextNode(currentTile.toString());
@@ -208,6 +257,12 @@ public class Parser {
 				}
 			}
 		}
+	}
+	
+	public Element saveOccupant(Tile currentTile){
+		//Element occupant = save.createElement("occupant");
+		//Element 
+		return nukk;
 	}
 	
 	public Element savePosition(Tile currentTile){
