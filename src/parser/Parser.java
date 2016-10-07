@@ -237,17 +237,17 @@ public class Parser {
 								Element size = saveSize(occupant);
 								
 							}else if (occupant instanceof FixedGO){
-								//Element description = saveDescription();
+								Element description = saveDescription(occupant);
 														
 							}else if (occupant instanceof MarkerGO){
 								//FIXME: Base GameObject?? do i need to save a record of this 
-								//Element description = saveDescription();
+								Element description = saveDescription(occupant);
 								
 							}else if (occupant instanceof MovableGO){
-								//Element areaName = saveAreaName();
+								Element areaName = saveAreaName(occupant);
 																
 							}else if (occupant instanceof Player){
-								//Element playerName = saveName();
+								Element playerName = saveName();
 								//FIXME: CurrentArea?? do i need to save a record of this
 								//Element spawnName = saveSpawnName();
 								//Element currentPosition = savePosition(currentTile);
@@ -275,23 +275,33 @@ public class Parser {
 	}
 	
 	public Element saveName(GameObject occupant){
+		Text value = null;
+		
 		if(occupant instanceof InventoryGO){
-			Text value = save.createTextNode(((InventoryGO) occupant).getName());
+			value = save.createTextNode(((InventoryGO) occupant).getName());
+		}else if (occupant instanceof Player){
+			value = save.createTextNode(((Player) occupant).getPlayerName());
+		}
 			Element name = save.createElement("name");
 			name.appendChild(value);
 			return name;
-		}
-		return null;
+		
 	}
 	
 	public Element saveAreaName(GameObject occupant){
+		Text value = null;
+		
 		if(occupant instanceof InventoryGO){
-			Text value = save.createTextNode(((InventoryGO) occupant).getAreaName());
-			Element areaName = save.createElement("areaName");
-			areaName.appendChild(value);
-			return areaName;
+			value = save.createTextNode(((InventoryGO) occupant).getAreaName());
+			
+		}else if (occupant instanceof MovableGO){
+			value = save.createTextNode(((MovableGO) occupant).getAreaName());
 		}
-		return null;
+		
+		Element areaName = save.createElement("areaName");
+		areaName.appendChild(value);
+		return areaName;
+
 	}
 	
 	public Element saveSize(GameObject occupant){
@@ -316,8 +326,12 @@ public class Parser {
 			
 		}else if (occupant instanceof DoorGO){
 			value = save.createTextNode(((DoorGO) occupant).getDescription());
-			
+		}else if (occupant instanceof FixedGO){
+			value = save.createTextNode(((FixedGO) occupant).getDescription());			
+		}else if (occupant instanceof MarkerGO){
+			value = save.createTextNode(((MarkerGO) occupant).getDescription());			
 		}
+		
 		Element description = save.createElement("description");
 		description.appendChild(value);
 		return description;
