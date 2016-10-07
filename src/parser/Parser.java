@@ -223,12 +223,12 @@ public class Parser {
 								Element sideA = saveSide(occupant, "a");
 								Element tokenA = saveToken(currentTile, "a");
 								Element sideAPos = saveSidePos(occupant, "a");
-								//Element sideAEntryPos = saveSideAEntryPos();
+								Element sideAEntryPos = saveSideEntryPos(occupant, "a");
 								
 								Element sideB = saveSide(occupant, "b");
 								Element tokenB = saveToken(currentTile, "b");
 								Element sideBPos = saveSidePos(occupant, "b");
-								//Element sideBEntryPos = saveSideBEntryPos();								
+								Element sideBEntryPos = saveSideEntryPos(occupant, "b");								
 								
 							}else if (occupant instanceof FixedContainerGO){
 								//Element open = saveOpen();
@@ -411,15 +411,55 @@ public class Parser {
 				Element sideAPos = save.createElement("sideAPos");
 				sideAPos.appendChild(x);
 				sideAPos.appendChild(y);
+				return sideAPos;
+				
 			}else{
 				Element sideBPos = save.createElement("sideBPos");
 				sideBPos.appendChild(x);
 				sideBPos.appendChild(y);
+				return sideBPos;
+				
 			}
 		}
 	}
 	
-	public 
+	public Element saveSideEntryPos(GameObject occupant, String side){
+		if (occupant instanceof DoorGO){
+			
+			Text xVal = null;
+			Text yVal = null;
+			
+			if(side.equals("a")){
+				Position posA = save.createTextNode(occupant.getSideAEntryPos());
+				xVal = save.createTextNode("" + posA.getPosX());
+				yVal = save.createTextNode("" + posA.getPosY());
+				
+			}else{
+				Position posB = save.createTextNode(occupant.getSideBEntryPos());
+				xVal = save.createTextNode("" + posB.getPosX());
+				yVal = save.createTextNode("" + posB.getPosY());
+			}
+			Element x = save.createElement("x");
+			Element y = save.createElement("y");
+			x.appendChild(xVal);
+			y.appendChild(yVal);
+			
+			if(side.equals("a")){
+				Element sideAEntryPos = save.createElement("sideAPos");
+				sideAEntryPos.appendChild(x);
+				sideAEntryPos.appendChild(y);
+				return sideAEntryPos;
+				
+			}else{
+				Element sideBEntryPos = save.createElement("sideBPos");
+				sideBEntryPos.appendChild(x);
+				sideBEntryPos.appendChild(y);
+				return sideBEntryPos;
+				
+			}
+		}
+	}
+	
 	
 	
 	
