@@ -261,7 +261,7 @@ public class SpriteMap {
 		spriteMap.put("P0", loadImage("footer.png"));
 
 		/* Rain */
-		/*
+
 		spriteMap.put("Rain0", loadImage("rain0.png"));
 		spriteMap.put("Rain1", loadImage("rain1.png"));
 		spriteMap.put("Rain2", loadImage("rain2.png"));
@@ -270,7 +270,7 @@ public class SpriteMap {
 		spriteMap.put("Rain5", loadImage("rain5.png"));
 		spriteMap.put("Rain6", loadImage("rain6.png"));
 		spriteMap.put("Rain7", loadImage("rain7.png"));
-		*/
+
 
 		/* Night overlay */
 		spriteMap.put("N0", loadImage("night0.png"));

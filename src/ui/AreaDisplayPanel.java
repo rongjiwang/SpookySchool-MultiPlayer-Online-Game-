@@ -43,6 +43,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	private int renderOffSetX;
 	private int renderOffSetY;
 
+	//For rain
+	private int nextRain = 0;
+
 	// For access to DebugDisplay
 	private GameFrame gameFrame;
 
@@ -179,14 +182,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 
 		if (currentArea != null && currentArea.getAreaName().equals("Outside")) {
-			if(Math.random() < 0.96){
+			if (Math.random() < 0.96) {
 				g.drawImage(spriteMap.getImage(getRotatedToken("N0")), 0, 0, null);
+				g.drawImage(spriteMap.getImage("Rain" + this.nextRain()), 0, 0, 600, 600, null);
 			}
-			//g.drawImage(spriteMap.getImage("Rain0"), 0, 0, 600, 600, null);
 		}
-
-
-
 	}
 
 	/**
@@ -507,6 +507,15 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 				return "SOUTH";
 		}
 		return null;
+	}
+
+	public int nextRain() {
+		this.nextRain++;
+		if (this.nextRain > 7) {
+			this.nextRain = 0;
+		}
+
+		return this.nextRain;
 	}
 
 
