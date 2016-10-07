@@ -247,7 +247,7 @@ public class Parser {
 								Element areaName = saveAreaName(occupant);
 																
 							}else if (occupant instanceof Player){
-								Element playerName = saveName();
+								Element playerName = saveName(occupant);
 								//FIXME: CurrentArea?? do i need to save a record of this
 								//Element spawnName = saveSpawnName();
 								//Element currentPosition = savePosition(currentTile);
