@@ -178,12 +178,12 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		renderArray(g, 3); // render close and side walls
 
 
-		if (currentArea != null && currentArea.getAreaName().equals("Outside")) {
-			if(Math.random() < 0.96){
-				g.drawImage(spriteMap.getImage(getRotatedToken("N0")), 0, 0, null);
-			}
+		//if (currentArea != null && currentArea.getAreaName().equals("Outside")) {
+		//	if(Math.random() < 0.96){
+		//		g.drawImage(spriteMap.getImage(getRotatedToken("N0")), 0, 0, null);
+		//	}
 			//g.drawImage(spriteMap.getImage("Rain0"), 0, 0, 600, 600, null);
-		}
+		//}
 
 
 

@@ -13,3 +13,4 @@ Dorm_toilet dormToilet.txt
 Outside outside.txt
 Staff_room staffRoom.txt
 Staff_hallway staffHallway.txt
+Room_to_nowhere roomToNowhere.txt
