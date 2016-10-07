@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
@@ -20,7 +22,7 @@ import game.Position;
 import game.Tile;
 import network.Client;
 
-public class AreaDisplayPanel extends JPanel implements KeyListener {
+public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListener {
 
 	private OverlayPanel overlayPanel;
 
@@ -70,6 +72,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		this.setFocusable(true);
 		this.requestFocus();
 		this.addKeyListener(this);
+		this.addMouseListener(this);
 
 		this.spriteMap = new SpriteMap();
 		this.overlayPanel = new OverlayPanel(this, spriteMap);
@@ -269,8 +272,10 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 		}
 
 		// Draw Walls(Back and side walls with layer 1, front with layer 3)
-		if (((token.equals("w0") || token.equals("W1")  || token.equals("B0") || token.equals("Q1") || token.equals("Q2")) && layer == 1)
-				|| ((!(token.equals("w0") || token.equals("W1") || token.equals("W2") || token.equals("B0") || token.equals("Q1") || token.equals("Q2"))) && layer == 3)) {
+		if (((token.equals("w0") || token.equals("W1") || token.equals("B0") || token.equals("Q1")
+				|| token.equals("Q2")) && layer == 1)
+				|| ((!(token.equals("w0") || token.equals("W1") || token.equals("W2") || token.equals("B0")
+						|| token.equals("Q1") || token.equals("Q2"))) && layer == 3)) {
 			if (token.contains("w") || token.contains("W") || token.contains("B") || token.contains("Q")) {
 				Image tileImage = spriteMap.getImage(token);
 				int adjustX = tileImage.getWidth(null) - tileWidth;
@@ -278,7 +283,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 				g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
 			}
 		}
-	
+
 	}
 
 	/**
@@ -518,10 +523,46 @@ public class AreaDisplayPanel extends JPanel implements KeyListener {
 
 
 	@Override
-	public void keyReleased(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {
+	}
 
 
 	@Override
-	public void keyTyped(KeyEvent e) {}
+	public void keyTyped(KeyEvent e) {
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		this.requestFocus();
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
 
 }
