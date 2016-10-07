@@ -231,10 +231,10 @@ public class Parser {
 								Element sideBEntryPos = saveSideEntryPos(occupant, "b");								
 								
 							}else if (occupant instanceof FixedContainerGO){
-								//Element open = saveOpen();
-								//Element locked = saveLocked();
+								Element open = saveOpen(occupant);
+								Element locked = saveLocked(occupant);
 								//Element keyID = saveKeyID();
-								//Element size = saveSize();
+								Element size = saveSize(occupant);
 								
 							}else if (occupant instanceof FixedGO){
 								//Element description = saveDescription();
@@ -295,55 +295,77 @@ public class Parser {
 	}
 	
 	public Element saveSize(GameObject occupant){
+		Text value = null;
+		
 		if(occupant instanceof InventoryGO){
-			Text value = save.createTextNode("" + ((InventoryGO) occupant).getSize());
+			value = save.createTextNode("" + ((InventoryGO) occupant).getSize());
+		}else if (occupant instanceof FixedContainerGO){
+			value = save.createTextNode("" + ((FixedContainerGO) occupant).getSize());
+		}
 			Element size = save.createElement("size");
 			size.appendChild(value);
 			return size;
-		}
-		return null;
+			
 	}
 	
 	public Element saveDescription(GameObject occupant){
 		Text value = null;
+		
 		if(occupant instanceof InventoryGO){
 			value = save.createTextNode(((InventoryGO) occupant).getDescription());
+			
 		}else if (occupant instanceof DoorGO){
 			value = save.createTextNode(((DoorGO) occupant).getDescription());
+			
 		}
-			Element description = save.createElement("description");
-			description.appendChild(value);
-			return description;
+		Element description = save.createElement("description");
+		description.appendChild(value);
+		return description;
 	}
 	
 	public Element saveOpen(GameObject occupant){
+		Text value = null;
+		
 		if(occupant instanceof DoorGO){
-			Text value = save.createTextNode("" + ((DoorGO) occupant).isOpen());
-			Element open = save.createElement("open");
-			open.appendChild(value);
-			return open;
+			 value = save.createTextNode("" + ((DoorGO) occupant).isOpen());	
+			 
+		}else if(occupant instanceof FixedContainerGO){
+			 value = save.createTextNode("" + ((FixedContainerGO) occupant).isOpen());	
 		}
-		return null;
+		Element open = save.createElement("open");
+		open.appendChild(value);
+		return open;
+	
 	}
 	
 	public Element saveLocked(GameObject occupant){
+		Text value = null;
+		
 		if(occupant instanceof DoorGO){
-			Text value = save.createTextNode("" + ((DoorGO) occupant).isLocked());
-			Element locked = save.createElement("locked");
-			locked.appendChild(value);
-			return locked;
+			value = save.createTextNode("" + ((DoorGO) occupant).isLocked());
+		}else if (occupant instanceof FixedContainerGO){
+			value = save.createTextNode("" + ((FixedContainerGO) occupant).isLocked());
 		}
-		return null;
+		Element locked = save.createElement("locked");
+		locked.appendChild(value);
+		return locked;
+		
 	}
 	
 	public Element saveKeyID(GameObject occupant){
+		Text value = null;
+		
 		if(occupant instanceof DoorGO){
-			Text value = save.createTextNode(((DoorGO) occupant).getKeyID());
-			Element keyID = save.createElement("keyID");
-			keyID.appendChild(value);
-			return keyID;
+			value = save.createTextNode(((DoorGO) occupant).getKeyID());
+		}else if (occupant instanceof FixedContainerGO){
+			//value = save.createTextNode(((FixedContainerGO) occupant).getKeyID());
 		}
-		return null;
+		
+		Element keyID = save.createElement("keyID");
+		keyID.appendChild(value);
+		return keyID;
+		
+		
 	}
 	
 	public Element saveSide(GameObject occupant, String side){
