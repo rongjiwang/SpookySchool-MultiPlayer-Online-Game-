@@ -205,10 +205,10 @@ public class Parser {
 							GameObject occupant = currentTile.getOccupant();
 							
 							if(occupant instanceof InventoryGO){
-								//Element name = saveName(occupant);
-								//Element areaName = saveAreaName(occupant);
-								//Element size = saveSize(occupant);
-								//Element description = saveDescription(occupant);
+								Element name = saveName(occupant);
+								Element areaName = saveAreaName(occupant);
+								Element size = saveSize(occupant);
+								Element description = saveDescription(occupant);
 								
 							}else if (occupant instanceof DoorGO){
 								//Element open = saveOpen();
@@ -289,6 +289,30 @@ public class Parser {
 		}
 		return null;
 	}
+	
+	public Element saveSize(GameObject occupant){
+		if(occupant instanceof InventoryGO){
+			Text value = save.createTextNode("" + ((InventoryGO) occupant).getSize());
+			Element saveSize = save.createElement("name");
+			saveSize.appendChild(value);
+			return saveSize;
+		}
+		return null;
+	}
+	
+	public Element saveDescription(GameObject occupant){
+		if(occupant instanceof InventoryGO){
+			Text value = save.createTextNode(((InventoryGO) occupant).getDescription());
+			Element description = save.createElement("name");
+			description.appendChild(value);
+			return description;
+		}
+		return null;
+	}
+	
+	
+	
+	
 	
 	public Element savePosition(Tile currentTile){
 		Element pos = save.createElement("pos");
