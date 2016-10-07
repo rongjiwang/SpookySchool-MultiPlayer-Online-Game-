@@ -51,6 +51,18 @@ public class SpriteMap {
 		spriteMap.put("W1", loadImage("wallCorner1.png"));
 		spriteMap.put("W2", loadImage("wallCorner2.png"));
 		spriteMap.put("W3", loadImage("wallCorner3.png"));
+		
+		//regular wall
+		spriteMap.put("f0", loadImage("fence0.png"));
+		spriteMap.put("f1", loadImage("fence1.png"));
+		spriteMap.put("f2", loadImage("fence2.png"));
+		spriteMap.put("f3", loadImage("fence3.png"));
+
+		// corner wall
+		spriteMap.put("F0", loadImage("fenceCorner0.png"));
+		spriteMap.put("F1", loadImage("fenceCorner1.png"));
+		spriteMap.put("F2", loadImage("fenceCorner2.png"));
+		spriteMap.put("F3", loadImage("fenceCorner3.png"));
 
 		// floors
 		spriteMap.put("c0",loadImage("carpet0.png"));
@@ -101,10 +113,10 @@ public class SpriteMap {
 		spriteMap.put("k3", loadImage("key3.png"));
 
 		// furniture
-		spriteMap.put("f0", loadImage("furniture0.png"));
-		spriteMap.put("f1", loadImage("furniture1.png"));
-		spriteMap.put("f2", loadImage("furniture2.png"));
-		spriteMap.put("f3", loadImage("furniture3.png"));
+		spriteMap.put("x0", loadImage("furniture0.png"));
+		spriteMap.put("x1", loadImage("furniture1.png"));
+		spriteMap.put("x2", loadImage("furniture2.png"));
+		spriteMap.put("x3", loadImage("furniture3.png"));
 
 		// trees
 		spriteMap.put("u0", loadImage("treeOne0.png"));
