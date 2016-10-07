@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -41,9 +43,10 @@ public class ChatPanel extends JPanel{
 	private ImageIcon[] send;
 	private JLabel sendButton;
 	private ButtonListen listen;
-	
+	private KeyListen keyListen;
+
 	private JButton tempSendButton;
-	
+
 	private UIImageMap imageMap;
 
 	public ChatPanel(GameFrame display, String playerName, Client client, UIImageMap imageMap) {
@@ -57,21 +60,23 @@ public class ChatPanel extends JPanel{
 		JPanel southPanel = new JPanel();
 		southPanel.setBackground(Color.BLACK);
 		southPanel.setLayout(new GridBagLayout());
-		
+
 		setSend();
-		
+
 		listen = new ButtonListen();
-		
+		keyListen = new KeyListen();
+
 		//temp button
 		//tempSendButton = new JButton("Send");
 		//tempSendButton.addMouseListener(listen);
 
 		typeArea = new JTextField(30);
-
+		typeArea.addKeyListener(keyListen);
+		
 		sendButton = new JLabel(send[0]);
 		sendButton.addMouseListener(listen);
-		
-		
+
+
 		messageList = new JTextPane();
 		messageList.setEditable(false);
 		messageList.setOpaque(true);
@@ -118,7 +123,7 @@ public class ChatPanel extends JPanel{
 
 		this.setVisible(true);
 	}	
-	
+
 	public void addChange(List<String> changes){
 		for(String change: changes){
 			if(change != null){
@@ -134,10 +139,10 @@ public class ChatPanel extends JPanel{
 			}
 		}
 	}
-	
+
 	public void setSend(){
 		send = new ImageIcon[2];
-				
+
 		send[0] = new ImageIcon(imageMap.getImage("sb"));
 		send[1] = new ImageIcon(imageMap.getImage("sbhi"));
 	}
@@ -146,7 +151,32 @@ public class ChatPanel extends JPanel{
 		return client;
 	}
 
+	private class KeyListen implements KeyListener{
 
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if(e.getKeyCode() == KeyEvent.VK_ENTER){
+				if (typeArea.getText().length() < 1) {
+					// do nothing
+				} else {
+					String chat = "CHAT :  " + typeArea.getText();
+					typeArea.setText("");
+
+					getClient().sendCommand(chat);
+				}
+				home.refocus();
+			} else if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+				home.refocus();
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent arg0) {}
+
+		@Override
+		public void keyTyped(KeyEvent arg0) {}
+
+	}
 
 	private class ButtonListen implements MouseListener{
 
@@ -163,14 +193,14 @@ public class ChatPanel extends JPanel{
 			home.refocus();
 
 		}
-		
-		
+
+
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			sendButton.setIcon(send[1]);
 
 		}
-		
+
 		@Override
 		public void mouseExited(MouseEvent e) {
 			sendButton.setIcon(send[0]);
@@ -179,7 +209,7 @@ public class ChatPanel extends JPanel{
 		//UNUSED
 		@Override
 		public void mousePressed(MouseEvent e) {}
-		
+
 		@Override
 		public void mouseReleased(MouseEvent e) {}
 	}
