@@ -2,7 +2,7 @@ package game;
 
 /**
  * 
- * Represents a door game object in the game.
+ * Represents a door and WINDOW game object in the game.
  * @author Pritesh R. Patel
  *
  */
@@ -143,6 +143,57 @@ public class DoorGO implements GameObject {
 	@Override
 	public void setDescription(String desc) {
 		this.description = desc;
+	}
+
+
+	/** GETTER AND SETTER METHODS FOR PARSER **/
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+
+	public String getSideA() {
+		return sideA;
+	}
+
+
+	public String getTokenA() {
+		return tokenA;
+	}
+
+
+	public Position getSideAPos() {
+		return sideAPos;
+	}
+
+
+	public Position getSideAEntryPos() {
+		return sideAEntryPos;
+	}
+
+
+	public String getSideB() {
+		return sideB;
+	}
+
+
+	public String getTokenB() {
+		return tokenB;
+	}
+
+
+	public String getKeyID() {
+		return this.keyID;
+	}
+
+	public Position getSideBPos() {
+		return sideBPos;
+	}
+
+
+	public Position getSideBEntryPos() {
+		return sideBEntryPos;
 	}
 
 }
