@@ -43,6 +43,10 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	private int renderOffSetX;
 	private int renderOffSetY;
 
+	//For rain
+	private int nextRain = 0;
+	private int delay = 10;
+
 	// For access to DebugDisplay
 	private GameFrame gameFrame;
 
@@ -177,15 +181,12 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		renderArray(g, 2); // render gameObjects
 		renderArray(g, 3); // render close and side walls
 
-
-		//if (currentArea != null && currentArea.getAreaName().equals("Outside")) {
-		//	if(Math.random() < 0.96){
-		//		g.drawImage(spriteMap.getImage(getRotatedToken("N0")), 0, 0, null);
-		//	}
-			//g.drawImage(spriteMap.getImage("Rain0"), 0, 0, 600, 600, null);
-		//}
-
-
+		if (currentArea != null && currentArea.getAreaName().equals("Outside")) {
+			if (Math.random() < 0.96) {
+				g.drawImage(spriteMap.getImage(getRotatedToken("N0")), 0, 0, null);
+				g.drawImage(spriteMap.getImage("Rain" + this.nextRain()), 0, 0, 600, 600, null);
+			}
+		}
 
 	}
 
@@ -507,6 +508,24 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 				return "SOUTH";
 		}
 		return null;
+	}
+
+
+	/**
+	 * Used for getting the next frame of the rain images. Delay is used to make sure, rain frames are not changes
+	 * too fast.
+	 * @return number for next rain frame.
+	 */
+	public int nextRain() {
+		if (delay == 0) {
+			this.nextRain++;
+			if (this.nextRain > 7) {
+				this.nextRain = 0;
+			}
+			delay = 10;
+		}
+		this.delay--;
+		return this.nextRain;
 	}
 
 
