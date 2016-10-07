@@ -249,8 +249,8 @@ public class Parser {
 							}else if (occupant instanceof Player){
 								Element playerName = saveName(occupant);
 								//FIXME: CurrentArea?? do i need to save a record of this
-								//Element spawnName = saveSpawnName();
-								//Element currentPosition = savePosition(currentTile);
+								Element spawnName = saveSpawnName(occupant);
+								Element currentPosition = savePosition(currentTile);
 
 						}
 						/*Element occupant = saveOccupant(currentTile);
@@ -286,6 +286,16 @@ public class Parser {
 			name.appendChild(value);
 			return name;
 		
+	}
+	
+	public Element saveSpawnName(GameObject occupant){
+		if(occupant instanceof Player){
+			Text value = save.createTextNode(((Player) occupant).getSpawnName());
+			Element spawnName = save.createElement("spawnName");
+			spawnName.appendChild(value);
+			return spawnName;
+		}
+		return null;
 	}
 	
 	public Element saveAreaName(GameObject occupant){
@@ -495,12 +505,6 @@ public class Parser {
 			}
 		}
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	public Element savePosition(Tile currentTile){
