@@ -45,7 +45,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 	//For rain
 	private int nextRain = 0;
-	private int delay = 10;
+	private int delay = 5;
 
 	// For access to DebugDisplay
 	private GameFrame gameFrame;
@@ -522,7 +522,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			if (this.nextRain > 7) {
 				this.nextRain = 0;
 			}
-			delay = 10;
+			delay = 5;
 		}
 		this.delay--;
 		return this.nextRain;
