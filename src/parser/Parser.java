@@ -30,9 +30,15 @@ import com.sun.org.apache.xml.internal.serialize.*;
 
 
 import game.Area;
+import game.DoorGO;
+import game.FixedContainerGO;
+import game.FixedGO;
 import game.FloorTile;
 import game.GameObject;
 import game.InventoryGO;
+import game.MarkerGO;
+import game.MovableGO;
+import game.NonHumanPlayer;
 import game.Player;
 import game.Position;
 import game.SpookySchool;
@@ -166,11 +172,11 @@ public class Parser {
 	        tr.setOutputProperty(OutputKeys.INDENT, "yes");
 	        tr.setOutputProperty(OutputKeys.METHOD, "xml");
 	        tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-	        tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
+	        tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "save.dtd");
 	        tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 	
 	        // send DOM to file
-			tr.transform(new DOMSource(save), new StreamResult(new FileOutputStream("Test.xml")));
+			tr.transform(new DOMSource(save), new StreamResult(new FileOutputStream("Save.xml")));
 		}catch (FileNotFoundException | TransformerException e) {
 			e.printStackTrace();
 		}	
@@ -186,33 +192,103 @@ public class Parser {
 				Tile currentTile = area.getArea()[i][j];
 				if (currentTile == null){
 					contents = save.createTextNode("null");
-				}if (currentTile instanceof Tile){
-					if(currentTile instanceof FloorTile){
-						Element pos = save.createElement("pos");
-						Element x = save.createElement("x");
-						Text xVal = save.createTextNode("" + currentTile.getPosition().getPosX());
-						Element y = save.createElement("y");
-						Text yVal = save.createTextNode("" + currentTile.getPosition().getPosY());
+					tagName.appendChild(contents);
+					currentParent.appendChild(tagName);
+				}
+				else if (currentTile instanceof Tile){
+					
+						Element positions = savePosition(currentTile);
+						tagName.appendChild(positions);
+						currentParent.appendChild(tagName);
 						
-						x.appendChild(xVal);
-						y.appendChild(yVal);
-						pos.appendChild(x);
-						pos.appendChild(y);
-						
+						if (currentTile.getOccupant() != null){
+							GameObject occupant = currentTile.getOccupant();
+							
+							if(occupant instanceof InventoryGO){
+								Element name = saveName();
+								Element areaName = saveAreaName();
+								Element size = saveSize();
+								Element description = saveDescription();
+								
+							}else if (occupant instanceof DoorGO){
+								Element open = saveOpen();
+								Element locked = saveLocked();
+								Element keyID = saveKeyID();
+								Element description = saveDescription();
+								
+								Element sideA = saveSideA();
+								Element tokenA = saveTokenA();
+								Element sideAPos = saveSideAPos();
+								Element sideAEntryPos = saveSideAEntryPos();
+								
+								Element sideB = saveSideB();
+								Element tokenB = saveTokenB();
+								Element sideBPos = saveSideBPos();
+								Element sideBEntryPos = saveSideBEntryPos();								
+								
+							}else if (occupant instanceof FixedContainerGO){
+								Element open = saveOpen();
+								Element locked = saveLocked();
+								Element keyID = saveKeyID();
+								Element size = saveSize();
+								
+							}else if (occupant instanceof FixedGO){
+								Element description = saveDescription();
+														
+							}else if (occupant instanceof MarkerGO){
+								//FIXME: Base GameObject?? do i need to save a record of this 
+								Element description = saveDescription();
+								
+							}else if (occupant instanceof MovableGO){
+								Element areaName = saveAreaName();
+																
+							}else if (occupant instanceof Player){
+								Element playerName = saveName();
+								//FIXME: CurrentArea?? do i need to save a record of this
+								Element spawnName = saveSpawnName();
+								Element currentPosition = savePosition(currentTile);
+
+						}
+						/*Element occupant = saveOccupant(currentTile);
+						tagName.appendChild(occupant);
+						currentParent.appendChild(tagName);*/
+				}
+				
+				else {
+					try{
+						contents = save.createTextNode(currentTile.toString());
+						tagName.appendChild(contents);
+						currentParent.appendChild(tagName);
+					}catch(NullPointerException e){
 						
 					}
-					//refer to the sheet to see which things are left to be done
 				}
-				else{
-					contents = save.createTextNode(area.getArea()[i][j].toString());
-				}
-				
-				
-				
-				tagName.appendChild(contents);
-				currentParent.appendChild(tagName);
 			}
 		}
+	}
+	
+	public Element saveOccupant(Tile currentTile){
+		//Element occupant = save.createElement("occupant");
+		//Element 
+		return nukk;
+	}
+	
+	public Element savePosition(Tile currentTile){
+		Element pos = save.createElement("pos");
+		Element x = save.createElement("x");
+		Text xVal = save.createTextNode("" + currentTile.getPosition().getPosX());
+		Element y = save.createElement("y");
+		Text yVal = save.createTextNode("" + currentTile.getPosition().getPosY());
+		
+		x.appendChild(xVal);
+		y.appendChild(yVal);
+		pos.appendChild(x);
+		pos.appendChild(y);
+		
+		return pos;
+		
+		
+		
 	}
 	
 	
