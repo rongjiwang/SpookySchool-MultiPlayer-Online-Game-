@@ -209,10 +209,12 @@ public class Parser {
 							GameObject occupant = currentTile.getOccupant();
 							
 							if(occupant instanceof InventoryGO){
-								Element name = saveName(occupant);
-								Element areaName = saveAreaName(occupant);
-								Element size = saveSize(occupant);
-								Element description = saveDescription(occupant);
+								tagName.appendChild(saveName(occupant));
+								tagName.appendChild(saveAreaName(occupant));
+								tagName.appendChild(saveSize(occupant));
+								tagName.appendChild(saveDescription(occupant));
+								
+								currentParent.appendChild(tagName);
 								
 							}else if (occupant instanceof DoorGO){
 								Element open = saveOpen(occupant);
