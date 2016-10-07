@@ -205,48 +205,48 @@ public class Parser {
 							GameObject occupant = currentTile.getOccupant();
 							
 							if(occupant instanceof InventoryGO){
-								Element name = saveName(occupant);
-								Element areaName = saveAreaName(occupant);
-								Element size = saveSize(occupant);
-								Element description = saveDescription(occupant);
+								//Element name = saveName(occupant);
+								//Element areaName = saveAreaName(occupant);
+								//Element size = saveSize(occupant);
+								//Element description = saveDescription(occupant);
 								
 							}else if (occupant instanceof DoorGO){
-								Element open = saveOpen();
-								Element locked = saveLocked();
-								Element keyID = saveKeyID();
-								Element description = saveDescription();
+								//Element open = saveOpen();
+								//Element locked = saveLocked();
+								//Element keyID = saveKeyID();
+								//Element description = saveDescription();
 								
-								Element sideA = saveSideA();
-								Element tokenA = saveTokenA();
-								Element sideAPos = saveSideAPos();
-								Element sideAEntryPos = saveSideAEntryPos();
+								//Element sideA = saveSideA();
+								//Element tokenA = saveTokenA();
+								//Element sideAPos = saveSideAPos();
+								//Element sideAEntryPos = saveSideAEntryPos();
 								
-								Element sideB = saveSideB();
-								Element tokenB = saveTokenB();
-								Element sideBPos = saveSideBPos();
-								Element sideBEntryPos = saveSideBEntryPos();								
+								//Element sideB = saveSideB();
+								//Element tokenB = saveTokenB();
+								//Element sideBPos = saveSideBPos();
+								//Element sideBEntryPos = saveSideBEntryPos();								
 								
 							}else if (occupant instanceof FixedContainerGO){
-								Element open = saveOpen();
-								Element locked = saveLocked();
-								Element keyID = saveKeyID();
-								Element size = saveSize();
+								//Element open = saveOpen();
+								//Element locked = saveLocked();
+								//Element keyID = saveKeyID();
+								//Element size = saveSize();
 								
 							}else if (occupant instanceof FixedGO){
-								Element description = saveDescription();
+								//Element description = saveDescription();
 														
 							}else if (occupant instanceof MarkerGO){
 								//FIXME: Base GameObject?? do i need to save a record of this 
-								Element description = saveDescription();
+								//Element description = saveDescription();
 								
 							}else if (occupant instanceof MovableGO){
-								Element areaName = saveAreaName();
+								//Element areaName = saveAreaName();
 																
 							}else if (occupant instanceof Player){
-								Element playerName = saveName();
+								//Element playerName = saveName();
 								//FIXME: CurrentArea?? do i need to save a record of this
-								Element spawnName = saveSpawnName();
-								Element currentPosition = savePosition(currentTile);
+								//Element spawnName = saveSpawnName();
+								//Element currentPosition = savePosition(currentTile);
 
 						}
 						/*Element occupant = saveOccupant(currentTile);
