@@ -258,7 +258,7 @@ public class SpriteMap {
 		/*       Overlay Window      */
 
 		spriteMap.put("H0", loadImage("header.png"));
-		spriteMap.put("F0", loadImage("footer.png"));
+		spriteMap.put("P0", loadImage("footer.png"));
 	}
 
 
