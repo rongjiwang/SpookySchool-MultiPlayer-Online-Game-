@@ -17,6 +17,8 @@ public class AnimationObject {
 	private int aimX;
 	private int aimY;
 
+	private int tokenCurrent = 0;
+
 	private String direction;
 
 	public AnimationObject(AreaDisplayPanel adp, GameObject gameObj, String direction, int startX, int startY, int aimX,
@@ -36,44 +38,60 @@ public class AnimationObject {
 
 
 	public String getNextImgToken() {
-		String token = gameObj.getToken().substring(0, gameObj.getToken().length() - 1) + String.valueOf(current);
+
+		String token = gameObj.getToken().substring(0, gameObj.getToken().length() - 1) + String.valueOf(next());
 		System.out.println("returning: " + token);
 		return token;
+	}
+
+	public int next() {
+		if (current > 3) {
+			return tokenCurrent++;
+		}
+
+		return current;
 	}
 
 
 
 	public Position nextPosition() {
 
-		int change = 0;
-
-		if (current == 3) {
-			return new Position(adp.getRenderOffSetX() + this.startX * adp.tileWidth,
-					adp.getRenderOffSetY() + this.startY * adp.tileHeight);
-		}
-
 		current++;
 
-		System.out.println("current now = " + this.current);
+		/*
+				if (current == 3) {
+					return new Position(adp.getRenderOffSetX() + this.startX * adp.tileWidth,
+							adp.getRenderOffSetY() + this.startY * adp.tileHeight);
+				}
+				*/
 
-		if (this.direction.equals("NORTH")) {
-			adp.mainPlayerYBuff -= change;
-			return new Position(adp.getRenderOffSetX() + this.startX * adp.tileWidth,
-					adp.getRenderOffSetY() - 5 + this.startY * adp.tileHeight);
-		} else if (this.direction.equals("SOUTH")) {
-			adp.mainPlayerYBuff += change;
-			return new Position(adp.getRenderOffSetX() + this.startX * adp.tileWidth,
-					adp.getRenderOffSetY() + 5 + this.startY * adp.tileHeight);
+		adp.mainPlayerYBuff -= (3 - current);
+		return new Position(adp.getRenderOffSetX() + this.aimX * adp.tileWidth,
+				adp.getRenderOffSetY() + this.aimY * adp.tileHeight + ((3 - current) * 11));
 
-		} else if (this.direction.equals("EAST")) {
-			adp.mainPlayerXBuff += change;
-			return new Position(adp.getRenderOffSetX() + 5 + this.startX * adp.tileWidth,
-					adp.getRenderOffSetY() + this.startY * adp.tileHeight);
-		}
 
+
+		/*
+				if (this.direction.equals("NORTH")) {
+					adp.mainPlayerYBuff -= change;
+					return new Position(adp.getRenderOffSetX() + this.startX * adp.tileWidth,
+							adp.getRenderOffSetY() - offset + this.startY * adp.tileHeight);
+				} else if (this.direction.equals("SOUTH")) {
+					adp.mainPlayerYBuff += change;
+					return new Position(adp.getRenderOffSetX() + this.startX * adp.tileWidth,
+							adp.getRenderOffSetY() + offset + this.startY * adp.tileHeight);
+		
+				} else if (this.direction.equals("EAST")) {
+					adp.mainPlayerXBuff += change;
+					return new Position(adp.getRenderOffSetX() + offset + this.startX * adp.tileWidth,
+							adp.getRenderOffSetY() + this.startY * adp.tileHeight);
+				}
+				
+		
 		//adp.mainPlayerXBuff -= change;
-		return new Position(adp.getRenderOffSetX() - 5 + this.startX * adp.tileWidth,
+		return new Position(adp.getRenderOffSetX() - offset + this.startX * adp.tileWidth,
 				adp.getRenderOffSetY() + this.startY * adp.tileHeight);
+				*/
 
 	}
 

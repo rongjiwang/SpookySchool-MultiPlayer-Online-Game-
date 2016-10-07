@@ -51,6 +51,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	private int nextRain = 0;
 	private int delay = 5;
 
+	private long aim;
+
 	// For access to DebugDisplay
 	private GameFrame gameFrame;
 
@@ -95,7 +97,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		this.setLayout(new BorderLayout());
 
-
 		validate();
 
 		this.client = client;
@@ -114,7 +115,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	 */
 	public void processBundle(Bundle bundle) {
 
-		System.out.println("animation cleared");
 		this.toAnimate.clear();
 
 		this.mainPlayer = bundle.getPlayerObj();
@@ -165,17 +165,23 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					if (currentObj.getPosition().getPosX() != previousObj.getPosition().getPosX()
 							|| currentObj.getPosition().getPosY() != previousObj.getPosition().getPosY()) {
 
-						//Starting position of the game object.
-						int[] view = this.getRotatedView(previousObj.getPosition().getPosX(),
-								previousObj.getPosition().getPosX(), currentArea.width, currentArea.height);
+						/*
+						Starting position of the game object.
+						int[] view = this.getRotatedView(previousObj.getPosition().getPosX(), previousObj.getPosition().getPosX(), currentArea.width, currentArea.height);
 						int startX = view[0];
 						int startY = view[1];
-
+						
 						//Finishing position of the game object.
-						view = this.getRotatedView(currentObj.getPosition().getPosX(),
-								currentObj.getPosition().getPosY(), currentArea.width, currentArea.height);
+						view = this.getRotatedView(currentObj.getPosition().getPosX(), currentObj.getPosition().getPosY(), currentArea.width, currentArea.height);
 						int aimX = view[0];
 						int aimY = view[1];
+						*/
+
+						int startX = previousObj.getPosition().getPosX();
+						int startY = previousObj.getPosition().getPosY();
+
+						int aimX = currentObj.getPosition().getPosX();
+						int aimY = currentObj.getPosition().getPosY();
 
 						AnimationObject aObj = null;
 
@@ -217,9 +223,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	public void updateDisplay() {
 		centerPlayer();
 
-		//while (this.toAnimate.size() > 0) {
-		this.repaint();
-		//}
+		while (this.toAnimate.size() > 0) {
+			this.repaint();
+		}
 
 	}
 
@@ -251,30 +257,36 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
+		/** USING SMOOTH RENDERING **/
+
+		Image offscreen = createImage(600, 500);
+		Graphics offgc = offscreen.getGraphics();
+
 		// add underlay
-		g.setColor(Color.black);
-		g.fillRect(this.windowOffSetX, this.windowOffSetY, this.windowWidth, this.windowHeight);
+		offgc.setColor(Color.black);
+		offgc.fillRect(this.windowOffSetX, this.windowOffSetY, this.windowWidth, this.windowHeight);
 
 		if (currentArea != null)
 			if (currentArea.getAreaName().equals("Outside"))
-				g.drawImage(spriteMap.getImage(getRotatedToken("G0")), (this.renderOffSetX - this.windowWidth) / 2,
+				offgc.drawImage(spriteMap.getImage(getRotatedToken("G0")), (this.renderOffSetX - this.windowWidth) / 2,
 						(this.renderOffSetY - this.windowHeight) / 2, null);
 
-
-
-		renderArray(g, 0); // render floor tiles		
-		renderArray(g, 1); // render far walls
-		renderArray(g, 2); // render gameObjects
-		renderArray(g, 3); // render close and side walls
+		renderArray(offgc, 0); // render floor tiles		
+		renderArray(offgc, 1); // render far walls
+		renderArray(offgc, 2); // render gameObjects
+		renderArray(offgc, 3); // render close and side walls
 
 
 
 		if (currentArea != null && currentArea.getAreaName().equals("Outside")) {
 			if (Math.random() < 0.96) {
-				g.drawImage(spriteMap.getImage(getRotatedToken("N0")), 0, 0, null);
-				g.drawImage(spriteMap.getImage("Rain" + this.nextRain()), 0, 0, 600, 600, null);
+				offgc.drawImage(spriteMap.getImage(getRotatedToken("N0")), 0, 0, null);
+				offgc.drawImage(spriteMap.getImage("Rain" + this.nextRain()), 0, 0, 600, 600, null);
 			}
 		}
+
+		g.drawImage(offscreen, 0, 0, this);
+		centerPlayer();
 
 	}
 
@@ -372,6 +384,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					adjustY = (tileImage.getHeight(null) - tileHeight);
 				} else {
 					*/
+
 				tileImage = spriteMap.getImage(getRotatedToken(roomObj.getToken()));
 				adjustX = (tileImage.getWidth(null) / 2);
 				adjustY = (tileImage.getHeight(null) / 2);
@@ -391,9 +404,13 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 				adjustY = (tileImage.getHeight(null) - tileHeight);
 
 				if (ao != null) {
-					tileImage = spriteMap.getImage(getRotatedAnimatedToken(ao.getNextImgToken(), p.getDirection()));
+
+					while (System.currentTimeMillis() < aim) {
+
+					}
 
 					Position pos = ao.nextPosition();
+					tileImage = spriteMap.getImage(getRotatedAnimatedToken(ao.getNextImgToken(), p.getDirection()));
 
 					finalX = pos.getPosX();
 					finalY = pos.getPosY();
@@ -692,13 +709,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-	}
+	public void keyReleased(KeyEvent e) {}
 
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-	}
+	public void keyTyped(KeyEvent e) {}
 
 
 	@Override
