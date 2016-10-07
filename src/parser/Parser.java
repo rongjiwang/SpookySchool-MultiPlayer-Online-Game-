@@ -227,19 +227,27 @@ public class Parser {
 								Element sideBEntryPos = saveSideBEntryPos();								
 								
 							}else if (occupant instanceof FixedContainerGO){
-								
+								Element open = saveOpen();
+								Element locked = saveLocked();
+								Element keyID = saveKeyID();
+								Element size = saveSize();
 								
 							}else if (occupant instanceof FixedGO){
-								
+								Element description = saveDescription();
+														
 							}else if (occupant instanceof MarkerGO){
+								//FIXME: Base GameObject?? do i need to save a record of this 
+								Element description = saveDescription();
 								
 							}else if (occupant instanceof MovableGO){
-								
+								Element areaName = saveAreaName();
+																
 							}else if (occupant instanceof Player){
-								
-							}else if (occupant instanceof NonHumanPlayer){
-								
-							}
+								Element playerName = saveName();
+								//FIXME: CurrentArea?? do i need to save a record of this
+								Element spawnName = saveSpawnName();
+								Element currentPosition = savePosition(currentTile);
+
 						}
 						/*Element occupant = saveOccupant(currentTile);
 						tagName.appendChild(occupant);
