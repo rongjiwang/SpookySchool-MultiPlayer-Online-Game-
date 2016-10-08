@@ -167,28 +167,34 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
+		//Double buffering to reduce flickering.
+		Image offScreen = createImage(600, 500);
+		Graphics offgc = offScreen.getGraphics();
+
 		// add underlay
-		g.setColor(Color.black);
-		g.fillRect(this.windowOffSetX, this.windowOffSetY, this.windowWidth, this.windowHeight);
+		offgc.setColor(Color.black);
+		offgc.fillRect(this.windowOffSetX, this.windowOffSetY, this.windowWidth, this.windowHeight);
 
 		if (currentArea != null)
-			if (currentArea.getAreaName().equals("Outside")){
+			if (currentArea.getAreaName().equals("Outside")) {
 				Image image = spriteMap.getImage(getRotatedToken("G0"));
-				g.drawImage(image , this.renderOffSetX - ((image.getWidth(null) - this.windowWidth)/2),
-						this.renderOffSetY - ((image.getHeight(null) - this.windowHeight)/2), null);
-				}
+				offgc.drawImage(image, this.renderOffSetX - ((image.getWidth(null) - this.windowWidth) / 2),
+						this.renderOffSetY - ((image.getHeight(null) - this.windowHeight) / 2), null);
+			}
 
-		renderArray(g, 0); // render floor tiles		
-		renderArray(g, 1); // render far walls
-		renderArray(g, 2); // render gameObjects
-		renderArray(g, 3); // render close and side walls
+		renderArray(offgc, 0); // render floor tiles		
+		renderArray(offgc, 1); // render far walls
+		renderArray(offgc, 2); // render gameObjects
+		renderArray(offgc, 3); // render close and side walls
 
 		if (currentArea != null && currentArea.getAreaName().equals("Outside")) {
 			if (Math.random() < 0.96) {
-				g.drawImage(spriteMap.getImage(getRotatedToken("N0")), 0, 0, null);
-				g.drawImage(spriteMap.getImage("Rain" + this.nextRain()), 0, 0, 600, 600, null);
+				offgc.drawImage(spriteMap.getImage(getRotatedToken("N0")), 0, 0, null);
+				offgc.drawImage(spriteMap.getImage("Rain" + this.nextRain()), 0, 0, 600, 600, null);
 			}
 		}
+
+		g.drawImage(offScreen, 0, 0, this);
 
 	}
 
@@ -567,13 +573,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-	}
+	public void keyReleased(KeyEvent e) {}
 
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-	}
+	public void keyTyped(KeyEvent e) {}
 
 
 	@Override
