@@ -118,7 +118,10 @@ public class Area implements Serializable {
 
 		if (tileString.equals("n")) {
 			return null;
-		} else if (tileString.equals("c0") || tileString.equals("g0") || tileString.equals("h0") || tileString.equals("R0")) { //FIXME: ADD More token types here to add different types of floor tiles.
+		} else if (tileString.equals("c0") || tileString.equals("g0") || //FIXME: ADD More token types here to add different types of floor tiles.
+				   tileString.equals("h0") || tileString.equals("R0") ||
+			 	   tileString.equals("L0"))
+		{ 
 			return new FloorTile(pos, tileString);
 		}
 

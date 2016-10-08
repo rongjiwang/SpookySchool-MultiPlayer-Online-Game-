@@ -308,10 +308,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			int adjustX = tileImage.getWidth(null) - tileWidth;
 			int adjustY = tileImage.getHeight(null) - tileHeight;
 			
-			if(token.equals("w0") || 
+			if(token.equals("w0") || token.equals("L2") ||
 			   token.equals("W1") || token.equals("W2") ||
 			   token.equals("F2") || token.equals("F1") ||
 			   token.equals("f2") || token.equals("B0") ||
+			   token.equals("u0") || token.equals("L1") ||
 			   token.equals("Q1") || token.equals("Q2")){
 			
 				if(layer == 1){
