@@ -101,10 +101,10 @@ public class SpriteMap {
 		spriteMap.put("w31", loadImage("window31.png"));
 
 		// bed
-		spriteMap.put("b0", loadImage("bed0.png"));
-		spriteMap.put("b1", loadImage("bed1.png"));
-		spriteMap.put("b2", loadImage("bed2.png"));
-		spriteMap.put("b3", loadImage("bed3.png"));
+		spriteMap.put("o0", loadImage("bed0.png"));
+		spriteMap.put("o1", loadImage("bed1.png"));
+		spriteMap.put("o2", loadImage("bed2.png"));
+		spriteMap.put("o3", loadImage("bed3.png"));
 
 		// key
 		spriteMap.put("k0", loadImage("key0.png"));
@@ -157,11 +157,11 @@ public class SpriteMap {
 		spriteMap.put("B2", loadImage("building2.png"));
 		spriteMap.put("B3", loadImage("building3.png"));
 		
-		// Building
-		spriteMap.put("o0", loadImage("box0.png"));
-		spriteMap.put("o1", loadImage("box1.png"));
-		spriteMap.put("o2", loadImage("box2.png"));
-		spriteMap.put("o3", loadImage("box3.png"));
+		// Box
+		spriteMap.put("b0", loadImage("box0.png"));
+		spriteMap.put("b1", loadImage("box1.png"));
+		spriteMap.put("b2", loadImage("box2.png"));
+		spriteMap.put("b3", loadImage("box3.png"));
 
 		// Building walls
 		spriteMap.put("Q0", loadImage("buildingCorner0.png"));

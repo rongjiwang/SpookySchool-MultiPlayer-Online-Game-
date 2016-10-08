@@ -15,5 +15,5 @@ n n n n n n n n n n n
 
 FIXED furniture1 x0 3 5 4 5 This is a book case.
 FIXED table1 T0 4 8
-FIXED bed1 b1 6 8 7 8 This is a bed
+FIXED bed1 o1 6 8 7 8 This is a bed
 FIXED table2 t0 7 9
