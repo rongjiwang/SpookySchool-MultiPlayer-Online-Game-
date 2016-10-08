@@ -12,4 +12,5 @@ n n n w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
 n n n w3 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 c0 w1
 n n n n w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 w2 n
 
-FIXED couch co1 12 5 12 4 
+FIXED couch co3 13 8 13 9 
+FIXED table9 T0 6 8
