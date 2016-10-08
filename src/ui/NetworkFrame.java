@@ -56,6 +56,7 @@ public class NetworkFrame extends JFrame implements WindowListener {
 		contentPane.add(new NetworkMenuPanel(contentPane), "NetworkMenuScreen");
 		contentPane.add(new CreateServerPanel(contentPane), "CreateServerScreen");
 		contentPane.add(new JoinServerPanel(contentPane), "JoinServerScreen");
+		contentPane.add(new LoadGamePanel(contentPane), "LoadGameScreen");
 
 	}
 

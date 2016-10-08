@@ -71,19 +71,20 @@ public class NetworkMenuPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-				cardLayout.show(contentPane, "JoinServerScreen"); //Player pressed start. Move onto the next screen.
+				cardLayout.show(contentPane, "JoinServerScreen"); //Player pressed join server. Move onto the next screen.
 			}
 		});
 		this.add(this.joinServerBtn);
 
 		//Create and add play local game button
-		this.localGameBtn = new JButton("Begin Local Game");
-		this.localGameBtn.setToolTipText("Click here to bein a new local game");
+		this.localGameBtn = new JButton("Load Game");
+		this.localGameBtn.setToolTipText("Click here to load a previous game");
 		this.localGameBtn.setBounds(100, 400, 300, 70);
 		this.localGameBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				//TODO add ability to play local game here
+				CardLayout cardLayout = (CardLayout) contentPane.getLayout();
+				cardLayout.show(contentPane, "LoadGameScreen"); //Player pressed load. Move onto the next screen.
 			}
 		});
 		this.add(this.localGameBtn);
