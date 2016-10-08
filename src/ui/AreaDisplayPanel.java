@@ -51,8 +51,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	private int nextRain = 0;
 	private int delay = 5;
 
-	private long aim;
-
 	// For access to DebugDisplay
 	private GameFrame gameFrame;
 
@@ -67,7 +65,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	private List<GameObject> previousAreaObjects = new ArrayList<GameObject>();
 
 	private Map<String, AnimationObject> toAnimate = new HashMap<String, AnimationObject>();
-
 
 
 	// Current Rotational view 0-3
@@ -116,9 +113,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	public void processBundle(Bundle bundle) {
 
 		this.toAnimate.clear();
-
 		this.mainPlayer = bundle.getPlayerObj();
-
 		this.previousAreaObjects = this.currentAreaObjects;
 
 		if (currentArea == null) {
@@ -136,13 +131,14 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			this.currentArea = this.mainPlayer.getCurrentArea();
 		}
 
+		//Display overlay message/
 		if (bundle.getMessage() != null) {
 			overlayPanel.setFooterMessage(bundle.getMessage());
 		}
 
 		this.findChanges();
 
-		this.updateDisplay();
+		//this.updateDisplay();
 	}
 
 
@@ -164,18 +160,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					//ASSUMING MOVEMENT IN ONLY ONE DIRECTION!!!
 					if (currentObj.getPosition().getPosX() != previousObj.getPosition().getPosX()
 							|| currentObj.getPosition().getPosY() != previousObj.getPosition().getPosY()) {
-
-						/*
-						Starting position of the game object.
-						int[] view = this.getRotatedView(previousObj.getPosition().getPosX(), previousObj.getPosition().getPosX(), currentArea.width, currentArea.height);
-						int startX = view[0];
-						int startY = view[1];
-						
-						//Finishing position of the game object.
-						view = this.getRotatedView(currentObj.getPosition().getPosX(), currentObj.getPosition().getPosY(), currentArea.width, currentArea.height);
-						int aimX = view[0];
-						int aimY = view[1];
-						*/
 
 						int startX = previousObj.getPosition().getPosX();
 						int startY = previousObj.getPosition().getPosY();
@@ -208,24 +192,21 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 				}
 			}
 		}
+
+		processAnimation();
+
+		this.updateDisplay(); //Place player in correct location!
+
+
 	}
 
-
-
-	private void displayAnimation() {
-		// TODO Auto-generated method stub
-
-	}
 
 	/**
 	 * Updates the board.
 	 */
 	public void updateDisplay() {
 		centerPlayer();
-
-		while (this.toAnimate.size() > 0) {
-			this.repaint();
-		}
+		this.repaint();
 
 	}
 
@@ -286,7 +267,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		}
 
 		g.drawImage(offscreen, 0, 0, this);
-		centerPlayer();
 
 	}
 
@@ -324,6 +304,41 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		}
 	}
 
+
+	/**
+	 * Only animating players for now.
+	 */
+	private void processAnimation() {
+
+		int completedAnimations = 0;
+
+		for (AnimationObject ao : this.toAnimate.values()) {
+
+			while (completedAnimations != this.toAnimate.size()) {
+
+				ao.changeBuff();
+				this.updateDisplay();
+
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				if (ao.animationComplete()) {
+					completedAnimations++;
+					System.out.println("Completed an animation");
+				}
+			}
+		}
+
+		this.toAnimate.clear();
+
+		//this.mainPlayerXBuff = 0;
+		//this.mainPlayerYBuff = 0;
+
+	}
 
 	public void renderTile(Graphics g, int layer, int x, int y) {
 
@@ -364,26 +379,16 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			if (roomObj instanceof DoorGO) {
 				DoorGO door = (DoorGO) roomObj;
 				Position doorPos = door.getPosition(this.mainPlayer.getCurrentArea().getAreaName());
-				if (doorPos.getPosX() == x && doorPos.getPosY() == y) {
-					tileImage = spriteMap.getImage(getAnimatedDoorToken(
-							door.getToken(this.mainPlayer.getCurrentArea().getAreaName()), door.isOpen()));
-					adjustX = (tileImage.getWidth(null) / 2);
-					adjustY = (tileImage.getHeight(null) / 2);
-				}
 
-
+				//if (doorPos.getPosX() == x && doorPos.getPosY() == y) {
+				tileImage = spriteMap.getImage(getAnimatedDoorToken(
+						door.getToken(this.mainPlayer.getCurrentArea().getAreaName()), door.isOpen()));
+				adjustX = (tileImage.getWidth(null) / 2);
+				adjustY = (tileImage.getHeight(null) / 2);
+				//}
 
 			} else if ((!(roomObj instanceof MarkerGO)) && (!(roomObj instanceof Player))
-					&& roomObj.getPosition().getPosX() == x && roomObj.getPosition().getPosY() == y) {
-
-				/*
-				if (roomObj instanceof Player && roomObj.getId().equals(this.mainPlayer.getId())) {
-					Player p = (Player) roomObj;
-					tileImage = spriteMap.getImage(getRotatedAnimatedToken(roomObj.getToken(), p.getDirection()));
-					adjustX = (tileImage.getWidth(null) - tileWidth);
-					adjustY = (tileImage.getHeight(null) - tileHeight);
-				} else {
-					*/
+			/*&& roomObj.getPosition().getPosX() == x && roomObj.getPosition().getPosY() == y*/) {
 
 				tileImage = spriteMap.getImage(getRotatedToken(roomObj.getToken()));
 				adjustX = (tileImage.getWidth(null) / 2);
@@ -393,33 +398,32 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 				//THIS PART ASSUMES ANIMATION FOR PLAYER - FOR NOW....
 
-				//Go through and draw next image token at correct place if this object is in the aniatelist.
-				//Use view x and y depending on the 
-				AnimationObject ao = this.toAnimate.get(roomObj.getId());
-
-				//Not being animated so...
+				//Get the game object on the tile.
 				Player p = (Player) roomObj;
 				tileImage = spriteMap.getImage(getRotatedAnimatedToken(roomObj.getToken(), p.getDirection()));
-				adjustX = (tileImage.getWidth(null) - tileWidth);
-				adjustY = (tileImage.getHeight(null) - tileHeight);
 
-				if (ao != null) {
 
-					while (System.currentTimeMillis() < aim) {
+				if (this.toAnimate.get(p.getId()) != null) {
+					AnimationObject ao = this.toAnimate.get(p.getId());
 
-					}
-
-					Position pos = ao.nextPosition();
 					tileImage = spriteMap.getImage(getRotatedAnimatedToken(ao.getNextImgToken(), p.getDirection()));
+				}
 
-					finalX = pos.getPosX();
-					finalY = pos.getPosY();
+				adjustX = (tileImage.getWidth(null) - tileWidth) - mainPlayerXBuff;
+				adjustY = (tileImage.getHeight(null) - tileHeight) - mainPlayerYBuff;
 
-					if (ao.animationComplete()) {
-						System.out.println("Removed");
-						this.toAnimate.remove(ao.getGameObj().getId());
+
+				//if (this.toAnimate)
+				/*
+				for (AnimationObject ao : this.toAnimate.values()) {
+					if (ao.getGameObj().getId().equals(p.getId())) {
+						System.out.println("here");
+						adjustX = (tileImage.getWidth(null) - tileWidth) - mainPlayerXBuff;
+						adjustY = (tileImage.getWidth(null) - tileHeight) - mainPlayerYBuff;
 					}
 				}
+				*/
+
 			}
 
 			g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
