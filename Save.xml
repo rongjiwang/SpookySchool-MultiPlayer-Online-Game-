@@ -28,7 +28,29 @@
                 <x>6</x>
                 <y>1</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>true</locked>
+                <description>This is a Door.</description>
+                <sideA>Spawn_6</sideA>
+                <sideAPos>
+                    <x>6</x>
+                    <y>1</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>6</x>
+                    <y>2</y>
+                </sideAEntryPos>
+                <sideB>Hallway</sideB>
+                <sideBPos>
+                    <x>10</x>
+                    <y>4</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>10</x>
+                    <y>3</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -509,7 +531,29 @@
                 <x>6</x>
                 <y>1</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>true</locked>
+                <description>This is a Door.</description>
+                <sideA>Spawn_7</sideA>
+                <sideAPos>
+                    <x>6</x>
+                    <y>1</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>6</x>
+                    <y>2</y>
+                </sideAEntryPos>
+                <sideB>Hallway</sideB>
+                <sideBPos>
+                    <x>15</x>
+                    <y>4</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>15</x>
+                    <y>3</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -1431,7 +1475,29 @@
                 <x>4</x>
                 <y>11</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>true</locked>
+                <description>This is a Door.</description>
+                <sideA>Spawn_4</sideA>
+                <sideAPos>
+                    <x>4</x>
+                    <y>11</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>4</x>
+                    <y>10</y>
+                </sideAEntryPos>
+                <sideB>Hallway</sideB>
+                <sideBPos>
+                    <x>20</x>
+                    <y>0</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>20</x>
+                    <y>1</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -1483,7 +1549,29 @@
                 <x>6</x>
                 <y>1</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>true</locked>
+                <description>This is a Door.</description>
+                <sideA>Spawn_5</sideA>
+                <sideAPos>
+                    <x>6</x>
+                    <y>1</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>6</x>
+                    <y>2</y>
+                </sideAEntryPos>
+                <sideB>Hallway</sideB>
+                <sideBPos>
+                    <x>5</x>
+                    <y>4</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>5</x>
+                    <y>3</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -2070,7 +2158,29 @@
                 <x>0</x>
                 <y>2</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Outside</sideA>
+                <sideAPos>
+                    <x>18</x>
+                    <y>10</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>17</x>
+                    <y>10</y>
+                </sideAEntryPos>
+                <sideB>Staff_room</sideB>
+                <sideBPos>
+                    <x>0</x>
+                    <y>2</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>1</x>
+                    <y>2</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -2540,7 +2650,29 @@
                 <x>2</x>
                 <y>9</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Staff_room</sideA>
+                <sideAPos>
+                    <x>2</x>
+                    <y>9</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>2</x>
+                    <y>8</y>
+                </sideAEntryPos>
+                <sideB>Staff_hallway</sideB>
+                <sideBPos>
+                    <x>2</x>
+                    <y>0</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>2</x>
+                    <y>1</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -2613,7 +2745,29 @@
                 <x>6</x>
                 <y>1</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>true</locked>
+                <description>This is a Door.</description>
+                <sideA>Spawn_8</sideA>
+                <sideAPos>
+                    <x>6</x>
+                    <y>1</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>6</x>
+                    <y>2</y>
+                </sideAEntryPos>
+                <sideB>Hallway</sideB>
+                <sideBPos>
+                    <x>20</x>
+                    <y>4</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>20</x>
+                    <y>3</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -3363,7 +3517,29 @@
                 <x>2</x>
                 <y>6</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Dorm_room</sideA>
+                <sideAPos>
+                    <x>11</x>
+                    <y>0</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>11</x>
+                    <y>1</y>
+                </sideAEntryPos>
+                <sideB>Dorm_toilet</sideB>
+                <sideBPos>
+                    <x>2</x>
+                    <y>6</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>2</x>
+                    <y>5</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -3458,7 +3634,29 @@
                 <x>0</x>
                 <y>2</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Staff_hallway</sideA>
+                <sideAPos>
+                    <x>4</x>
+                    <y>5</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>3</x>
+                    <y>5</y>
+                </sideAEntryPos>
+                <sideB>Staff_toilet2</sideB>
+                <sideBPos>
+                    <x>0</x>
+                    <y>2</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>1</x>
+                    <y>2</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -3919,7 +4117,29 @@
                 <x>14</x>
                 <y>2</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Hallway</sideA>
+                <sideAPos>
+                    <x>25</x>
+                    <y>2</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>24</x>
+                    <y>2</y>
+                </sideAEntryPos>
+                <sideB>Outside</sideB>
+                <sideBPos>
+                    <x>14</x>
+                    <y>2</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>15</x>
+                    <y>2</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -4008,7 +4228,29 @@
                 <x>5</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Dorm_room</sideA>
+                <sideAPos>
+                    <x>0</x>
+                    <y>4</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>1</x>
+                    <y>4</y>
+                </sideAEntryPos>
+                <sideB>Outside</sideB>
+                <sideBPos>
+                    <x>5</x>
+                    <y>3</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>4</x>
+                    <y>3</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -4313,7 +4555,29 @@
                 <x>9</x>
                 <y>5</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Dorm_room</sideA>
+                <sideAPos>
+                    <x>9</x>
+                    <y>11</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>9</x>
+                    <y>10</y>
+                </sideAEntryPos>
+                <sideB>Outside</sideB>
+                <sideBPos>
+                    <x>9</x>
+                    <y>5</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>9</x>
+                    <y>6</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -5059,7 +5323,29 @@
                 <x>18</x>
                 <y>10</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Outside</sideA>
+                <sideAPos>
+                    <x>18</x>
+                    <y>10</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>17</x>
+                    <y>10</y>
+                </sideAEntryPos>
+                <sideB>Staff_room</sideB>
+                <sideBPos>
+                    <x>0</x>
+                    <y>2</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>1</x>
+                    <y>2</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -5120,7 +5406,29 @@
                 <x>5</x>
                 <y>11</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Outside</sideA>
+                <sideAPos>
+                    <x>5</x>
+                    <y>11</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>6</x>
+                    <y>11</y>
+                </sideAEntryPos>
+                <sideB>Room_to_nowhere</sideB>
+                <sideBPos>
+                    <x>5</x>
+                    <y>3</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>4</x>
+                    <y>3</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -6345,7 +6653,29 @@
                 <x>2</x>
                 <y>0</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Staff_hallway</sideA>
+                <sideAPos>
+                    <x>2</x>
+                    <y>8</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>2</x>
+                    <y>7</y>
+                </sideAEntryPos>
+                <sideB>Principles_office</sideB>
+                <sideBPos>
+                    <x>2</x>
+                    <y>0</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>2</x>
+                    <y>1</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -6723,7 +7053,29 @@
                 <x>5</x>
                 <y>0</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Dorm_room</sideA>
+                <sideAPos>
+                    <x>5</x>
+                    <y>0</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>5</x>
+                    <y>1</y>
+                </sideAEntryPos>
+                <sideB>Dorm_storage</sideB>
+                <sideBPos>
+                    <x>5</x>
+                    <y>6</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>5</x>
+                    <y>5</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -6760,7 +7112,29 @@
                 <x>11</x>
                 <y>0</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Dorm_room</sideA>
+                <sideAPos>
+                    <x>11</x>
+                    <y>0</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>11</x>
+                    <y>1</y>
+                </sideAEntryPos>
+                <sideB>Dorm_toilet</sideB>
+                <sideBPos>
+                    <x>2</x>
+                    <y>6</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>2</x>
+                    <y>5</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -7098,7 +7472,29 @@
                 <x>0</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Dorm_room</sideA>
+                <sideAPos>
+                    <x>0</x>
+                    <y>4</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>1</x>
+                    <y>4</y>
+                </sideAEntryPos>
+                <sideB>Outside</sideB>
+                <sideBPos>
+                    <x>5</x>
+                    <y>3</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>4</x>
+                    <y>3</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -7195,7 +7591,29 @@
                 <x>16</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Hallway</sideA>
+                <sideAPos>
+                    <x>0</x>
+                    <y>2</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>1</x>
+                    <y>2</y>
+                </sideAEntryPos>
+                <sideB>Dorm_room</sideB>
+                <sideBPos>
+                    <x>16</x>
+                    <y>4</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>15</x>
+                    <y>4</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -7820,7 +8238,29 @@
                 <x>9</x>
                 <y>11</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Dorm_room</sideA>
+                <sideAPos>
+                    <x>9</x>
+                    <y>11</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>9</x>
+                    <y>10</y>
+                </sideAEntryPos>
+                <sideB>Outside</sideB>
+                <sideBPos>
+                    <x>9</x>
+                    <y>5</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>9</x>
+                    <y>6</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -8168,7 +8608,29 @@
                 <x>5</x>
                 <y>6</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Dorm_room</sideA>
+                <sideAPos>
+                    <x>5</x>
+                    <y>0</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>5</x>
+                    <y>1</y>
+                </sideAEntryPos>
+                <sideB>Dorm_storage</sideB>
+                <sideBPos>
+                    <x>5</x>
+                    <y>6</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>5</x>
+                    <y>5</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -8245,7 +8707,29 @@
                 <x>0</x>
                 <y>2</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Staff_hallway</sideA>
+                <sideAPos>
+                    <x>4</x>
+                    <y>3</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>3</x>
+                    <y>3</y>
+                </sideAEntryPos>
+                <sideB>Staff_toilet</sideB>
+                <sideBPos>
+                    <x>0</x>
+                    <y>2</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>1</x>
+                    <y>2</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -8473,7 +8957,29 @@
                 <x>5</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Outside</sideA>
+                <sideAPos>
+                    <x>5</x>
+                    <y>11</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>6</x>
+                    <y>11</y>
+                </sideAEntryPos>
+                <sideB>Room_to_nowhere</sideB>
+                <sideBPos>
+                    <x>5</x>
+                    <y>3</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>4</x>
+                    <y>3</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -9000,7 +9506,29 @@
                 <x>4</x>
                 <y>11</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>true</locked>
+                <description>This is a Door.</description>
+                <sideA>Spawn_2</sideA>
+                <sideAPos>
+                    <x>4</x>
+                    <y>11</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>4</x>
+                    <y>10</y>
+                </sideAEntryPos>
+                <sideB>Hallway</sideB>
+                <sideBPos>
+                    <x>10</x>
+                    <y>0</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>10</x>
+                    <y>1</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -9037,7 +9565,29 @@
                 <x>2</x>
                 <y>0</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Staff_room</sideA>
+                <sideAPos>
+                    <x>2</x>
+                    <y>9</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>2</x>
+                    <y>8</y>
+                </sideAEntryPos>
+                <sideB>Staff_hallway</sideB>
+                <sideBPos>
+                    <x>2</x>
+                    <y>0</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>2</x>
+                    <y>1</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -9135,7 +9685,29 @@
                 <x>4</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Staff_hallway</sideA>
+                <sideAPos>
+                    <x>4</x>
+                    <y>3</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>3</x>
+                    <y>3</y>
+                </sideAEntryPos>
+                <sideB>Staff_toilet</sideB>
+                <sideBPos>
+                    <x>0</x>
+                    <y>2</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>1</x>
+                    <y>2</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -9196,7 +9768,29 @@
                 <x>4</x>
                 <y>5</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Staff_hallway</sideA>
+                <sideAPos>
+                    <x>4</x>
+                    <y>5</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>3</x>
+                    <y>5</y>
+                </sideAEntryPos>
+                <sideB>Staff_toilet2</sideB>
+                <sideBPos>
+                    <x>0</x>
+                    <y>2</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>1</x>
+                    <y>2</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -9270,7 +9864,29 @@
                 <x>2</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Staff_hallway</sideA>
+                <sideAPos>
+                    <x>2</x>
+                    <y>8</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>2</x>
+                    <y>7</y>
+                </sideAEntryPos>
+                <sideB>Principles_office</sideB>
+                <sideBPos>
+                    <x>2</x>
+                    <y>0</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>2</x>
+                    <y>1</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -9742,7 +10358,29 @@
                 <x>4</x>
                 <y>11</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>true</locked>
+                <description>This is a Door.</description>
+                <sideA>Spawn_3</sideA>
+                <sideAPos>
+                    <x>4</x>
+                    <y>11</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>4</x>
+                    <y>10</y>
+                </sideAEntryPos>
+                <sideB>Hallway</sideB>
+                <sideBPos>
+                    <x>15</x>
+                    <y>0</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>15</x>
+                    <y>1</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -9797,7 +10435,29 @@
                 <x>5</x>
                 <y>0</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>true</locked>
+                <description>This is a Door.</description>
+                <sideA>Spawn_1</sideA>
+                <sideAPos>
+                    <x>4</x>
+                    <y>11</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>4</x>
+                    <y>10</y>
+                </sideAEntryPos>
+                <sideB>Hallway</sideB>
+                <sideBPos>
+                    <x>5</x>
+                    <y>0</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>5</x>
+                    <y>1</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -9829,7 +10489,29 @@
                 <x>10</x>
                 <y>0</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>true</locked>
+                <description>This is a Door.</description>
+                <sideA>Spawn_2</sideA>
+                <sideAPos>
+                    <x>4</x>
+                    <y>11</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>4</x>
+                    <y>10</y>
+                </sideAEntryPos>
+                <sideB>Hallway</sideB>
+                <sideBPos>
+                    <x>10</x>
+                    <y>0</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>10</x>
+                    <y>1</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -9861,7 +10543,29 @@
                 <x>15</x>
                 <y>0</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>true</locked>
+                <description>This is a Door.</description>
+                <sideA>Spawn_3</sideA>
+                <sideAPos>
+                    <x>4</x>
+                    <y>11</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>4</x>
+                    <y>10</y>
+                </sideAEntryPos>
+                <sideB>Hallway</sideB>
+                <sideBPos>
+                    <x>15</x>
+                    <y>0</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>15</x>
+                    <y>1</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -9893,7 +10597,29 @@
                 <x>20</x>
                 <y>0</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>true</locked>
+                <description>This is a Door.</description>
+                <sideA>Spawn_4</sideA>
+                <sideAPos>
+                    <x>4</x>
+                    <y>11</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>4</x>
+                    <y>10</y>
+                </sideAEntryPos>
+                <sideB>Hallway</sideB>
+                <sideBPos>
+                    <x>20</x>
+                    <y>0</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>20</x>
+                    <y>1</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -10082,7 +10808,29 @@
                 <x>0</x>
                 <y>2</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Hallway</sideA>
+                <sideAPos>
+                    <x>0</x>
+                    <y>2</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>1</x>
+                    <y>2</y>
+                </sideAEntryPos>
+                <sideB>Dorm_room</sideB>
+                <sideBPos>
+                    <x>16</x>
+                    <y>4</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>15</x>
+                    <y>4</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -10323,7 +11071,29 @@
                 <x>25</x>
                 <y>2</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>false</locked>
+                <description>This is a Door.</description>
+                <sideA>Hallway</sideA>
+                <sideAPos>
+                    <x>25</x>
+                    <y>2</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>24</x>
+                    <y>2</y>
+                </sideAEntryPos>
+                <sideB>Outside</sideB>
+                <sideBPos>
+                    <x>14</x>
+                    <y>2</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>15</x>
+                    <y>2</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -10511,7 +11281,29 @@
                 <x>5</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>true</locked>
+                <description>This is a Door.</description>
+                <sideA>Spawn_5</sideA>
+                <sideAPos>
+                    <x>6</x>
+                    <y>1</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>6</x>
+                    <y>2</y>
+                </sideAEntryPos>
+                <sideB>Hallway</sideB>
+                <sideBPos>
+                    <x>5</x>
+                    <y>4</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>5</x>
+                    <y>3</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -10543,7 +11335,29 @@
                 <x>10</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>true</locked>
+                <description>This is a Door.</description>
+                <sideA>Spawn_6</sideA>
+                <sideAPos>
+                    <x>6</x>
+                    <y>1</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>6</x>
+                    <y>2</y>
+                </sideAEntryPos>
+                <sideB>Hallway</sideB>
+                <sideBPos>
+                    <x>10</x>
+                    <y>4</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>10</x>
+                    <y>3</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -10575,7 +11389,29 @@
                 <x>15</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>true</locked>
+                <description>This is a Door.</description>
+                <sideA>Spawn_7</sideA>
+                <sideAPos>
+                    <x>6</x>
+                    <y>1</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>6</x>
+                    <y>2</y>
+                </sideAEntryPos>
+                <sideB>Hallway</sideB>
+                <sideBPos>
+                    <x>15</x>
+                    <y>4</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>15</x>
+                    <y>3</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -10607,7 +11443,29 @@
                 <x>20</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>true</locked>
+                <description>This is a Door.</description>
+                <sideA>Spawn_8</sideA>
+                <sideAPos>
+                    <x>6</x>
+                    <y>1</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>6</x>
+                    <y>2</y>
+                </sideAEntryPos>
+                <sideB>Hallway</sideB>
+                <sideBPos>
+                    <x>20</x>
+                    <y>4</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>20</x>
+                    <y>3</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -11099,7 +11957,29 @@
                 <x>4</x>
                 <y>11</y>
             </pos>
-            <occupant objectType="class game.DoorGO"/>
+            <occupant objectType="class game.DoorGO">
+                <open>false</open>
+                <locked>true</locked>
+                <description>This is a Door.</description>
+                <sideA>Spawn_1</sideA>
+                <sideAPos>
+                    <x>4</x>
+                    <y>11</y>
+                </sideAPos>
+                <sideAEntryPos>
+                    <x>4</x>
+                    <y>10</y>
+                </sideAEntryPos>
+                <sideB>Hallway</sideB>
+                <sideBPos>
+                    <x>5</x>
+                    <y>0</y>
+                </sideBPos>
+                <sideBEntryPos>
+                    <x>5</x>
+                    <y>1</y>
+                </sideBEntryPos>
+            </occupant>
         </tile>
         <tile>
             <pos>
