@@ -141,16 +141,24 @@ public class PlayerThread extends Thread {
 			} else if (nextToken.equals("ACTION")) {
 				this.game.processAction(playerName); //
 
+			} else if (nextToken.equals("DROP")) {
+				this.game.processDrop(playerName, scan.next());
+
+			} else if (nextToken.equals("PACK")) {
+				this.game.addToContainer(playerName, scan.next(), scan.next());
+
+			} else if (nextToken.equals("UNPACK")) {
+				this.game.unpackContainer(playerName, scan.next());
+
+			} else if (nextToken.equals("PASS")) {
+				this.game.passItem(playerName, scan.next());
+
 			} else if (nextToken.equals("CHAT")) {
 				String message = "<" + this.playerName + "> " + scan.nextLine(); //Append the player name before the message
 				this.game.addChatLogItemToAllBundles(message); //Add the message to all player's bundles so they can display in their chat window.
 
 			} else if (nextToken.equals("SAVE")) {
 				this.game.saveGame(playerName);
-			}
-
-			else if (nextToken.equals("DROP")) {
-				this.game.processDrop(playerName, scan.next());
 			}
 		}
 	}

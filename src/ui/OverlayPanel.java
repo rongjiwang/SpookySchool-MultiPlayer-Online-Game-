@@ -78,9 +78,11 @@ public class OverlayPanel extends JPanel {
 		super.paintComponent(g);
 
 		//Draw the header
-		g.drawImage(spriteMap.getImage("H0"), headerX, headerY, null);
-		g.drawString(headerMessage, headerX + 10, headerY + 17);
-
+		if (this.footerMessage != null) {
+			g.drawImage(spriteMap.getImage("H0"), headerX, headerY, null);
+			g.drawString(headerMessage, headerX + 10, headerY + 17);
+		}
+		
 		//Draw the footer
 		if (this.footerMessage != null) {
 			g.drawImage(spriteMap.getImage("P0"), footerX, footerY, null);

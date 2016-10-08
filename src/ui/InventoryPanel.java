@@ -297,7 +297,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 			//processTemp();
 		}
 		if(!firstID.equals("") && !secondID.equals("")){
-			//client.sendCommand("DRAG "+firstID+" "+secondID);
+			client.sendCommand("PACK "+secondID+" "+firstID);
 		}
 		repaint();
 	}
@@ -334,7 +334,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	class PopUpMenu extends JPopupMenu {
 		JMenuItem inspect;
 		JMenuItem drop;
-		JMenuItem open;
+		JMenuItem unpack;
 		JMenuItem pass;
 
 		public PopUpMenu(ItemDisplay item){
@@ -347,7 +347,9 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 					} else if (event.getActionCommand().equals("Open")){
 						client.sendCommand("OPEN "+item.getID());
 					} else if (event.getActionCommand().equals("Pass")){
-						//client.sendCommand("OPEN "+item.getID());
+						client.sendCommand("PASS "+item.getID());
+					} else if (event.getActionCommand().equals("Unpack")){
+						client.sendCommand("UNPACK "+item.getID());
 					}
 				}
 				
@@ -356,11 +358,13 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 			try {
 				inspect = new JMenuItem("Inspect");
 				drop = new JMenuItem("Drop");
-				pass = new JMenuItem("Pass Item");
+				pass = new JMenuItem("Pass");
+				unpack = new JMenuItem("Unpack");
 				Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
 				inspect.setFont(font.deriveFont(Font.TRUETYPE_FONT, 13f));
 				drop.setFont(font.deriveFont(Font.TRUETYPE_FONT, 13f));
 				pass.setFont(font.deriveFont(Font.TRUETYPE_FONT, 13f));
+				unpack.setFont(font.deriveFont(Font.TRUETYPE_FONT, 13f));
 
 			} catch (Exception e) {}
 			
@@ -373,11 +377,11 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 			
 			pass.addActionListener(popUpListener);
 			add(pass);
-		//	if(value){
-			//	open = new JMenuItem("Open");
-				//open.addActionListener(popUpListener);
-				//add(open);
-			//}
+			
+			if(item.isContainer()){
+				unpack.addActionListener(popUpListener);
+				add(unpack);
+			}
 
 		}
 	}

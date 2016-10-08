@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * A bundle holds the different bits of information that needs to be passed to the respective client.
  * @author Pritesh R. Patel
@@ -27,10 +26,8 @@ public class Bundle implements Serializable {
 	 * Clear relevant fields of this bundle. THis should be called once the bundle has been sent to the respective client.
 	 */
 	public void clearBundle() {
-		//this.playerObj = null;
-		//this.gameObjectChanges = new ArrayList<String>();
 		this.setMessage(null);
-		this.chatLogChanges = new ArrayList<String>(); //FIXME keep commented out for now. Want to send entire chat log over network (for now!)
+		this.chatLogChanges = new ArrayList<String>();
 	}
 
 	/** GETTERS AND SETTERS **/

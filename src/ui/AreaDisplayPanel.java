@@ -20,6 +20,7 @@ import game.MarkerGO;
 import game.Player;
 import game.Position;
 import game.Tile;
+import game.WallTile;
 import network.Client;
 
 public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListener {
@@ -167,28 +168,34 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
+		//Double buffering to reduce flickering.
+		Image offScreen = createImage(600, 500);
+		Graphics offgc = offScreen.getGraphics();
+
 		// add underlay
-		g.setColor(Color.black);
-		g.fillRect(this.windowOffSetX, this.windowOffSetY, this.windowWidth, this.windowHeight);
+		offgc.setColor(Color.black);
+		offgc.fillRect(this.windowOffSetX, this.windowOffSetY, this.windowWidth, this.windowHeight);
 
 		if (currentArea != null)
-			if (currentArea.getAreaName().equals("Outside")){
+			if (currentArea.getAreaName().equals("Outside")) {
 				Image image = spriteMap.getImage(getRotatedToken("G0"));
-				g.drawImage(image , this.renderOffSetX - ((image.getWidth(null) - this.windowWidth)/2),
-						this.renderOffSetY - ((image.getHeight(null) - this.windowHeight)/2), null);
-				}
+				offgc.drawImage(image, this.renderOffSetX - ((image.getWidth(null) - this.windowWidth) / 2),
+						this.renderOffSetY - ((image.getHeight(null) - this.windowHeight) / 2), null);
+			}
 
-		renderArray(g, 0); // render floor tiles		
-		renderArray(g, 1); // render far walls
-		renderArray(g, 2); // render gameObjects
-		renderArray(g, 3); // render close and side walls
+		renderArray(offgc, 0); // render floor tiles		
+		renderArray(offgc, 1); // render far walls
+		renderArray(offgc, 2); // render gameObjects
+		renderArray(offgc, 3); // render close and side walls
 
 		if (currentArea != null && currentArea.getAreaName().equals("Outside")) {
 			if (Math.random() < 0.96) {
-				g.drawImage(spriteMap.getImage(getRotatedToken("N0")), 0, 0, null);
-				g.drawImage(spriteMap.getImage("Rain" + this.nextRain()), 0, 0, 600, 600, null);
+				offgc.drawImage(spriteMap.getImage(getRotatedToken("N0")), 0, 0, null);
+				offgc.drawImage(spriteMap.getImage("Rain" + this.nextRain()), 0, 0, 600, 600, null);
 			}
 		}
+
+		g.drawImage(offScreen, 0, 0, this);
 
 	}
 
@@ -296,8 +303,35 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		// Draw Walls(Back and side walls with layer 1, front with layer 3)
 
-		if (((token.equals("w0") || token.equals("W1") || token.equals("F2") || token.equals("F1") || token.equals("f2")
+		if(tile instanceof WallTile){
+			Image tileImage = spriteMap.getImage(token);
+			int adjustX = tileImage.getWidth(null) - tileWidth;
+			int adjustY = tileImage.getHeight(null) - tileHeight;
+			
+			if(token.equals("w0") || 
+			   token.equals("W1") || token.equals("W2") ||
+			   token.equals("F2") || token.equals("F1") ||
+			   token.equals("f2") || token.equals("B0") ||
+			   token.equals("Q1") || token.equals("Q2")){
+			
+				if(layer == 1){
+					g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
+
+				}
+			}else{
+				if(layer == 3){
+					g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
+				}
+			}
+		}
+		
+		
+		
+		
+		/*if (((token.equals("w0") || token.equals("W1") || token.equals("F2") || token.equals("F1") || token.equals("f2")
 				|| token.equals("B0") || token.equals("Q1") || token.equals("Q2")) && layer == 1)
+				
+				
 				|| ((!(token.equals("w0") || token.equals("W1") || token.equals("W2") || token.equals("f2")
 						|| token.equals("F1") || token.equals("F2") || token.equals("B0") || token.equals("Q1")
 						|| token.equals("Q2"))) && layer == 3)) {
@@ -308,7 +342,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 				int adjustY = tileImage.getHeight(null) - tileHeight;
 				g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
 			}
-		}
+		}*/
 
 	}
 
@@ -567,13 +601,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-	}
+	public void keyReleased(KeyEvent e) {}
 
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-	}
+	public void keyTyped(KeyEvent e) {}
 
 
 	@Override
