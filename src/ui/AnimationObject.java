@@ -60,20 +60,20 @@ public class AnimationObject {
 
 	public void changeBuff() {
 
-
+		this.currentBuff++;
 
 		if (this.direction.equals("NORTH") && this.currentBuff < 25) {
-			this.currentBuff += 6;
-			adp.mainPlayerYBuff -= 6;
+			//this.currentBuff += 6;
+			adp.mainPlayerYBuff--;
 		} else if (this.direction.equals("SOUTH") & this.currentBuff < 25) {
-			this.currentBuff += 6;
-			adp.mainPlayerYBuff += 6;
+			//this.currentBuff += 6;
+			adp.mainPlayerYBuff++;
 		} else if (this.direction.equals("EAST") && this.currentBuff < 32) {
-			this.currentBuff += 8;
-			adp.mainPlayerXBuff += 8;
+			//this.currentBuff += 8;
+			adp.mainPlayerXBuff++;
 		} else if (this.direction.equals("WEST") && this.currentBuff < 32) {
-			this.currentBuff += 8;
-			adp.mainPlayerXBuff -= 8;
+			//his.currentBuff += 8;
+			adp.mainPlayerXBuff--;
 		}
 	}
 

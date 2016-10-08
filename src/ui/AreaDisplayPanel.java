@@ -138,7 +138,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		this.findChanges();
 
-		//this.updateDisplay();
+		this.updateDisplay();
 	}
 
 
@@ -312,15 +312,16 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		int completedAnimations = 0;
 
-		for (AnimationObject ao : this.toAnimate.values()) {
+		while (completedAnimations != this.toAnimate.size()) {
+			for (AnimationObject ao : this.toAnimate.values()) {
 
-			while (completedAnimations != this.toAnimate.size()) {
+				System.out.println("stating single move.");
 
 				ao.changeBuff();
 				this.updateDisplay();
 
 				try {
-					Thread.sleep(100);
+					Thread.sleep(10);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -335,8 +336,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		this.toAnimate.clear();
 
-		//this.mainPlayerXBuff = 0;
-		//this.mainPlayerYBuff = 0;
+		this.mainPlayerXBuff = 0;
+		this.mainPlayerYBuff = 0;
 
 	}
 
@@ -411,19 +412,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 				adjustX = (tileImage.getWidth(null) - tileWidth) - mainPlayerXBuff;
 				adjustY = (tileImage.getHeight(null) - tileHeight) - mainPlayerYBuff;
-
-
-				//if (this.toAnimate)
-				/*
-				for (AnimationObject ao : this.toAnimate.values()) {
-					if (ao.getGameObj().getId().equals(p.getId())) {
-						System.out.println("here");
-						adjustX = (tileImage.getWidth(null) - tileWidth) - mainPlayerXBuff;
-						adjustY = (tileImage.getWidth(null) - tileHeight) - mainPlayerYBuff;
-					}
-				}
-				*/
-
 			}
 
 			g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
