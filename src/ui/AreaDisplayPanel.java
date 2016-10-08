@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import game.Area;
 import game.Bundle;
 import game.DoorGO;
+import game.FixedContainerGO;
 import game.FloorTile;
 import game.GameObject;
 import game.MarkerGO;
@@ -280,9 +281,18 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					adjustX = (tileImage.getWidth(null) / 2);
 					adjustY = (tileImage.getHeight(null) / 2);
 				}
+			}else if (roomObj instanceof FixedContainerGO) {
+					FixedContainerGO container = (FixedContainerGO) roomObj;
+					Position containerPos = container.getPosition();
+					if (containerPos.getPosX() == x && containerPos.getPosY() == y) {
+						tileImage = spriteMap.getImage(getAnimatedDoorToken(
+								container.getToken(), container.isOpen()));
+						adjustX = (tileImage.getWidth(null) / 2);
+						adjustY = (tileImage.getHeight(null) / 2);
+						System.out.println(1);
 
-
-
+					}
+			
 			} else if ((!(roomObj instanceof MarkerGO)) && roomObj.getPosition().getPosX() == x
 					&& roomObj.getPosition().getPosY() == y) {
 
@@ -308,10 +318,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			int adjustX = tileImage.getWidth(null) - tileWidth;
 			int adjustY = tileImage.getHeight(null) - tileHeight;
 			
-			if(token.equals("w0") || 
+			if(token.equals("w0") || token.equals("L2") ||
 			   token.equals("W1") || token.equals("W2") ||
 			   token.equals("F2") || token.equals("F1") ||
 			   token.equals("f2") || token.equals("B0") ||
+			   token.equals("u0") || token.equals("L1") ||
 			   token.equals("Q1") || token.equals("Q2")){
 			
 				if(layer == 1){
