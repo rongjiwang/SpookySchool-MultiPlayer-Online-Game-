@@ -500,7 +500,7 @@ public class SpookySchool {
 		ContainerGO container = (ContainerGO) this.getInventoryObjects().get(itemID);
 
 		if (container.isEmpty()) {
-			this.getBundle(playerName).setMessage("The container is empty.");
+			this.getBundle(playerName).setMessage("The " + container.getName() + " is empty.");
 		}
 
 		//Add all items in the container to the players's inventory.
@@ -529,6 +529,12 @@ public class SpookySchool {
 			Player receiver = (Player) tile.getOccupant();
 			receiver.addToInventory(item);
 			player.removeFromInventory(item);
+			this.getBundle(playerName)
+					.setMessage("You passed the " + item.getName() + " to " + receiver.getPlayerName());
+			this.getBundle(receiver.getPlayerName())
+					.setMessage("You received a " + item.getName() + " from " + player.getPlayerName());
+		} else {
+			this.getBundle(playerName).setMessage("The player must be in front of you to pass an item");
 		}
 	}
 
