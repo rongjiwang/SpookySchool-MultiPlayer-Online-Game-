@@ -894,13 +894,12 @@ public class SpookySchool {
 	}
 
 	/**
-	 * FIXME: for saving gmae to xml
+	 * FIXME: for saving game to xml
 	 */
 	public synchronized void saveGame(String playerName) {
 		System.out.println("Saving game...");
 		this.parser.save(this, playerName);
-		this.getBundle(playerName).setMessage("Failed to save game");
-
+		this.getBundle(playerName).setMessage("Failed to save game?");
 	}
 
 

@@ -54,12 +54,6 @@
                 <x>5</x>
                 <y>2</y>
             </pos>
-            <occupant objectType="class game.InventoryGO">
-                <name>Key</name>
-                <areaName>Spawn_6</areaName>
-                <size>1</size>
-                <description> The key for Spawn_6 room</description>
-            </occupant>
         </tile>
         <tile>
             <pos>
@@ -102,12 +96,6 @@
                 <x>6</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.ContainerGO">
-                <name>Box</name>
-                <areaName>Spawn_6</areaName>
-                <size>5</size>
-                <description> A box that you can put stuff in.</description>
-            </occupant>
         </tile>
         <tile>
             <pos>
@@ -330,7 +318,6 @@
                 <x>5</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.Player"/>
         </tile>
         <tile>
             <pos>
@@ -4495,6 +4482,7 @@
                 <x>14</x>
                 <y>6</y>
             </pos>
+            <occupant objectType="class game.Player"/>
         </tile>
         <tile>
             <pos>
@@ -7147,7 +7135,6 @@
                 <x>6</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.NonHumanPlayer"/>
         </tile>
         <tile>
             <pos>
@@ -7239,12 +7226,14 @@
                 <x>4</x>
                 <y>5</y>
             </pos>
+            <occupant objectType="class game.MovableGO"/>
         </tile>
         <tile>
             <pos>
                 <x>5</x>
                 <y>5</y>
             </pos>
+            <occupant objectType="class game.FixedContainerGO"/>
         </tile>
         <tile>
             <pos>
@@ -7257,12 +7246,14 @@
                 <x>7</x>
                 <y>5</y>
             </pos>
+            <occupant objectType="class game.MovableGO"/>
         </tile>
         <tile>
             <pos>
                 <x>8</x>
                 <y>5</y>
             </pos>
+            <occupant objectType="class game.MovableGO"/>
         </tile>
         <tile>
             <pos>
@@ -7552,6 +7543,7 @@
                 <x>6</x>
                 <y>8</y>
             </pos>
+            <occupant objectType="class game.FixedGO"/>
         </tile>
         <tile>
             <pos>
@@ -7594,6 +7586,7 @@
                 <x>13</x>
                 <y>8</y>
             </pos>
+            <occupant objectType="class game.FixedGO"/>
         </tile>
         <tile>
             <pos>
@@ -7681,6 +7674,7 @@
                 <x>13</x>
                 <y>9</y>
             </pos>
+            <occupant objectType="class game.MarkerGO"/>
         </tile>
         <tile>
             <pos>
