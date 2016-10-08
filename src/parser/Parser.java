@@ -213,65 +213,19 @@ public class Parser {
 							GameObject occupant = currentTile.getOccupant();
 							Element occupantNode = save.createElement("occupant");
 							occupantNode.setAttribute("objectType", occupant.getClass().toString());
-							currentParent.appendChild(occupantNode);
+							tagName.appendChild(occupantNode);
 							
-							currentParent = occupantNode;
 							
 							if(occupant instanceof InventoryGO){
-								tagName.appendChild(saveName(occupant));
-								//tagName.appendChild(saveAreaName(occupant));
-								//tagName.appendChild(saveSize(occupant));
-								//tagName.appendChild(saveDescription(occupant));
+								occupantNode.appendChild(saveName(occupant));
+								occupantNode.appendChild(saveAreaName(occupant));
+								occupantNode.appendChild(saveSize(occupant));
+								occupantNode.appendChild(saveDescription(occupant));
 								
-								currentParent.appendChild(tagName);
+								tagName.appendChild(occupantNode);
 							}
+							
 						}
-								
-								
-							 /*}else if (occupant instanceof DoorGO){
-								Element open = saveOpen(occupant);
-								Element locked = saveLocked(occupant);
-								Element keyID = saveKeyID(occupant);
-								Element description = saveDescription(occupant);
-								
-								Element sideA = saveSide(occupant, "a");
-								Element tokenA = saveToken(currentTile, "a");
-								Element sideAPos = saveSidePos(occupant, "a");
-								Element sideAEntryPos = saveSideEntryPos(occupant, "a");
-								
-								Element sideB = saveSide(occupant, "b");
-								Element tokenB = saveToken(currentTile, "b");
-								Element sideBPos = saveSidePos(occupant, "b");
-								Element sideBEntryPos = saveSideEntryPos(occupant, "b");								
-								
-							}else if (occupant instanceof FixedContainerGO){
-								Element open = saveOpen(occupant);
-								Element locked = saveLocked(occupant);
-								//Element keyID = saveKeyID();
-								Element size = saveSize(occupant);
-								
-							}else if (occupant instanceof FixedGO){
-								Element description = saveDescription(occupant);
-														
-							}else if (occupant instanceof MarkerGO){
-								//FIXME: Base GameObject?? do i need to save a record of this 
-								Element description = saveDescription(occupant);
-								
-							}else if (occupant instanceof MovableGO){
-								Element areaName = saveAreaName(occupant);
-																
-							}else if (occupant instanceof Player){
-								Element playerName = saveName(occupant);
-								//FIXME: CurrentArea?? do i need to save a record of this
-								Element spawnName = saveSpawnName(occupant);
-								Element currentPosition = savePosition(currentTile);
-
-						}
-						/*Element occupant = saveOccupant(currentTile);
-						tagName.appendChild(occupant);
-						currentParent.appendChild(tagName);*/
-						
-						
 				}
 						
 				
