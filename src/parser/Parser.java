@@ -244,11 +244,36 @@ public class Parser {
 								tagName.appendChild(occupantNode);
 								
 							}else if (occupant instanceof FixedContainerGO){
-								//occupantNode.appendChild(saveOpen(occupant));
-								//occupantNode.appendChild(saveLocked(occupant));
-								//Element keyID = saveKeyID();
-								//occupantNode.appendChild(saveSize(occupant));
+								occupantNode.appendChild(saveOpen(occupant));
+								occupantNode.appendChild(saveLocked(occupant));
+								//Element keyID = saveKeyID(occupant);
+								occupantNode.appendChild(saveSize(occupant));
 								
+								tagName.appendChild(occupantNode);
+;								
+							}else if (occupant instanceof FixedGO){
+								occupantNode.appendChild(saveDescription(occupant));
+								
+								tagName.appendChild(occupantNode);
+							}else if (occupant instanceof MarkerGO){
+								//FIXME: Base GameObject?? do i need to save a record of this 
+								occupantNode.appendChild(saveDescription(occupant));
+								
+								tagName.appendChild(occupantNode);
+								
+							}else if (occupant instanceof MovableGO){
+								occupantNode.appendChild(saveAreaName(occupant));
+								//saveID() required
+								
+								tagName.appendChild(occupantNode);
+															
+							}else if (occupant instanceof Player){
+								occupantNode.appendChild(saveName(occupant));
+								//FIXME: CurrentArea?? do i need to save a record of this
+								occupantNode.appendChild(saveSpawnName(occupant));
+								occupantNode.appendChild(savePosition(currentTile));
+								
+								tagName.appendChild(occupantNode);
 							}
 							
 						}

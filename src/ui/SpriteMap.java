@@ -202,6 +202,12 @@ public class SpriteMap {
 		spriteMap.put("R1", loadImage("roof1.png"));
 		spriteMap.put("R2", loadImage("roof2.png"));
 		spriteMap.put("R3", loadImage("roof3.png"));
+		
+		// Light
+		spriteMap.put("li0", loadImage("light0.png"));
+		spriteMap.put("li1", loadImage("light1.png"));
+		spriteMap.put("li2", loadImage("light2.png"));
+		spriteMap.put("li3", loadImage("light3.png"));
 
 		// Pondy
 		spriteMap.put("P00", loadImage("pondy00.png"));
