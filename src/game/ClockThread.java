@@ -8,7 +8,7 @@ package game;
  */
 public class ClockThread extends Thread {
 
-	private final int delay = 300; //How often (in miliseconds) to .
+	private final int delay = 200; //How often (in miliseconds) to move an npc.
 	private final SpookySchool game;
 
 	public ClockThread(SpookySchool game) {
@@ -18,15 +18,26 @@ public class ClockThread extends Thread {
 	@Override
 	public void run() {
 
+		long then = System.currentTimeMillis() + delay;
+
 		//Loop for ever.
 		while (true) {
 
+			//Delay each move by npc by 300ms
+			if (System.currentTimeMillis() > then) {
+				game.moveNPC();
+				then = System.currentTimeMillis() + delay;
+			}
+
+			game.checkNPCPath();
+
+			//Extra 10 delay.
 			try {
-				Thread.sleep(delay);
-				game.tick();
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				//Should never happen.
 			}
+
 
 
 		}
