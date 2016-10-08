@@ -208,13 +208,23 @@
                 <x>4</x>
                 <y>5</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description> This is a book case.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
                 <x>5</x>
                 <y>5</y>
             </pos>
+            <occupant objectType="class game.Player">
+                <name>Tom</name>
+                <spawnName>Spawn_6</spawnName>
+                <pos>
+                    <x>5</x>
+                    <y>5</y>
+                </pos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -356,7 +366,6 @@
                 <x>5</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.Player"/>
         </tile>
         <tile>
             <pos>
@@ -372,7 +381,9 @@
                 <x>7</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description> This is a bed</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -726,7 +737,9 @@
                 <x>4</x>
                 <y>5</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description> This is a book case.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -889,7 +902,9 @@
                 <x>7</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description> This is a bed</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -1203,7 +1218,9 @@
                 <x>3</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description> This is a bed</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -1366,7 +1383,9 @@
                 <x>6</x>
                 <y>7</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description> This is a book case.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -1760,7 +1779,9 @@
                 <x>4</x>
                 <y>5</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description> This is a book case.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -1923,7 +1944,9 @@
                 <x>7</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description> This is a bed</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -2964,7 +2987,9 @@
                 <x>4</x>
                 <y>5</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description> This is a book case.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -3127,7 +3152,9 @@
                 <x>7</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description> This is a bed</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -4216,7 +4243,9 @@
                 <x>17</x>
                 <y>2</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -4238,7 +4267,9 @@
                 <x>20</x>
                 <y>2</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -4376,14 +4407,18 @@
                 <x>16</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
                 <x>17</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -4396,14 +4431,18 @@
                 <x>19</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
                 <x>20</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -5523,7 +5562,9 @@
                 <x>11</x>
                 <y>11</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -5665,14 +5706,18 @@
                 <x>11</x>
                 <y>12</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
                 <x>12</x>
                 <y>12</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -7704,7 +7749,9 @@
                 <x>4</x>
                 <y>5</y>
             </pos>
-            <occupant objectType="class game.MovableGO"/>
+            <occupant objectType="class game.MovableGO">
+                <areaName>Dorm_room</areaName>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -7723,14 +7770,18 @@
                 <x>7</x>
                 <y>5</y>
             </pos>
-            <occupant objectType="class game.MovableGO"/>
+            <occupant objectType="class game.MovableGO">
+                <areaName>Dorm_room</areaName>
+            </occupant>
         </tile>
         <tile>
             <pos>
                 <x>8</x>
                 <y>5</y>
             </pos>
-            <occupant objectType="class game.MovableGO"/>
+            <occupant objectType="class game.MovableGO">
+                <areaName>Dorm_room</areaName>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -8155,7 +8206,9 @@
                 <x>13</x>
                 <y>9</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -9268,7 +9321,9 @@
                 <x>3</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description> This is a bed</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -9431,7 +9486,9 @@
                 <x>6</x>
                 <y>7</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description> This is a book case.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -10128,7 +10185,9 @@
                 <x>3</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description> This is a bed</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -10291,7 +10350,9 @@
                 <x>6</x>
                 <y>7</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description> This is a book case.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -11750,7 +11811,9 @@
                 <x>3</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description> This is a bed.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -11913,7 +11976,9 @@
                 <x>6</x>
                 <y>7</y>
             </pos>
-            <occupant objectType="class game.MarkerGO"/>
+            <occupant objectType="class game.MarkerGO">
+                <description> This is a book case.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -11992,7 +12057,9 @@
                 <x>4</x>
                 <y>9</y>
             </pos>
-            <occupant objectType="class game.MovableGO"/>
+            <occupant objectType="class game.MovableGO">
+                <areaName>Spawn_1</areaName>
+            </occupant>
         </tile>
         <tile>
             <pos>
