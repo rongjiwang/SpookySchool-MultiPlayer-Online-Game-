@@ -23,3 +23,4 @@ NORMAL Key test14 k0 1 Hallway 17 2 Test key
 NORMAL Key test15 k0 1 Hallway 18 2 Test key
 CONTAINER Box testBox b0 5 Spawn_6 6 3 A box that you can put stuff in.
 NORMAL Key test16 k0 1 null null null A key that starts in a box.
+CONTAINER Box testBox2 b0 5 null null null A box that you can put stuff in.

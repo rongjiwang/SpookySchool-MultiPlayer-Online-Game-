@@ -7,6 +7,7 @@ public class FixedContainerGO implements GameObject {
 
 	private static final long serialVersionUID = 118153527696427133L;
 
+	private final String name;
 	private final String area;
 	private final String id;
 	private final String token;
@@ -21,9 +22,10 @@ public class FixedContainerGO implements GameObject {
 
 	private String description;
 
-	public FixedContainerGO(String area, String id, String token, boolean open, boolean locked, String keyID, int size,
-			Position position) {
+	public FixedContainerGO(String name, String area, String id, String token, boolean open, boolean locked,
+			String keyID, int size, Position position) {
 
+		this.name = name;
 		this.area = area;
 		this.id = id;
 		this.token = token;
@@ -35,7 +37,7 @@ public class FixedContainerGO implements GameObject {
 		this.position = position;
 
 		//Ensure a key exists the container is locked.
-		if (keyID.equals("null") && locked) {
+		if (keyID == null && locked) {
 			throw new Error("KeyID cannot be null if the container is locked!");
 		}
 
@@ -159,5 +161,9 @@ public class FixedContainerGO implements GameObject {
 
 	public String getKeyID() {
 		return keyID;
+	}
+
+	public String getName() {
+		return name;
 	}
 }

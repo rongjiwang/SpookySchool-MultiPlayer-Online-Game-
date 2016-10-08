@@ -1,1 +1,1 @@
-Dorm_room testFixedContainer ch00 closed unlocked null 5 5 5 MARKERPOSITIONS
+Chest Dorm_room testFixedContainer ch00 closed unlocked null 5 5 5
