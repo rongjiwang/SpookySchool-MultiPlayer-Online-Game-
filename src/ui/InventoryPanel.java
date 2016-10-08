@@ -358,7 +358,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 			try {
 				inspect = new JMenuItem("Inspect");
 				drop = new JMenuItem("Drop");
-				pass = new JMenuItem("Pass Item");
+				pass = new JMenuItem("Pass");
 				unpack = new JMenuItem("Unpack");
 				Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
 				inspect.setFont(font.deriveFont(Font.TRUETYPE_FONT, 13f));

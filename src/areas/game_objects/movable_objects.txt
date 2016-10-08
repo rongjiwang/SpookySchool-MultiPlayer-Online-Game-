@@ -1,1 +1,4 @@
 testObj t0 Spawn_1 4 9
+chair ch0 Dorm_room 4 5
+chair ch0 Dorm_room 7 5
+chair ch0 Dorm_room 8 5

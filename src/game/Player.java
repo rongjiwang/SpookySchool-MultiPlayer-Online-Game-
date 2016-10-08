@@ -104,11 +104,29 @@ public class Player implements GameObject {
 	}
 
 	/**
+	 * Removes the given item from the player's inventory.
+	 * @param item that is to be removed from the player's inventory/
+	 */
+	public void removeFromInventory(InventoryGO item) {
+		this.inventory.remove(item);
+	}
+
+	/**
 	 * Add an item to the player's inventory.
 	 * @param item the inventory item to add to the player's inventory.
 	 */
 	public void addToInventory(InventoryGO item) {
 		this.inventory.add(item);
+	}
+
+	public boolean hasItemInInventory(InventoryGO item) {
+		for (InventoryGO obj : this.inventory) {
+			if (obj.getId().equals(item)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

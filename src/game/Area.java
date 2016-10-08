@@ -45,7 +45,7 @@ public class Area implements Serializable {
 
 			//Read the areaFile into the 2D area array.
 			while (yPos < this.height) {
-				
+
 				String tileString = scan.next();
 
 				this.area[yPos][xPos] = createTile(tileString, new Position(xPos, yPos)); //Create appropriate tile and add it to the area 2d array.
@@ -75,12 +75,6 @@ public class Area implements Serializable {
 				if (objType.equals("FIXED")) {
 					Position pos = new Position(gameObjScanner.nextInt(), gameObjScanner.nextInt());
 					GameObject gameObject = new FixedGO(id, token, pos);
-
-					/*
-					if (!(this.area[pos.getPosY()][pos.getPosX()] instanceof FloorTile)) {
-						throw new Error("Error: Can only add fixed items to floor tiles.");
-					}
-					*/
 
 					this.area[pos.getPosY()][pos.getPosX()].setOccupant(gameObject);
 
@@ -118,10 +112,12 @@ public class Area implements Serializable {
 
 		if (tileString.equals("n")) {
 			return null;
+
 		} else if (tileString.equals("c0") || tileString.equals("g0") || //FIXME: ADD More token types here to add different types of floor tiles.
 				   tileString.equals("h0") || tileString.equals("R0") ||
 			 	   tileString.equals("L0"))
 		{ 
+
 			return new FloorTile(pos, tileString);
 		}
 

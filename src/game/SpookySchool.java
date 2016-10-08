@@ -22,7 +22,7 @@ public class SpookySchool {
 
 	private final Position defaultSpawnPosition = new Position(5, 8); //Default position that a player spawns in, in a spawn room.
 
-	private Parser parser;
+	private List<Player> players = new ArrayList<Player>(); //List of players in the game.
 
 	//Should make xml implementation easier?!
 	private String areasFileLoc = "src/areas/areas.txt";
@@ -30,27 +30,30 @@ public class SpookySchool {
 	private String movableObjectsFileLoc = "src/areas/game_objects/movable_objects.txt";
 	private String nonHumanPlayersFileLoc = "src/areas/game_objects/non_human_player_objects.txt";
 	private String inventoryObjFileLoc = "src/areas/game_objects/inventory_objects.txt";
+	private String fixedContainersFileLoc = "src/areas/game_objects/fixed_container_objects.txt";
+	private String fillContainersFileLoc = "src/areas/game_objects/fill_containers.txt";
 
 	//Default Load files - these never change.
 	private Map<String, Area> areas = new HashMap<String, Area>();
 	private List<NonHumanPlayer> nonHumanPlayers = new ArrayList<NonHumanPlayer>();
 
-	private List<Player> players = new ArrayList<Player>();
-
 	//Mainly for XML
+	private Parser parser;
+
 	private List<MovableGO> movableObjects = new ArrayList<MovableGO>(); //FIXME add for xml
 	private List<DoorGO> doorObjects = new ArrayList<DoorGO>(); //FIXME add for XML
-
-	private Map<String, InventoryGO> inventoryObjects = new HashMap<String, InventoryGO>(); //FIXME Keep track of all inventory game objects in game??
-
+	private Map<String, InventoryGO> inventoryObjects = new HashMap<String, InventoryGO>(); //FIXME PARSER NEEDS TO SAVE ALL OF THESE??
 
 	//For networking
 	private Map<String, Bundle> playerBundles = new HashMap<String, Bundle>();
+
+
 
 	public SpookySchool() {
 		this.loadAreas(); //Load maps
 		this.setDoors(); //Sets up doors on the areas.
 		this.loadRemainingGameObjects(); //Load the remaining game objects.
+		this.fillContainers(); //Fill the containers in the rooms.
 
 		this.parser = new Parser();
 
@@ -191,25 +194,57 @@ public class SpookySchool {
 
 				Scanner lineScanner = new Scanner(scan.nextLine());
 
+				String type = lineScanner.next(); //Type of inventory object.
+
 				//Scan information about the inventory object
 				String name = lineScanner.next();
 				String id = lineScanner.next();
 				String token = lineScanner.next();
 				int size = lineScanner.nextInt();
 				String areaName = lineScanner.next();
-				Position pos = new Position(lineScanner.nextInt(), lineScanner.nextInt());
+
+				Position pos = null;
+
+				//Scan the items position if the area isnt null. If it is, skip the next two tokens.
+				if (areaName.equals("null")) {
+					lineScanner.next();
+					lineScanner.next();
+				} else {
+					pos = new Position(lineScanner.nextInt(), lineScanner.nextInt());
+				}
+
 				String description = lineScanner.nextLine();
 
-				//Create the inventory object
-				InventoryGO item = new InventoryGO(name, id, token, size, areaName, pos, description);
+				InventoryGO item = null;
 
-				//Place the item on the tile in the given area.
-				Area area = this.areas.get(areaName);
-				area.getTile(pos).setOccupant(item);
+				if (type.equals("NORMAL")) {
+					item = new InventoryGO(name, id, token, size, areaName, pos, description); //Create the inventory object
+				} else if (type.equals("CONTAINER")) {
+					item = new ContainerGO(name, id, token, size, areaName, pos, description);
+				} else {
+					throw new Error("Invalid Inventory object type!");
+				}
 
-				this.inventoryObjects.put(id, item);
+				//Place the item on the tile in the given area if applicable.
+				if (!areaName.equals("null")) {
+					Area area = this.areas.get(areaName);
+					area.getTile(pos).setOccupant(item);
+				}
+
+				this.inventoryObjects.put(id, item); //Add the item to the list of inventory objects.
+			}
+
+			//Scan all of the fixed container objects on the floors.
+			scan = new Scanner(new File(this.fixedContainersFileLoc));
+			while (scan.hasNextLine()) {
+
+				Scanner lineScanner = new Scanner(scan.nextLine());
+
+
 
 			}
+
+
 
 			scan.close();
 		} catch (FileNotFoundException e) {
@@ -217,6 +252,50 @@ public class SpookySchool {
 		}
 	}
 
+	/**
+	 * Fill the containers in the game where required. 
+	 */
+	public void fillContainers() {
+		Scanner scan = null;
+
+		try {
+			scan = new Scanner(new File(fillContainersFileLoc));
+
+			while (scan.hasNextLine()) {
+				Scanner lineScanner = new Scanner(scan.nextLine());
+
+				String itemID = lineScanner.next();
+				String type = lineScanner.next();
+				String containerID = lineScanner.next();
+
+				InventoryGO item = this.inventoryObjects.get(itemID); //Item to be put into the given container.
+
+				if (item == null) {
+					lineScanner.close();
+					scan.close();
+					throw new Error(
+							"Item to be put into the container is null. Note: You can only put InventroGOs into containers.");
+				}
+
+				//Add the item into the appropriate container.
+				if (type.equals("CONTAINER")) {
+					((ContainerGO) this.inventoryObjects.get(containerID)).addToContainer(item);
+				} else if (type.equals("FIXED_CONTAINER")) {
+
+				} else {
+					lineScanner.close();
+					scan.close();
+					throw new Error("INVALID CONTAINER TYPE!");
+				}
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			scan.close();
+		}
+
+	}
 
 	/**
 	* Adds player to the game if the game is not full and player with this name does not already exist.
@@ -317,7 +396,7 @@ public class SpookySchool {
 			return;
 		}
 
-		//
+		//If the object in front is an inventory item, pick it up.
 		if (gameObj instanceof InventoryGO) {
 
 			InventoryGO item = (InventoryGO) gameObj;
@@ -350,6 +429,10 @@ public class SpookySchool {
 				}
 			}
 
+			if (objDescription.isEmpty()) {
+				objDescription = "Nothing to see here.";
+			}
+
 			this.getBundle(playerName).setMessage(objDescription);
 
 			return; //Finished 
@@ -363,14 +446,14 @@ public class SpookySchool {
 			if (door.isLocked()) {
 				//Attempt to unlock it.
 				for (InventoryGO item : player.getInventory()) {
-					if (item.getId().contains(door.getId())) {
+					if (door.getKeyID().equals(item.getId())) {
 						door.setLocked(false); //Unlock the door.
 						this.getBundle(playerName).setMessage("You unlocked the door using the key in your inventory");
 						return;
 					}
 				}
 
-				this.getBundle(playerName).setMessage("You dont have the key to open this door.");
+				this.getBundle(playerName).setMessage("The door is locked. You dont have the key to open this door.");
 
 				return; //Door unlocked
 			}
@@ -379,6 +462,20 @@ public class SpookySchool {
 			if (door.isOpen()) {
 				door.setOpen(false);
 			} else {
+
+				/*
+				 * FIXME: make doors lockable.
+				//Lock the door if player has the key.
+				for (InventoryGO item : player.getInventory()) {
+					if (door.getKeyID().equals(item.getId())) {
+						door.setLocked(true); //lock the door.
+						this.getBundle(playerName).setMessage("You locked the door using the key in your inventory.");
+						return;
+					}
+				}
+				*/
+
+				//Open the door if player does not have the key. 
 				door.setOpen(true);
 			}
 
@@ -419,6 +516,91 @@ public class SpookySchool {
 		this.getBundle(playerName).setMessage("The item you tried to drop is no longer in your inventory.");
 
 	}
+
+	/**
+	 * Places a given item into a given container if possible.
+	 * @param containerID the id of the container you would like to add the item to.
+	 * @param itemID the id of the item that is to be added to the container.
+	 */
+	public void addToContainer(String playerName, String containerID, String itemID) {
+
+		//You cannot put an item inside itself.
+		if (containerID.equals(itemID)) {
+			return;
+		}
+
+		if (!(this.inventoryObjects.get(containerID) instanceof ContainerGO)) {
+			this.getBundle(playerName).setMessage(this.inventoryObjects.get(containerID).getName()
+					+ " is not a container. You cannot place items in it.");
+			return;
+		}
+
+		ContainerGO container = (ContainerGO) this.inventoryObjects.get(containerID);
+
+		if (container.addToContainer(this.getInventoryObjects().get(itemID))) {
+			//Add the item to the container and remove from the player's inventory.
+			this.getPlayer(playerName).removeFromInventory(this.getInventoryObjects().get(itemID));
+			this.getBundle(playerName).setMessage("You packed the " + this.getInventoryObjects().get(itemID).getName()
+					+ " to the " + container.getName() + ".");
+		} else {
+			this.getBundle(playerName).setMessage("There is not enough space in the " + container.getName() + ".");
+		}
+	}
+
+
+	/**
+	 * Unpack the container given the id. Removes the items from the container and places them in the inventory.
+	 * @param playerName name of the player who has sent the unpack command.
+	 * @param itemID the id of the container inventory object that is to be unpacked.
+	 */
+	public void unpackContainer(String playerName, String itemID) {
+
+		if (!(this.inventoryObjects.get(itemID) instanceof ContainerGO)) {
+			throw new Error("Can only unpack containers.");
+		}
+
+		Player player = this.getPlayer(playerName);
+		ContainerGO container = (ContainerGO) this.getInventoryObjects().get(itemID);
+
+		if (container.isEmpty()) {
+			this.getBundle(playerName).setMessage("The " + container.getName() + " is empty.");
+		}
+
+		//Add all items in the container to the players's inventory.
+		for (InventoryGO item : container.getAllItems()) {
+			player.addToInventory(item);
+		}
+
+		container.clearContainer(); //Clear the container now that the items are in the player's inventory.
+	}
+
+	/**
+	 * This method "passes" the given item to the player in front of them. 
+	 * If there is no player in front of them, a message is displayed and the item stays in the players inventory.
+	 * @param playerName
+	 * @param itemID id of the item the player wishes to pass.
+	 */
+	public void passItem(String playerName, String itemID) {
+
+		Player player = this.getPlayer(playerName);
+		InventoryGO item = this.inventoryObjects.get(itemID);
+
+		Tile tile = this.getPotentialTile(player.getCurrentArea(), player, player.getDirection(), 1); //The tile in front of the player.
+
+		//Pass the item if there is a player in front.
+		if (tile.getOccupant() instanceof Player) {
+			Player receiver = (Player) tile.getOccupant();
+			receiver.addToInventory(item);
+			player.removeFromInventory(item);
+			this.getBundle(playerName)
+					.setMessage("You passed the " + item.getName() + " to " + receiver.getPlayerName());
+			this.getBundle(receiver.getPlayerName())
+					.setMessage("You received a " + item.getName() + " from " + player.getPlayerName());
+		} else {
+			this.getBundle(playerName).setMessage("The player must be in front of you to pass an item");
+		}
+	}
+
 
 	/**
 	 * Moves player in a given direction if possible.
@@ -673,4 +855,3 @@ public class SpookySchool {
 	}
 
 }
-
