@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
@@ -39,6 +40,7 @@ public class OverlayPanel extends JPanel {
 				while (true) {
 					tick();
 					repaint();
+
 					try {
 						sleep(4);
 					} catch (InterruptedException e) {
@@ -82,11 +84,11 @@ public class OverlayPanel extends JPanel {
 			g.drawImage(spriteMap.getImage("H0"), headerX, headerY, null);
 			g.drawString(headerMessage, headerX + 10, headerY + 17);
 		}
-		
+
 		//Draw the footer
 		if (this.footerMessage != null) {
 			g.drawImage(spriteMap.getImage("P0"), footerX, footerY, null);
-			g.drawString(this.footerMessage, footerX + 10, footerY + 25);
+			this.drawStringMultiLine(g, this.footerMessage, 480, footerX + 10, footerY + 25);
 		}
 	}
 
@@ -126,5 +128,37 @@ public class OverlayPanel extends JPanel {
 			}
 		}
 	}
+
+	/**
+	 * This method draws a string on the panel. If the string is too long (measured by parameter "linewidth"), then it will
+	 * display the string in multiple lines.
+	 * @param g graphics
+	 * @param text to be printed onto the panel
+	 * @param lineWidth how long a single line of text can be (in pixels).
+	 * @param x position of where to start drawing string from.
+	 * @param y position of where to start drawing string from.
+	 */
+	public void drawStringMultiLine(Graphics g, String text, int lineWidth, int x, int y) {
+		FontMetrics m = g.getFontMetrics();
+		if (m.stringWidth(text) < lineWidth) {
+			g.drawString(text, x, y);
+		} else {
+			String[] words = text.split(" ");
+			String currentLine = words[0];
+			for (int i = 1; i < words.length; i++) {
+				if (m.stringWidth(currentLine + words[i]) < lineWidth) {
+					currentLine += " " + words[i];
+				} else {
+					g.drawString(currentLine, x, y);
+					y += m.getHeight();
+					currentLine = words[i];
+				}
+			}
+			if (currentLine.trim().length() > 0) {
+				g.drawString(currentLine, x, y);
+			}
+		}
+	}
+
 
 }
