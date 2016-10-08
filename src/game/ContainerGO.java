@@ -40,7 +40,6 @@ public class ContainerGO extends InventoryGO {
 	}
 
 
-
 	/**
 	 * Get all of the items in the inventory. ClearContainer() method should be called after using/calling this method.
 	 * @return
@@ -66,6 +65,14 @@ public class ContainerGO extends InventoryGO {
 	public void clearContainer() {
 		this.sizeRemaining = this.size;
 		this.contents.clear();
+	}
+
+
+	/**
+	 * @return true if the container is empty and false otherwise.
+	 */
+	public boolean isEmpty() {
+		return this.size == this.sizeRemaining;
 	}
 
 

@@ -119,6 +119,16 @@ public class Player implements GameObject {
 		this.inventory.add(item);
 	}
 
+	public boolean hasItemInInventory(InventoryGO item) {
+		for (InventoryGO obj : this.inventory) {
+			if (obj.getId().equals(item)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

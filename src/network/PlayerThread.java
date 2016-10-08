@@ -145,12 +145,15 @@ public class PlayerThread extends Thread {
 				this.game.processDrop(playerName, scan.next());
 
 			} else if (nextToken.equals("PACK")) {
+				System.out.println("Received pack");
 				this.game.addToContainer(playerName, scan.next(), scan.next());
 
 			} else if (nextToken.equals("UNPACK")) {
+				System.out.println("Received Unpack");
 				this.game.unpackContainer(playerName, scan.next());
 
 			} else if (nextToken.equals("PASS")) {
+				System.out.println("Received pass");
 				this.game.passItem(playerName, scan.next());
 
 			} else if (nextToken.equals("CHAT")) {

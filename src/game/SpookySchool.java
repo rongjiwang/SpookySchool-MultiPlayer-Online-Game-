@@ -40,7 +40,7 @@ public class SpookySchool {
 
 	private List<MovableGO> movableObjects = new ArrayList<MovableGO>(); //FIXME add for xml
 	private List<DoorGO> doorObjects = new ArrayList<DoorGO>(); //FIXME add for XML
-	private Map<String, InventoryGO> inventoryObjects = new HashMap<String, InventoryGO>(); //FIXME Keep track of all inventory game objects in game??
+	private Map<String, InventoryGO> inventoryObjects = new HashMap<String, InventoryGO>(); //FIXME PARSER NEEDS TO SAVE ALL OF THESE??
 
 	//For networking
 	private Map<String, Bundle> playerBundles = new HashMap<String, Bundle>();
@@ -51,6 +51,7 @@ public class SpookySchool {
 		this.loadAreas(); //Load maps
 		this.setDoors(); //Sets up doors on the areas.
 		this.loadRemainingGameObjects(); //Load the remaining game objects.
+		this.fillContainers(); //Fill the containers in the rooms.
 
 		this.parser = new Parser();
 
@@ -225,6 +226,13 @@ public class SpookySchool {
 		}
 	}
 
+	/**
+	 * Fill the containers in the game where required. 
+	 */
+	public void fillContainers() {
+		// TODO Auto-generated method stub
+
+	}
 
 	/**
 	* Adds player to the game if the game is not full and player with this name does not already exist.
@@ -375,14 +383,14 @@ public class SpookySchool {
 			if (door.isLocked()) {
 				//Attempt to unlock it.
 				for (InventoryGO item : player.getInventory()) {
-					if (item.getId().contains(door.getId())) {
+					if (door.getKeyID().equals(item.getId())) {
 						door.setLocked(false); //Unlock the door.
 						this.getBundle(playerName).setMessage("You unlocked the door using the key in your inventory");
 						return;
 					}
 				}
 
-				this.getBundle(playerName).setMessage("You dont have the key to open this door.");
+				this.getBundle(playerName).setMessage("The door is locked. You dont have the key to open this door.");
 
 				return; //Door unlocked
 			}
@@ -391,6 +399,20 @@ public class SpookySchool {
 			if (door.isOpen()) {
 				door.setOpen(false);
 			} else {
+
+				/*
+				 * FIXME: make doors lockable.
+				//Lock the door if player has the key.
+				for (InventoryGO item : player.getInventory()) {
+					if (door.getKeyID().equals(item.getId())) {
+						door.setLocked(true); //lock the door.
+						this.getBundle(playerName).setMessage("You locked the door using the key in your inventory.");
+						return;
+					}
+				}
+				*/
+
+				//Open the door if player does not have the key. 
 				door.setOpen(true);
 			}
 
@@ -439,13 +461,22 @@ public class SpookySchool {
 	 */
 	public void addToContainer(String playerName, String containerID, String itemID) {
 
+		//You cannot put an item inside itself.
+		if (containerID.equals(itemID)) {
+			return;
+		}
+
 		if (!(this.inventoryObjects.get(containerID) instanceof ContainerGO)) {
-			this.getBundle(playerName).setMessage("You cannot put items in that.");
+			this.getBundle(playerName).setMessage(this.inventoryObjects.get(containerID).getName()
+					+ " is not a container. You cannot place items in it.");
+			return;
 		}
 
 		ContainerGO container = (ContainerGO) this.inventoryObjects.get(containerID);
 
 		if (container.addToContainer(this.getInventoryObjects().get(itemID))) {
+			//Add the item to the container and remove from the player's inventory.
+			this.getPlayer(playerName).removeFromInventory(this.getInventoryObjects().get(itemID));
 			this.getBundle(playerName).setMessage("You packed the " + this.getInventoryObjects().get(itemID).getName()
 					+ " to the " + container.getName() + ".");
 		} else {
@@ -467,6 +498,10 @@ public class SpookySchool {
 
 		Player player = this.getPlayer(playerName);
 		ContainerGO container = (ContainerGO) this.getInventoryObjects().get(itemID);
+
+		if (container.isEmpty()) {
+			this.getBundle(playerName).setMessage("The container is empty.");
+		}
 
 		//Add all items in the container to the players's inventory.
 		for (InventoryGO item : container.getAllItems()) {
