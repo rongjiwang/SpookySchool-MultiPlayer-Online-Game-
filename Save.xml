@@ -199,7 +199,9 @@
                 <x>3</x>
                 <y>5</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> This is a book case.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -345,7 +347,9 @@
                 <x>4</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -359,7 +363,9 @@
                 <x>6</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> This is a bed</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -413,7 +419,9 @@
                 <x>7</x>
                 <y>9</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -709,7 +717,9 @@
                 <x>3</x>
                 <y>5</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> This is a book case.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -855,7 +865,9 @@
                 <x>4</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -868,7 +880,9 @@
                 <x>6</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> This is a bed</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -922,7 +936,9 @@
                 <x>7</x>
                 <y>9</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -1138,7 +1154,9 @@
                 <x>3</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -1192,7 +1210,9 @@
                 <x>4</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> This is a bed</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -1205,7 +1225,9 @@
                 <x>6</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -1351,7 +1373,9 @@
                 <x>7</x>
                 <y>7</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> This is a book case.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -1727,7 +1751,9 @@
                 <x>3</x>
                 <y>5</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> This is a book case.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -1873,7 +1899,9 @@
                 <x>4</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -1886,7 +1914,9 @@
                 <x>6</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> This is a bed</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -1940,7 +1970,9 @@
                 <x>7</x>
                 <y>9</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -2923,7 +2955,9 @@
                 <x>3</x>
                 <y>5</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> This is a book case.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -3069,7 +3103,9 @@
                 <x>4</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -3082,7 +3118,9 @@
                 <x>6</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> This is a bed</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -3136,7 +3174,9 @@
                 <x>7</x>
                 <y>9</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -4057,7 +4097,9 @@
                 <x>2</x>
                 <y>2</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -4165,7 +4207,9 @@
                 <x>16</x>
                 <y>2</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -4185,7 +4229,9 @@
                 <x>19</x>
                 <y>2</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -5484,7 +5530,9 @@
                 <x>12</x>
                 <y>11</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -7972,7 +8020,9 @@
                 <x>6</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -8015,7 +8065,9 @@
                 <x>13</x>
                 <y>8</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -9167,7 +9219,9 @@
                 <x>3</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -9221,7 +9275,9 @@
                 <x>4</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> This is a bed</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -9234,7 +9290,9 @@
                 <x>6</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -9380,7 +9438,9 @@
                 <x>7</x>
                 <y>7</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> This is a book case.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -10019,7 +10079,9 @@
                 <x>3</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -10073,7 +10135,9 @@
                 <x>4</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> This is a bed</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -10086,7 +10150,9 @@
                 <x>6</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -10232,7 +10298,9 @@
                 <x>7</x>
                 <y>7</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> This is a book case.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -10475,7 +10543,9 @@
                 <x>6</x>
                 <y>0</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> Spawn_1</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -10529,7 +10599,9 @@
                 <x>11</x>
                 <y>0</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> Spawn_2</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -10583,7 +10655,9 @@
                 <x>16</x>
                 <y>0</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> Spawn_3</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -10637,7 +10711,9 @@
                 <x>21</x>
                 <y>0</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> Spawn_4</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -11321,7 +11397,9 @@
                 <x>6</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> Spawn_5</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -11375,7 +11453,9 @@
                 <x>11</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> Spawn_6</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -11429,7 +11509,9 @@
                 <x>16</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> Spawn_7</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -11483,7 +11565,9 @@
                 <x>21</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> Spawn_8</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -11617,7 +11701,9 @@
                 <x>3</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -11671,7 +11757,9 @@
                 <x>4</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> This is a bed.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -11684,7 +11772,9 @@
                 <x>6</x>
                 <y>4</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description/>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -11830,7 +11920,9 @@
                 <x>7</x>
                 <y>7</y>
             </pos>
-            <occupant objectType="class game.FixedGO"/>
+            <occupant objectType="class game.FixedGO">
+                <description> This is a book case.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>

@@ -251,6 +251,10 @@ public class Parser {
 								
 								tagName.appendChild(occupantNode);
 ;								
+							}else if (occupant instanceof FixedGO){
+								occupantNode.appendChild(saveDescription(occupant));
+								
+								tagName.appendChild(occupantNode);
 							}
 							
 						}
