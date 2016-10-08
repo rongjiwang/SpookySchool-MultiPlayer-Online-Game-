@@ -20,6 +20,7 @@ import game.MarkerGO;
 import game.Player;
 import game.Position;
 import game.Tile;
+import game.WallTile;
 import network.Client;
 
 public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListener {
@@ -302,8 +303,35 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		// Draw Walls(Back and side walls with layer 1, front with layer 3)
 
-		if (((token.equals("w0") || token.equals("W1") || token.equals("F2") || token.equals("F1") || token.equals("f2")
+		if(tile instanceof WallTile){
+			Image tileImage = spriteMap.getImage(token);
+			int adjustX = tileImage.getWidth(null) - tileWidth;
+			int adjustY = tileImage.getHeight(null) - tileHeight;
+			
+			if(token.equals("w0") || 
+			   token.equals("W1") || token.equals("W2") ||
+			   token.equals("F2") || token.equals("F1") ||
+			   token.equals("f2") || token.equals("B0") ||
+			   token.equals("Q1") || token.equals("Q2")){
+			
+				if(layer == 1){
+					g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
+
+				}
+			}else{
+				if(layer == 3){
+					g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
+				}
+			}
+		}
+		
+		
+		
+		
+		/*if (((token.equals("w0") || token.equals("W1") || token.equals("F2") || token.equals("F1") || token.equals("f2")
 				|| token.equals("B0") || token.equals("Q1") || token.equals("Q2")) && layer == 1)
+				
+				
 				|| ((!(token.equals("w0") || token.equals("W1") || token.equals("W2") || token.equals("f2")
 						|| token.equals("F1") || token.equals("F2") || token.equals("B0") || token.equals("Q1")
 						|| token.equals("Q2"))) && layer == 3)) {
@@ -314,7 +342,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 				int adjustY = tileImage.getHeight(null) - tileHeight;
 				g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
 			}
-		}
+		}*/
 
 	}
 
