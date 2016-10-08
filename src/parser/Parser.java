@@ -4,6 +4,7 @@ package parser;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.io.FileNotFoundException;
 import java.util.List;
 
@@ -203,22 +204,31 @@ public class Parser {
 						tagName.appendChild(positions);
 						currentParent.appendChild(tagName);
 						
-						Element token = saveToken(currentTile, "");
-						tagName.appendChild(token);
-						currentParent.appendChild(tagName);
+						//Element token = saveToken(currentTile, "");
+						//tagName.appendChild(token);
+						//currentParent.appendChild(tagName);
 						
-						/*if (currentTile.getOccupant() != null){
+						
+						if (currentTile.getOccupant() != null){
 							GameObject occupant = currentTile.getOccupant();
+							Element occupantNode = save.createElement("occupant");
+							occupantNode.setAttribute("objectType", occupant.getClass().toString());
+							currentParent.appendChild(occupantNode);
+							
+							currentParent = occupantNode;
 							
 							if(occupant instanceof InventoryGO){
 								tagName.appendChild(saveName(occupant));
-								tagName.appendChild(saveAreaName(occupant));
-								tagName.appendChild(saveSize(occupant));
-								tagName.appendChild(saveDescription(occupant));
+								//tagName.appendChild(saveAreaName(occupant));
+								//tagName.appendChild(saveSize(occupant));
+								//tagName.appendChild(saveDescription(occupant));
 								
 								currentParent.appendChild(tagName);
+							}
+						}
 								
-							}else if (occupant instanceof DoorGO){
+								
+							 /*}else if (occupant instanceof DoorGO){
 								Element open = saveOpen(occupant);
 								Element locked = saveLocked(occupant);
 								Element keyID = saveKeyID(occupant);
@@ -260,7 +270,10 @@ public class Parser {
 						/*Element occupant = saveOccupant(currentTile);
 						tagName.appendChild(occupant);
 						currentParent.appendChild(tagName);*/
+						
+						
 				}
+						
 				
 				else {
 					try{
@@ -416,12 +429,14 @@ public class Parser {
 	
 	public Element saveToken(Tile currentTile, String side){
 		GameObject occupant = currentTile.getOccupant();
-		Text value = save.createTextNode("");
+		Text value = save.createTextNode("noToken");
 		
 		if (occupant == null){
 			if(currentTile instanceof FloorTile){
+				value = null;
 				value = save.createTextNode(((FloorTile) currentTile).getToken());
 			}else if (currentTile instanceof WallTile){
+				value = null;
 				value = save.createTextNode(((WallTile) currentTile).getToken());
 			}
 			
@@ -432,12 +447,14 @@ public class Parser {
 		}
 		
 		if(occupant instanceof DoorGO){
-			if(side.equals("a")){
+			if(side.equals("a") || side.equals("")){
+				value = null;
 				value = save.createTextNode(((DoorGO)occupant).getTokenA());
 				Element tokenA = save.createElement("tokenA");
 				tokenA.appendChild(value);
 				return tokenA;
 			}else if(side.equals("b")){
+				value = null;
 				value = save.createTextNode(((DoorGO)occupant).getTokenB());
 				Element tokenB = save.createElement("tokenB");
 				tokenB.appendChild(value);
