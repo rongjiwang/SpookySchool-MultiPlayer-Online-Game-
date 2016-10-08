@@ -186,7 +186,6 @@ public class SpookySchool {
 			}
 
 			//Scan all of the inventory objects on the floors.
-
 			scan = new Scanner(new File(inventoryObjFileLoc));
 			while (scan.hasNextLine()) {
 
@@ -607,40 +606,47 @@ public class SpookySchool {
 
 
 	/**
-		 * This method is called periodically by the Clock Thread and is used to move NPC objects.
-		 */
-	public void tick() {
+	 * This method is called periodically by the Clock Thread and is used to move NPC objects.
+	 */
+	public synchronized void moveNPC() {
+
+		//Move all NPCs in the game towards their next direction (if possible).
+		for (NonHumanPlayer npc : this.nonHumanPlayers) {
+			if (this.movePlayer(npc, npc.getPotentialDirection())) {
+				npc.directionMoved();
+			}
+		}
+	}
+
+
+	/**
+	 * Goes through each NPC in game, and checks if there is a player in front of them. If there is, it kicks them to their room.
+	 */
+	public synchronized void checkNPCPath() {
 
 		int tilesToCheck = 3; //Number of tiles the npc needs to check in front of them for a player.
 
-		//Move all NPCs in the game towards their next direction (if possible).
 		outer: for (NonHumanPlayer npc : this.nonHumanPlayers) {
-			if (this.movePlayer(npc, npc.getPotentialDirection())) {
-				npc.directionMoved();
+			//Check one tile at a tile, "tilesToCheck" number of times. 
+			//If a player is found, teleport them back to their spawn room!
+			for (int i = 1; i <= tilesToCheck; i++) {
+				Tile tile = this.getPotentialTile(npc.getCurrentArea(), npc, npc.getCurrentDirection(), i);
 
-				//Check one tile at a tile, "tilesToCheck" number of times. 
-				//If a player is found, teleport them back to their spawn room!
-				for (int i = 1; i <= tilesToCheck; i++) {
-					Tile tile = this.getPotentialTile(npc.getCurrentArea(), npc, npc.getCurrentDirection(), i);
+				//If player caught, teleport them back to their spawn room.
+				if (tile.getOccupant() instanceof Player) {
+					Player player = (Player) tile.getOccupant();
+					player.getCurrentArea().getTile(player.getCurrentPosition()).removeOccupant(); //Remove player from this tile.
+					player.setCurrentArea(this.areas.get(player.getSpawnName())); //Set player's area back to the spawn room.
+					this.moveGOToTile(player, player.getCurrentArea().getTile(this.defaultSpawnPosition)); //Move player back to original spawn position.
 
-					//If player caught, teleport them back to their spawn room.
-					if (tile.getOccupant() instanceof Player) {
-						Player player = (Player) tile.getOccupant();
-						player.getCurrentArea().getTile(player.getCurrentPosition()).removeOccupant(); //Remove player from this tile.
-						player.setCurrentArea(this.areas.get(player.getSpawnName())); //Set player's area back to the spawn room.
-						this.moveGOToTile(player, player.getCurrentArea().getTile(this.defaultSpawnPosition)); //Move player back to original spawn position.
+					//Add message to the bundle about what just happened to the player
+					this.getBundle(player.getId())
+							.setMessage("You were caught by a teacher and sent back to your spawn room!");
 
-						//Add message to the bundle about what just happened to the player
-						this.getBundle(player.getId())
-								.setMessage("You were caught by a teacher and sent back to your spawn room!");
-
-						continue outer; //Exit to the outer loop.
-					}
+					continue outer; //Exit to the outer loop.
 				}
 			}
 		}
-
-		return;
 	}
 
 
