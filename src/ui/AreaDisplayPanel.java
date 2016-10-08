@@ -108,23 +108,39 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		if (currentArea == null) {
 			this.currentArea = this.mainPlayer.getCurrentArea();
-			overlayPanel.setHeaderMessage(-155, currentArea.getAreaName());
+			this.displayRoomName();
 		} else {
 			String oldArea = currentArea.getAreaName();
-
 			if (!oldArea.equals(this.mainPlayer.getCurrentArea().getAreaName())) {
 				this.currentArea = this.mainPlayer.getCurrentArea();
-				overlayPanel.setHeaderMessage(-155, currentArea.getAreaName());
+				this.displayRoomName();
 			}
-
 			this.currentArea = this.mainPlayer.getCurrentArea();
 		}
 
+		//Set the footer message if there is one in the bundle.
 		if (bundle.getMessage() != null) {
 			overlayPanel.setFooterMessage(bundle.getMessage());
 		}
 
 		this.updateDisplay();
+	}
+
+	/**
+	 * Display the current room name in the header of the overlay panel.
+	 */
+	public void displayRoomName() {
+
+		if (this.currentArea.getAreaName().contains("Spawn")) {
+			if (this.currentArea.hasOwner()) {
+				overlayPanel.setHeaderMessage(-155, currentArea.getOwner().getPlayerName() + "'s Room");
+			} else {
+				overlayPanel.setHeaderMessage(-155, currentArea.getAreaName().replace('_', ' '));
+			}
+
+		} else {
+			overlayPanel.setHeaderMessage(-155, currentArea.getAreaName().replace('_', ' '));
+		}
 	}
 
 
@@ -192,7 +208,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 				Image image = spriteMap.getImage(getRotatedToken("N0"));
 				offgc.drawImage(image, this.renderOffSetX - ((image.getWidth(null) - this.windowWidth) / 2),
 						this.renderOffSetY - ((image.getHeight(null) - this.windowHeight) / 2), null);
-				
+
 				offgc.drawImage(spriteMap.getImage("Rain" + this.nextRain()), 0, 0, 600, 600, null);
 			}
 		}
