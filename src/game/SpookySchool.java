@@ -40,7 +40,9 @@ public class SpookySchool {
 	//Mainly for XML
 	private List<MovableGO> movableObjects = new ArrayList<MovableGO>(); //FIXME add for xml
 	private List<DoorGO> doorObjects = new ArrayList<DoorGO>(); //FIXME add for XML
+
 	private Map<String, InventoryGO> inventoryObjects = new HashMap<String, InventoryGO>(); //FIXME Keep track of all inventory game objects in game??
+
 
 	//For networking
 	private Map<String, Bundle> playerBundles = new HashMap<String, Bundle>();
