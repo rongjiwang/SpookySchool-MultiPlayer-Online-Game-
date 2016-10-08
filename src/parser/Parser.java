@@ -244,11 +244,13 @@ public class Parser {
 								tagName.appendChild(occupantNode);
 								
 							}else if (occupant instanceof FixedContainerGO){
-								//occupantNode.appendChild(saveOpen(occupant));
-								//occupantNode.appendChild(saveLocked(occupant));
-								//Element keyID = saveKeyID();
-								//occupantNode.appendChild(saveSize(occupant));
+								occupantNode.appendChild(saveOpen(occupant));
+								occupantNode.appendChild(saveLocked(occupant));
+								//Element keyID = saveKeyID(occupant);
+								occupantNode.appendChild(saveSize(occupant));
 								
+								tagName.appendChild(occupantNode);
+;								
 							}
 							
 						}
