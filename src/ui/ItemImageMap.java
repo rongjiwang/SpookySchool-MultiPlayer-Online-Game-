@@ -39,9 +39,37 @@ public class ItemImageMap {
 	public void loadMap(){
 		spriteMap = new HashMap<String, Image>();
 		
-		spriteMap.put("b0",loadImage("box.png"));
-		spriteMap.put("c0",loadImage("coin.png"));
-		spriteMap.put("k0",loadImage("key.png"));
+		spriteMap.put("bag0", loadImage("bag.png")); //rubbish bag
+		spriteMap.put("ba0",loadImage("backpack.png")); //backpack
+		spriteMap.put("b0",loadImage("box.png")); //box
+		spriteMap.put("bo0",loadImage("book.png")); //book
+		spriteMap.put("bu0",loadImage("burger.png")); //burger
+		spriteMap.put("ca0", loadImage("cake.png")); //slice of cake
+		spriteMap.put("c0",loadImage("coin.png")); //coin
+		spriteMap.put("co0",loadImage("coffee.png")); //coffee
+		spriteMap.put("h0", loadImage("headphones.png")); //headset
+		spriteMap.put("g0",loadImage("gameboy.png")); //gameboy
+		spriteMap.put("k0",loadImage("key.png")); //key
+		spriteMap.put("l0",loadImage("laptop.png")); //laptop
+		spriteMap.put("pa0",loadImage("pad.png")); //pad paper
+		spriteMap.put("p0",loadImage("phone.png")); //phone
+		spriteMap.put("pi0", loadImage("pizza.png")); //pizza
+		spriteMap.put("w0",loadImage("waterbottle.png")); //water bottle
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	}
 

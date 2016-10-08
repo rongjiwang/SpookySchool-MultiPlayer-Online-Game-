@@ -207,7 +207,7 @@ public class Parser {
 						tagName.appendChild(token);
 						currentParent.appendChild(tagName);
 						
-						if (currentTile.getOccupant() != null){
+						/*if (currentTile.getOccupant() != null){
 							GameObject occupant = currentTile.getOccupant();
 							
 							if(occupant instanceof InventoryGO){
@@ -276,7 +276,7 @@ public class Parser {
 		}
 			
 			
-	}
+	
 	
 	public Element saveName(GameObject occupant){
 		Text value = null;
@@ -416,21 +416,35 @@ public class Parser {
 	
 	public Element saveToken(Tile currentTile, String side){
 		GameObject occupant = currentTile.getOccupant();
+		Text value = null;
+		
+		if (occupant == null){
+			if(currentTile instanceof FloorTile){
+				value = save.createTextNode(((FloorTile) currentTile).getToken());
+			}else if (currentTile instanceof WallTile){
+				value = save.createTextNode(((WallTile) currentTile).getToken());
+			}
+			
+			Element token = save.createElement("token");
+			token.appendChild(value);
+			return token;
+			
+		}
 		
 		if(occupant instanceof DoorGO){
 			if(side.equals("a")){
-				Text value = save.createTextNode(((DoorGO)occupant).getTokenA());
+				value = save.createTextNode(((DoorGO)occupant).getTokenA());
 				Element tokenA = save.createElement("tokenA");
 				tokenA.appendChild(value);
 				return tokenA;
 			}else if(side.equals("b")){
-				Text value = save.createTextNode(((DoorGO)occupant).getTokenB());
+				value = save.createTextNode(((DoorGO)occupant).getTokenB());
 				Element tokenB = save.createElement("tokenB");
 				tokenB.appendChild(value);
 				return tokenB;
 			}
 		}else{
-			Text value = save.createTextNode(occupant.getToken());
+			value = save.createTextNode(occupant.getToken());
 			Element token = save.createElement("token");
 			token.appendChild(value);
 			return token;
