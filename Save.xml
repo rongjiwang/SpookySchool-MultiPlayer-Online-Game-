@@ -76,12 +76,6 @@
                 <x>5</x>
                 <y>2</y>
             </pos>
-            <occupant objectType="class game.InventoryGO">
-                <name>Key</name>
-                <areaName>Spawn_6</areaName>
-                <size>1</size>
-                <description> The key for Spawn_6 room</description>
-            </occupant>
         </tile>
         <tile>
             <pos>
@@ -124,12 +118,6 @@
                 <x>6</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.ContainerGO">
-                <name>Box</name>
-                <areaName>Spawn_6</areaName>
-                <size>5</size>
-                <description> A box that you can put stuff in.</description>
-            </occupant>
         </tile>
         <tile>
             <pos>
@@ -4844,6 +4832,7 @@
                 <x>14</x>
                 <y>6</y>
             </pos>
+            <occupant objectType="class game.Player"/>
         </tile>
         <tile>
             <pos>
@@ -7758,6 +7747,7 @@
                 <x>5</x>
                 <y>5</y>
             </pos>
+            <occupant objectType="class game.FixedContainerGO"/>
         </tile>
         <tile>
             <pos>

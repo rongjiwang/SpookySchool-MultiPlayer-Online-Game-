@@ -70,6 +70,7 @@ public class UIImageMap {
 		
 		//inv background
 		spriteMap.put("invBack",loadImage("invBackground.png"));
+		spriteMap.put("invPanel", loadImage("invPanel.png"));
 		
 		
 	}

@@ -39,10 +39,9 @@ public class SpookySchool {
 
 	//Mainly for XML
 	private Parser parser;
-
-	private List<MovableGO> movableObjects = new ArrayList<MovableGO>(); //FIXME add for xml
-	private List<DoorGO> doorObjects = new ArrayList<DoorGO>(); //FIXME add for XML
-	private Map<String, InventoryGO> inventoryObjects = new HashMap<String, InventoryGO>(); //FIXME PARSER NEEDS TO SAVE ALL OF THESE??
+	private List<MovableGO> movableObjects = new ArrayList<MovableGO>();
+	private List<DoorGO> doorObjects = new ArrayList<DoorGO>();
+	private Map<String, InventoryGO> inventoryObjects = new HashMap<String, InventoryGO>();
 	private Map<String, FixedContainerGO> fixedContainerObjects = new HashMap<String, FixedContainerGO>();
 
 	//For networking
@@ -894,13 +893,12 @@ public class SpookySchool {
 	}
 
 	/**
-	 * FIXME: for saving gmae to xml
+	 * FIXME: for saving game to xml
 	 */
 	public synchronized void saveGame(String playerName) {
 		System.out.println("Saving game...");
 		this.parser.save(this, playerName);
-		this.getBundle(playerName).setMessage("Failed to save game");
-
+		this.getBundle(playerName).setMessage("Failed to save game?");
 	}
 
 

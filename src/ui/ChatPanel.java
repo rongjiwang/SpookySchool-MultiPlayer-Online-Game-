@@ -66,10 +66,6 @@ public class ChatPanel extends JPanel{
 		listen = new ButtonListen();
 		keyListen = new KeyListen();
 
-		//temp button
-		//tempSendButton = new JButton("Send");
-		//tempSendButton.addMouseListener(listen);
-
 		typeArea = new JTextField(30);
 		typeArea.addKeyListener(keyListen);
 		
