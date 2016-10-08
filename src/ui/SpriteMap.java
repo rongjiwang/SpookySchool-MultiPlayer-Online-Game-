@@ -140,6 +140,12 @@ public class SpriteMap {
 		spriteMap.put("ch2", loadImage("chair2.png"));
 		spriteMap.put("ch3", loadImage("chair3.png"));
 		
+		// chairTwo
+		spriteMap.put("Ch0", loadImage("chairTwo0.png"));
+		spriteMap.put("Ch1", loadImage("chairTwo1.png"));
+		spriteMap.put("Ch2", loadImage("chairTwo2.png"));
+		spriteMap.put("Ch3", loadImage("chairTwo3.png"));
+		
 		// couch
 		spriteMap.put("co0", loadImage("couch0.png"));
 		spriteMap.put("co1", loadImage("couch1.png"));
@@ -175,6 +181,12 @@ public class SpriteMap {
 		spriteMap.put("t2", loadImage("tableSmall2.png"));
 		spriteMap.put("t3", loadImage("tableSmall3.png"));
 
+		// table - small
+		spriteMap.put("tL0", loadImage("tableLong0.png"));
+		spriteMap.put("tL1", loadImage("tableLong1.png"));
+		spriteMap.put("tL2", loadImage("tableLong2.png"));
+		spriteMap.put("tL3", loadImage("tableLong3.png"));
+		
 		// sign
 		spriteMap.put("s0", loadImage("sign0.png"));
 		spriteMap.put("s1", loadImage("sign1.png"));

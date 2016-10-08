@@ -83,8 +83,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		this.overlayPanel = new OverlayPanel(this, spriteMap);
 
 		this.spriteMap = spriteMap;
-		//overlayPanel.setBackground(Color.BLUE);
-
 		this.setLayout(new BorderLayout());
 
 
