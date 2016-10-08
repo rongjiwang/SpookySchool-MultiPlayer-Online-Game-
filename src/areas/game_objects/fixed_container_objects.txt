@@ -1,0 +1,1 @@
+AREANAME testFixedContainer xx closed unlocked null 5 posX posY MARKERPOSITIONS
