@@ -30,6 +30,7 @@ public class SpookySchool {
 	private String movableObjectsFileLoc = "src/areas/game_objects/movable_objects.txt";
 	private String nonHumanPlayersFileLoc = "src/areas/game_objects/non_human_player_objects.txt";
 	private String inventoryObjFileLoc = "src/areas/game_objects/inventory_objects.txt";
+	private String fixedContainersFileLoc = "src/areas/game_objects/fixed_container_objects.txt";
 	private String fillContainersFileLoc = "src/areas/game_objects/fill_containers.txt";
 
 	//Default Load files - these never change.
@@ -233,6 +234,18 @@ public class SpookySchool {
 				this.inventoryObjects.put(id, item); //Add the item to the list of inventory objects.
 			}
 
+			//Scan all of the fixed container objects on the floors.
+			scan = new Scanner(new File(this.fixedContainersFileLoc));
+			while (scan.hasNextLine()) {
+
+				Scanner lineScanner = new Scanner(scan.nextLine());
+
+
+
+			}
+
+
+
 			scan.close();
 		} catch (FileNotFoundException e) {
 			throw new Error(e.getMessage());
@@ -266,9 +279,7 @@ public class SpookySchool {
 
 				//Add the item into the appropriate container.
 				if (type.equals("CONTAINER")) {
-
 					((ContainerGO) this.inventoryObjects.get(containerID)).addToContainer(item);
-
 				} else if (type.equals("FIXED_CONTAINER")) {
 
 				} else {
@@ -844,4 +855,3 @@ public class SpookySchool {
 	}
 
 }
-
