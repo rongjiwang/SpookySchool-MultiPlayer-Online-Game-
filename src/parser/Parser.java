@@ -223,6 +223,32 @@ public class Parser {
 								occupantNode.appendChild(saveDescription(occupant));
 								
 								tagName.appendChild(occupantNode);
+								
+								
+							}else if (occupant instanceof DoorGO){
+								occupantNode.appendChild(saveOpen(occupant));
+								occupantNode.appendChild(saveLocked(occupant));
+								//occupantNode.appendChild(saveKeyID(occupant));
+								occupantNode.appendChild(saveDescription(occupant));
+								
+								occupantNode.appendChild(saveSide(occupant, "a"));
+								//Element tokenA = saveToken(currentTile, "a");
+								occupantNode.appendChild(saveSidePos(occupant, "a"));
+								occupantNode.appendChild(saveSideEntryPos(occupant, "a"));
+								
+								occupantNode.appendChild(saveSide(occupant, "b"));
+								//Element tokenB = saveToken(currentTile, "b");
+								occupantNode.appendChild(saveSidePos(occupant, "b"));
+								occupantNode.appendChild(saveSideEntryPos(occupant, "b"));
+								
+								tagName.appendChild(occupantNode);
+								
+							}else if (occupant instanceof FixedContainerGO){
+								//occupantNode.appendChild(saveOpen(occupant));
+								//occupantNode.appendChild(saveLocked(occupant));
+								//Element keyID = saveKeyID();
+								//occupantNode.appendChild(saveSize(occupant));
+								
 							}
 							
 						}
@@ -484,13 +510,13 @@ public class Parser {
 			y.appendChild(yVal);
 			
 			if(side.equals("a")){
-				Element sideAEntryPos = save.createElement("sideAPos");
+				Element sideAEntryPos = save.createElement("sideAEntryPos");
 				sideAEntryPos.appendChild(x);
 				sideAEntryPos.appendChild(y);
 				return sideAEntryPos;
 				
 			}else{
-				Element sideBEntryPos = save.createElement("sideBPos");
+				Element sideBEntryPos = save.createElement("sideBEntryPos");
 				sideBEntryPos.appendChild(x);
 				sideBEntryPos.appendChild(y);
 				return sideBEntryPos;
