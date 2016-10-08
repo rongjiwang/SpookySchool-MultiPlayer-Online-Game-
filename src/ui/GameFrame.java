@@ -43,8 +43,6 @@ public class GameFrame extends JFrame implements WindowListener {
 
 		this.client = client;
 
-
-
 		//sets up layout
 		this.setLayout(new BorderLayout());
 		this.setResizable(false); //Do not allow window resizing.
@@ -53,9 +51,7 @@ public class GameFrame extends JFrame implements WindowListener {
 		this.areaDisplayPanel = new AreaDisplayPanel(this.client, this, spriteMap);
 		this.overlayPanel = new OverlayPanel(areaDisplayPanel, spriteMap);
 		this.areaDisplayPanel.setOverLay(this.overlayPanel);
-		//} else {
-		//		this.areaDisplayPanel2D = new AreaDisplayPanel2D(this.client);
-		//	}
+		
 
 		//creates inventory panel
 		invPanel = new InventoryPanel(imageMap, this.client, this.overlayPanel);
@@ -86,11 +82,7 @@ public class GameFrame extends JFrame implements WindowListener {
 
 	//refocuses on game window (after sending a message)
 	public void refocus() {
-		//	if (this.render3D) {
 		areaDisplayPanel.requestFocusInWindow();
-		//} else {
-		//areaDisplayPanel2D.requestFocusInWindow();
-		//}
 	}
 
 	/**
@@ -98,15 +90,13 @@ public class GameFrame extends JFrame implements WindowListener {
 	 */
 	public void setPanels() {
 		//leftPanel
-		//if (this.render3D) {
+		
 		northPanel = new MainPanel(areaDisplayPanel, imageMap);
-		//} else {
-		//		northPanel = new MainPanel(areaDisplayPanel2D, imageMap);
-		//	}
 		this.add(northPanel, BorderLayout.NORTH);
 
 		southPanel = new SidePanel(chatPanel, invPanel, imageMap);
 		this.add(southPanel, BorderLayout.SOUTH);
+		
 		this.pack();
 	}
 
@@ -119,15 +109,11 @@ public class GameFrame extends JFrame implements WindowListener {
 			chatPanel.addChange(bundle.getLog());
 
 		//passes bundle's player's inventory to inventory panel
-		invPanel.updateInventory(bundle.getPlayerObj().getInventory());
+		invPanel.addItems(bundle.getPlayerObj().getInventory());
 
 		//passes bundle to render window
-		//	if (this.render3D) {
+		
 		this.areaDisplayPanel.processBundle(bundle);//Temporarily only passing bundle to the renderer.
-		//	} else {
-		//		this.areaDisplayPanel2D.processBundle(bundle);
-		//}
-
 	}
 
 	public DebugDisplay getDebugDisplay() {

@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -27,14 +28,13 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	private List<ItemDisplay> itemsShown;
 	final static Dimension boardSize = new Dimension(250,150);
 	private boolean highlighted;
-	private boolean processing;
+	
 	private int highlightedX;
 	private int highlightedY;
 	private Image highLight;
 	private Image background;
 
-	private List<InventoryGO> tempStore;
-	private boolean tempStored;
+	private Font pixelFont;
 
 	private UIImageMap imageMap;
 	private ItemImageMap itemMap;
@@ -49,15 +49,16 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 
 	public InventoryPanel(UIImageMap imageMap, Client client, OverlayPanel overlayPanel){
 		super(new GridLayout(3,5));
-
+		
+		try {
+			pixelFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
+		} catch (Exception e) {}
+		
 		this.client = client;
 		this.overlayPanel = overlayPanel;
 		this.imageMap = imageMap;
 		this.itemMap = new ItemImageMap();
-		this.tempStore = new ArrayList<InventoryGO>();
-		this.tempStored = false;
-
-		processing = false;
+		
 
 		itemList = new ArrayList<ItemDisplay>();
 		itemsShown = new ArrayList<ItemDisplay>();
@@ -76,7 +77,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 
 
 	public void upOne(){
-		if(level > 0){
+		if((level-5) >= 0){
 			level-=5;
 			processItems();
 			repaint();
@@ -90,22 +91,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 			repaint();
 		}
 	}
-	/**
-	 * Checks if the user is currently right clicked or dragging. If so, stores the inventory to pass after the user is finished, otherwise processes inventory as normal
-	 * 
-	 * @param items
-	 */
-	public void updateInventory(List<InventoryGO> items){
-		
-		//if(!processing)
-			addItems(items);
-	//	else{
-		//	tempStore = items;
-		//	tempStored = true;
-		//}
-
-	}
-
+	
 	public boolean itemsChanged(List<InventoryGO> items){
 		if(items.size() != itemList.size())
 			return true;
@@ -122,12 +108,6 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	public void addItems(List<InventoryGO> items){
 		if(items != null){
 			if(itemsChanged(items)){
-
-				for(ItemDisplay item : itemsShown){
-					item.removeDisplay();
-				}
-				itemsShown.clear();
-
 				itemList.clear();
 
 				for(InventoryGO item : items){
@@ -144,6 +124,11 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 	 * place items onto correct x,y coordinates, in the 5x3 grid
 	 */
 	public void processItems(){
+		for(ItemDisplay item : itemsShown){
+			item.removeDisplay();
+		}
+		itemsShown.clear();
+		
 		int i = level;
 
 		ItemDisplay toAdd = null;
@@ -184,34 +169,33 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 		repaint();
 	}
 
-	
-	//public void processTemp(){
-	//	if(processing){
-	//		processing = false;
-	//		if(tempStored){
-	//			addItems(tempStore);
-	//			tempStore.clear();
-	//			tempStored = false;
-	//		}
-	//	}
-	//}
-	
 	@Override
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
+		g.setFont(pixelFont.deriveFont(Font.TRUETYPE_FONT, 10f));
+		g.setColor(Color.BLACK);
 		g.drawImage(background, 0, 0, background.getWidth(null), background.getHeight(null), null);
 		if(highlighted){
 			g.drawImage(highLight, highlightedX, highlightedY, highLight.getWidth(null), highLight.getHeight(null), null);
 		}
 		Image image = null;
 		ItemDisplay item = null;
-		for(int i = (level*5); i < (level*5)+15; i++){
+		Image panel = imageMap.getImage("invPanel");
+		
+		for(int i = 0; i < 15; i++){
 			if(i >= itemsShown.size())
 				break;
 			item = itemsShown.get(i);
 			image = itemMap.getImage(item.getToken());
+			
 			if(dragged != i){
 				g.drawImage(image, item.getX(), item.getY(), image.getWidth(null), image.getHeight(null), null);
+				
+				if(item.isContainer()){
+					g.drawImage(panel, item.getX(), item.getY()+39, panel.getWidth(null), panel.getHeight(null), null);
+					g.drawString(item.getSize(), item.getX()+2, item.getY()+48);
+					
+				}
 			} 
 
 		}

@@ -5,6 +5,7 @@ import game.InventoryGO;
 
 public class ItemDisplay {
 	private InventoryGO item;
+	private ContainerGO containItem;
 	private int x;
 	private int y;
 	private int tempX;
@@ -15,12 +16,19 @@ public class ItemDisplay {
 	
 	public ItemDisplay(InventoryGO item){
 		this.item = item;
-		container = (item instanceof ContainerGO);
+		if (item instanceof ContainerGO){
+			container = true;
+			containItem = (ContainerGO) item;
+		}
 			
 		x = 0;
 		y = 0;
 		dragging = false;
 		display = false;
+	}
+	
+	public String getSize(){
+		return ""+(!container ? item.getSize() : containItem.getSize()-containItem.getSizeRemaining()+"/"+containItem.getSize());
 	}
 	
 	public boolean isContainer(){
