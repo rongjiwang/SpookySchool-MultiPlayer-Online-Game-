@@ -1,5 +1,6 @@
 package ui;
 
+import game.ContainerGO;
 import game.InventoryGO;
 
 public class ItemDisplay {
@@ -10,11 +11,12 @@ public class ItemDisplay {
 	private int tempY;
 	private boolean dragging;
 	private boolean display;
-	boolean container = false;
+	boolean container;
 	
 	public ItemDisplay(InventoryGO item){
 		this.item = item;
-		
+		container = (item instanceof ContainerGO);
+			
 		x = 0;
 		y = 0;
 		dragging = false;
