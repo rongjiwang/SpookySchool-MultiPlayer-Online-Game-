@@ -255,6 +255,12 @@ public class Parser {
 								occupantNode.appendChild(saveDescription(occupant));
 								
 								tagName.appendChild(occupantNode);
+							}else if (occupant instanceof MarkerGO){
+								//FIXME: Base GameObject?? do i need to save a record of this 
+								occupantNode.appendChild(saveDescription(occupant));
+								
+								tagName.appendChild(occupantNode);
+								
 							}
 							
 						}
