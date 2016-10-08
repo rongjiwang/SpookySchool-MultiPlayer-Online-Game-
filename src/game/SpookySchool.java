@@ -30,6 +30,7 @@ public class SpookySchool {
 	private String movableObjectsFileLoc = "src/areas/game_objects/movable_objects.txt";
 	private String nonHumanPlayersFileLoc = "src/areas/game_objects/non_human_player_objects.txt";
 	private String inventoryObjFileLoc = "src/areas/game_objects/inventory_objects.txt";
+	private String fillContainersFileLoc = "src/areas/game_objects/fill_containers.txt";
 
 	//Default Load files - these never change.
 	private Map<String, Area> areas = new HashMap<String, Area>();
@@ -200,7 +201,17 @@ public class SpookySchool {
 				String token = lineScanner.next();
 				int size = lineScanner.nextInt();
 				String areaName = lineScanner.next();
-				Position pos = new Position(lineScanner.nextInt(), lineScanner.nextInt());
+
+				Position pos = null;
+
+				//Scan the items position if the area isnt null. If it is, skip the next two tokens.
+				if (areaName.equals("null")) {
+					lineScanner.next();
+					lineScanner.next();
+				} else {
+					pos = new Position(lineScanner.nextInt(), lineScanner.nextInt());
+				}
+
 				String description = lineScanner.nextLine();
 
 				InventoryGO item = null;
@@ -213,11 +224,13 @@ public class SpookySchool {
 					throw new Error("Invalid Inventory object type!");
 				}
 
-				//Place the item on the tile in the given area.
-				Area area = this.areas.get(areaName);
-				area.getTile(pos).setOccupant(item);
+				//Place the item on the tile in the given area if applicable.
+				if (!areaName.equals("null")) {
+					Area area = this.areas.get(areaName);
+					area.getTile(pos).setOccupant(item);
+				}
 
-				this.inventoryObjects.put(id, item);
+				this.inventoryObjects.put(id, item); //Add the item to the list of inventory objects.
 			}
 
 			scan.close();
@@ -230,7 +243,46 @@ public class SpookySchool {
 	 * Fill the containers in the game where required. 
 	 */
 	public void fillContainers() {
-		// TODO Auto-generated method stub
+		Scanner scan = null;
+
+		try {
+			scan = new Scanner(new File(fillContainersFileLoc));
+
+			while (scan.hasNextLine()) {
+				Scanner lineScanner = new Scanner(scan.nextLine());
+
+				String itemID = lineScanner.next();
+				String type = lineScanner.next();
+				String containerID = lineScanner.next();
+
+				InventoryGO item = this.inventoryObjects.get(itemID); //Item to be put into the given container.
+
+				if (item == null) {
+					lineScanner.close();
+					scan.close();
+					throw new Error(
+							"Item to be put into the container is null. Note: You can only put InventroGOs into containers.");
+				}
+
+				//Add the item into the appropriate container.
+				if (type.equals("CONTAINER")) {
+
+					((ContainerGO) this.inventoryObjects.get(containerID)).addToContainer(item);
+
+				} else if (type.equals("FIXED_CONTAINER")) {
+
+				} else {
+					lineScanner.close();
+					scan.close();
+					throw new Error("INVALID CONTAINER TYPE!");
+				}
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			scan.close();
+		}
 
 	}
 
