@@ -43,6 +43,7 @@ public class SpookySchool {
 	private List<MovableGO> movableObjects = new ArrayList<MovableGO>(); //FIXME add for xml
 	private List<DoorGO> doorObjects = new ArrayList<DoorGO>(); //FIXME add for XML
 	private Map<String, InventoryGO> inventoryObjects = new HashMap<String, InventoryGO>(); //FIXME PARSER NEEDS TO SAVE ALL OF THESE??
+	private Map<String, FixedContainerGO> fixedContainerObjects = new HashMap<String, FixedContainerGO>();
 
 	//For networking
 	private Map<String, Bundle> playerBundles = new HashMap<String, Bundle>();
@@ -240,11 +241,35 @@ public class SpookySchool {
 
 				Scanner lineScanner = new Scanner(scan.nextLine());
 
+				//Scan information about the fixed container.
+				String name = lineScanner.next();
+				String areaName = lineScanner.next();
+				String id = lineScanner.next();
+				String token = lineScanner.next();
+				boolean open = lineScanner.next().equals("open");
+				boolean locked = lineScanner.next().equals("locked");
+				String keyID = lineScanner.next();
+				keyID = keyID.equals("null") ? null : keyID;
+				int size = lineScanner.nextInt();
+				Position pos = new Position(lineScanner.nextInt(), lineScanner.nextInt());
 
+				//Create the container object.
+				FixedContainerGO container = new FixedContainerGO(name, areaName, id, token, open, locked, keyID, size,
+						pos);
 
+				//Place the container object
+				Area area = this.areas.get(areaName);
+				area.getTile(pos).setOccupant(container);
+
+				//Set up the rest of the marker tiles that make up this fixed container game object.
+				while (lineScanner.hasNextInt()) {
+					Position markerPos = new Position(lineScanner.nextInt(), lineScanner.nextInt());
+					GameObject markerObj = new MarkerGO(container, markerPos); //Link marker to original game object.
+					area.getTile(markerPos).setOccupant(markerObj);
+				}
+
+				this.fixedContainerObjects.put(id, container);
 			}
-
-
 
 			scan.close();
 		} catch (FileNotFoundException e) {
@@ -279,8 +304,14 @@ public class SpookySchool {
 
 				//Add the item into the appropriate container.
 				if (type.equals("CONTAINER")) {
-					((ContainerGO) this.inventoryObjects.get(containerID)).addToContainer(item);
+					if (!((ContainerGO) this.inventoryObjects.get(containerID)).addToContainer(item)) {
+						throw new Error("Item is too big!");
+					}
+
 				} else if (type.equals("FIXED_CONTAINER")) {
+					if (!this.fixedContainerObjects.get(containerID).addToContainer(item)) {
+						throw new Error("Item is too big!");
+					}
 
 				} else {
 					lineScanner.close();
@@ -414,6 +445,52 @@ public class SpookySchool {
 			return;
 		}
 
+		//If its a marker tile to a fixedContainer, set the game object to fixed container.. As if YOU are 
+		if (gameObj instanceof MarkerGO && ((MarkerGO) gameObj).getBaseGO() instanceof FixedContainerGO) {
+			gameObj = ((MarkerGO) gameObj).getBaseGO();
+		}
+
+		//If its a fixed container.
+		if (gameObj instanceof FixedContainerGO) {
+			FixedContainerGO fixedContainer = (FixedContainerGO) gameObj;
+
+			if (fixedContainer.isLocked()) {
+				//Attempt to unlock it.
+				for (InventoryGO item : player.getInventory()) {
+					if (fixedContainer.getKeyID().equals(item.getId())) {
+						fixedContainer.setLocked(false); //Unlock the door.
+						this.getBundle(playerName).setMessage(
+								"You unlocked the " + fixedContainer.getName() + " using the key in your inventory");
+						return;
+					}
+				}
+
+				this.getBundle(playerName).setMessage(
+						"The " + fixedContainer.getName() + " is locked. You don't seem to have the key to open it.");
+
+				return; //Couldn't unlock chest.
+			}
+
+			//If the container is open, empty what is inside, and if its empty, close it.
+			//If container is closed, open it.
+			if (fixedContainer.isOpen()) {
+				if (fixedContainer.isEmpty()) {
+					fixedContainer.setOpen(false);
+				} else {
+					//Add all items from the container to the player's inventory.
+					for (InventoryGO item : fixedContainer.getAllItems()) {
+						player.addToInventory(item);
+					}
+					fixedContainer.clearContainer(); //Clear the container now that the player has its contents.
+					this.getBundle(playerName)
+							.setMessage("Items found in the container have been added to your inventory.");
+				}
+			} else {
+				fixedContainer.setOpen(true);
+			}
+
+			return; //finished interacting with the container.
+		}
 
 		if (!(gameObj instanceof DoorGO)) {
 			String objDescription = gameObj.getDescription();
@@ -455,7 +532,7 @@ public class SpookySchool {
 
 				this.getBundle(playerName).setMessage("The door is locked. You dont have the key to open this door.");
 
-				return; //Door unlocked
+				return; //Couldnt unlock door.
 			}
 
 			//Open or close the door depending on current door state
@@ -507,9 +584,49 @@ public class SpookySchool {
 					player.getInventory().remove(item);
 					this.getBundle(playerName).setMessage("You dropped the item.");
 					return;
+
+				} else if (potentialTile != null && potentialTile instanceof FloorTile
+						&& (potentialTile.getOccupant() instanceof FixedContainerGO
+								|| potentialTile.getOccupant() instanceof MarkerGO)) {
+
+					//If potential tile is a marker object of 
+					if (potentialTile.getOccupant() instanceof MarkerGO
+							&& !(((MarkerGO) potentialTile.getOccupant()).getBaseGO() instanceof FixedContainerGO)) {
+						this.getBundle(playerName).setMessage("You cannot drop the item here.");
+						return;
+					}
+
+					//Get the FixedContainerGO.
+					FixedContainerGO obj = null;
+					if (potentialTile.getOccupant() instanceof MarkerGO) {
+						obj = (FixedContainerGO) ((MarkerGO) potentialTile.getOccupant()).getBaseGO();
+					} else {
+						obj = (FixedContainerGO) potentialTile.getOccupant();
+					}
+
+					if (!obj.isOpen()) {
+						this.getBundle(playerName)
+								.setMessage("The " + obj.getName() + " must be open to place items inside.");
+						return;
+					} else if (obj.isLocked()) {
+						this.getBundle(playerName)
+								.setMessage("The " + obj.getName() + " is locked. Cannot place anything inside.");
+						return;
+					}
+
+					//Place the item into the container.
+
+					if (obj.addToContainer(item)) {
+						obj.addToContainer(item);
+						player.removeFromInventory(item);
+						this.getBundle(playerName)
+								.setMessage("You placed the " + item.getName() + " into the " + obj.getName());
+					} else {
+						this.getBundle(playerName).setMessage("There is not enough space in the " + obj.getName());
+					}
+
+					return; //Finished.
 				}
-				this.getBundle(playerName).setMessage("You cannot drop the item here.");
-				return;
 			}
 		}
 
