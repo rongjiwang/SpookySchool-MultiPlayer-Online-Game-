@@ -5,7 +5,6 @@ import java.awt.FontFormatException;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 
 import javax.swing.JPanel;
@@ -35,7 +34,7 @@ public class OverlayPanel extends JPanel {
 	private long footerThen; //holds time
 	private boolean firstFooterReceived = false; //To stop the null pointer at the start of the game.
 	private Font font;
-	
+
 	public OverlayPanel(AreaDisplayPanel panel, SpriteMap spriteMap) {
 
 		this.panel = panel;
@@ -62,7 +61,7 @@ public class OverlayPanel extends JPanel {
 			Graphics2D g2d = (Graphics2D) getGraphics();
 			g2d.setFont(font.deriveFont(Font.TRUETYPE_FONT, 12f));
 
-		
+
 		} catch (Exception e) {
 		}
 
@@ -88,25 +87,25 @@ public class OverlayPanel extends JPanel {
 		super.paintComponent(g);
 
 		//Draw the header
-		if (this.footerMessage != null) {
+		if (this.headerMessage != null) {
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.drawImage(spriteMap.getImage("H0"), headerX, headerY, null);
-			Font font = new Font("Calibri", Font.PLAIN, 15);
-			g2d.setFont(font);
-			/*try {
+
+			//Set the font.
+			try {
 				font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
 				g2d.setFont(font.deriveFont(Font.TRUETYPE_FONT, 12f));
-
 			} catch (FontFormatException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}*/
-			Rectangle2D r = font.getStringBounds(headerMessage, g2d.getFontRenderContext());
-			int x = (int) (headerWidth - r.getWidth()) /2;
-			g2d.drawString(headerMessage, headerX + x, headerY + 17);
+			}
+
+
+			//Draw the header message in the center.
+			int stringLen = (int) g2d.getFontMetrics().getStringBounds(headerMessage, g2d).getWidth();
+			int start = headerWidth / 2 - stringLen / 2;
+			g2d.drawString(headerMessage, start + headerX, headerY + 17);
 		}
 
 		//Draw the footer
