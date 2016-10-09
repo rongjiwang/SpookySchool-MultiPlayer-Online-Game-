@@ -338,13 +338,13 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		g.drawImage(offScreen, 0, 0, this);
 
-		/*
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				*/
+
+
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 
 	}
