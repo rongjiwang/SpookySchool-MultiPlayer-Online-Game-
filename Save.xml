@@ -591,6 +591,12 @@
                 <x>5</x>
                 <y>2</y>
             </pos>
+            <occupant objectType="class game.InventoryGO">
+                <name>Key</name>
+                <areaName>Spawn_7</areaName>
+                <size>1</size>
+                <description> The key for Spawn_7 room</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -627,14 +633,6 @@
                 <x>5</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.Player">
-                <name>Jim</name>
-                <spawnName>Spawn_7</spawnName>
-                <pos>
-                    <x>5</x>
-                    <y>3</y>
-                </pos>
-            </occupant>
         </tile>
         <tile>
             <pos>
@@ -2209,7 +2207,7 @@
                 <y>2</y>
             </pos>
             <occupant objectType="class game.DoorGO">
-                <open>false</open>
+                <open>true</open>
                 <locked>false</locked>
                 <description>This is a Door.</description>
                 <sideA>Outside</sideA>
@@ -4301,7 +4299,7 @@
                 <y>3</y>
             </pos>
             <occupant objectType="class game.DoorGO">
-                <open>false</open>
+                <open>true</open>
                 <locked>false</locked>
                 <description>This is a Door.</description>
                 <sideA>Dorm_room</sideA>
@@ -5339,6 +5337,14 @@
                 <x>7</x>
                 <y>10</y>
             </pos>
+            <occupant objectType="class game.Player">
+                <name>Rob</name>
+                <spawnName>Spawn_6</spawnName>
+                <pos>
+                    <x>7</x>
+                    <y>10</y>
+                </pos>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -5406,7 +5412,7 @@
                 <y>10</y>
             </pos>
             <occupant objectType="class game.DoorGO">
-                <open>false</open>
+                <open>true</open>
                 <locked>false</locked>
                 <description>This is a Door.</description>
                 <sideA>Outside</sideA>
@@ -7584,7 +7590,7 @@
                 <y>4</y>
             </pos>
             <occupant objectType="class game.DoorGO">
-                <open>false</open>
+                <open>true</open>
                 <locked>false</locked>
                 <description>This is a Door.</description>
                 <sideA>Dorm_room</sideA>
@@ -7703,7 +7709,7 @@
                 <y>4</y>
             </pos>
             <occupant objectType="class game.DoorGO">
-                <open>false</open>
+                <open>true</open>
                 <locked>false</locked>
                 <description>This is a Door.</description>
                 <sideA>Hallway</sideA>
@@ -11026,7 +11032,7 @@
                 <y>2</y>
             </pos>
             <occupant objectType="class game.DoorGO">
-                <open>false</open>
+                <open>true</open>
                 <locked>false</locked>
                 <description>This is a Door.</description>
                 <sideA>Hallway</sideA>
@@ -11377,14 +11383,6 @@
                 <x>10</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.Player">
-                <name>Brandon</name>
-                <spawnName>Spawn_6</spawnName>
-                <pos>
-                    <x>10</x>
-                    <y>3</y>
-                </pos>
-            </occupant>
         </tile>
         <tile>
             <pos>
