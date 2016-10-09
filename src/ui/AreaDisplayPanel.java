@@ -120,7 +120,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			overlayPanel.setFooterMessage(bundle.getMessage());
 		}
 
-
 		this.toAnimate.clear();
 
 		if (this.currentArea != null) {
@@ -177,6 +176,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			//Nothing to animate!
 			return;
 		}
+
+		System.out.println("new changes");
 
 		for (int i = 0; i < this.currentAreaObjects.size(); i++) {
 			for (int j = 0; j < this.previousAreaObjects.size(); j++) {
