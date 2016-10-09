@@ -142,13 +142,13 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			overlayPanel.setFooterMessage(bundle.getMessage());
 		}
 
-		/*
+
 		if (this.currentArea != null) {
 			//Update the display to show objects in their correct places.
-			this.centerPlayer();
-			this.updateDisplay();
+			//this.centerPlayer();
+			//this.updateDisplay();
 		}
-		*/
+
 
 		this.mainPlayer = bundle.getPlayerObj();
 
@@ -158,6 +158,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			this.currentArea = this.mainPlayer.getCurrentArea();
 			this.currentAreaObjects = bundle.getAreaObjects();
 			this.displayRoomName();
+			this.centerPlayer();
 
 			//Dont try to find changes since we just entered the game!
 			//this.updateDisplay();
@@ -168,13 +169,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 			if (!oldArea.equals(this.mainPlayer.getCurrentArea().getAreaName())) {
 
-				this.toAnimate.clear(); //New area so clear the animation list.
-
+				this.toAnimate.clear(); //New area so clear the animation list.		
 				this.currentArea = this.mainPlayer.getCurrentArea();
 				this.displayRoomName();
-
 				this.currentAreaObjects = bundle.getAreaObjects();
-				this.currentArea = this.mainPlayer.getCurrentArea();
+				this.centerPlayer();
 
 				//Dont try to find changes!
 				//this.updateDisplay();
@@ -187,7 +186,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 
 
-		this.findChanges();
+		this.addChanges();
 
 		//this.updateDisplay();
 	}
@@ -195,7 +194,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	/**
 	 * Find the changes that have occurred in the area since the last copy of the area was received, and add them to the toAnimate map.
 	 */
-	private void findChanges() {
+	private void addChanges() {
 
 		if (this.previousAreaObjects == null) {
 			//Nothing to animate!
