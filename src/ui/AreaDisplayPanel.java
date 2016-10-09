@@ -66,6 +66,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	//For animation.
 	private List<GameObject> currentAreaObjects = new ArrayList<GameObject>();
 	private List<GameObject> previousAreaObjects = new ArrayList<GameObject>();
+
 	private Map<String, AnimationObject> toAnimate = new HashMap<String, AnimationObject>();
 
 	// Current Rotational view 0-3
@@ -219,6 +220,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 							aObj = new AnimationObject(this, currentObj, isMain, "NORTH", startX, startY, aimX, aimY);
 						}
 
+						//Player is animating.
+						if (aObj.isMainPlayer()) {
+							this.animating = true;
+						}
+
 						this.toAnimate.put(currentObj.getId(), aObj);
 
 					}
@@ -338,14 +344,13 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		g.drawImage(offScreen, 0, 0, this);
 
-
-
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
+		/*
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+		*/
 
 	}
 
@@ -490,9 +495,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 							this.toAnimate.remove(ao.getGameObj().getId());
 
 						}
-
 					}
-
 				}
 
 				else {
@@ -521,7 +524,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 				}
 			} else {
 				if (layer == 3) {
-					g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
+					g.drawImage(tileImage, finalX - adjustX, finalY - adjustY + 1, null);
 				}
 			}
 		}

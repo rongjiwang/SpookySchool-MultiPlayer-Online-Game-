@@ -12,10 +12,7 @@ public class AnimationObject {
 	private int startX;
 	private int startY;
 	private int aimX;
-
-
 	private int aimY;
-
 	private boolean mainPlayer;
 
 	private String imgToken;
@@ -141,5 +138,15 @@ public class AnimationObject {
 	public void setAimY(int aimY) {
 		this.aimY = aimY;
 	}
+
+	public int getAimX() {
+		return this.aimX;
+	}
+
+	public int getAimY() {
+		return this.aimY;
+	}
+
+
 
 }
