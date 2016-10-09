@@ -114,6 +114,12 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	 */
 	public void processBundle(Bundle bundle) {
 
+		//Set the footer message if there is one in the bundle.
+		if (bundle.getMessage() != null) {
+			overlayPanel.setFooterMessage(bundle.getMessage());
+		}
+
+
 		this.toAnimate.clear();
 
 		if (this.currentArea != null) {
@@ -130,22 +136,31 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			this.currentArea = this.mainPlayer.getCurrentArea();
 			this.currentAreaObjects = bundle.getAreaObjects();
 			this.displayRoomName();
+
+			//Dont try to find changes!
+			this.updateDisplay();
+			return;
+
 		} else {
 			String oldArea = currentArea.getAreaName();
 
 			if (!oldArea.equals(this.mainPlayer.getCurrentArea().getAreaName())) {
 				this.currentArea = this.mainPlayer.getCurrentArea();
 				this.displayRoomName();
+
+				this.currentAreaObjects = bundle.getAreaObjects();
+				this.currentArea = this.mainPlayer.getCurrentArea();
+
+				//Dont try to find changes!
+				this.updateDisplay();
+				return;
 			}
 
 			this.currentAreaObjects = bundle.getAreaObjects();
 			this.currentArea = this.mainPlayer.getCurrentArea();
 		}
 
-		//Set the footer message if there is one in the bundle.
-		if (bundle.getMessage() != null) {
-			overlayPanel.setFooterMessage(bundle.getMessage());
-		}
+
 
 		this.findChanges();
 
@@ -236,10 +251,12 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	 * Updates the board.
 	 */
 	public void updateDisplay() {
+
 		while (this.toAnimate.size() > 0) {
 			this.repaint();
 		}
-		this.repaint(); //Repaint either way!
+
+		//this.repaint(); //Repaint either way!
 	}
 
 
@@ -322,11 +339,12 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		g.drawImage(offScreen, 0, 0, this);
 
 		/*
-		try {
-			Thread.sleep(0);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+		
 		*/
 
 	}
@@ -435,8 +453,17 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					if (this.toAnimate.get(p.getId()) != null) {
 
 						AnimationObject ao = this.toAnimate.get(p.getId());
-						tileImage = spriteMap.getImage(getRotatedAnimatedToken(ao.getNextImgToken(), p.getDirection()));
 
+						/*
+						//Rotated x and y at finish position of player.
+						view = getRotatedView(x, y, currentArea.width, currentArea.height);
+						viewX = view[0];
+						viewY = view[1];
+						ao.setAimX(viewX);
+						ao.setAimY(viewY);
+						*/
+
+						tileImage = spriteMap.getImage(getRotatedAnimatedToken(ao.getNextImgToken(), p.getDirection()));
 
 						if (ao.isMainPlayer()) {
 							this.animating = true;
@@ -461,6 +488,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 							this.mainPlayerXBuff = 0;
 							this.mainPlayerYBuff = 0;
 							this.toAnimate.remove(ao.getGameObj().getId());
+
 						}
 
 					}

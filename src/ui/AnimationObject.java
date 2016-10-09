@@ -12,6 +12,26 @@ public class AnimationObject {
 	private int startX;
 	private int startY;
 	private int aimX;
+
+	public int getAimX() {
+		return aimX;
+	}
+
+
+	public void setAimX(int aimX) {
+		this.aimX = aimX;
+	}
+
+
+	public int getAimY() {
+		return aimY;
+	}
+
+
+	public void setAimY(int aimY) {
+		this.aimY = aimY;
+	}
+
 	private int aimY;
 
 	private boolean mainPlayer;
@@ -102,7 +122,6 @@ public class AnimationObject {
 		}
 
 		String token = gameObj.getToken().substring(0, gameObj.getToken().length() - 1) + String.valueOf(nextToken);
-		System.out.println("returning: " + token);
 		return token;
 	}
 
