@@ -107,14 +107,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			public void run() {
 				while (true) {
 					tick();
-
-					try {
-						sleep(4);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
 				}
 			}
 		};
@@ -128,11 +120,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	 * Process the received bundle. Display game according to the bundle.
 	 */
 	public void processBundle(Bundle bundle) {
-
-		//Set the footer message if there is one in the bundle.
-		if (bundle.getMessage() != null) {
-			overlayPanel.setFooterMessage(bundle.getMessage());
-		}
 
 
 		if (this.currentArea != null) {
@@ -151,6 +138,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			this.displayRoomName();
 			this.centerPlayer(); //Dont change this bit.
 
+			//Set the footer message if there is one in the bundle.
+			if (bundle.getMessage() != null) {
+				overlayPanel.setFooterMessage(bundle.getMessage());
+			}
+
 			//Dont try to find changes since we just entered the game!
 			//this.updateDisplay();
 			//return;
@@ -163,6 +155,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 				this.currentArea = this.mainPlayer.getCurrentArea();
 				this.currentAreaObjects = bundle.getAreaObjects();
+
+				//Set the footer message if there is one in the bundle.
+				if (bundle.getMessage() != null) {
+					overlayPanel.setFooterMessage(bundle.getMessage());
+				}
 
 				this.toAnimate.clear(); //New area so clear the animation list.	
 				this.centerPlayer();
@@ -520,9 +517,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 								this.animating = false;
 							}
 
-							System.out.println("Finished Animation: Start at x: " + ao.getStartX() + " y: "
+							/*System.out.println("Finished Animation: Start at x: " + ao.getStartX() + " y: "
 									+ ao.getStartY() + " Finish at x: " + ao.getAimX() + " y: " + ao.getAimY()
-									+ " main player: " + this.mainPlayer);
+									+ " main player: " + this.mainPlayer);*/
 
 							this.mainPlayerXBuff = 0;
 							this.mainPlayerYBuff = 0;
