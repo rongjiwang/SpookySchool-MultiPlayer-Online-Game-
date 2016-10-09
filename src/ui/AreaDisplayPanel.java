@@ -511,7 +511,10 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 								this.animating = false;
 							}
 
-							System.out.println("Removed");
+							System.out.println("Finished Animation: Starting at x: " + ao.getStartX() + " y: "
+									+ ao.getStartY() + " Finishing: x: " + ao.getAimX() + " y: " + ao.getAimY()
+									+ " main player: " + this.mainPlayer);
+
 							this.mainPlayerXBuff = 0;
 							this.mainPlayerYBuff = 0;
 							this.toAnimate.remove(index);
