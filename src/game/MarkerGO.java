@@ -25,7 +25,7 @@ public class MarkerGO implements GameObject {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the "base" game object that this marker represents.
 	 */
 	public GameObject getBaseGO() {
@@ -44,7 +44,7 @@ public class MarkerGO implements GameObject {
 
 	@Override
 	public Position getPosition() {
-		return null;
+		return this.position;
 	}
 
 	@Override
