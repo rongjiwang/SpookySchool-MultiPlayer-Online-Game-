@@ -309,9 +309,37 @@ public class Parser {
 			Element baseGO = save.createElement("base");
 			baseGO.setAttribute("objectType", base.getClass().toString());
 			
+			Element tokenElement = save.createElement("token");
+			Text tokenValue = save.createTextNode(token);
+			tokenElement.appendChild(tokenValue);
+			
+			Element idElement = save.createElement("id");
+			Text idValue = save.createTextNode(id);
+			tokenElement.appendChild(idValue);
+
+			Element descElement = save.createElement("desciption");
+			Text descValue = save.createTextNode(description);
+			tokenElement.appendChild(descValue);
+			
+			Element positonElement = save.createElement("position");
+			Element x = save.createElement("x");
+			Element y = save.createElement("y");
+			Text xVal = save.createTextNode("" + pos.getPosX());
+			Text yVal = save.createTextNode("" + pos.getPosY());
+			x.appendChild(xVal);
+			y.appendChild(yVal);
+			positonElement.appendChild(x);
+			positonElement.appendChild(y);
+			
+			baseGO.appendChild(tokenElement);
+			baseGO.appendChild(idElement);
+			baseGO.appendChild(descElement);
+			baseGO.appendChild(positonElement);
+			
+			return baseGO;
 			
 		}
-		
+		return null;
 		
 	}
 	
