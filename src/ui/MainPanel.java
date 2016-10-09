@@ -19,14 +19,18 @@ public class MainPanel extends JPanel{
 	private JPanel game;
 	private JPanel chat;
 	private JPanel inv;
+	private GameFrame home;
+	private ButtonPanel buttons;
 	
-	public MainPanel(JPanel gamePanel, ChatPanel chatPanel, InventoryPanel invPanel, UIImageMap imageMap){
+	public MainPanel(GameFrame home, JPanel gamePanel, ChatPanel chatPanel, InventoryPanel invPanel, ButtonPanel buttons, UIImageMap imageMap){
 		setLayout(new BorderLayout(20, 0));
+		this.home = home;
+		this.buttons = buttons;
 		
 		game = new UIPanel(gamePanel, 600, 500, imageMap);
 		chat = new UIPanel(chatPanel, 400, 220, imageMap);
 		inv = new UIPanel(invPanel, 262, 162, imageMap);
-		ButtonPanel buttons = new ButtonPanel(imageMap);
+		
 		this.add(game, BorderLayout.NORTH);
 		
 		JPanel left = new JPanel(new BorderLayout(20, 0));

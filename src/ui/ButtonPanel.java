@@ -22,12 +22,14 @@ public class ButtonPanel extends JPanel{
 	private JLabel about;
 	private JLabel save;
 	private UIImageMap imageMap;
+	private GameFrame home;
 		
-	public ButtonPanel(UIImageMap imageMap){
+	public ButtonPanel(GameFrame home, UIImageMap imageMap){
 		setLayout(new FlowLayout());
 		
 		//sets imageMap
 		this.imageMap = imageMap;
+		this.home = home;
 		
 		//sets icons
 		setIcons();
@@ -77,11 +79,11 @@ public class ButtonPanel extends JPanel{
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if(e.getSource() == info){ //info has been pressed
-
+				home.setGlass(true);
 			} else if(e.getSource() == about){ //about has been pressed
-
+				home.setGlass(false);
 			} else { //save game has been pressed
-				
+				//TODO: Save functionality needs to be added
 			}
 		}
 
