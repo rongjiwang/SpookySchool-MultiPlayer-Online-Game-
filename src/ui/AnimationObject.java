@@ -31,6 +31,8 @@ public class AnimationObject {
 		this.aimX = aimX;
 		this.aimY = aimY;
 
+
+
 		System.out.println("New Animation: Starting at x: " + this.startX + " y: " + this.startY + " Finishing: x: "
 				+ this.aimX + " y: " + this.aimY + " main player: " + this.mainPlayer);
 	}
