@@ -146,11 +146,44 @@ public class SpriteMap {
 		spriteMap.put("Ch2", loadImage("chairTwo2.png"));
 		spriteMap.put("Ch3", loadImage("chairTwo3.png"));
 		
+		// principle chair
+		spriteMap.put("pc0", loadImage("principleChair0.png"));
+		spriteMap.put("pc1", loadImage("principleChair1.png"));
+		spriteMap.put("pc2", loadImage("principleChair2.png"));
+		spriteMap.put("pc3", loadImage("principleChair3.png"));
+		
+		// principle desk
+		spriteMap.put("pd0", loadImage("principleDesk0.png"));
+		spriteMap.put("pd1", loadImage("principleDesk1.png"));
+		spriteMap.put("pd2", loadImage("principleDesk2.png"));
+		spriteMap.put("pd3", loadImage("principleDesk3.png"));
+		
+		// tv
+		spriteMap.put("tv0", loadImage("tv0.png"));
+		spriteMap.put("tv1", loadImage("tv1.png"));
+		spriteMap.put("tv2", loadImage("tv2.png"));
+		spriteMap.put("tv3", loadImage("tv3.png"));
+		
 		// couch
 		spriteMap.put("co0", loadImage("couch0.png"));
 		spriteMap.put("co1", loadImage("couch1.png"));
 		spriteMap.put("co2", loadImage("couch2.png"));
 		spriteMap.put("co3", loadImage("couch3.png"));
+		
+		// paintings
+		spriteMap.put("1P0", loadImage("paintingOne0.png"));
+		spriteMap.put("1P1", loadImage("paintingOne1.png"));
+		spriteMap.put("1P2", loadImage("paintingOne2.png"));
+		spriteMap.put("1P3", loadImage("paintingOne3.png"));
+		spriteMap.put("2P0", loadImage("paintingTwo0.png"));
+		spriteMap.put("2P1", loadImage("paintingTwo1.png"));
+		spriteMap.put("2P2", loadImage("paintingTwo2.png"));
+		spriteMap.put("2P3", loadImage("paintingTwo3.png"));
+		spriteMap.put("3P0", loadImage("paintingThree0.png"));
+		spriteMap.put("3P1", loadImage("paintingThree1.png"));
+		spriteMap.put("3P2", loadImage("paintingThree2.png"));
+		spriteMap.put("3P3", loadImage("paintingThree3.png"));
+				
 		
 		
 		

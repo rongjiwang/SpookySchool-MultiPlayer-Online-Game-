@@ -16,4 +16,4 @@ Staff_hallway staffHallway.txt
 Staff_toilet staffToilet.txt
 Staff_toilet2 staffToilet2.txt
 Room_to_nowhere roomToNowhere.txt
-Principles_office  principlesOffice.txt
+Principles_office principlesOffice.txt

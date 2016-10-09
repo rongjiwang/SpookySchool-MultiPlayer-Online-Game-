@@ -5,4 +5,10 @@ chair3 ch2 Dorm_room 6 9
 chair4 ch1 Dorm_room 7 8
 chair5 Ch2 Dorm_room 2 2
 chair6 Ch2 Dorm_room 4 2
+chair7 Ch0 Staff_room 5 2
+chair8 Ch2 Staff_room 5 4
+chair9 ch3 Staff_room 6 7
+chair10 ch1 Staff_room 8 7
+chair11 ch2 Staff_room 7 8
 table1 t0 Dorm_room 13 7
+chair11 pc1 Principles_office 7 3
