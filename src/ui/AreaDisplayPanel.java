@@ -490,13 +490,14 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					//If this player needs to be animated, change final x and final y for animation.
 					if (ao != null) {
 
+						/*
 						//Rotated x and y at finish position of player.
 						view = getRotatedView(x, y, currentArea.width, currentArea.height);
 						viewX = view[0];
 						viewY = view[1];
 						ao.setAimX(viewX);
 						ao.setAimY(viewY);
-
+						*/
 
 						tileImage = spriteMap.getImage(getRotatedAnimatedToken(ao.getNextImgToken(), p.getDirection()));
 
@@ -525,7 +526,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 							this.mainPlayerXBuff = 0;
 							this.mainPlayerYBuff = 0;
-							this.toAnimate.remove(index);
+							this.toAnimate.remove(index); //FIXME: Index may be changed?
 
 						}
 					}
@@ -845,11 +846,13 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 
 	@Override
-	public void keyReleased(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {
+	}
 
 
 	@Override
-	public void keyTyped(KeyEvent e) {}
+	public void keyTyped(KeyEvent e) {
+	}
 
 
 	@Override

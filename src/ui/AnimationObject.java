@@ -15,9 +15,7 @@ public class AnimationObject {
 	private int aimY;
 	private boolean mainPlayer;
 
-	private String imgToken;
 	private int current = 0;
-	private int tokenCurrent = 0;
 
 	public AnimationObject(AreaDisplayPanel adp, GameObject gameObj, boolean mainPlayer, String direction, int startX,
 			int startY, int aimX, int aimY) {
@@ -30,6 +28,8 @@ public class AnimationObject {
 		this.startY = startY;
 		this.aimX = aimX;
 		this.aimY = aimY;
+
+		System.out.println(Math.abs((startY - aimY)));
 
 		if (Math.abs(startX - aimX) > 1 || (startY - aimY) > 1) {
 			throw new Error("Only allowed movement of ONE position per animation object!");
@@ -105,7 +105,7 @@ public class AnimationObject {
 			}
 		}
 
-		String token = gameObj.getToken().substring(0, gameObj.getToken().length() - 1) + String.valueOf(0);
+		String token = gameObj.getToken().substring(0, gameObj.getToken().length() - 1) + String.valueOf(nextToken);
 		return token;
 	}
 
@@ -151,7 +151,5 @@ public class AnimationObject {
 	public int getAimY() {
 		return this.aimY;
 	}
-
-
 
 }
