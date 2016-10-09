@@ -19,8 +19,8 @@ public class ButtonPanel extends JPanel{
 	private ImageIcon[] icons;
 	private ButtonListen listen;
 	private JLabel info;
-	private JLabel quit;
-	private JLabel players;
+	private JLabel about;
+	private JLabel save;
 	private UIImageMap imageMap;
 		
 	public ButtonPanel(UIImageMap imageMap){
@@ -37,18 +37,18 @@ public class ButtonPanel extends JPanel{
 		
 		//creates 3 buttons
 		info = new JLabel(icons[0]);
-		players = new JLabel(icons[2]);
-		quit = new JLabel(icons[4]);
+		about = new JLabel(icons[2]);
+		save = new JLabel(icons[4]);
 
 		//assigns button listener
-		players.addMouseListener(listen);
 		info.addMouseListener(listen);
-		quit.addMouseListener(listen);
+		about.addMouseListener(listen);
+		save.addMouseListener(listen);
 
 		//adds 3 buttons to panel
 		this.add(info);
-		this.add(players);
-		this.add(quit);
+		this.add(about);
+		this.add(save);
 		
 		this.setOpaque(false);
 	}
@@ -61,10 +61,10 @@ public class ButtonPanel extends JPanel{
 
 		icons[0] = new ImageIcon(imageMap.getImage("ib"));
 		icons[1] = new ImageIcon(imageMap.getImage("ibhi"));
-		icons[2] = new ImageIcon(imageMap.getImage("pb"));
-		icons[3] = new ImageIcon(imageMap.getImage("pbhi"));
-		icons[4] = new ImageIcon(imageMap.getImage("qb"));
-		icons[5] = new ImageIcon(imageMap.getImage("qbhi"));
+		icons[2] = new ImageIcon(imageMap.getImage("ab"));
+		icons[3] = new ImageIcon(imageMap.getImage("abhi"));
+		icons[4] = new ImageIcon(imageMap.getImage("sab"));
+		icons[5] = new ImageIcon(imageMap.getImage("sabhi"));
 	}
 	
 	/**
@@ -78,38 +78,33 @@ public class ButtonPanel extends JPanel{
 		public void mouseClicked(MouseEvent e) {
 			if(e.getSource() == info){ //info has been pressed
 
-			} else if(e.getSource() == players){ //players has been pressed
+			} else if(e.getSource() == about){ //about has been pressed
 
-			} else { //quit game has been pressed
-				String ObjButtons[] = {"Yes","No"};
-				int PromptResult = JOptionPane.showOptionDialog(null,"Are you sure you want to exit?","Quit Spooky School?",JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,ObjButtons,ObjButtons[1]);
-				if(PromptResult==JOptionPane.YES_OPTION)
-				{
-					System.exit(0);
-				}
+			} else { //save game has been pressed
+				
 			}
 		}
 
 		
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			if(e.getSource() == info){ //info is highlighted
+			if(e.getSource() == info){ //info has been pressed
 				info.setIcon(icons[1]);
-			} else if(e.getSource() == players){ //players is highlighted
-				players.setIcon(icons[3]);
-			} else { //quit game is highlighted
-				quit.setIcon(icons[5]);
+			} else if(e.getSource() == about){ //about has been pressed
+				about.setIcon(icons[3]);
+			} else { //save game has been pressed
+				save.setIcon(icons[5]);
 			}
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			if(e.getSource() == info){ //info is unhighlighted
+			if(e.getSource() == info){ //info has been pressed
 				info.setIcon(icons[0]);
-			} else if(e.getSource() == players){ //player is highlighted
-				players.setIcon(icons[2]);
-			} else { //info is unhighlighted
-				quit.setIcon(icons[4]);
+			} else if(e.getSource() == about){ //about has been pressed
+				about.setIcon(icons[2]);
+			} else { //save game has been pressed
+				save.setIcon(icons[4]);
 			}
 		}
 		

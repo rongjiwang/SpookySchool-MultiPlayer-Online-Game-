@@ -17,7 +17,7 @@ import network.Client;
 
 public class GameFrame extends JFrame implements WindowListener {
 
-	private JPanel northPanel;
+	private JPanel mainPanel;
 	private JPanel southPanel;
 	private InventoryPanel invPanel;
 	private ChatPanel chatPanel;
@@ -29,8 +29,7 @@ public class GameFrame extends JFrame implements WindowListener {
 
 	private AreaDisplayPanel areaDisplayPanel; //This pane displays all of the other panels
 	private AreaDisplayPanel2D areaDisplayPanel2D; //This pane displays all of the other panels
-	private DebugDisplay debugDisplay;
-
+	
 	private Client client;
 	private String name;
 	private OverlayPanel overlayPanel;
@@ -54,13 +53,10 @@ public class GameFrame extends JFrame implements WindowListener {
 		
 
 		//creates inventory panel
-		invPanel = new InventoryPanel(imageMap, this.client, this.overlayPanel);
+		invPanel = new InventoryPanel(this.imageMap, this.client, this.overlayPanel);
 
 		//creates chat panel
-		chatPanel = new ChatPanel(this, name, client, imageMap);
-
-		//temp, delete after
-		debugDisplay = new DebugDisplay(areaDisplayPanel);
+		chatPanel = new ChatPanel(this, this.name, this.client, this.imageMap);
 
 		setPanels();
 
@@ -76,9 +72,6 @@ public class GameFrame extends JFrame implements WindowListener {
 		this.setVisible(true); //Display the window
 	}
 
-	public void updateDebug(String name) {
-		debugDisplay.updateDisplay();
-	}
 
 	//refocuses on game window (after sending a message)
 	public void refocus() {
@@ -89,14 +82,11 @@ public class GameFrame extends JFrame implements WindowListener {
 	 * This method is called to set the default main and side panels upon opening the game.
 	 */
 	public void setPanels() {
-		//leftPanel
-		
-		northPanel = new MainPanel(areaDisplayPanel, imageMap);
-		this.add(northPanel, BorderLayout.NORTH);
-
-		southPanel = new SidePanel(chatPanel, invPanel, imageMap);
-		this.add(southPanel, BorderLayout.SOUTH);
-		
+		//mainPanel
+		mainPanel = new MainPanel(areaDisplayPanel, chatPanel, invPanel, imageMap);
+		this.add(mainPanel, BorderLayout.NORTH);
+	
+	
 		this.pack();
 	}
 
@@ -116,8 +106,8 @@ public class GameFrame extends JFrame implements WindowListener {
 		this.areaDisplayPanel.processBundle(bundle);//Temporarily only passing bundle to the renderer.
 	}
 
-	public DebugDisplay getDebugDisplay() {
-		return debugDisplay;
+	public String getDebugDisplay() {
+		return null;
 	}
 
 	@Override
