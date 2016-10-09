@@ -126,12 +126,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	 * Redisplay the area.
 	 */
 	public void tick() {
-
 		if (this.currentArea != null) {
 			this.updateDisplay();
 		}
-
-
 	}
 
 
