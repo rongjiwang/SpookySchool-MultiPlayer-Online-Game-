@@ -9,9 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.JPanel;
 
@@ -64,10 +62,13 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 
 	//For animation.
+	private Thread thread;
 	private List<GameObject> currentAreaObjects = new ArrayList<GameObject>();
 	private List<GameObject> previousAreaObjects = new ArrayList<GameObject>();
+	private List<AnimationObject> toAnimate = new ArrayList<AnimationObject>();
+	//private Map<String, AnimationObject> toAnimate = new HashMap<String, AnimationObject>();
 
-	private Map<String, AnimationObject> toAnimate = new HashMap<String, AnimationObject>();
+
 
 	// Current Rotational view 0-3
 	private int view;
@@ -96,19 +97,43 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		this.spriteMap = spriteMap;
 		this.setLayout(new BorderLayout());
 
-
 		validate();
-
 		this.client = client;
-
 		this.gameFrame = gf;
+
+
+		this.thread = new Thread() {
+			@Override
+			public void run() {
+				while (true) {
+					tick();
+					/*
+					try {
+						sleep(4);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					*/
+				}
+			}
+		};
+
 	}
 
-	public void setOverLay(OverlayPanel overlayPanel) {
-		this.overlayPanel = overlayPanel;
-		overlayPanel.setOpaque(false);
-		this.add(overlayPanel, BorderLayout.CENTER);
+
+	/**
+	 * Redisplay the area.
+	 */
+	public void tick() {
+
+		if (this.currentArea != null) {
+			this.updateDisplay();
+		}
+
+
 	}
+
 
 	/**
 	 * Process the received bundle. Display game according to the bundle.
@@ -120,11 +145,13 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			overlayPanel.setFooterMessage(bundle.getMessage());
 		}
 
+		/*
 		if (this.currentArea != null) {
 			//Update the display to show objects in their correct places.
 			this.centerPlayer();
 			this.updateDisplay();
 		}
+		*/
 
 		this.mainPlayer = bundle.getPlayerObj();
 
@@ -136,8 +163,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			this.displayRoomName();
 
 			//Dont try to find changes since we just entered the game!
-			this.updateDisplay();
-			return;
+			//this.updateDisplay();
+			//return;
 
 		} else {
 			String oldArea = currentArea.getAreaName();
@@ -153,8 +180,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 				this.currentArea = this.mainPlayer.getCurrentArea();
 
 				//Dont try to find changes!
-				this.updateDisplay();
-				return;
+				//this.updateDisplay();
+				//return;
 			}
 
 			this.currentAreaObjects = bundle.getAreaObjects();
@@ -165,7 +192,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		this.findChanges();
 
-		this.updateDisplay();
+		//this.updateDisplay();
 	}
 
 	/**
@@ -177,8 +204,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			//Nothing to animate!
 			return;
 		}
-
-		System.out.println("new changes");
 
 		for (int i = 0; i < this.currentAreaObjects.size(); i++) {
 			for (int j = 0; j < this.previousAreaObjects.size(); j++) {
@@ -227,7 +252,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 							this.animating = true;
 						}
 
-						this.toAnimate.put(currentObj.getId(), aObj);
+						this.toAnimate.add(aObj);
 
 					}
 
@@ -259,12 +284,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	 * Updates the board.
 	 */
 	public void updateDisplay() {
-
-		while (this.toAnimate.size() > 0) {
-			this.repaint();
-		}
-
-		//this.repaint(); //Repaint either way!
+		this.repaint(); //Repaint either way!
 	}
 
 
@@ -345,15 +365,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		}
 
 		g.drawImage(offScreen, 0, 0, this);
-
-		/*
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-		*/
-
 	}
 
 	/**
@@ -456,11 +467,22 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					adjustX = (tileImage.getWidth(null) - tileWidth);
 					adjustY = (tileImage.getHeight(null) - tileHeight);
 
+
+					AnimationObject ao = null;
+
+					int index;
+
+					//Find the animation object that matches the playerObject.
+					outer: for (index = 0; index < this.toAnimate.size(); index++) {
+						if (this.toAnimate.get(index).getGameObj().getId().equals(p.getId())) {
+							ao = this.toAnimate.get(index);
+							break outer;
+						}
+					}
+
+
 					//If this player needs to be animated, change final x and final y for animation.
-					if (this.toAnimate.get(p.getId()) != null) {
-
-						AnimationObject ao = this.toAnimate.get(p.getId());
-
+					if (ao != null) {
 
 						//Rotated x and y at finish position of player.
 						view = getRotatedView(x, y, currentArea.width, currentArea.height);
@@ -494,7 +516,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 							System.out.println("Removed");
 							this.mainPlayerXBuff = 0;
 							this.mainPlayerYBuff = 0;
-							this.toAnimate.remove(ao.getGameObj().getId());
+							this.toAnimate.remove(index);
 
 						}
 					}
@@ -732,6 +754,12 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		return null;
 	}
 
+
+	public void setOverLay(OverlayPanel overlayPanel) {
+		this.overlayPanel = overlayPanel;
+		overlayPanel.setOpaque(false);
+		this.add(overlayPanel, BorderLayout.CENTER);
+	}
 
 	/**
 	 * Used for getting the next frame of the rain images. Delay is used to make sure, rain frames are not changes
