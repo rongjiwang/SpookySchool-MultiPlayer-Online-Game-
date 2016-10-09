@@ -107,28 +107,20 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			public void run() {
 				while (true) {
 					tick();
-					/*
+
 					try {
 						sleep(4);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					*/
+
 				}
 			}
 		};
 
-	}
+		thread.start();
 
-
-	/**
-	 * Redisplay the area.
-	 */
-	public void tick() {
-		if (this.currentArea != null) {
-			this.updateDisplay();
-		}
 	}
 
 
@@ -145,7 +137,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		if (this.currentArea != null) {
 			//Update the display to show objects in their correct places.
-			//this.centerPlayer();
 			//this.updateDisplay();
 		}
 
@@ -158,7 +149,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			this.currentArea = this.mainPlayer.getCurrentArea();
 			this.currentAreaObjects = bundle.getAreaObjects();
 			this.displayRoomName();
-			this.centerPlayer();
+			this.centerPlayer(); //Dont change this bit.
 
 			//Dont try to find changes since we just entered the game!
 			//this.updateDisplay();
@@ -168,14 +159,18 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			String oldArea = currentArea.getAreaName();
 
 			if (!oldArea.equals(this.mainPlayer.getCurrentArea().getAreaName())) {
-
-				this.toAnimate.clear(); //New area so clear the animation list.		
-				this.currentArea = this.mainPlayer.getCurrentArea();
 				this.displayRoomName();
+
+				this.currentArea = this.mainPlayer.getCurrentArea();
 				this.currentAreaObjects = bundle.getAreaObjects();
+
+				this.toAnimate.clear(); //New area so clear the animation list.	
 				this.centerPlayer();
+				this.repaint();
+				return;
 
 				//Dont try to find changes!
+				//System.out.println("new room");
 				//this.updateDisplay();
 				//return;
 			}
@@ -184,12 +179,19 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			this.currentArea = this.mainPlayer.getCurrentArea();
 		}
 
-
-
 		this.addChanges();
 
 		//this.updateDisplay();
 	}
+
+	/**
+	 * Redisplay the area.
+	 */
+	public void tick() {
+		this.updateDisplay();
+	}
+
+
 
 	/**
 	 * Find the changes that have occurred in the area since the last copy of the area was received, and add them to the toAnimate map.

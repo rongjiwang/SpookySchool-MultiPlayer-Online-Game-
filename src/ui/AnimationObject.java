@@ -100,7 +100,7 @@ public class AnimationObject {
 			}
 		}
 
-		String token = gameObj.getToken().substring(0, gameObj.getToken().length() - 1) + String.valueOf(nextToken);
+		String token = gameObj.getToken().substring(0, gameObj.getToken().length() - 1) + String.valueOf(0);
 		return token;
 	}
 
