@@ -55,6 +55,12 @@ public class UIImageMap {
 		spriteMap.put("hi",loadImage("highlight.png"));
 		
 		//buttons
+		spriteMap.put("ab",loadImage("about.png"));
+		spriteMap.put("abhi",loadImage("abouthighlight.png"));
+		spriteMap.put("ob", loadImage("ok.png"));
+		spriteMap.put("obhi",loadImage("okhighlight.png"));
+		spriteMap.put("sab",loadImage("save.png"));
+		spriteMap.put("sabhi", loadImage("savehighlight.png"));
 		spriteMap.put("ib",loadImage("info.png"));
 		spriteMap.put("ibhi",loadImage("infohighlight.png"));
 		spriteMap.put("pb",loadImage("players.png"));
@@ -67,6 +73,7 @@ public class UIImageMap {
 		spriteMap.put("ubhi",loadImage("uparrowhigh.png"));
 		spriteMap.put("db",loadImage("downarrow.png"));
 		spriteMap.put("dbhi", loadImage("downarrowhigh.png"));
+		
 		
 		//inv background
 		spriteMap.put("invBack",loadImage("invBackground.png"));

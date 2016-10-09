@@ -148,9 +148,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	 * Updates the board.
 	 */
 	public void updateDisplay() {
-		if (gameFrame.getDebugDisplay() != null) {
-			gameFrame.getDebugDisplay().updateDisplay();
-		}
 		centerPlayer();
 		this.repaint();
 	}

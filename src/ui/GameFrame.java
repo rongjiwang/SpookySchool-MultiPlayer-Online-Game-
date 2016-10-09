@@ -17,20 +17,20 @@ import network.Client;
 
 public class GameFrame extends JFrame implements WindowListener {
 
-	private JPanel northPanel;
-	private JPanel southPanel;
+	private JPanel mainPanel;
+	private InfoPanel infoPanel;
+
 	private InventoryPanel invPanel;
 	private ChatPanel chatPanel;
 	private UIImageMap imageMap;
 	private SpriteMap spriteMap;
-
+	private ButtonPanel buttons;
 
 	//private boolean render3D = true; //FIXME **CHANGE TO FALSE TESTING 2D RENDERING**
 
 	private AreaDisplayPanel areaDisplayPanel; //This pane displays all of the other panels
 	private AreaDisplayPanel2D areaDisplayPanel2D; //This pane displays all of the other panels
-	private DebugDisplay debugDisplay;
-
+	
 	private Client client;
 	private String name;
 	private OverlayPanel overlayPanel;
@@ -51,19 +51,25 @@ public class GameFrame extends JFrame implements WindowListener {
 		this.areaDisplayPanel = new AreaDisplayPanel(this.client, this, spriteMap);
 		this.overlayPanel = new OverlayPanel(areaDisplayPanel, spriteMap);
 		this.areaDisplayPanel.setOverLay(this.overlayPanel);
-		
+		this.infoPanel = new InfoPanel(getContentPane(), this, imageMap);
+		this.buttons = new ButtonPanel(this, imageMap);
 
 		//creates inventory panel
-		invPanel = new InventoryPanel(imageMap, this.client, this.overlayPanel);
+		invPanel = new InventoryPanel(this.imageMap, this.client, this.overlayPanel);
 
 		//creates chat panel
-		chatPanel = new ChatPanel(this, name, client, imageMap);
+		chatPanel = new ChatPanel(this, this.name, this.client, this.imageMap);
 
-		//temp, delete after
-		debugDisplay = new DebugDisplay(areaDisplayPanel);
+		//adds all panels to the main Panel;
+		mainPanel = new MainPanel(this, areaDisplayPanel, chatPanel, invPanel, buttons, imageMap);
+		this.add(mainPanel, BorderLayout.NORTH);
+	
+		//packs panel sizes
+		this.pack();
 
-		setPanels();
-
+		//creates overlay on glasspanel.
+		setGlassPane(infoPanel);
+		
 		this.addWindowListener(this); //This frame also implements window listener so "add it"
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //Don't close window when x button is pressed. Allows us to get user confirmation.
 
@@ -71,33 +77,19 @@ public class GameFrame extends JFrame implements WindowListener {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension scrnsize = toolkit.getScreenSize();
 		setBounds((scrnsize.width - getWidth()) / 2, (scrnsize.height - getHeight()) / 2, getWidth(), getHeight());
-		//debugDisplay.updateDisplay();
-
+	
 		this.setVisible(true); //Display the window
 	}
 
-	public void updateDebug(String name) {
-		debugDisplay.updateDisplay();
-	}
 
 	//refocuses on game window (after sending a message)
 	public void refocus() {
 		areaDisplayPanel.requestFocusInWindow();
 	}
-
-	/**
-	 * This method is called to set the default main and side panels upon opening the game.
-	 */
-	public void setPanels() {
-		//leftPanel
-		
-		northPanel = new MainPanel(areaDisplayPanel, imageMap);
-		this.add(northPanel, BorderLayout.NORTH);
-
-		southPanel = new SidePanel(chatPanel, invPanel, imageMap);
-		this.add(southPanel, BorderLayout.SOUTH);
-		
-		this.pack();
+	
+	public void setGlass(boolean info){
+		infoPanel.setInfo(info);
+		getGlassPane().setVisible(true);
 	}
 
 	/**
@@ -112,12 +104,7 @@ public class GameFrame extends JFrame implements WindowListener {
 		invPanel.addItems(bundle.getPlayerObj().getInventory());
 
 		//passes bundle to render window
-		
 		this.areaDisplayPanel.processBundle(bundle);//Temporarily only passing bundle to the renderer.
-	}
-
-	public DebugDisplay getDebugDisplay() {
-		return debugDisplay;
 	}
 
 	@Override

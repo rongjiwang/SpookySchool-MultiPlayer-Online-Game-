@@ -18,8 +18,7 @@ public class UIPanel extends JPanel {
 	private JPanel panel;
 	private int width;
 	private int height;
-	private int panelNum;
-	
+		
 	private JPanel background;
 	
 	private JLabel topLeft;
@@ -34,33 +33,22 @@ public class UIPanel extends JPanel {
 	
 	private UIImageMap imageMap;
 	
-	//private BufferedImage[] backgroundAssets;
 			
-	public UIPanel(JPanel panel, int num, UIImageMap imageMap){
+	public UIPanel(JPanel panel, int width, int height, UIImageMap imageMap){
 		super();
-		this.panelNum = num;
+		
+		this.width = width+12;
+		this.height = height+12;
+		this.panel = panel;
+		
 		this.imageMap = imageMap;
 		
 		JLayeredPane layers = new JLayeredPane();
 		layers.setLayout(null);
 		
-		switch(num){
-			case 1 : 	width = 612;
-						height = 512;
-						break;
-			case 2 : 	width = 262;
-						height = 162;
-						break;
-			case 3 : 	width = 450;
-						height = 220;
-						break;
-			default :	width = 0;
-						height = 0;
-						break;
-		}
 		layers.setPreferredSize(new Dimension(width, height));
 		
-	//	setBackgroundAssets();
+
 		setLabels();
 		
 		//gets background image and assigns it to JLabel background
@@ -92,9 +80,8 @@ public class UIPanel extends JPanel {
 		layers.add(background, new Integer(0), 0);
 	
 		//assigns render panel and places in correctly
-		this.panel = panel;
-		panel.setBounds(6,6,(width-12),(height-12));
-		layers.add(panel, new Integer(1), 0);
+		this.panel.setBounds(6,6,(width-12),(height-12));
+		layers.add(this.panel, new Integer(1), 0);
 		setOpaque(false);
 		this.add(layers);
 		this.setVisible(true);
