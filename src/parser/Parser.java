@@ -242,8 +242,10 @@ public class Parser {
 		Element pos = save.createElement("pos");
 		Element x = save.createElement("x");
 		Element y = save.createElement("y");
-		x.appendChild(save.createTextNode("" + occupant.getPosition().getPosX()));
-		y.appendChild(save.createTextNode("" + occupant.getPosition().getPosY()));
+		Text xVal = save.createTextNode("" + occupant.getPosition().getPosX());
+		Text yVal = save.createTextNode("" + occupant.getPosition().getPosY());
+		x.appendChild(xVal);
+		y.appendChild(yVal);
 		pos.appendChild(x);
 		pos.appendChild(y);
 		return pos;
