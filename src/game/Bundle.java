@@ -18,6 +18,8 @@ public class Bundle implements Serializable {
 	private Player playerObj;
 	private List<String> chatLogChanges = new ArrayList<String>();
 
+	private List<GameObject> areaObjects = new ArrayList<GameObject>();
+
 	public Bundle(String playerName) {
 		this.playerName = playerName;
 	}
@@ -26,6 +28,7 @@ public class Bundle implements Serializable {
 	 * Clear relevant fields of this bundle. THis should be called once the bundle has been sent to the respective client.
 	 */
 	public void clearBundle() {
+		this.areaObjects.clear();
 		this.setMessage(null);
 		this.chatLogChanges = new ArrayList<String>();
 	}
@@ -64,5 +67,11 @@ public class Bundle implements Serializable {
 	}
 
 
+	public void addMapObject(GameObject obj) {
+		this.areaObjects.add(obj);
+	}
 
+	public List<GameObject> getAreaObjects() {
+		return this.areaObjects;
+	}
 }
