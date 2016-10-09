@@ -1,1 +1,1 @@
-Chest Dorm_room testFixedContainer ch00 closed unlocked null 5 5 5
+Chest Dorm_room testFixedContainer ch00 closed unlocked null 6 9 1
