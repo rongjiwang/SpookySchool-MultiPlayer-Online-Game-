@@ -257,6 +257,7 @@ public class Parser {
 								tagName.appendChild(occupantNode);
 							}else if (occupant instanceof MarkerGO){
 								//FIXME: Base GameObject?? do i need to save a record of this 
+								occupantNode.appendChild(saveBaseGameObject(occupant));
 								occupantNode.appendChild(saveDescription(occupant));
 								
 								tagName.appendChild(occupantNode);
@@ -294,7 +295,25 @@ public class Parser {
 		}
 			
 			
-	
+	public Element saveBaseGameObject(GameObject occupant){
+		Text value = save.createTextNode("");
+		
+		if(occupant instanceof MarkerGO){
+			GameObject base = ((MarkerGO) occupant).getBaseGO();
+			
+			String token = base.getToken();
+			String id = base.getId();
+			String description = base.getDescription();
+			Position pos = base.getPosition();
+			
+			Element baseGO = save.createElement("base");
+			baseGO.setAttribute("objectType", base.getClass().toString());
+			
+			
+		}
+		
+		
+	}
 	
 	public Element saveName(GameObject occupant){
 		Text value = save.createTextNode("");
