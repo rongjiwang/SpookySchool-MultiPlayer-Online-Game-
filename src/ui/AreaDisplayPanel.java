@@ -114,7 +114,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	 */
 	public void processBundle(Bundle bundle) {
 
-		//this.toAnimate.clear();
+		this.toAnimate.clear();
 
 		if (this.currentArea != null) {
 			//Update the display to show objects in their correct places.
