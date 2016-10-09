@@ -151,6 +151,7 @@ public class Parser {
 	    root = save.createElement("game");
 	    saveMap(areas);
 	    
+	    
 	    outputFile();
 		
 	}
@@ -256,7 +257,6 @@ public class Parser {
 								
 								tagName.appendChild(occupantNode);
 							}else if (occupant instanceof MarkerGO){
-								//FIXME: Base GameObject?? do i need to save a record of this 
 								occupantNode.appendChild(saveBaseGameObject(occupant));
 								occupantNode.appendChild(saveDescription(occupant));
 								
@@ -268,14 +268,14 @@ public class Parser {
 								
 								tagName.appendChild(occupantNode);
 															
-							}else if (occupant instanceof Player){
+							}/*else if (occupant instanceof Player){
 								occupantNode.appendChild(saveName(occupant));
 								//FIXME: CurrentArea?? do i need to save a record of this
 								occupantNode.appendChild(saveSpawnName(occupant));
 								occupantNode.appendChild(savePosition(currentTile));
 								
 								tagName.appendChild(occupantNode);
-							}
+							}*/
 							
 						}
 				}
@@ -299,7 +299,7 @@ public class Parser {
 		Text value = save.createTextNode("");
 		
 		if(occupant instanceof MarkerGO){
-			GameObject base = ((MarkerGO) occupant).getBaseGO();
+			FixedGO base = (FixedGO) ((MarkerGO) occupant).getBaseGO();
 			
 			String token = base.getToken();
 			String id = base.getId();
