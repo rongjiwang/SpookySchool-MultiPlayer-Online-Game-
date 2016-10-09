@@ -126,14 +126,6 @@ public class AnimationObject {
 	}
 
 
-	public int getStartX() {
-		return this.startX;
-	}
-
-	public int getStartY() {
-		return this.startY;
-	}
-
 	public void setAimX(int aimX) {
 		this.aimX = aimX;
 	}
