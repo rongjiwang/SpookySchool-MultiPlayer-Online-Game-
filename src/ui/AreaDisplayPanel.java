@@ -234,14 +234,25 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 						AnimationObject aObj = null;
 
 						if (currentObj.getPosition().getPosX() > previousObj.getPosition().getPosX()) {
+
+							int toMove = currentObj.getPosition().getPosX() - previousObj.getPosition().getPosX();
+
 							aObj = new AnimationObject(this, currentObj, isMain, "EAST", startX, startY, aimX, aimY);
 
 						} else if (currentObj.getPosition().getPosX() < previousObj.getPosition().getPosX()) {
+							int toMove = previousObj.getPosition().getPosX() - currentObj.getPosition().getPosX();
+
 							aObj = new AnimationObject(this, currentObj, isMain, "WEST", startX, startY, aimX, aimY);
 
 						} else if (currentObj.getPosition().getPosY() > previousObj.getPosition().getPosY()) {
+
+							int toMove = currentObj.getPosition().getPosY() - previousObj.getPosition().getPosY();
+
 							aObj = new AnimationObject(this, currentObj, isMain, "SOUTH", startX, startY, aimX, aimY);
+
 						} else {
+
+							int toMove = previousObj.getPosition().getPosY() - currentObj.getPosition().getPosY();
 							aObj = new AnimationObject(this, currentObj, isMain, "NORTH", startX, startY, aimX, aimY);
 						}
 
@@ -467,9 +478,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 
 					AnimationObject ao = null;
-
-					int index;
-
+					int index = 0;
 					//Find the animation object that matches the playerObject.
 					outer: for (index = 0; index < this.toAnimate.size(); index++) {
 						if (this.toAnimate.get(index).getGameObj().getId().equals(p.getId())) {
@@ -477,7 +486,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 							break outer;
 						}
 					}
-
 
 					//If this player needs to be animated, change final x and final y for animation.
 					if (ao != null) {
@@ -511,8 +519,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 								this.animating = false;
 							}
 
-							System.out.println("Finished Animation: Starting at x: " + ao.getStartX() + " y: "
-									+ ao.getStartY() + " Finishing: x: " + ao.getAimX() + " y: " + ao.getAimY()
+							System.out.println("Finished Animation: Start at x: " + ao.getStartX() + " y: "
+									+ ao.getStartY() + " Finish at x: " + ao.getAimX() + " y: " + ao.getAimY()
 									+ " main player: " + this.mainPlayer);
 
 							this.mainPlayerXBuff = 0;

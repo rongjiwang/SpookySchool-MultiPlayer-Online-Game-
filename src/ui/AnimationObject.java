@@ -31,6 +31,9 @@ public class AnimationObject {
 		this.aimX = aimX;
 		this.aimY = aimY;
 
+		if (Math.abs(startX - aimX) > 1 || (startY - aimY) > 1) {
+			throw new Error("Only allowed movement of ONE position per animation object!");
+		}
 
 
 		System.out.println("New Animation: Starting at x: " + this.startX + " y: " + this.startY + " Finishing: x: "
