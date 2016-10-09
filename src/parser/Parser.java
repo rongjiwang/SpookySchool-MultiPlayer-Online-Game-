@@ -97,7 +97,10 @@ public class Parser {
 		roomNode.appendChild(widthNode);
 		roomNode.appendChild(areaNameNode);
 		
-		saveTiles(currentArea, roomNode);
+		Element areaNode  = save.createElement("area");
+		roomNode.appendChild(areaNode);
+		
+		saveTiles(currentArea, areaNode);
 		
 		return roomNode;
 	}
@@ -123,106 +126,62 @@ public class Parser {
 						GameObject occupant = currentTile.getOccupant();
 						Element occupantNode = save.createElement("occupant");
 						occupantNode.setAttribute("objectType", occupant.getClass().toString());
-						tileNode.appendChild(occupantNode);
+						//tileNode.appendChild(occupantNode);
 						
 						
 						if(occupant instanceof DoorGO){
-							saveDoorGOdata(occupant, tileNode);					
+								
 							
 						}else if(occupant instanceof FixedContainerGO){
-							saveFixedContData(occupant, tileNode);
+							
 							
 						}else if(occupant instanceof FixedGO){
-							saveFixedData(occupant, tileNode);
+							
 							
 						}else if(occupant instanceof InventoryGO){
-							saveInventData(occupant, tileNode);
+							occupantNode.appendChild(saveName(occupant));
+							occupantNode.appendChild(saveID(occupant));
+							occupantNode.appendChild(saveToken(occupant));
+							occupantNode.appendChild(saveSize(occupant));
+							occupantNode.appendChild(saveAreaName(occupant));
+							occupantNode.appendChild(savePosition(occupant));
+							occupantNode.appendChild(saveDescription(occupant));
+							tileNode.appendChild(occupantNode);
 							
 						}else if(occupant instanceof MarkerGO){
-							saveMarkerData(occupant, tileNode);
+							
 							
 						}else if(occupant instanceof MovableGO){
-							saveMovableData(occupant, tileNode);
+							
 					}
+						
 				}
+					currentParent.appendChild(tileNode);
 			}
 		}
 		}
 		
 	}
 	
-	public void saveMovableData(GameObject occupant, Element parent) {
-		//saveID(occupant);
-		parent.appendChild(saveToken(occupant));
-		saveDescription(occupant);
-		saveAreaName(occupant);
-		savePosition(occupant);
-		
-	}
-
-	public void saveMarkerData(GameObject occupant, Element parent) {
-		//saveBase(occupant);
-		savePosition(occupant);
-		saveDescription(occupant);
-		
-	}
-
-	public void saveInventData(GameObject occupant, Element parent) {
-		//saveName(occupant);
-		//saveID(occupant);
-		saveToken(occupant);
-		saveSize(occupant);
-		saveAreaName(occupant);
-		savePosition(occupant);
-		saveDescription(occupant);
-		
-		
-	}
-
-	public void saveFixedData(GameObject occupant, Element parent) {
-		//saveID(occupant);
-		saveToken(occupant);
-		savePosition(occupant);
-		saveDescription(occupant);
-		
-	}
-
-	public void saveFixedContData(GameObject occupant, Element parent) {
-		//saveName(occupant);
-		saveAreaName(occupant);
-		//saveID(occupant);
-		saveToken(occupant);
-		saveOpen(occupant);
-		saveLocked(occupant);
-		//saveKeyID(occupant);
-		savePosition(occupant);
-		//saveContents(occupant);
-		saveSize(occupant);
-		//saveSizeRemaining(occupant);
-		saveDescription(occupant);
-		
-	}
-
-	public void saveDoorGOdata(GameObject occupant, Element parent) {
-		//saveID(occupant);
-		saveOpen(occupant);
-		saveLocked(occupant);
-		//saveKeyID(occupant);
-		saveDescription(occupant);
-		
-		//saveSideA(occupant);
-		//saveTokenA(occupant);
-		//saveSideAPos(occupant);
-		//saveSideAEntryPos(occupant);
-		
-		//saveSideB(occupant);
-		//saveTokenB(occupant);
-		//saveSideBPos(occupant);
-		//saveSideBEntryPos(occupant);
-		
-		
+	public Element saveName(GameObject occupant){
+		Text value = save.createTextNode("");
+		Element name = save.createElement("name");
+		if(occupant instanceof InventoryGO){
+			value = save.createTextNode(((InventoryGO) occupant).getName());
+		}
+		name.appendChild(value);
+		return name;
 	}
 	
+	public Element saveID(GameObject occupant){
+		Text value = save.createTextNode("");
+		Element id = save.createElement("id");
+		if(occupant instanceof InventoryGO){
+			value = save.createTextNode(((InventoryGO) occupant).getId());
+		}
+		id.appendChild(value);
+		return id;
+	}
 	
 	
 	public Element savePosition(Tile currentTile){
