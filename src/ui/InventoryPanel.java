@@ -180,7 +180,7 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 		}
 		Image image = null;
 		ItemDisplay item = null;
-		Image panel = imageMap.getImage("invPanel");
+		Image panel = null;
 		
 		for(int i = 0; i < 15; i++){
 			if(i >= itemsShown.size())
@@ -192,10 +192,12 @@ public class InventoryPanel extends JPanel implements MouseListener, MouseMotion
 				g.drawImage(image, item.getX(), item.getY(), image.getWidth(null), image.getHeight(null), null);
 				
 				if(item.isContainer()){
-					g.drawImage(panel, item.getX(), item.getY()+39, panel.getWidth(null), panel.getHeight(null), null);
-					g.drawString(item.getSize(), item.getX()+2, item.getY()+48);
-					
+					panel = imageMap.getImage("invPanel");
+				} else {
+					panel = imageMap.getImage("invPanel2");
 				}
+				g.drawImage(panel, item.getX(), item.getY()+39, panel.getWidth(null), panel.getHeight(null), null);
+				g.drawString(item.getSize(), item.getX()+2, item.getY()+48);
 			} 
 
 		}

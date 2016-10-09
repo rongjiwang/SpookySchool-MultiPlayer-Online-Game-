@@ -1,8 +1,11 @@
 package ui;
 
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 
@@ -18,6 +21,7 @@ public class OverlayPanel extends JPanel {
 	private String headerMessage;
 	private int headerX;
 	private int headerY = 5;
+	private int headerWidth = 155;
 	private int headerIncrement;
 	private long headerThen; //holds time
 	private boolean firstHeaderReceived = false; //To stop the null pointer at the start of the game.
@@ -29,6 +33,7 @@ public class OverlayPanel extends JPanel {
 	private int footerIncrement;
 	private long footerThen; //holds time
 	private boolean firstFooterReceived = false; //To stop the null pointer at the start of the game.
+	private Font font;
 
 	public OverlayPanel(AreaDisplayPanel panel, SpriteMap spriteMap) {
 
@@ -52,8 +57,10 @@ public class OverlayPanel extends JPanel {
 		};
 
 		try {
-			Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
-			setFont(font.deriveFont(Font.TRUETYPE_FONT, 12f));
+			font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
+			Graphics2D g2d = (Graphics2D) getGraphics();
+			g2d.setFont(font.deriveFont(Font.TRUETYPE_FONT, 12f));
+
 
 		} catch (Exception e) {
 		}
@@ -80,9 +87,25 @@ public class OverlayPanel extends JPanel {
 		super.paintComponent(g);
 
 		//Draw the header
-		if (this.footerMessage != null) {
-			g.drawImage(spriteMap.getImage("H0"), headerX, headerY, null);
-			g.drawString(headerMessage, headerX + 10, headerY + 17);
+		if (this.headerMessage != null) {
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.drawImage(spriteMap.getImage("H0"), headerX, headerY, null);
+
+			//Set the font.
+			try {
+				font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
+				g2d.setFont(font.deriveFont(Font.TRUETYPE_FONT, 12f));
+			} catch (FontFormatException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+
+			//Draw the header message in the center.
+			int stringLen = (int) g2d.getFontMetrics().getStringBounds(headerMessage, g2d).getWidth();
+			int start = headerWidth / 2 - stringLen / 2;
+			g2d.drawString(headerMessage, start + headerX, headerY + 17);
 		}
 
 		//Draw the footer
