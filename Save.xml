@@ -29,8 +29,8 @@
                 <y>1</y>
             </pos>
             <occupant objectType="class game.DoorGO">
-                <open>true</open>
-                <locked>false</locked>
+                <open>false</open>
+                <locked>true</locked>
                 <description>This is a Door.</description>
                 <sideA>Spawn_6</sideA>
                 <sideAPos>
@@ -76,6 +76,12 @@
                 <x>5</x>
                 <y>2</y>
             </pos>
+            <occupant objectType="class game.InventoryGO">
+                <name>Key</name>
+                <areaName>Spawn_6</areaName>
+                <size>1</size>
+                <description> The key for Spawn_6 room</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -118,6 +124,12 @@
                 <x>6</x>
                 <y>3</y>
             </pos>
+            <occupant objectType="class game.ContainerGO">
+                <name>Box</name>
+                <areaName>Spawn_6</areaName>
+                <size>5</size>
+                <description> A box that you can put stuff in.</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -197,6 +209,15 @@
                 <y>5</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>x0furniture1 This is a book case.</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>3</x>
+                        <y>5</y>
+                    </position>
+                </base>
                 <description> This is a book case.</description>
             </occupant>
         </tile>
@@ -346,6 +367,7 @@
                 <x>5</x>
                 <y>8</y>
             </pos>
+            <occupant objectType="class game.Player"/>
         </tile>
         <tile>
             <pos>
@@ -362,6 +384,15 @@
                 <y>8</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>o1bed1 This is a bed</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>6</x>
+                        <y>8</y>
+                    </position>
+                </base>
                 <description> This is a bed</description>
             </occupant>
         </tile>
@@ -591,6 +622,12 @@
                 <x>5</x>
                 <y>2</y>
             </pos>
+            <occupant objectType="class game.InventoryGO">
+                <name>Key</name>
+                <areaName>Spawn_7</areaName>
+                <size>1</size>
+                <description> The key for Spawn_7 room</description>
+            </occupant>
         </tile>
         <tile>
             <pos>
@@ -627,14 +664,6 @@
                 <x>5</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.Player">
-                <name>Jim</name>
-                <spawnName>Spawn_7</spawnName>
-                <pos>
-                    <x>5</x>
-                    <y>3</y>
-                </pos>
-            </occupant>
         </tile>
         <tile>
             <pos>
@@ -720,6 +749,15 @@
                 <y>5</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>x0furniture1 This is a book case.</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>3</x>
+                        <y>5</y>
+                    </position>
+                </base>
                 <description> This is a book case.</description>
             </occupant>
         </tile>
@@ -885,6 +923,15 @@
                 <y>8</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>o1bed1 This is a bed</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>6</x>
+                        <y>8</y>
+                    </position>
+                </base>
                 <description> This is a bed</description>
             </occupant>
         </tile>
@@ -1201,6 +1248,15 @@
                 <y>4</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>o3bed1 This is a bed</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>4</x>
+                        <y>4</y>
+                    </position>
+                </base>
                 <description> This is a bed</description>
             </occupant>
         </tile>
@@ -1366,6 +1422,15 @@
                 <y>7</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>x2furniture1 This is a book case.</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>7</x>
+                        <y>7</y>
+                    </position>
+                </base>
                 <description> This is a book case.</description>
             </occupant>
         </tile>
@@ -1762,6 +1827,15 @@
                 <y>5</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>x0furniture1 This is a book case.</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>3</x>
+                        <y>5</y>
+                    </position>
+                </base>
                 <description> This is a book case.</description>
             </occupant>
         </tile>
@@ -1927,6 +2001,15 @@
                 <y>8</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>o1bed1 This is a bed</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>6</x>
+                        <y>8</y>
+                    </position>
+                </base>
                 <description> This is a bed</description>
             </occupant>
         </tile>
@@ -2970,6 +3053,15 @@
                 <y>5</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>x0furniture1 This is a book case.</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>3</x>
+                        <y>5</y>
+                    </position>
+                </base>
                 <description> This is a book case.</description>
             </occupant>
         </tile>
@@ -3135,6 +3227,15 @@
                 <y>8</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>o1bed1 This is a bed</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>6</x>
+                        <y>8</y>
+                    </position>
+                </base>
                 <description> This is a bed</description>
             </occupant>
         </tile>
@@ -4226,6 +4327,15 @@
                 <y>2</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>v0treeOne1</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>16</x>
+                        <y>2</y>
+                    </position>
+                </base>
                 <description/>
             </occupant>
         </tile>
@@ -4250,6 +4360,15 @@
                 <y>2</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>v0treeOne2</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>19</x>
+                        <y>2</y>
+                    </position>
+                </base>
                 <description/>
             </occupant>
         </tile>
@@ -4390,6 +4509,15 @@
                 <y>3</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>v0treeOne1</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>16</x>
+                        <y>2</y>
+                    </position>
+                </base>
                 <description/>
             </occupant>
         </tile>
@@ -4399,6 +4527,15 @@
                 <y>3</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>v0treeOne1</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>16</x>
+                        <y>2</y>
+                    </position>
+                </base>
                 <description/>
             </occupant>
         </tile>
@@ -4414,6 +4551,15 @@
                 <y>3</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>v0treeOne2</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>19</x>
+                        <y>2</y>
+                    </position>
+                </base>
                 <description/>
             </occupant>
         </tile>
@@ -4423,6 +4569,15 @@
                 <y>3</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>v0treeOne2</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>19</x>
+                        <y>2</y>
+                    </position>
+                </base>
                 <description/>
             </occupant>
         </tile>
@@ -5548,6 +5703,15 @@
                 <y>11</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>l0treeThree1</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>12</x>
+                        <y>11</y>
+                    </position>
+                </base>
                 <description/>
             </occupant>
         </tile>
@@ -5692,6 +5856,15 @@
                 <y>12</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>l0treeThree1</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>12</x>
+                        <y>11</y>
+                    </position>
+                </base>
                 <description/>
             </occupant>
         </tile>
@@ -5701,6 +5874,15 @@
                 <y>12</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>l0treeThree1</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>12</x>
+                        <y>11</y>
+                    </position>
+                </base>
                 <description/>
             </occupant>
         </tile>
@@ -7272,6 +7454,15 @@
                 <y>1</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>tL0table2</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>1</x>
+                        <y>1</y>
+                    </position>
+                </base>
                 <description/>
             </occupant>
         </tile>
@@ -7281,6 +7472,15 @@
                 <y>1</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>tL0table2</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>1</x>
+                        <y>1</y>
+                    </position>
+                </base>
                 <description/>
             </occupant>
         </tile>
@@ -7290,6 +7490,15 @@
                 <y>1</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>tL0table2</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>1</x>
+                        <y>1</y>
+                    </position>
+                </base>
                 <description/>
             </occupant>
         </tile>
@@ -7299,6 +7508,15 @@
                 <y>1</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>tL0table2</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>1</x>
+                        <y>1</y>
+                    </position>
+                </base>
                 <description/>
             </occupant>
         </tile>
@@ -8247,6 +8465,15 @@
                 <y>9</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>co3couch</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>13</x>
+                        <y>8</y>
+                    </position>
+                </base>
                 <description/>
             </occupant>
         </tile>
@@ -9391,6 +9618,15 @@
                 <y>4</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>o3bed1 This is a bed</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>4</x>
+                        <y>4</y>
+                    </position>
+                </base>
                 <description> This is a bed</description>
             </occupant>
         </tile>
@@ -9556,6 +9792,15 @@
                 <y>7</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>x2furniture1 This is a book case.</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>7</x>
+                        <y>7</y>
+                    </position>
+                </base>
                 <description> This is a book case.</description>
             </occupant>
         </tile>
@@ -10255,6 +10500,15 @@
                 <y>4</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>o3bed1 This is a bed</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>4</x>
+                        <y>4</y>
+                    </position>
+                </base>
                 <description> This is a bed</description>
             </occupant>
         </tile>
@@ -10420,6 +10674,15 @@
                 <y>7</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>x2furniture1 This is a book case.</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>7</x>
+                        <y>7</y>
+                    </position>
+                </base>
                 <description> This is a book case.</description>
             </occupant>
         </tile>
@@ -11377,14 +11640,6 @@
                 <x>10</x>
                 <y>3</y>
             </pos>
-            <occupant objectType="class game.Player">
-                <name>Brandon</name>
-                <spawnName>Spawn_6</spawnName>
-                <pos>
-                    <x>10</x>
-                    <y>3</y>
-                </pos>
-            </occupant>
         </tile>
         <tile>
             <pos>
@@ -11563,8 +11818,8 @@
                 <y>4</y>
             </pos>
             <occupant objectType="class game.DoorGO">
-                <open>true</open>
-                <locked>false</locked>
+                <open>false</open>
+                <locked>true</locked>
                 <description>This is a Door.</description>
                 <sideA>Spawn_6</sideA>
                 <sideAPos>
@@ -11889,6 +12144,15 @@
                 <y>4</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>o3bed1 This is a bed.</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>4</x>
+                        <y>4</y>
+                    </position>
+                </base>
                 <description> This is a bed.</description>
             </occupant>
         </tile>
@@ -12054,6 +12318,15 @@
                 <y>7</y>
             </pos>
             <occupant objectType="class game.MarkerGO">
+                <base objectType="class game.FixedGO">
+                    <token>x2furniture1 This is a book case.</token>
+                    <id/>
+                    <desciption/>
+                    <position>
+                        <x>7</x>
+                        <y>7</y>
+                    </position>
+                </base>
                 <description> This is a book case.</description>
             </occupant>
         </tile>

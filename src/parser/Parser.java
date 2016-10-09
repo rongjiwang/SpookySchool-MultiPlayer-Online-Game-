@@ -76,7 +76,7 @@ public class Parser {
 	 * 
 	 * @param filename -- name for the file to be read from
 	 */
-	public void load(String filename) {
+	public void oldLoad(String filename) {
 
 		load = getDoc("src/com/school/xml/" + filename + ".xml"); //Loads the XML file into the program
 
@@ -117,6 +117,10 @@ public class Parser {
 		}
 	}
 	
+	public void load(){
+		
+	}
+	
 		
 	/** Takes all the information of the current state of the game and saves it to
 	 * an XML file. This can be read from later when needed to be loaded
@@ -143,15 +147,29 @@ public class Parser {
 		//System.err.println(game.getAreas().keySet());
 		//System.err.println(game.getAreas().entrySet());
 		Map<String, Area> areas = game.getAreas();
-		Map<String, Player> players = null;
+		List<Player> players = game.getPlayers();
 		Map<String, InventoryGO> inventObjects = game.getInventoryObjects();
 			
 
 	    save = createXMLDom();
 	    root = save.createElement("game");
 	    saveMap(areas);
+	    savePlayer(players, player);
+	    
 	    
 	    outputFile();
+		
+	}
+	
+	public void savePlayer(List<Player> players, String playerName){
+		Player saver = null;
+		for (Player p : players){
+			if(p.getPlayerName().equals(playerName)){
+				saver = p;
+			}
+		}
+		
+		
 		
 	}
 	
@@ -256,7 +274,7 @@ public class Parser {
 								
 								tagName.appendChild(occupantNode);
 							}else if (occupant instanceof MarkerGO){
-								//FIXME: Base GameObject?? do i need to save a record of this 
+								occupantNode.appendChild(saveBaseGameObject(occupant));
 								occupantNode.appendChild(saveDescription(occupant));
 								
 								tagName.appendChild(occupantNode);
@@ -267,14 +285,14 @@ public class Parser {
 								
 								tagName.appendChild(occupantNode);
 															
-							}else if (occupant instanceof Player){
+							}/*else if (occupant instanceof Player){
 								occupantNode.appendChild(saveName(occupant));
 								//FIXME: CurrentArea?? do i need to save a record of this
 								occupantNode.appendChild(saveSpawnName(occupant));
 								occupantNode.appendChild(savePosition(currentTile));
 								
 								tagName.appendChild(occupantNode);
-							}
+							}*/
 							
 						}
 				}
@@ -294,7 +312,53 @@ public class Parser {
 		}
 			
 			
-	
+	public Element saveBaseGameObject(GameObject occupant){
+		Text value = save.createTextNode("");
+		
+		if(occupant instanceof MarkerGO){
+			FixedGO base = (FixedGO) ((MarkerGO) occupant).getBaseGO();
+			
+			String token = base.getToken();
+			String id = base.getId();
+			String description = base.getDescription();
+			Position pos = base.getPosition();
+			
+			Element baseGO = save.createElement("base");
+			baseGO.setAttribute("objectType", base.getClass().toString());
+			
+			Element tokenElement = save.createElement("token");
+			Text tokenValue = save.createTextNode(token);
+			tokenElement.appendChild(tokenValue);
+			
+			Element idElement = save.createElement("id");
+			Text idValue = save.createTextNode(id);
+			tokenElement.appendChild(idValue);
+
+			Element descElement = save.createElement("desciption");
+			Text descValue = save.createTextNode(description);
+			tokenElement.appendChild(descValue);
+			
+			Element positonElement = save.createElement("position");
+			Element x = save.createElement("x");
+			Element y = save.createElement("y");
+			Text xVal = save.createTextNode("" + pos.getPosX());
+			Text yVal = save.createTextNode("" + pos.getPosY());
+			x.appendChild(xVal);
+			y.appendChild(yVal);
+			positonElement.appendChild(x);
+			positonElement.appendChild(y);
+			
+			baseGO.appendChild(tokenElement);
+			baseGO.appendChild(idElement);
+			baseGO.appendChild(descElement);
+			baseGO.appendChild(positonElement);
+			
+			return baseGO;
+			
+		}
+		return null;
+		
+	}
 	
 	public Element saveName(GameObject occupant){
 		Text value = save.createTextNode("");
