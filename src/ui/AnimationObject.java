@@ -13,24 +13,6 @@ public class AnimationObject {
 	private int startY;
 	private int aimX;
 
-	public int getAimX() {
-		return aimX;
-	}
-
-
-	public void setAimX(int aimX) {
-		this.aimX = aimX;
-	}
-
-
-	public int getAimY() {
-		return aimY;
-	}
-
-
-	public void setAimY(int aimY) {
-		this.aimY = aimY;
-	}
 
 	private int aimY;
 
@@ -150,6 +132,14 @@ public class AnimationObject {
 
 	public int getStartY() {
 		return this.startY;
+	}
+
+	public void setAimX(int aimX) {
+		this.aimX = aimX;
+	}
+
+	public void setAimY(int aimY) {
+		this.aimY = aimY;
 	}
 
 }

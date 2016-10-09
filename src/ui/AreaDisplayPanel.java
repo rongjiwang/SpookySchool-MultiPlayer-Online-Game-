@@ -338,14 +338,14 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		g.drawImage(offScreen, 0, 0, this);
 
-		/*
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-		
-		*/
+
+
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 
 	}
 
@@ -454,14 +454,14 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 						AnimationObject ao = this.toAnimate.get(p.getId());
 
-						/*
+
 						//Rotated x and y at finish position of player.
 						view = getRotatedView(x, y, currentArea.width, currentArea.height);
 						viewX = view[0];
 						viewY = view[1];
 						ao.setAimX(viewX);
 						ao.setAimY(viewY);
-						*/
+
 
 						tileImage = spriteMap.getImage(getRotatedAnimatedToken(ao.getNextImgToken(), p.getDirection()));
 
