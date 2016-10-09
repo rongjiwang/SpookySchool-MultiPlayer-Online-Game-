@@ -76,7 +76,7 @@ public class Parser {
 	 * 
 	 * @param filename -- name for the file to be read from
 	 */
-	public void load(String filename) {
+	public void oldLoad(String filename) {
 
 		load = getDoc("src/com/school/xml/" + filename + ".xml"); //Loads the XML file into the program
 
@@ -117,6 +117,10 @@ public class Parser {
 		}
 	}
 	
+	public void load(){
+		
+	}
+	
 		
 	/** Takes all the information of the current state of the game and saves it to
 	 * an XML file. This can be read from later when needed to be loaded
@@ -143,16 +147,29 @@ public class Parser {
 		//System.err.println(game.getAreas().keySet());
 		//System.err.println(game.getAreas().entrySet());
 		Map<String, Area> areas = game.getAreas();
-		Map<String, Player> players = null;
+		List<Player> players = game.getPlayers();
 		Map<String, InventoryGO> inventObjects = game.getInventoryObjects();
 			
 
 	    save = createXMLDom();
 	    root = save.createElement("game");
 	    saveMap(areas);
+	    savePlayer(players, player);
 	    
 	    
 	    outputFile();
+		
+	}
+	
+	public void savePlayer(List<Player> players, String playerName){
+		Player saver = null;
+		for (Player p : players){
+			if(p.getPlayerName().equals(playerName)){
+				saver = p;
+			}
+		}
+		
+		
 		
 	}
 	
