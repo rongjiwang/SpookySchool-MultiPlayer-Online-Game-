@@ -120,8 +120,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			overlayPanel.setFooterMessage(bundle.getMessage());
 		}
 
-		this.toAnimate.clear();
-
 		if (this.currentArea != null) {
 			//Update the display to show objects in their correct places.
 			this.centerPlayer();
@@ -137,7 +135,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			this.currentAreaObjects = bundle.getAreaObjects();
 			this.displayRoomName();
 
-			//Dont try to find changes!
+			//Dont try to find changes since we just entered the game!
 			this.updateDisplay();
 			return;
 
@@ -145,6 +143,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			String oldArea = currentArea.getAreaName();
 
 			if (!oldArea.equals(this.mainPlayer.getCurrentArea().getAreaName())) {
+
+				this.toAnimate.clear(); //New area so clear the animation list.
+
 				this.currentArea = this.mainPlayer.getCurrentArea();
 				this.displayRoomName();
 
