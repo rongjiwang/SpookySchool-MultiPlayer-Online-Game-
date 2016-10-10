@@ -103,7 +103,7 @@ public class InfoPanel extends JPanel{
 	 * Sets text to info window
 	 */
 	public void setAsInfo(){
-		infoTest.setText("Spooky School! \n\nSome information about Spooky School goes here.\n\n"+
+		infoTest.setText("Spooky School! \n\n"+
 						"Controls: \n\n"+
 						"Use arrow keys to move.\n'l' : rotate screen anti-clockwise\n'r' : rotate screen clockwise\n'z' : perform an action (examine/open a door)");
 	}

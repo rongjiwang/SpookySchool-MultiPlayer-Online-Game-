@@ -4,7 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.JPanel;
 
@@ -21,6 +25,7 @@ public class MainPanel extends JPanel{
 	private JPanel inv;
 	private GameFrame home;
 	private ButtonPanel buttons;
+	private BufferedImage uiBackground;
 	
 	public MainPanel(GameFrame home, JPanel gamePanel, ChatPanel chatPanel, InventoryPanel invPanel, ButtonPanel buttons, UIImageMap imageMap){
 		setLayout(new BorderLayout(20, 0));
@@ -28,10 +33,13 @@ public class MainPanel extends JPanel{
 		this.home = home;
 		//sets button panel
 		this.buttons = buttons;
+		try{
+			this.uiBackground = ImageIO.read(new File("src/ui/UIimages/background.png"));
+		} catch (Exception e){}
 		
 		//creates new UIPanels for game, chat and inventory panel
 		game = new UIPanel(gamePanel, 600, 500, imageMap);
-		chat = new UIPanel(chatPanel, 400, 220, imageMap);
+		chat = new UIPanel(chatPanel, 390, 220, imageMap);
 		inv = new UIPanel(invPanel, 262, 162, imageMap);
 		//adds game to panel
 		this.add(game, BorderLayout.NORTH);
@@ -41,7 +49,7 @@ public class MainPanel extends JPanel{
 		JPanel inven = new JPanel(new FlowLayout());
 		
 		//adds rigid area for allignment
-		inven.add(Box.createRigidArea(new Dimension(40,1)));
+		inven.add(Box.createRigidArea(new Dimension(20,1)));
 		//adds inventory panel
 		inven.add(inv);
 		//adds new scroll panel
@@ -63,5 +71,11 @@ public class MainPanel extends JPanel{
 		Color newGrey = new Color(49, 45, 43);
 		setBackground(newGrey);
 		validate();
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(this.uiBackground, 0, 0, null);
 	}
 }

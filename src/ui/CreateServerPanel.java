@@ -35,12 +35,16 @@ public class CreateServerPanel extends JPanel {
 	private BufferedImage uiBackground;
 	private JTextField serverStatusField;
 	private JTextArea printTextArea;
+	
+	private Font customFont;
 
 	public CreateServerPanel(JPanel contentPane) {
 		this.contentPane = contentPane;
 		this.setLayout(null); //Use no layout manager in this panel.
 		this.setBackground(Color.darkGray);
-
+		try {
+			customFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
+		} catch (Exception e) {}
 		this.setupPanel(); //Sets up this panel. Adds various buttons and input fields.
 
 		try {
@@ -61,11 +65,13 @@ public class CreateServerPanel extends JPanel {
 		serverStatusField.setHorizontalAlignment(SwingConstants.CENTER);
 		serverStatusField.setEditable(false);
 		serverStatusField.setBounds(150, 150, 200, 30);
+		serverStatusField.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 10f));
 		this.add(serverStatusField);
 
 		//Add print panel.
 		this.printTextArea = new JTextArea("Waiting for Server Creation...", 11, 25);
 		this.printTextArea.setEditable(false); // set textArea non-editable
+		this.printTextArea.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 10f));
 		JScrollPane scroll = new JScrollPane(this.printTextArea);
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -77,9 +83,10 @@ public class CreateServerPanel extends JPanel {
 
 		//port label
 		JLabel portLabel = new JLabel("Create on Port:");
-		portLabel.setForeground(Color.WHITE);
+		portLabel.setForeground(Color.BLACK);
 		portLabel.setFont(new Font("Arial", 1, 15));
 		portLabel.setBounds(100, 420, 200, 30);
+		portLabel.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 12f));
 		this.add(portLabel);
 
 
@@ -87,12 +94,14 @@ public class CreateServerPanel extends JPanel {
 		JTextField portField = new JTextField(this.port.toString(), 15);
 		portField.setHorizontalAlignment(SwingConstants.CENTER);
 		portField.setBounds(225, 420, 175, 30);
+		portField.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 11f));
 		this.add(portField);
 
 		//Add Create Server Button.
 		JButton createServerBtn = new JButton("Create Server");
 		createServerBtn.setToolTipText("Click here to create a new server");
 		createServerBtn.setBounds(100, 460, 300, 70);
+		createServerBtn.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 12f));
 		this.add(createServerBtn);
 
 		createServerBtn.addActionListener(new ActionListener() {
