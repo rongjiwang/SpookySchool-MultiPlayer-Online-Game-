@@ -39,27 +39,38 @@ public class Parser {
 	
 	//Load related Fields
 	private Document load;
-	private List <MovableGO> movablesToLoad;
-	private List <DoorGO> doorsToLoad;
-	private List <InventoryGO> inventsToLoad;
-	private List <FixedContainerGO> fixedContsToLoad;
+	private List <MovableGO> movablesToLoad;	//List of MovableGameObjects that need to be loaded
+	private List <DoorGO> doorsToLoad;		//List of DoorGameObjects that need to be loaded
+	private List <InventoryGO> inventsToLoad;		//List of InventoryGameObjects that need to be loaded
+	private List <FixedContainerGO> fixedContsToLoad;	//List of FixedContainerGameObjects to be loaded
 	
 	//Save related Fields
-	private Document save;
-	private Element root;
-	private List<DoorGO> doors; 
-	private Player saver;
-	private List<MovableGO> movables;
-	private List<NonHumanPlayer> nonHumans;
-	private Map<String, InventoryGO> inventObjects;
-	private List<InventoryGO> saversInvent;
-	private List<InventoryGO> itemsInContainers;
-	private Map<String, FixedContainerGO> fixedContainers;
+	private Document save;		//DOM structure for saving
+	private Element root;	//root Node for the save file
+	private List<DoorGO> doors; 	//list of Door objects that are currently in the Game
+	private Player saver;		//The Player that requested the Save operation
+	private List<MovableGO> movables; //list of MovableGameObjects that are currently in the Game
+	private List<NonHumanPlayer> nonHumans;		//List of NonHumanPlayer Objects currently in the Game
+	private Map<String, InventoryGO> inventObjects;		//Map of all InventoryGameObjects currently in the Game. Map is name of the item to the Item itself
+	private List<InventoryGO> saversInvent;		//List of InventoryItems that the Player that requested the save holds
+	private List<InventoryGO> itemsInContainers;	//List of all the items held in Containers in the game
+	private Map<String, FixedContainerGO> fixedContainers;	//Map of all fixedContainers in the Game. Map is the name of the Container to the Container.
 	
+	/**
+	 * COnstructor for the XML Parser which will handle the saving and loading of save states for the Game.
+	 * 
+	 * @author Chethana Wijesekera
+	 * 
+	 */
 	public Parser(){
 		
 	}
-	
+	/**
+	 * Creates a DOM document structure in memory for the program. 
+	 * This is for saving the game state to an XML file.
+	 * 
+	 * @return Document -- the DOM Document structure to be Saved
+	 */
 	public Document createDocument(){
 		try{
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -90,12 +101,6 @@ public class Parser {
 		
 		
 		saveMap(areas);
-		
-		//when saving areas, only save the WallTiles, FloorTiles, and nulltiles
-		// before closing each room, save the moveables, nonhumans, and inventory obejcts on the map
-		//
-		//
-		
 		
 		createXML();
 		
