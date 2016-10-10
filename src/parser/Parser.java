@@ -73,256 +73,305 @@ public class Parser {
 	 */
 	public Document createDocument(){
 		try{
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document doc = builder.newDocument();
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();	//create an instance of the DocumentBuilderFactory
+			DocumentBuilder builder = factory.newDocumentBuilder();		//use the factory to make a builder to create a Document
+			Document doc = builder.newDocument();	//create a DOM Document
 			
-			return doc;
+			return doc;		//return the newly-made DOM Structure
 			
-		}catch(ParserConfigurationException e){
-			e.printStackTrace();			
+		}catch(ParserConfigurationException e){		//Catch the exception thrown by the DocumentBuilderFactory
+			e.printStackTrace();			//Print stack trace
 		}
-		return null;
+		return null;	//should never get here, just to the class compile
 	}
 	
+	/**
+	 * Main method for saving the game state of the SpookySchool game. From this method, relevant details about the Game are stored and then 
+	 * recorded onto an XML file through extra modular methods.
+	 * 
+	 * Holds a public nature as this is the method called from the SpookySchool class to initiate the saving command.
+	 * 
+	 * @param game -- The current instance of the running SpookySchool game
+	 * @param playerName -- Name of the player that requested the save command. This players details are what will be saved, along with 
+	 * 						the rest of the Game Objects.
+	 */
 	public void save(SpookySchool game, String playerName){
 		
-		save = createDocument();
-		root = save.createElement("game");
+		save = createDocument();	//creates a workable DOM Document where the XML Tree is saved
+		root = save.createElement("game");		//create the root node for the XML file
 		
-		Map<String, Area> areas = game.getAreas();
-		List<Player> players = game.getPlayers();
-		this.inventObjects = game.getInventoryObjects();
-		this.doors = game.getDoorObjects();
-		this.saver = determinePlayer(playerName, players);
-		this.movables = game.getMovableObjects();
-		this.nonHumans = game.getNonHumanPlayers();
-		this.fixedContainers = game.getFixedContainerObjects();
+		Map<String, Area> areas = game.getAreas();	//Get all the different rooms in the Game. Map is from areaName to Area
+		List<Player> players = game.getPlayers();	//Get all the Players currently in the Game
+		this.inventObjects = game.getInventoryObjects();	//Get all the InventoryGO currently in the game
+		this.doors = game.getDoorObjects();		//Get all the DoorGOs currently in the Game
+		this.saver = determinePlayer(playerName, players);	//Find the Player object for the player that saved the Game
+		this.movables = game.getMovableObjects();	//Get all the MovableGOs currently in the Game
+		this.nonHumans = game.getNonHumanPlayers();	//Get all the NonHumanPlayers currently in the Game
+		this.fixedContainers = game.getFixedContainerObjects();		//Get all the FixedContainerObjects currently in the Game
 		
+		saveMap(areas);		//Save the current Game Map, i.e: all the different rooms in the Game
 		
-		saveMap(areas);
-		
-		createXML();
-		
-		
+		createXML();	//Output the DOM structure to be transformed into an XML file
 	}
 	
-	
+	/**
+	 * Main method for loading an instance of a game state into the program to be played with by the user. For this method, a new XML is
+	 * loaded into memory as a workable DOM structure, and parsed with the help of modular methods to create a SpookySchool instance
+	 * that can be played.
+	 * 
+	 */
 	public void load(){
-		load = loadXML();
+		load = loadXML();		//Load the Save file as an XML, and extract the workable DOM strcuture from it
 		
-		Node loadRoot = load.getDocumentElement();
-		
-		iterate();
-		
-		
+		Node loadRoot = load.getDocumentElement();	//Determines the root Node of the saved state
+		iterate();	//iterates through each of the children nodes of the root	
 	}
 	
+	/**
+	 * Iterates over the elements in the loaded DOM structure starting from the root node. If a Node is found of a particular variety, then
+	 * its child nodes are recorded and used to create objects corresponding to the name of the head Node.
+	 */
 	public void iterate(){
-		NodeList nodeList = load.getElementsByTagName("*");
-		String content = "";
-        String nodeName = "";
-	    for (int i = 0; i < nodeList.getLength(); i++) {
-	        Node node = nodeList.item(i);
+		NodeList nodeList = load.getElementsByTagName("*");		//create a list of all Nodes in teh DOM structure
+		String content = "";	//initialize text value for the Node
+        String nodeName = "";	//initialize the name of the Node
+	    for (int i = 0; i < nodeList.getLength(); i++) {	//iterate through every Node in the structure
+	        Node node = nodeList.item(i);		//the current Node
 	        if (node.getNodeType() == Node.ELEMENT_NODE) {
-	            // do something with the current element
-	            nodeName = node.getNodeName();
-	            //System.err.println(nodeName);
-	            if (nodeName.equals("movableGO")){
-		        	NodeList children = node.getChildNodes();
-		        	//System.err.println(children.getLength());
+	            nodeName = node.getNodeName();		//get the name of the current Node
+	            
+	            if (nodeName.equals("movableGO")){		//if its for a MovableGO,  
+		        	NodeList children = node.getChildNodes(); //then save the child nodes of this and create an instance
 		        	createMovableGO(children);
-	            }if (nodeName.equals("door")){
-	            	NodeList children = node.getChildNodes();
-		        	//System.err.println(children.getLength());
-		        	createDoorGO(children);
-	            }if (nodeName.equals("inventoryObject")){
-	            	NodeList children = node.getChildNodes();
-		        	//System.err.println(children.getLength());
+		        	
+	            }if (nodeName.equals("door")){ 		//if its for a DoorGO,
+	            	NodeList children = node.getChildNodes(); //save the child nodes of this and create an instance
+		        	createDoorGO(children);		
+		        	
+	            }if (nodeName.equals("inventoryObject")){ //if its for a InventoryGO,
+	            	NodeList children = node.getChildNodes();	//save the child nodes of this and create an instance
 		        	createInventoryGO(children);
-	            }if (nodeName.equals("fixedContainer")){
-	            	NodeList children = node.getChildNodes();
-		        	//System.err.println(children.getLength());
+		        	
+	            }if (nodeName.equals("fixedContainer")){	//if its for a FixedContainerGO
+	            	NodeList children = node.getChildNodes();	//save the child nodes of this and create an instance
 		        	createFixedContainerGO(children);
 	            }
 	        } 
 	    }
 	}
 	
-		
-	public void createMovableGO(NodeList feilds){
-		System.out.println(feilds.getLength());
-//		String id = feilds.item(1).getTextContent();
-//		String token = feilds.item(3).getTextContent();
-//		String description = feilds.item(9).getTextContent();
-//		String areaName = feilds.item(5).getTextContent();
-//		feilds.item(6).get().replaceAll(" ", "");
-//		feilds.item(7).getTextContent().replaceAll(" ", "");
+	/**
+	 * Creates an instance of a MovableGO using the List of child nodes which represent the field values of the saved instance
+	 * 
+	 * @param fields -- NodeList of child nodes representing the fields for a MovableGO Object
+	 */
+	public void createMovableGO(NodeList fields){
+		System.out.println(fields.getLength());
+//		String id = fields.item(1).getTextContent();
+//		String token = fields.item(3).getTextContent();
+//		String description = fields.item(9).getTextContent();
+//		String areaName = fields.item(5).getTextContent();
+//		fields.item(6).get().replaceAll(" ", "");
+//		fields.item(7).getTextContent().replaceAll(" ", "");
 		//Position pos = new Position(x, y);
 		
 		//movablesToLoad.add(new MovableGO(id, token, areaName, pos));
-		
-		
+	
+	}
+	
+	/**
+	 * Creates an instance of a DoorGO using the List of child nodes which represent the field values of the saved instance
+	 * 
+	 * @param fields -- NodeList of child nodes representing the fields for a DoorGO Object
+	 */
+	public void createDoorGO(NodeList fields){
+			
+	}
+	
+	/**
+	 * Creates an instance of a InventoryGO using the List of child nodes which represent the field values of the saved instance
+	 * 
+	 * @param fields -- NodeList of child nodes representing the fields for a InventoryGO Object
+	 */
+	public void createInventoryGO(NodeList fields){
 		
 	}
 	
-	public void createDoorGO(NodeList feilds){
-			
-		}
-	
-	public void createInventoryGO(NodeList feilds){
+	/**
+	 * Creates an instance of a FixedContainerGO using the List of child nodes which represent the field values of the saved instance
+	 * 
+	 * @param fields -- NodeList of child nodes representing the fields for a FixedContainerGO Object
+	 */
+	public void createFixedContainerGO(NodeList fields){
 		
 	}
 	
-	public void createFixedContainerGO(NodeList feilds){
-		
-	}
-			
-			
-	
-			
-			
-			
-			
-		
-	
+	/**
+	 * Loads each room stored in the XML file by saving all Tile nodes held in a parent Room node
+	 */
 	public void loadAreas(){
 		
 	}
 	
+	/**
+	 * Extracts the Player object that corresponds to the playerName string passed into it.
+	 * 
+	 * @param playerName -- String, name of the player who saved the game, and whose Player object is to be returned
+	 * @param players -- List of all the Player objects held in the current Game.
+	 * @return p -- the Player object whose name matches the given playerName
+	 */
 	public Player determinePlayer(String playerName, List<Player> players){
-		for (Player p : players){
-			if (p.getPlayerName().equals(playerName)){
-				return p;
+		for (Player p : players){		//iterate through each Player in the list of players
+			if (p.getPlayerName().equals(playerName)){	//if the Player's name matches the given playerName
+				return p;		//return this player
 			}
 		}
-		
-		return null; //should not get here
+		return null; 	//should not get here, just to make it compile
 	}
 	
+	/**
+	 * Saves the entire map of the current Game by iterating through each Area and saving the fields of that Area.
+	 * 
+	 * @param areas -- Map of all the rooms in the Game. Map is from areaName to the Area itself
+	 */
 	public void saveMap(Map<String, Area> areas){
-		for (String key : areas.keySet()){
-			Area currentArea = areas.get(key);
-			root.appendChild(saveArea(currentArea));
+		for (String key : areas.keySet()){		//iterate through each areaName in the Map
+			Area currentArea = areas.get(key);		//the area to work with
+			root.appendChild(saveArea(currentArea));	//get the grid of the Area as a Node with children, and append it to the root.
 		}
-		root.appendChild(savePlayer());
-		save.appendChild(root);
+		root.appendChild(savePlayer());	//after saving the whole game map, save the player details to the root
+		save.appendChild(root);		//append the root to the DOM document structure to be transformed into an XML
 	}
 	
+	/**
+	 * Save each room of the Game, including the height and width of the grid "area", the name of the Area, and all GameObjects that are
+	 * in the room.
+	 * 
+	 * @param currentArea -- the current Area that is to be saved 
+	 * @return -- the Element roomNode with all relevant data for the room saved as its children
+	 */
 	public Element saveArea(Area currentArea){
-		Element roomNode = save.createElement("room");
-		Element heightNode = save.createElement("height");
-		Element widthNode = save.createElement("width");
+		Element roomNode = save.createElement("room");		//create the node "room". Holds all subsequent data in this method as a child
+		Element heightNode = save.createElement("height");		//create node "height"
+		Element widthNode = save.createElement("width");		//create the node "width"
 		
-		heightNode.appendChild(save.createTextNode("" + currentArea.getArea()[0].length));
-		widthNode.appendChild(save.createTextNode("" + currentArea.getArea().length));
+		heightNode.appendChild(save.createTextNode("" + currentArea.getArea()[0].length));	//record the height of the area
+		widthNode.appendChild(save.createTextNode("" + currentArea.getArea().length)); //record the width of the area
 		
-		Element areaNameNode = save.createElement("areaName");
-		areaNameNode.appendChild(save.createTextNode(currentArea.getAreaName()));
+		Element areaNameNode = save.createElement("areaName");	//create a node to represent the name of the room
+		areaNameNode.appendChild(save.createTextNode(currentArea.getAreaName())); //append the name of the room to the areaName node
 		
-		roomNode.appendChild(heightNode);
-		roomNode.appendChild(widthNode);
-		roomNode.appendChild(areaNameNode);
+		roomNode.appendChild(heightNode);	//append the height to the room node
+		roomNode.appendChild(widthNode);	//append the width to the room node
+		roomNode.appendChild(areaNameNode);		//append the areaName to the room node
 		
-		Element areaNode  = save.createElement("area");
-		roomNode.appendChild(areaNode);
+		Element areaNode  = save.createElement("area");	//create a node to represent the grid 
+		roomNode.appendChild(areaNode);		//append the grids node to the roomNode so its a part of that room
 		
-		saveTiles(currentArea, areaNode);
-		saveDoors(currentArea, roomNode);
-		saveMovables(currentArea, roomNode);
-		saveNonHumans(currentArea, roomNode);
-		saveInventoryGameObjects(currentArea, roomNode);
-		saveFixedContainers(currentArea, roomNode);
-		saveFillContainers(currentArea, roomNode);
-		//savePlayerInventory(currentArea);
-			//gets the inventory items that 
-		
-		return roomNode;
+		saveTiles(currentArea, areaNode);	//save all the tiles in the area grid and append it to the areaNode
+		saveDoors(currentArea, roomNode);	//save all the doors in the room and append it to the roomNode
+		saveMovables(currentArea, roomNode);	//save all the movableGOs in the room and append it to the roomNode
+		saveNonHumans(currentArea, roomNode);	//save all the NonHumanPlayers in the room and append it to the roomNode
+		saveInventoryGameObjects(currentArea, roomNode);	//save all the inventoryGOs in the room and append it to the roomNode
+		saveFixedContainers(currentArea, roomNode);		//save all the fixedContainerGOs in the room and append it o the roomNode
+		saveFillContainers(currentArea, roomNode);	//fill all the containers in the room
+				
+		return roomNode;	//return the roomNode with all its children to be appended to the root
 	}
 	
+	/**
+	 * Saves each Tile in the 2D-array of Tiles in an Area, including WallTiles and FloorTiles as well as null tiles (Tiles that do
+	 * are not a Floor or Wall Tile). Also saves the fixed position occupant of the Tile, i.e: saves the FixedGO and MarkerGO that is 
+	 * on the FloorTile.
+	 * 
+	 * @param currentArea -- The current Area object that is being saved.
+	 * @param currentParent -- The parent Node to be attached.
+	 */
 	public void saveTiles(Area currentArea, Element currentParent){
-		Tile[][] tiles = currentArea.getArea();
 		
-		for(int i = 0; i < currentArea.getArea().length; i++){
+		for(int i = 0; i < currentArea.getArea().length; i++){		//iterate through the 2D-array, so essentially iterate through every Tile
 			for (int j = 0; j < currentArea.getArea()[i].length; j++){
-				Element tileNode = save.createElement("tile");
-				Tile currentTile = currentArea.getArea()[i][j];
+				Element tileNode = save.createElement("tile");		//Create a Tile Node
+				Tile currentTile = currentArea.getArea()[i][j];		//Take a record of the current Tile
 				
-				if (currentTile == null){
-					tileNode.setAttribute("tileType", "black");
-					tileNode.appendChild(save.createTextNode("null"));
-					currentParent.appendChild(tileNode);
+				if (currentTile == null){		//if the currentTile is a null Tiles
+					tileNode.setAttribute("tileType", "black");		//record that it is a "black tile"
+					tileNode.appendChild(save.createTextNode("null"));	//say it contains nothing
+					currentParent.appendChild(tileNode);	//append the Tile to the room
 				}else{
-					if(currentTile instanceof WallTile){
-						tileNode.setAttribute("tileType", "WallTile");
+					if(currentTile instanceof WallTile){		//if the Tile is a WallTile
+						tileNode.setAttribute("tileType", "WallTile");	//record that it is a WallTile
 						
-					}else if(currentTile instanceof FloorTile){
-						tileNode.setAttribute("tileType", "FloorTile");
-						GameObject occupant = currentTile.getOccupant();
-						Element occupantNode = save.createElement("occupant");
-						if(occupant != null){
-							occupantNode.setAttribute("objectType", occupant.getClass().toString().substring(11));
-
+					}else if(currentTile instanceof FloorTile){		//if the Tile is a FloorTile
+						tileNode.setAttribute("tileType", "FloorTile");		//record that it is a a FloorTile
+						GameObject occupant = currentTile.getOccupant();	//get the GameObjec that is on the Tile
+						Element occupantNode = save.createElement("occupant");	//create a node for this Occupant
+						if(occupant != null){		//as long as there IS an occupant
+							occupantNode.setAttribute("objectType", occupant.getClass().toString().substring(11)); //record the objectType of the
+																				//occupant and format the string to remove unwanted tokens
 						}
 						
-						if(occupant instanceof FixedGO){
-							occupantNode.appendChild(saveID(occupant));
-							occupantNode.appendChild(saveToken(occupant));
-							occupantNode.appendChild(savePosition(occupant));
-							occupantNode.appendChild(saveDescription(occupant));
+						if(occupant instanceof FixedGO){		//if the occupant is a FixedGameObject, save its fields as nodes
+							occupantNode.appendChild(saveID(occupant));		//save the ID and append to the occupantNode
+							occupantNode.appendChild(saveToken(occupant));		//save the token and append to the occupantNode
+							occupantNode.appendChild(savePosition(occupant));		//save the position and append to the occupantNode
+							occupantNode.appendChild(saveDescription(occupant));		//save the description and append to the occupantNode
 							
-							tileNode.appendChild(occupantNode);
-							
+							tileNode.appendChild(occupantNode);		//append the occupantNode and its children to the current tileNode
 							
 						}else if(occupant instanceof MarkerGO){
-							occupantNode.appendChild(savePosition(occupant));
-							occupantNode.appendChild(saveBaseGameObject(occupant));
+							occupantNode.appendChild(savePosition(occupant));		//save the position and append to the occupantNode
+							occupantNode.appendChild(saveBaseGameObject(occupant));		//save the BaseGameObject and append to the occupantNode
 							
-							tileNode.appendChild(occupantNode);						}
-						
+							tileNode.appendChild(occupantNode);			//append the occupantNode and its children to the current tileNode			
+						}
 					}
-					tileNode.appendChild(savePosition(currentTile));
-					currentParent.appendChild(tileNode);	
+					tileNode.appendChild(savePosition(currentTile));		//as long as the occupant isn't null, append the currentTile to the tileNode
+																			//NOTE: Tiles without an occupant have already been appended
+					currentParent.appendChild(tileNode);		//append the tileNode to the roomNode (the parent)
 				}
-					
-				
 			}
 		}	
 	}
 	
+	/**
+	 * Saves the fields held by the Player who saved the Game. These fields are saved as child nodes to a parent "player" node, which is then
+	 * appended to the main game node in the XML
+	 * 
+	 * @return	player -- Element that represents the player, with child nodes representing the fields.
+	 */
 	public Element savePlayer(){
-		Element player = save.createElement("player");
-		player.appendChild(saveName(saver));
-		player.appendChild(saveAreaName(saver));
-		//player.appendChild(saveSpawnName(saver));
-		player.appendChild(savePosition(saver));
-		//player.appendChild(saveInventory(saver));
-		//player.appendChild(saveDirection(saver));
-		player.appendChild(saveToken(saver));
-		player.appendChild(saveDescription(saver));
-		
-		
-		return player;
+		Element player = save.createElement("player");		//create an element to represent the player who saved the Game
+		player.appendChild(saveName(saver));		//save the name and append it to the playerNode
+		player.appendChild(saveAreaName(saver));		//save the areaName and append it to the playerNode
+		//player.appendChild(saveSpawnName(saver)); 	//save the spawnName and append it to the playerNode
+		player.appendChild(savePosition(saver));		//save the Position and append it to the playerNode
+		//player.appendChild(saveInventory(saver));		//save the inventory and append it to the playerNode
+		//player.appendChild(saveDirection(saver));		//save the direction and append it to the playerNode
+		player.appendChild(saveToken(saver));		//save the token and append it to the playerNode
+		player.appendChild(saveDescription(saver));		//save the description and append it to the playerNode
+	
+		return player;		//return the player to be appended to the gameNode
 	}
 	
-	public void saveFillContainers(Area currentArea, Element roomNode){
-		for(InventoryGO item : itemsInContainers){
-			
-		}
-	}
-	
-	
+	/**
+	 * Save the fields for each fixedContainerGO in the Game. These fields are saved as child nodes to a parent "fixedContainer" node, which is then
+	 * appended to the room node in the XML.
+	 * 
+	 * @param currentArea -- the current Area that is being saved
+	 * @param roomNode -- the parent Element that represents the room being saved.
+	 */
 	public void saveFixedContainers(Area currentArea, Element roomNode){
 		
-		for(String key : fixedContainers.keySet()){
-			FixedContainerGO currentFixedContainer = fixedContainers.get(key);
+		for(String key : fixedContainers.keySet()){		//iterate over the keys for the Map of fixedContainers
+			FixedContainerGO currentFixedContainer = fixedContainers.get(key);		//establish a currentContainter
 			
-			if(currentFixedContainer.getArea().equals(currentArea.getAreaName())){
-				Element fixedContainerNode = save.createElement("fixedContainer");
-				fixedContainerNode.setAttribute("id", currentFixedContainer.getId());
+			if(currentFixedContainer.getArea().equals(currentArea.getAreaName())){		//if the container is in the currentArea
+				Element fixedContainerNode = save.createElement("fixedContainer");		//create an element to represent it
+				fixedContainerNode.setAttribute("id", currentFixedContainer.getId());	//mark it with an id attribute based on the containerID
 				
-				fixedContainerNode.appendChild(saveName(currentFixedContainer));
-				fixedContainerNode.appendChild(saveAreaName(currentFixedContainer));
+				fixedContainerNode.appendChild(saveName(currentFixedContainer));	//create nodes for each field of the container and append them
+				fixedContainerNode.appendChild(saveAreaName(currentFixedContainer));		//to the fixedContainerNode
 				fixedContainerNode.appendChild(saveID(currentFixedContainer));
 				fixedContainerNode.appendChild(saveToken(currentFixedContainer));
 				fixedContainerNode.appendChild(saveOpen(currentFixedContainer));
@@ -333,85 +382,107 @@ public class Parser {
 				fixedContainerNode.appendChild(saveContents(currentFixedContainer));
 				fixedContainerNode.appendChild(saveSizeRemaining(currentFixedContainer));
 				
-				roomNode.appendChild(fixedContainerNode);
+				roomNode.appendChild(fixedContainerNode);		//append the containerNode and its children to the roomNode
 			}
 		}
-		
 	}
 	
+	/**
+	 * Saves all the InventoryGO in the current Area and all their field values. These values are saved as child nodes appended to a node to represent the
+	 * current item.
+	 * 
+	 * @param currentArea -- the current Area where the items are checked to exist.
+	 * @param roomNode -- the Node to which each item will be appended to.
+	 */
 	public void saveInventoryGameObjects(Area currentArea, Element roomNode){
 		
-		saversInvent = saver.getInventory();
-		itemsInContainers = new ArrayList<>();
+		saversInvent = saver.getInventory();		//get the Player who saved the game's inventory
+		itemsInContainers = new ArrayList<>();		//initialize the list to remember which items remain in containers
 		
-		
-		for (String key : inventObjects.keySet()){
-			InventoryGO currentObject = inventObjects.get(key);
+		for (String key : inventObjects.keySet()){		//iterate through the keys in the Map of InventoryGOs
+			InventoryGO currentObject = inventObjects.get(key);	//establish a currentObject to work with
 			
-			if(currentObject.getPosition() != null){
-				//inventory item is on the floor
-				Element inventoryObject = save.createElement("inventoryObject");
-				inventoryObject.setAttribute("id", currentObject.getId());
+			if(currentObject.getPosition() != null){	//inventory item is on the floor, not being held
 				
-				inventoryObject.appendChild(saveName(currentObject));
-				inventoryObject.appendChild(saveID(currentObject));
+				Element inventoryObject = save.createElement("inventoryObject");	//create a node to represent the current item
+				inventoryObject.setAttribute("id", currentObject.getId());	//mark the item with an id attribute 
+				
+				inventoryObject.appendChild(saveName(currentObject));		//save each of the fields for the currentItem, appending each of them
+				inventoryObject.appendChild(saveID(currentObject));				//to the inventoryObject node
 				inventoryObject.appendChild(saveToken(currentObject));
 				inventoryObject.appendChild(saveAreaName(currentObject));
 				inventoryObject.appendChild(saveSize(currentObject));
 				inventoryObject.appendChild(savePosition(currentObject));
 				inventoryObject.appendChild(saveDescription(currentObject));
 				
-				roomNode.appendChild(inventoryObject);
-			}else{
-				if(!saversInvent.contains(currentObject)){
-					itemsInContainers.add(currentObject);
+				roomNode.appendChild(inventoryObject);		//append the object Node to the parentRoom
+			}else{			//otherwise, if item is not on the floor,
+				if(!saversInvent.contains(currentObject)){	//and not in the inventory, it must be in a container
+					itemsInContainers.add(currentObject);	//so add it to the list of items in containers
 				}
-			}//STILL NEED TO FILL CONTAINERS
+			}
 		}
 	}
 	
+	/**
+	 * Saves all the NonHumanPlayers in the game and their field values to their respective Areas in the XML.
+	 * 
+	 * @param currentArea -- the current Area where the NonHumanPlayer is checked to exist in
+	 * @param roomNode -- the Node to which each NonHumnPlayer will be appended to
+	 */
 	public void saveNonHumans(Area currentArea, Element roomNode){
-		for (NonHumanPlayer nhp : nonHumans){
-			if (nhp.getCurrentArea().getAreaName().equals(currentArea.getAreaName())){
-				Element nonHumanNode = save.createElement("nonHumanPlayer");
-				nonHumanNode.setAttribute("name", nhp.getPlayerName());
-				
-				nonHumanNode.appendChild(saveName(nhp));	
+		for (NonHumanPlayer nhp : nonHumans){		//iterate through the list of NonHumans
+			if (nhp.getCurrentArea().getAreaName().equals(currentArea.getAreaName())){	//if their name matches the name of the Area,
+																						//then it should be saved here
+				Element nonHumanNode = save.createElement("nonHumanPlayer");	//create a node to represent it
+				nonHumanNode.setAttribute("name", nhp.getPlayerName());		//mark it with the attribute name to identify it
+				nonHumanNode.appendChild(saveName(nhp));					//save the nhp's respective fields and append them to the nonHumanNode
 				nonHumanNode.appendChild(saveNonHumanSpawnName(nhp));
 				nonHumanNode.appendChild(saveAreaName(nhp));
-				//when loading, load the Area not the areaName.
 				nonHumanNode.appendChild(savePosition(nhp));
 				
-				roomNode.appendChild(nonHumanNode);
+				roomNode.appendChild(nonHumanNode);		//append the nonHuman node and its children to the parent roomNode
 				
 			}
 		}
 	}
 	
+	/**
+	 * Saves all the Movable Game Objects in the game and their field values to their respective Areas in the XML
+	 * 
+	 * @param currentArea -- the current Area where the NonHumanPlayer is checked to exist in
+	 * @param roomNode -- the Node to which each NonHumnPlayer will be appended to
+	 */
 	public void saveMovables(Area currentArea, Element roomNode){
-		for (MovableGO object : movables){
-			if(object.getAreaName().equals(currentArea.getAreaName())){
-				Element movableNode = save.createElement("movableGO");
+		for (MovableGO object : movables){		//iterate through the list of movableObjects
+			if(object.getAreaName().equals(currentArea.getAreaName())){		//if the areaName of the object matches the name of the current Area
+				Element movableNode = save.createElement("movableGO");	//create a node to represent it
 				
-				movableNode.appendChild(saveID(object));
+				movableNode.appendChild(saveID(object));		//save the movable's respective fields and append them to the movableNode 
 				movableNode.appendChild(saveToken(object));
 				movableNode.appendChild(saveAreaName(object));
 				movableNode.appendChild(savePosition(object));
 				movableNode.appendChild(saveDescription(object));
 				
-				roomNode.appendChild(movableNode);
+				roomNode.appendChild(movableNode);	//append the movable node and its children to the parent roomNode
 			}
 		}
 	}
 	
+	/**
+	 * Saves all the Door Game Objects in the game and their field values to their respective Areas in the XML.
+	 * 
+	 * @param currentArea -- the current Area where the NonHumanPlayer is checked to exist in
+	 * @param roomNode -- the Node to which each NonHumnPlayer will be appended to
+	 */
 	public void saveDoors(Area currentArea, Element roomNode){
 		
-		for(DoorGO door : doors){
-			if (door.getSideA().equals(currentArea.getAreaName())){
-				Element doorNode = save.createElement("door");
-				doorNode.setAttribute("id", door.getId());
+		for(DoorGO door : doors){			//iterate through the list of Doors
+			if (door.getSideA().equals(currentArea.getAreaName())){ 	//if the door is in the currentArea
+				Element doorNode = save.createElement("door");		//create a node to represent it
+				doorNode.setAttribute("id", door.getId());		//mark this doorNode with an id attribute
 				
-				doorNode.appendChild(saveID(door));
+				doorNode.appendChild(saveID(door));				//save the door's respective fields and append them to the doorNode  
 				doorNode.appendChild(saveOpen(door));
 				doorNode.appendChild(saveLocked(door));
 				doorNode.appendChild(saveKeyID(door));
@@ -427,35 +498,58 @@ public class Parser {
 				doorNode.appendChild(saveSideBPos(door));
 				doorNode.appendChild(saveSideBEntryPos(door));
 				
-				roomNode.appendChild(doorNode);
+				roomNode.appendChild(doorNode);			//append the door node and its children to the parent roomNode
 			}
 		}
-		
 	}
 	
+	/**
+	 * Saves the spawn name of a NonHumanPlayer into a node
+	 * 
+	 * @param nhp -- the NonHumanPlayer whose name is required
+	 * @return spawnName -- the Node with the NonHumanPlayers spawnName
+	 */
 	public Element saveNonHumanSpawnName(NonHumanPlayer nhp){
-		Element spawnName = save.createElement("spawnName");
-		Text value = save.createTextNode("null");
-		spawnName.appendChild(value);
-		return spawnName;
+		Element spawnName = save.createElement("spawnName");	//create a node called spawnName
+		Text value = save.createTextNode("null");	//NonHumans do not have a spawn name, so append the String "null" to avoid NullPointers
+		spawnName.appendChild(value);	//append the two Nodes
+		return spawnName; 	//return the final Node
 	}
 	
+	/**
+	 * Save the "A side" of a given door. DoorGOs have two sides, so the sideA refers to one of these sides.
+	 * 
+	 * @param door -- the DoorGO whose side is required
+	 * @return sideA -- the Node containing the DoorGOs sideA
+	 */
 	public Element saveSideA(DoorGO door){
-		Element sideA = save.createElement("sideA");
-		Text value = save.createTextNode(door.getSideA());
-		sideA.appendChild(value);
-		return sideA;
+		Element sideA = save.createElement("sideA");	//create a node called sideA
+		Text value = save.createTextNode(door.getSideA());		//create a node with the doors sideA value
+		sideA.appendChild(value);	//append the two Nodes
+		return sideA;		//return the final Node
 	}
 	
+	/**
+	 * Save the "B side" of a given door. DoorGOs have two sides, so the sideB refers to one of these sides.
+	 * 
+	 * @param door -- the DoorGO whose side is required
+	 * @return sideB -- the Node containing the DoorGOs sideB
+	 */
 	public Element saveSideB(DoorGO door){
-		Element sideB = save.createElement("sideB");
-		Text value = save.createTextNode(door.getSideB());
-		sideB.appendChild(value);
-		return sideB;
+		Element sideB = save.createElement("sideB");	//create a node called sideB
+		Text value = save.createTextNode(door.getSideB());		//create a node with the doors sideB value
+		sideB.appendChild(value);	//append the two Nodes
+		return sideB;		//return the final Node
 	}
 	
+	/**
+	 * Save the "A side" token of the door.
+	 * 
+     * @param door -- the DoorGO whose side is required
+	 * @return sideB -- the Node containing the DoorGOs sideAToken
+	 */
 	public Element saveTokenA(DoorGO door){
-		Element tokenA = save.createElement("tokenA");
+		Element tokenA = save.createElement("tokenA");		//
 		Text value = save.createTextNode(door.getTokenA());
 		tokenA.appendChild(value);
 		return tokenA;
