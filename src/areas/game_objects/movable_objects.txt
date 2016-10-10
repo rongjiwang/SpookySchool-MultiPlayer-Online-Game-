@@ -17,5 +17,5 @@ lamp2 la0 Dorm_storage 2 2
 lamp3 la0 Dorm_room 5 5
 plantpot1 pp0 Dorm_storage 2 4
 potEmpty1 pe0 Dorm_storage 4 4
-potEmpty2 pe0 Dorm_storage 4 5
+potEmpty2 pe0 Dorm_storage 5 4
 barrel1 ba0 Dorm_storage 6 4
