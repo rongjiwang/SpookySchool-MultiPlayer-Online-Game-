@@ -18,6 +18,7 @@ import game.SpookySchool;
 import game.Tile;
 import game.WallTile;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
 import javax.xml.parsers.*;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -39,6 +40,7 @@ public class Parser {
 	
 	private List<DoorGO> doors; 
 	private Player saver;
+	private List<MovableGO> movables;
 	
 	public Parser(){
 		
@@ -68,6 +70,8 @@ public class Parser {
 		Map<String, InventoryGO> inventObjects = game.getInventoryObjects();
 		this.doors = game.getDoorObjects();
 		this.saver = determinePlayer(playerName, players);
+		this.movables = game.getMovableObjects();
+		
 		
 		saveMap(areas);
 		
@@ -124,7 +128,7 @@ public class Parser {
 		
 		saveTiles(currentArea, areaNode);
 		saveDoors(currentArea, roomNode);
-		//saveMovables(currentArea, areaNode);
+		saveMovables(currentArea, roomNode);
 		//saveNonHumans(currentArea, areaNode);
 		//saveInventoryObjects(currentArea, areaNode);
 		//saveFixedContainers(currentArea, areaNode);
@@ -182,6 +186,22 @@ public class Parser {
 				
 			}
 		}	
+	}
+	
+	public void saveMovables(Area currentArea, Element roomNode){
+		for (MovableGO object : movables){
+			if(object.getAreaName().equals(currentArea.getAreaName())){
+				Element movableNode = save.createElement("movableGO");
+				
+				movableNode.appendChild(saveID(object));
+				movableNode.appendChild(saveToken(object));
+				movableNode.appendChild(saveAreaName(object));
+				movableNode.appendChild(savePosition(object));
+				movableNode.appendChild(saveDescription(object));
+				
+				roomNode.appendChild(movableNode);
+			}
+		}
 	}
 	
 	public void saveDoors(Area currentArea, Element roomNode){
