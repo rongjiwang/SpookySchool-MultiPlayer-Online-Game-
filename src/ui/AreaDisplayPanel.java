@@ -138,7 +138,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			this.currentArea = this.mainPlayer.getCurrentArea();
 			this.currentAreaObjects = bundle.getAreaObjects();
 			this.displayRoomName();
-			//this.centerPlayer();
+			this.centerPlayer();
 
 			//Set the footer message if there is one in the bundle.
 			if (bundle.getMessage() != null) {
@@ -163,7 +163,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					overlayPanel.setFooterMessage(bundle.getMessage());
 				}
 
-				//this.centerPlayer();
+				this.centerPlayer();
 				return;
 
 				//Dont try to find changes!
@@ -468,15 +468,15 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 						tileImage = spriteMap.getImage(getRotatedAnimatedToken(ao.getNextImgToken(), p.getDirection()));
 
+						Position posToDraw = ao.getPosition(); //Dont need to worry since its main player.
+						ao.incrementCurrent();
+
 						if (ao.isMainPlayer()) {
 							System.out.println("change main player buff");
 							this.animating = true;
 							ao.changeBuffs();
 							this.centerPlayerAnimation(ao.getStartX(), ao.getStartY()); //Center the player now that it has moved position...
 						}
-
-						Position posToDraw = ao.getPosition(); //Dont need to worry since its main player.
-						ao.incrementCurrent();
 
 						finalX = posToDraw.getPosX();
 						finalY = posToDraw.getPosY();
