@@ -40,10 +40,16 @@ public class JoinServerPanel extends JPanel {
 	private JTextField serverStatusField;
 	private JButton joinServerBtn;
 	private BufferedImage uiBackground;
+	
+	private Font customFont;
 
 	public JoinServerPanel(JPanel contentPane) {
 		this.setLayout(null); //Use no layout manager in this panel.
 		this.setBackground(Color.darkGray);
+		
+		try {
+			customFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
+		} catch (Exception e) {}
 
 		//Assign a random name from the list of default names.
 		int nameIndex = (int) (Math.random() * defaultNames.length);
@@ -63,59 +69,66 @@ public class JoinServerPanel extends JPanel {
 	 * Sets up the this (JoinServerPanel) panel. Adds various buttons and input fields.
 	 */
 	private void setupPanel() {
-
 		//Server Status field
 		this.serverStatusField = new JTextField("Waiting to join server...", 15);
 		serverStatusField.setHorizontalAlignment(SwingConstants.CENTER);
 		serverStatusField.setEditable(false);
 		serverStatusField.setBounds(150, 200, 200, 30);
+		serverStatusField.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 10f));
 		this.add(serverStatusField);
 
 
 		//PlayerName Label
 		JLabel playerNameLabel = new JLabel("Player Name:");
-		playerNameLabel.setForeground(Color.WHITE);
+		playerNameLabel.setForeground(Color.BLACK);
 		playerNameLabel.setFont(new Font("Arial", 1, 15));
 		playerNameLabel.setBounds(105, 280, 200, 30);
+		playerNameLabel.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 12f));
 		this.add(playerNameLabel);
 
 		//Add playerName text field.
 		JTextField playerNameField = new JTextField(this.playerName, 15);
 		playerNameField.setBounds(225, 280, 200, 30);
+		playerNameField.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 11f));
 		this.add(playerNameField);
 
 
 		//IP Address Label
 		JLabel ipLabel = new JLabel("IP Address:");
-		ipLabel.setForeground(Color.WHITE);
+		ipLabel.setForeground(Color.BLACK);
 		ipLabel.setFont(new Font("Arial", 1, 15));
 		ipLabel.setBounds(105, 340, 200, 30);
+		ipLabel.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 12f));
 		this.add(ipLabel);
 
 
 		//Add ip address field.
 		JTextField ipAddressField = new JTextField(this.ipAddress, 15);
 		ipAddressField.setBounds(225, 340, 200, 30);
+		ipAddressField	.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 11f));
 		this.add(ipAddressField);
 
 
 		//Port label
 		JLabel portLabel = new JLabel("Join on Port:");
-		portLabel.setForeground(Color.WHITE);
+		portLabel.setForeground(Color.BLACK);
 		portLabel.setFont(new Font("Arial", 1, 15));
 		portLabel.setBounds(105, 400, 200, 30);
+		portLabel.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 12f));
 		this.add(portLabel);
 
 
 		//Add Port Field
 		JTextField portField = new JTextField(this.port.toString(), 15);
 		portField.setBounds(225, 400, 200, 30);
+		portField.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 11f));
 		this.add(portField);
 
 		//Add Join Server Button.
 		joinServerBtn = new JButton("Join Server");
 		joinServerBtn.setToolTipText("Click here to join server");
 		joinServerBtn.setBounds(100, 460, 300, 70);
+		joinServerBtn.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 12f));
 		this.add(joinServerBtn);
 
 		joinServerBtn.addActionListener(new ActionListener() {

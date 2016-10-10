@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import network.Client;
+
 /**
  * Button panel is a panel of 3 option buttons, which allow for various functionality
  * 
@@ -16,20 +18,29 @@ import javax.swing.JPanel;
  *
  */
 public class ButtonPanel extends JPanel{
+	//references to other panels
+	private GameFrame home;
+	private Client client;
+	private UIImageMap imageMap;
+	
+	//button interaction
 	private ImageIcon[] icons;
 	private ButtonListen listen;
+	
+	//buttons 
 	private JLabel info;
 	private JLabel about;
 	private JLabel save;
-	private UIImageMap imageMap;
-	private GameFrame home;
-		
-	public ButtonPanel(GameFrame home, UIImageMap imageMap){
+				
+	public ButtonPanel(GameFrame home, Client client, UIImageMap imageMap){
 		setLayout(new FlowLayout());
-		
+				
+		//sets gameframe
+		this.home = home;
+		//sets client
+		this.client = client;
 		//sets imageMap
 		this.imageMap = imageMap;
-		this.home = home;
 		
 		//sets icons
 		setIcons();
@@ -83,29 +94,29 @@ public class ButtonPanel extends JPanel{
 			} else if(e.getSource() == about){ //about has been pressed
 				home.setGlass(false);
 			} else { //save game has been pressed
-				//TODO: Save functionality needs to be added
+				client.sendCommand("SAVE");
 			}
 		}
 
 		
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			if(e.getSource() == info){ //info has been pressed
+			if(e.getSource() == info){ //info has been highlighted
 				info.setIcon(icons[1]);
-			} else if(e.getSource() == about){ //about has been pressed
+			} else if(e.getSource() == about){ //about has been highlighted
 				about.setIcon(icons[3]);
-			} else { //save game has been pressed
+			} else { //save game has been highlighted
 				save.setIcon(icons[5]);
 			}
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			if(e.getSource() == info){ //info has been pressed
+			if(e.getSource() == info){ //info has been unhighlighted
 				info.setIcon(icons[0]);
-			} else if(e.getSource() == about){ //about has been pressed
+			} else if(e.getSource() == about){ //about has been unhighlighted
 				about.setIcon(icons[2]);
-			} else { //save game has been pressed
+			} else { //save game has been unhighlighted
 				save.setIcon(icons[4]);
 			}
 		}

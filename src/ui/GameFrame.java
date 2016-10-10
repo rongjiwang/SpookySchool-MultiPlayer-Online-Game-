@@ -15,50 +15,61 @@ import javax.swing.JPanel;
 import game.Bundle;
 import network.Client;
 
+/**
+ * GameFrame is is where the game is viewed and controlled. It holds references to all panels invovled with the running of an individual game
+ * and passes bundles from the client to the required panel.
+ * 
+ * @author Andy
+ *
+ */
 public class GameFrame extends JFrame implements WindowListener {
-
+	//main display penels
+	//Main Panel
 	private JPanel mainPanel;
+	//Info Panel
 	private InfoPanel infoPanel;
-
+	//Inventory Panel
 	private InventoryPanel invPanel;
+	//Chat Panel
 	private ChatPanel chatPanel;
+	//UI Image Map 
 	private UIImageMap imageMap;
+	//Sprite Map
 	private SpriteMap spriteMap;
+	//Button Panel
 	private ButtonPanel buttons;
-
-	//private boolean render3D = true; //FIXME **CHANGE TO FALSE TESTING 2D RENDERING**
-
-	private AreaDisplayPanel areaDisplayPanel; //This pane displays all of the other panels
-	private AreaDisplayPanel2D areaDisplayPanel2D; //This pane displays all of the other panels
+	//Area Display Panel (Game renderer
+	private AreaDisplayPanel areaDisplayPanel; 
 	
+	//Client
 	private Client client;
+	//Player name
 	private String name;
+	//Overlay Panel
 	private OverlayPanel overlayPanel;
 
 	public GameFrame(String title, Client client, String name) {
 		super(title); // Set window title.
 
+		//Creates both image maps
 		this.imageMap = new UIImageMap();
 		this.spriteMap = new SpriteMap();
 
+		//Game client
 		this.client = client;
 
 		//sets up layout
 		this.setLayout(new BorderLayout());
 		this.setResizable(false); //Do not allow window resizing.
 
-		//if (this.render3D) {
-		this.areaDisplayPanel = new AreaDisplayPanel(this.client, this, spriteMap);
-		this.overlayPanel = new OverlayPanel(areaDisplayPanel, spriteMap);
-		this.areaDisplayPanel.setOverLay(this.overlayPanel);
-		this.infoPanel = new InfoPanel(getContentPane(), this, imageMap);
-		this.buttons = new ButtonPanel(this, imageMap);
-
-		//creates inventory panel
-		invPanel = new InventoryPanel(this.imageMap, this.client, this.overlayPanel);
-
-		//creates chat panel
-		chatPanel = new ChatPanel(this, this.name, this.client, this.imageMap);
+		//creates the various panels, passing them required references to other panels
+		this.areaDisplayPanel = new AreaDisplayPanel(this.client, this, spriteMap); //Renderer panel
+		this.overlayPanel = new OverlayPanel(areaDisplayPanel, spriteMap); //overlay panel
+		this.areaDisplayPanel.setOverLay(this.overlayPanel); //assigns overlay to renderer
+		this.infoPanel = new InfoPanel(getContentPane(), this, imageMap); //InfoPanel 
+		this.buttons = new ButtonPanel(this, this.client, imageMap); //button panel
+		this.invPanel = new InventoryPanel(this.imageMap, this.client, this.overlayPanel); //inventory panel
+		this.chatPanel = new ChatPanel(this, this.name, this.client, this.imageMap);//chat panel
 
 		//adds all panels to the main Panel;
 		mainPanel = new MainPanel(this, areaDisplayPanel, chatPanel, invPanel, buttons, imageMap);
@@ -67,26 +78,36 @@ public class GameFrame extends JFrame implements WindowListener {
 		//packs panel sizes
 		this.pack();
 
-		//creates overlay on glasspanel.
+		//creates assigns overlay panel to glasspane
 		setGlassPane(infoPanel);
 		
-		this.addWindowListener(this); //This frame also implements window listener so "add it"
-		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //Don't close window when x button is pressed. Allows us to get user confirmation.
+		//adds window listener to this frame
+		this.addWindowListener(this); 
+		//prevents frame from closing when user clicks the X button
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); 
 
 		// Center window in screen
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension scrnsize = toolkit.getScreenSize();
 		setBounds((scrnsize.width - getWidth()) / 2, (scrnsize.height - getHeight()) / 2, getWidth(), getHeight());
 	
-		this.setVisible(true); //Display the window
+		//Display the window
+		this.setVisible(true); 
 	}
 
 
-	//refocuses on game window (after sending a message)
+	/**
+	 * Refocuses on the area display panel
+	 */
 	public void refocus() {
 		areaDisplayPanel.requestFocusInWindow();
 	}
 	
+	/**
+	 * Activates the glass panel, which is overlayed in this frame over the game.
+	 * 
+	 * @param info if the panel will be 
+	 */
 	public void setGlass(boolean info){
 		infoPanel.setInfo(info);
 		getGlassPane().setVisible(true);
@@ -96,7 +117,7 @@ public class GameFrame extends JFrame implements WindowListener {
 	 * Process the bundle by passing its contents to relevant panels.
 	 */
 	public void processBundle(Bundle bundle) {
-
+		//passes chat panel any log updates
 		if (bundle.getLog() != null && !bundle.getLog().isEmpty()) 
 			chatPanel.addChange(bundle.getLog());
 
@@ -107,9 +128,14 @@ public class GameFrame extends JFrame implements WindowListener {
 		this.areaDisplayPanel.processBundle(bundle);//Temporarily only passing bundle to the renderer.
 	}
 
+	/**
+	 * If user attempts to close window, displays a dialogue instead.
+	 * 
+	 * @param arg0
+	 */
 	@Override
 	public void windowClosing(WindowEvent arg0) {
-		this.closeWindow();
+		this.closeWindow(); 
 	}
 
 	/**

@@ -158,6 +158,8 @@ public class SpookySchool {
 				Tile tile = area.getTile(objPosition); //Get the tile of 
 
 				tile.setOccupant(movableGO);
+
+				this.movableObjects.add(movableGO);
 			}
 
 			//Scan the non human player objects.
@@ -969,4 +971,7 @@ public class SpookySchool {
 		return inventoryObjects;
 	}
 
+	public List<NonHumanPlayer> getNonHumanPlayers() {
+		return this.nonHumanPlayers;
+	}
 }

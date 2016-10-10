@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,21 +28,21 @@ public class NetworkMenuPanel extends JPanel {
 	private JButton newServerBtn;
 	private JButton joinServerBtn;
 	private JButton localGameBtn;
+	private Font customFont;
 
 	public NetworkMenuPanel(JPanel contentPane) {
 		this.contentPane = contentPane;
 		this.setLayout(null); //Use no layout manager in this panel.
 		this.setBackground(Color.darkGray);
 
-		this.addNetworkMenuButtons(); //Add buttons to this panel
-
 		try {
 			this.uiBackground = ImageIO.read(new File("src/ui/images/networkui_bg.png"));
-		} catch (IOException e) {
+			customFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-
+		
+		this.addNetworkMenuButtons(); //Add buttons to this panel
 	}
 
 
@@ -54,6 +55,7 @@ public class NetworkMenuPanel extends JPanel {
 		this.newServerBtn = new JButton("New Server");
 		this.newServerBtn.setToolTipText("Click here to create a new Spooky School Server");
 		this.newServerBtn.setBounds(100, 200, 300, 70);
+		this.newServerBtn.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 12f));
 		this.newServerBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
@@ -67,6 +69,7 @@ public class NetworkMenuPanel extends JPanel {
 		this.joinServerBtn = new JButton("Join Server");
 		this.joinServerBtn.setToolTipText("Click here to join an existing Spooky School Server");
 		this.joinServerBtn.setBounds(100, 300, 300, 70);
+		this.joinServerBtn.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 12f));
 		this.joinServerBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
@@ -75,7 +78,9 @@ public class NetworkMenuPanel extends JPanel {
 			}
 		});
 		this.add(this.joinServerBtn);
-
+	}	
+	
+	/*
 		//Create and add play local game button
 		this.localGameBtn = new JButton("Begin Local Game");
 		this.localGameBtn.setToolTipText("Click here to bein a new local game");
@@ -88,7 +93,7 @@ public class NetworkMenuPanel extends JPanel {
 		});
 		this.add(this.localGameBtn);
 
-	}
+	}*/
 
 	@Override
 	public void paintComponent(Graphics g) {
