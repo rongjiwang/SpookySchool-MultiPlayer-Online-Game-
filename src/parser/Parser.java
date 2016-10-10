@@ -95,7 +95,11 @@ public class Parser {
 		
 	}
 	
+	
 	public void load(){
+		
+		
+		
 		
 	}
 	
@@ -114,6 +118,7 @@ public class Parser {
 			Area currentArea = areas.get(key);
 			root.appendChild(saveArea(currentArea));
 		}
+		root.appendChild(savePlayer());
 		save.appendChild(root);
 	}
 	
@@ -141,7 +146,8 @@ public class Parser {
 		saveNonHumans(currentArea, roomNode);
 		saveInventoryGameObjects(currentArea, roomNode);
 		saveFixedContainers(currentArea, roomNode);
-		//saveFillContainers(currentArea, areaNode);
+		saveFillContainers(currentArea, roomNode);
+		//savePlayerInventory(currentArea);
 			//gets the inventory items that 
 		
 		return roomNode;
@@ -196,6 +202,28 @@ public class Parser {
 			}
 		}	
 	}
+	
+	public Element savePlayer(){
+		Element player = save.createElement("player");
+		player.appendChild(saveName(saver));
+		player.appendChild(saveAreaName(saver));
+		//player.appendChild(saveSpawnName(saver));
+		player.appendChild(savePosition(saver));
+		//player.appendChild(saveInventory(saver));
+		//player.appendChild(saveDirection(saver));
+		player.appendChild(saveToken(saver));
+		player.appendChild(saveDescription(saver));
+		
+		
+		return player;
+	}
+	
+	public void saveFillContainers(Area currentArea, Element roomNode){
+		for(InventoryGO item : itemsInContainers){
+			
+		}
+	}
+	
 	
 	public void saveFixedContainers(Area currentArea, Element roomNode){
 		
@@ -465,7 +493,10 @@ public class Parser {
 			value = save.createTextNode(((NonHumanPlayer) occupant).getPlayerName());
 		} else if(occupant instanceof FixedContainerGO){
 			value = save.createTextNode(((FixedContainerGO) occupant).getName());
+		} else if(occupant instanceof Player){
+			value = save.createTextNode(((Player) occupant).getPlayerName());
 		}
+		
 		name.appendChild(value);
 		return name;
 	}
@@ -573,6 +604,8 @@ public class Parser {
 			value = save.createTextNode(((FixedGO) occupant).getDescription());			
 		}else if (occupant instanceof MarkerGO){
 			value = save.createTextNode(((MarkerGO) occupant).getDescription());			
+		}else if (occupant instanceof Player){
+			value = save.createTextNode(((Player) occupant).getDescription());			
 		}
 		
 		Element description = save.createElement("description");
@@ -602,6 +635,8 @@ public class Parser {
 			value = save.createTextNode((((NonHumanPlayer) occupant).getCurrentArea().getAreaName()));
 		}else if (occupant instanceof FixedContainerGO){
 			value = save.createTextNode((((FixedContainerGO) occupant).getArea()));
+		}else if (occupant instanceof Player){
+			value = save.createTextNode((((Player) occupant).getCurrentArea().getAreaName()));
 		}
 		Element areaName = save.createElement("areaName");
 		areaName.appendChild(value);
