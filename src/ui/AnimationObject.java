@@ -14,7 +14,9 @@ public class AnimationObject {
 	private int aimX;
 	private int aimY;
 	private boolean mainPlayer;
-
+	private long now;
+	private long then = System.currentTimeMillis();
+	private boolean rightFoot;
 	private int current = 0;
 
 	public AnimationObject(AreaDisplayPanel adp, GameObject gameObj, boolean mainPlayer, String direction, int startX,
@@ -28,6 +30,7 @@ public class AnimationObject {
 		this.startY = startY;
 		this.aimX = aimX;
 		this.aimY = aimY;
+		this.rightFoot = Math.random() < 0.5;
 
 		System.out.println(Math.abs((startY - aimY)));
 
@@ -60,8 +63,15 @@ public class AnimationObject {
 
 	}
 
-	public void incrementCurrent() {
-		this.current++;
+	public boolean incrementCurrent() {
+		now = System.currentTimeMillis();
+		boolean change = false;
+		if(now > then){
+			this.current++;
+			change = true;
+		then = System.currentTimeMillis() + 5;
+		}
+		return change;
 	}
 
 	public void changeBuffs() {
@@ -84,29 +94,32 @@ public class AnimationObject {
 		int nextToken = 0;
 
 		if (this.direction.equals("NORTH") || this.direction.equals("SOUTH")) {
-			if (this.current <= 6) {
+			if (this.current <= 5) {
 				nextToken = 0;
-			} else if (this.current <= 12) {
-				nextToken = 1;
-			} else if (this.current <= 18) {
-				nextToken = 2;
-			} else {
-				nextToken = 3;
+			} else{
+				if(rightFoot){
+					nextToken = 1;
+				}else
+					nextToken = 3;
 			}
+
+
+
 		} else {
 			if (this.current <= 8) {
 				nextToken = 0;
-			} else if (this.current <= 16) {
-				nextToken = 1;
-			} else if (this.current <= 24) {
-				nextToken = 2;
-			} else {
-				nextToken = 3;
+			} else{
+				if(rightFoot){
+					nextToken = 1;
+				}else
+					nextToken = 3;
 			}
+
 		}
 
 		String token = gameObj.getToken().substring(0, gameObj.getToken().length() - 1) + String.valueOf(nextToken);
 		return token;
+
 	}
 
 

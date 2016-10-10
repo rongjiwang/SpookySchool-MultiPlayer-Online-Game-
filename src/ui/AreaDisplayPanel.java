@@ -77,7 +77,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			|		|
 		3	|		|	1
 			|_______|
-			
+
 				0
 		  Default view */
 
@@ -122,12 +122,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	public void processBundle(Bundle bundle) {
 
 
-		if (this.currentArea != null) {
-			//Update the display to show objects in their correct places.
-			//this.updateDisplay();
-		}
-
-
 		this.mainPlayer = bundle.getPlayerObj();
 
 		this.previousAreaObjects = this.currentAreaObjects;
@@ -136,7 +130,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			this.currentArea = this.mainPlayer.getCurrentArea();
 			this.currentAreaObjects = bundle.getAreaObjects();
 			this.displayRoomName();
-			this.centerPlayer(); //Dont change this bit.
 
 			//Set the footer message if there is one in the bundle.
 			if (bundle.getMessage() != null) {
@@ -161,7 +154,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					overlayPanel.setFooterMessage(bundle.getMessage());
 				}
 
-				this.toAnimate.clear(); //New area so clear the animation list.	
 				this.centerPlayer();
 				this.repaint();
 				return;
@@ -355,7 +347,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 						this.renderOffSetY - ((image.getHeight(null) - this.windowHeight) / 2), null);
 			}
 
-		renderArray(offgc, 0); // render floor tiles		
+		renderArray(offgc, 0); // render floor tiles
 		renderArray(offgc, 1); // render far walls
 		renderArray(offgc, 2); // render gameObjects
 		renderArray(offgc, 3); // render close and side walls
@@ -363,10 +355,10 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		if (currentArea != null && currentArea.getAreaName().equals("Outside")) {
 			if (Math.random() < 0.96) {
 				Image image = spriteMap.getImage(getRotatedToken("N0"));
-				//offgc.drawImage(image, this.renderOffSetX - ((image.getWidth(null) - this.windowWidth) / 2),
-				//	this.renderOffSetY - ((image.getHeight(null) - this.windowHeight) / 2), null);
+				offgc.drawImage(image, this.renderOffSetX - ((image.getWidth(null) - this.windowWidth) / 2),
+					this.renderOffSetY - ((image.getHeight(null) - this.windowHeight) / 2), null);
 
-				//offgc.drawImage(spriteMap.getImage("Rain" + this.nextRain()), 0, 0, 600, 600, null);
+				offgc.drawImage(spriteMap.getImage("Rain" + this.nextRain()), 0, 0, 600, 600, null);
 			}
 		}
 
@@ -374,10 +366,10 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	}
 
 	/**
-	 * Iterates through the array in the appropriate direction 
+	 * Iterates through the array in the appropriate direction
 	 * depending on the current view. Only renders the suggested layer
-	 * 
-	 * @param g - graphics 
+	 *
+	 * @param g - graphics
 	 * @param layer - layer to render
 	 */
 	public void renderArray(Graphics g, int layer) {
@@ -487,26 +479,21 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					//If this player needs to be animated, change final x and final y for animation.
 					if (ao != null) {
 
-						/*
-						//Rotated x and y at finish position of player.
-						view = getRotatedView(x, y, currentArea.width, currentArea.height);
-						viewX = view[0];
-						viewY = view[1];
-						ao.setAimX(viewX);
-						ao.setAimY(viewY);
-						*/
-
 						tileImage = spriteMap.getImage(getRotatedAnimatedToken(ao.getNextImgToken(), p.getDirection()));
 
-						if (ao.isMainPlayer()) {
-							this.animating = true;
-							ao.changeBuffs();
-							this.centerPlayerAnimation(ao.getStartX(), ao.getStartY()); //Center the player now that it has moved position...
-						}
 
 
 						Position posToDraw = ao.getPosition(); //Dont need to worry since its main player.
-						ao.incrementCurrent();
+						boolean change = ao.incrementCurrent();
+
+
+						if (ao.isMainPlayer()) {
+							this.animating = true;
+							if(change){
+								ao.changeBuffs();
+								this.centerPlayerAnimation(ao.getStartX(), ao.getStartY()); //Center the player now that it has moved position...
+							}
+						}
 
 						finalX = posToDraw.getPosX();
 						finalY = posToDraw.getPosY();
@@ -562,9 +549,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	}
 
 	/**
-	 * Determines the new x,y position(where the tile will be drawn) 
+	 * Determines the new x,y position(where the tile will be drawn)
 	 * of a tile from it logical position and the current view
-	 * 
+	 *
 	 * @param x - player x position
 	 * @param y - player y position
 	 * @param width - width of the area array
@@ -594,7 +581,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	/**
 	 *  Iterate the view field approriately,
 	 *  must be 0 >= x >= 3
-	 * 
+	 *
 	 * @param r - particular rotation,
 	 * 			  either 1 (anti-clockwise)
 	 * 			  or -1 (clockwise)
@@ -636,8 +623,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 	/**
 	 * Determine the approriate token string depending on the view
-	 * e.g. "w1" when rotate = 1 should be "w0" 
-	 * 
+	 * e.g. "w1" when rotate = 1 should be "w0"
+	 *
 	 * @param token
 	 * @return
 	 */
@@ -663,8 +650,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 	/**
 	 * Determine the approriate token string depending on the view
-	 * e.g. "w1" when rotate = 1 should be "w0" 
-	 * 
+	 * e.g. "w1" when rotate = 1 should be "w0"
+	 *
 	 * @param token
 	 * @return
 	 */
@@ -709,9 +696,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	}
 
 	/**
-	 * Determine the correct direction depending on the 
+	 * Determine the correct direction depending on the
 	 * current rotation of the display
-	 * 
+	 *
 	 * @param direction - 2d direction
 	 * @return direction - direction the user will see
 	 */
@@ -723,7 +710,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	}
 
 	/**
-	 * Determine the direction in 90 degree rotation 
+	 * Determine the direction in 90 degree rotation
 	 * either left of right
 	 *
 	 * @param direction
