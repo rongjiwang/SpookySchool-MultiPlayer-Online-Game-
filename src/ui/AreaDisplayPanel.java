@@ -65,16 +65,15 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	private List<GameObject> currentAreaObjects = new ArrayList<GameObject>();
 	private List<GameObject> previousAreaObjects = new ArrayList<GameObject>();
 	private List<AnimationObject> toAnimate = new ArrayList<AnimationObject>();
-	//private Map<String, AnimationObject> toAnimate = new HashMap<String, AnimationObject>();
 
 	// Current Rotational view 0-3
-	private int view;
+	private int view = 0;
 	/*			2
 			 _______
 			|		|
 		3	|		|	1
 			|_______|
-
+	
 				0
 		  Default view */
 
@@ -96,32 +95,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		validate();
 		this.client = client;
 		this.gameFrame = gf;
-
-		/*
-		this.thread = new Thread() {
-			@Override
-			public void run() {
-				while (true) {
-
-					//tick();
-
-					System.out.println("here");
-
-					try {
-						this.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-
-				}
-			}
-		};
-
-		thread.start();
-		*/
-
 	}
 
 	/**
@@ -223,25 +196,62 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 						int aimX = currentObj.getPosition().getPosX();
 						int aimY = currentObj.getPosition().getPosY();
 
+
+						int[] view = this.getRotatedView(startX, startY, this.currentArea.width,
+								this.currentArea.height);
+						startX = view[0];
+						startY = view[1];
+
+
+						view = this.getRotatedView(aimX, aimY, this.currentArea.width, this.currentArea.height);
+						aimX = view[0];
+						aimY = view[1];
+
+
 						boolean isMain = currentObj.getId().equals(this.mainPlayer.getId());
 
 						AnimationObject aObj = null;
 
 						if (currentObj.getPosition().getPosX() > previousObj.getPosition().getPosX()) {
 
-							aObj = new AnimationObject(this, currentObj, isMain, "EAST", startX, startY, aimX, aimY);
+							if (this.view == 0 || this.view == 2) {
+								aObj = new AnimationObject(this, currentObj, isMain, this.determineDirection("EAST"),
+										startX, startY, aimX, aimY);
+							} else {
+								aObj = new AnimationObject(this, currentObj, isMain, this.determineDirection("WEST"),
+										startX, startY, aimX, aimY);
+							}
 
 						} else if (currentObj.getPosition().getPosX() < previousObj.getPosition().getPosX()) {
 
-							aObj = new AnimationObject(this, currentObj, isMain, "WEST", startX, startY, aimX, aimY);
+
+							if (this.view == 0 || this.view == 2) {
+								aObj = new AnimationObject(this, currentObj, isMain, this.determineDirection("WEST"),
+										startX, startY, aimX, aimY);
+							} else {
+								aObj = new AnimationObject(this, currentObj, isMain, this.determineDirection("EAST"),
+										startX, startY, aimX, aimY);
+							}
 
 						} else if (currentObj.getPosition().getPosY() > previousObj.getPosition().getPosY()) {
 
-							aObj = new AnimationObject(this, currentObj, isMain, "SOUTH", startX, startY, aimX, aimY);
+							if (this.view == 0 || this.view == 2) {
+								aObj = new AnimationObject(this, currentObj, isMain, this.determineDirection("SOUTH"),
+										startX, startY, aimX, aimY);
+							} else {
+								aObj = new AnimationObject(this, currentObj, isMain, this.determineDirection("NORTH"),
+										startX, startY, aimX, aimY);
+							}
 
 						} else {
 
-							aObj = new AnimationObject(this, currentObj, isMain, "NORTH", startX, startY, aimX, aimY);
+							if (this.view == 0 || this.view == 2) {
+								aObj = new AnimationObject(this, currentObj, isMain, this.determineDirection("NORTH"),
+										startX, startY, aimX, aimY);
+							} else {
+								aObj = new AnimationObject(this, currentObj, isMain, this.determineDirection("SOUTH"),
+										startX, startY, aimX, aimY);
+							}
 						}
 
 						//Player is animating.
@@ -340,7 +350,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		renderArray(offgc, 0); // render floor tiles
 		renderArray(offgc, 1); // render far walls
 		renderArray(offgc, 2); // render gameObjects
-		renderArray(offgc, 3); // render close and side walls
+		//renderArray(offgc, 3); // render close and side walls
 
 		if (currentArea != null && currentArea.getAreaName().equals("Outside")) {
 			if (Math.random() < 0.96) {
@@ -470,7 +480,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 						if (ao.isMainPlayer()) {
 							this.animating = true;
 							ao.changeBuffs();
-							this.centerPlayerAnimation(ao.getStartX(), ao.getStartY()); //Center the player now that it has moved position...
+							//System.out.println(
+							//		"MainbuffX: " + this.mainPlayerXBuff + " MainBuffY: " + this.mainPlayerYBuff);
+							//this.centerPlayerAnimation(ao.getStartX(), ao.getStartY()); //Center the player now that it has moved position...
 						}
 
 						Position posToDraw = ao.getPosition(); //Dont need to worry since its main player.
@@ -514,13 +526,15 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					|| token.equals("u0") || token.equals("L1") || token.equals("Q1") || token.equals("Q2")) {
 
 				if (layer == 1) {
-					g.drawImage(tileImage, finalX - adjustX - 1, finalY - adjustY - 1,tileImage.getWidth(null) + 2, tileImage.getHeight(null) + 2, null);
+					g.drawImage(tileImage, finalX - adjustX - 1, finalY - adjustY - 1, tileImage.getWidth(null) + 2,
+							tileImage.getHeight(null) + 2, null);
 
 				}
 			} else {
 				if (layer == 3) {
 
-					g.drawImage(tileImage, finalX - adjustX - 1, finalY - adjustY - 1,tileImage.getWidth(null) + 2, tileImage.getHeight(null) + 2, null);
+					g.drawImage(tileImage, finalX - adjustX - 1, finalY - adjustY - 1, tileImage.getWidth(null) + 2,
+							tileImage.getHeight(null) + 2, null);
 				}
 			}
 		}
@@ -704,19 +718,16 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 				return "EAST";
 			if (i < 0)
 				return "WEST";
-
 		case "EAST":
 			if (i > 0)
 				return "SOUTH";
 			if (i < 0)
 				return "NORTH";
-
 		case "SOUTH":
 			if (i > 0)
 				return "WEST";
 			if (i < 0)
 				return "EAST";
-
 		case "WEST":
 			if (i > 0)
 				return "NORTH";
@@ -794,23 +805,32 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			this.client.sendCommand("SAVE");
 			break;
 		case KeyEvent.VK_R:
+
+			if (this.toAnimate.size() > 0) {
+				this.overlayPanel.setFooterMessage("Cannot rotate while there are moving players.");
+				return;
+			}
+
 			rotate(1);
-			//this.updateDisplay();
 			break;
 		case KeyEvent.VK_L:
+
+			if (this.toAnimate.size() > 0) {
+				this.overlayPanel.setFooterMessage("Cannot rotate while there are moving players.");
+				return;
+			}
+
+
 			rotate(-1);
-			//this.updateDisplay();
 			break;
 		}
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-	}
+	public void keyReleased(KeyEvent e) {}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-	}
+	public void keyTyped(KeyEvent e) {}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {

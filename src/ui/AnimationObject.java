@@ -14,8 +14,6 @@ public class AnimationObject {
 	private int aimX;
 	private int aimY;
 	private boolean mainPlayer;
-	private long now;
-	private long then = System.currentTimeMillis();
 	private boolean rightFoot;
 	private int current = 0;
 
@@ -34,13 +32,16 @@ public class AnimationObject {
 
 		System.out.println(Math.abs((startY - aimY)));
 
+
 		if (Math.abs(startX - aimX) > 1 || (startY - aimY) > 1) {
 			throw new Error("Only allowed movement of ONE position per animation object!");
 		}
 
 
-		System.out.println("New Animation: Starting at x: " + this.startX + " y: " + this.startY + " Finishing: x: "
-				+ this.aimX + " y: " + this.aimY + " main player: " + this.mainPlayer);
+
+		System.out.println(
+				"New Animation: Starting at x: " + this.startX + " y: " + this.startY + " Finishing: x: " + this.aimX
+						+ " y: " + this.aimY + " main player: " + this.mainPlayer + " direction: " + this.direction);
 	}
 
 
@@ -68,9 +69,14 @@ public class AnimationObject {
 	}
 
 	public void changeBuffs() {
+
+		//this.direction = this.adp.determineDirection(this.direction);
+
 		//If main player, change the main player buff
+		/*
 		if (this.mainPlayer) {
 			if (this.direction.equals("NORTH")) {
+				//System.out.println();
 				adp.mainPlayerYBuff -= 1;
 			} else if (this.direction.equals("SOUTH")) {
 				adp.mainPlayerYBuff += 1;
@@ -80,6 +86,7 @@ public class AnimationObject {
 				adp.mainPlayerXBuff -= 1;
 			}
 		}
+		*/
 	}
 
 	public String getNextImgToken() {
@@ -89,22 +96,20 @@ public class AnimationObject {
 		if (this.direction.equals("NORTH") || this.direction.equals("SOUTH")) {
 			if (this.current <= 5) {
 				nextToken = 0;
-			} else{
-				if(rightFoot){
+			} else {
+				if (rightFoot) {
 					nextToken = 1;
-				}else
+				} else
 					nextToken = 3;
 			}
-
-
 
 		} else {
 			if (this.current <= 8) {
 				nextToken = 0;
-			} else{
-				if(rightFoot){
+			} else {
+				if (rightFoot) {
 					nextToken = 1;
-				}else
+				} else
 					nextToken = 3;
 			}
 
@@ -156,6 +161,10 @@ public class AnimationObject {
 
 	public int getAimY() {
 		return this.aimY;
+	}
+
+	public void setRightFoot(boolean b) {
+		this.rightFoot = b;
 	}
 
 }
