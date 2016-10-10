@@ -3,6 +3,7 @@ package parser;
 import org.w3c.dom.*;
 
 import game.Area;
+import game.ContainerGO;
 import game.DoorGO;
 import game.FixedContainerGO;
 import game.FixedGO;
@@ -63,6 +64,11 @@ public class Parser {
 		Map<String, InventoryGO> inventObjects = game.getInventoryObjects();
 		
 		saveMap(areas);
+		
+		//when saving areas, only save the WallTiles, FloorTiles, and nulltiles
+		// before closing each room, save the moveables, nonhumans, and inventory obejcts on the map
+		//
+		//nvm
 		
 		
 		createXML();
@@ -133,9 +139,21 @@ public class Parser {
 								
 							
 						}else if(occupant instanceof FixedContainerGO){
-							
+							occupantNode.appendChild(saveName(occupant));
+							occupantNode.appendChild(saveAreaName(occupant));
+							occupantNode.appendChild(saveID(occupant));
+							occupantNode.appendChild(saveToken(occupant));
+							occupantNode.appendChild(saveOpen(occupant));
+							occupantNode.appendChild(saveLocked(occupant));
+							occupantNode.appendChild(saveKeyID(occupant));
+							occupantNode.appendChild(savePosition(occupant));
+							occupantNode.appendChild(saveContents(occupant));
+							occupantNode.appendChild(saveSize(occupant));
+							occupantNode.appendChild(saveSizeRemaining(occupant));
+							occupantNode.appendChild(saveDescription(occupant));
 							
 						}else if(occupant instanceof FixedGO){
+							
 							
 							
 						}else if(occupant instanceof InventoryGO){
@@ -163,6 +181,47 @@ public class Parser {
 		
 	}
 	
+	public Element saveContents(GameObject occupant){
+		Text value = save.createTextNode("");
+		Element contents = save.createElement("contents");
+		
+		List<InventoryGO> items = ((FixedContainerGO) occupant).getAllItems();
+		for (InventoryGO i : items){
+			Element item = save.createElement("item");
+			item.setAttribute("objectType", i.getClass().toString());
+			if(i instanceof ContainerGO){
+				contents.appendChild(saveSizeRemaining(i));
+			}
+			item.appendChild(saveName(i));
+			item.appendChild(saveID(i));
+			item.appendChild(saveToken(i));
+			item.appendChild(saveSize(i));
+			item.appendChild(saveAreaName(i));
+			item.appendChild(savePosition(i));
+			item.appendChild(saveDescription(i));
+			
+			contents.appendChild(item);			
+		}
+		
+		return contents;
+		
+	}
+	
+	public Element saveSizeRemaining(GameObject container){
+		Text value = save.createTextNode("");
+		Element sizeRemaining = save.createElement("sizeRemaining");
+		
+		if(container instanceof ContainerGO){
+			value = save.createTextNode("" + ((ContainerGO)container).getSizeRemaining());
+			sizeRemaining.appendChild(value);
+		}else if(container instanceof FixedContainerGO){
+			value = save.createTextNode("" + ((FixedContainerGO)container).getSizeRemaining());
+			sizeRemaining.appendChild(value);
+		}
+		
+		return sizeRemaining;
+	}
+	
 	public Element saveName(GameObject occupant){
 		Text value = save.createTextNode("");
 		Element name = save.createElement("name");
@@ -183,6 +242,15 @@ public class Parser {
 		return id;
 	}
 	
+	public Element saveKeyID(GameObject occupant){
+		Text value = save.createTextNode("");
+		Element keyID = save.createElement("id");
+		if(occupant instanceof FixedContainerGO){
+			value = save.createTextNode(((FixedContainerGO) occupant).getKeyID());
+		}
+		keyID.appendChild(value);
+		return keyID;
+	}
 	
 	public Element savePosition(Tile currentTile){
 		Element pos = save.createElement("pos");
