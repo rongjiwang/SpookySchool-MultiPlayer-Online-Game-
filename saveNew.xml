@@ -185,7 +185,7 @@
                         <x>4</x>
                         <y>5</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>furniture1</id>
                         <token>x0</token>
                         <pos>
@@ -374,7 +374,7 @@
                         <x>7</x>
                         <y>8</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>bed1</id>
                         <token>o1</token>
                         <pos>
@@ -546,6 +546,33 @@
             <tile tileType="black">null</tile>
             <tile tileType="black">null</tile>
         </area>
+        <door id="sh6">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Spawn_6</sideA>
+            <tokenA>d00</tokenA>
+            <sideAPos>
+                <x>6</x>
+                <y>1</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>6</x>
+                <y>2</y>
+            </sideAEntryPos>
+            <sideB>Hallway</sideB>
+            <tokenB>d20</tokenB>
+            <sideBPos>
+                <x>10</x>
+                <y>4</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>10</x>
+                <y>3</y>
+            </sideBEntryPos>
+        </door>
     </room>
     <room>
         <height>11</height>
@@ -731,7 +758,7 @@
                         <x>4</x>
                         <y>5</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>furniture1</id>
                         <token>x0</token>
                         <pos>
@@ -920,7 +947,7 @@
                         <x>7</x>
                         <y>8</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>bed1</id>
                         <token>o1</token>
                         <pos>
@@ -1092,6 +1119,33 @@
             <tile tileType="black">null</tile>
             <tile tileType="black">null</tile>
         </area>
+        <door id="sh7">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Spawn_7</sideA>
+            <tokenA>d00</tokenA>
+            <sideAPos>
+                <x>6</x>
+                <y>1</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>6</x>
+                <y>2</y>
+            </sideAEntryPos>
+            <sideB>Hallway</sideB>
+            <tokenB>d20</tokenB>
+            <sideBPos>
+                <x>15</x>
+                <y>4</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>15</x>
+                <y>3</y>
+            </sideBEntryPos>
+        </door>
     </room>
     <room>
         <height>11</height>
@@ -1260,7 +1314,7 @@
                         <x>3</x>
                         <y>4</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>bed1</id>
                         <token>o3</token>
                         <pos>
@@ -1449,7 +1503,7 @@
                         <x>6</x>
                         <y>7</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>furniture1</id>
                         <token>x2</token>
                         <pos>
@@ -1638,6 +1692,33 @@
             <tile tileType="black">null</tile>
             <tile tileType="black">null</tile>
         </area>
+        <door id="sh4">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Spawn_4</sideA>
+            <tokenA>d20</tokenA>
+            <sideAPos>
+                <x>4</x>
+                <y>11</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>4</x>
+                <y>10</y>
+            </sideAEntryPos>
+            <sideB>Hallway</sideB>
+            <tokenB>d00</tokenB>
+            <sideBPos>
+                <x>20</x>
+                <y>0</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>20</x>
+                <y>1</y>
+            </sideBEntryPos>
+        </door>
     </room>
     <room>
         <height>11</height>
@@ -1823,7 +1904,7 @@
                         <x>4</x>
                         <y>5</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>furniture1</id>
                         <token>x0</token>
                         <pos>
@@ -2012,7 +2093,7 @@
                         <x>7</x>
                         <y>8</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>bed1</id>
                         <token>o1</token>
                         <pos>
@@ -2184,6 +2265,33 @@
             <tile tileType="black">null</tile>
             <tile tileType="black">null</tile>
         </area>
+        <door id="sh5">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Spawn_5</sideA>
+            <tokenA>d00</tokenA>
+            <sideAPos>
+                <x>6</x>
+                <y>1</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>6</x>
+                <y>2</y>
+            </sideAEntryPos>
+            <sideB>Hallway</sideB>
+            <tokenB>d20</tokenB>
+            <sideBPos>
+                <x>5</x>
+                <y>4</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>5</x>
+                <y>3</y>
+            </sideBEntryPos>
+        </door>
     </room>
     <room>
         <height>11</height>
@@ -2381,7 +2489,7 @@
                         <x>9</x>
                         <y>2</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>couch1</id>
                         <token>co1</token>
                         <pos>
@@ -2459,7 +2567,7 @@
                         <x>7</x>
                         <y>3</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>couch2</id>
                         <token>co3</token>
                         <pos>
@@ -2888,6 +2996,87 @@
             </tile>
             <tile tileType="black">null</tile>
         </area>
+        <door id="Sd1">
+            <id/>
+            <open>false</open>
+            <locked>false</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Staff_room</sideA>
+            <tokenA>d20</tokenA>
+            <sideAPos>
+                <x>2</x>
+                <y>9</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>2</x>
+                <y>8</y>
+            </sideAEntryPos>
+            <sideB>Staff_hallway</sideB>
+            <tokenB>d00</tokenB>
+            <sideBPos>
+                <x>2</x>
+                <y>0</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>2</x>
+                <y>1</y>
+            </sideBEntryPos>
+        </door>
+        <door id="Sw1">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Staff_room</sideA>
+            <tokenA>w00</tokenA>
+            <sideAPos>
+                <x>3</x>
+                <y>0</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>3</x>
+                <y>1</y>
+            </sideAEntryPos>
+            <sideB>Outside</sideB>
+            <tokenB>w20</tokenB>
+            <sideBPos>
+                <x>19</x>
+                <y>6</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>19</x>
+                <y>5</y>
+            </sideBEntryPos>
+        </door>
+        <door id="Sw2">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Staff_room</sideA>
+            <tokenA>w00</tokenA>
+            <sideAPos>
+                <x>7</x>
+                <y>0</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>7</x>
+                <y>1</y>
+            </sideAEntryPos>
+            <sideB>Outside</sideB>
+            <tokenB>w20</tokenB>
+            <sideBPos>
+                <x>21</x>
+                <y>6</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>21</x>
+                <y>5</y>
+            </sideBEntryPos>
+        </door>
     </room>
     <room>
         <height>11</height>
@@ -3073,7 +3262,7 @@
                         <x>4</x>
                         <y>5</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>furniture1</id>
                         <token>x0</token>
                         <pos>
@@ -3262,7 +3451,7 @@
                         <x>7</x>
                         <y>8</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>bed1</id>
                         <token>o1</token>
                         <pos>
@@ -3434,6 +3623,33 @@
             <tile tileType="black">null</tile>
             <tile tileType="black">null</tile>
         </area>
+        <door id="sh8">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Spawn_8</sideA>
+            <tokenA>d00</tokenA>
+            <sideAPos>
+                <x>6</x>
+                <y>1</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>6</x>
+                <y>2</y>
+            </sideAEntryPos>
+            <sideB>Hallway</sideB>
+            <tokenB>d20</tokenB>
+            <sideBPos>
+                <x>20</x>
+                <y>4</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>20</x>
+                <y>3</y>
+            </sideBEntryPos>
+        </door>
     </room>
     <room>
         <height>8</height>
@@ -4332,7 +4548,7 @@
                         <x>17</x>
                         <y>2</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>treeOne1</id>
                         <token>v0</token>
                         <pos>
@@ -4374,7 +4590,7 @@
                         <x>20</x>
                         <y>2</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>treeOne2</id>
                         <token>v0</token>
                         <pos>
@@ -4503,7 +4719,7 @@
                         <x>16</x>
                         <y>3</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>treeOne1</id>
                         <token>v0</token>
                         <pos>
@@ -4524,7 +4740,7 @@
                         <x>17</x>
                         <y>3</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>treeOne1</id>
                         <token>v0</token>
                         <pos>
@@ -4551,7 +4767,7 @@
                         <x>19</x>
                         <y>3</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>treeOne2</id>
                         <token>v0</token>
                         <pos>
@@ -4572,7 +4788,7 @@
                         <x>20</x>
                         <y>3</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>treeOne2</id>
                         <token>v0</token>
                         <pos>
@@ -5646,7 +5862,7 @@
                         <x>11</x>
                         <y>11</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>treeThree1</id>
                         <token>l0</token>
                         <pos>
@@ -5808,7 +6024,7 @@
                         <x>11</x>
                         <y>12</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>treeThree1</id>
                         <token>l0</token>
                         <pos>
@@ -5829,7 +6045,7 @@
                         <x>12</x>
                         <y>12</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>treeThree1</id>
                         <token>l0</token>
                         <pos>
@@ -6871,6 +7087,87 @@
                 </pos>
             </tile>
         </area>
+        <door id="od1">
+            <id/>
+            <open>false</open>
+            <locked>false</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Outside</sideA>
+            <tokenA>d10</tokenA>
+            <sideAPos>
+                <x>18</x>
+                <y>10</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>17</x>
+                <y>10</y>
+            </sideAEntryPos>
+            <sideB>Staff_room</sideB>
+            <tokenB>d30</tokenB>
+            <sideBPos>
+                <x>0</x>
+                <y>7</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>1</x>
+                <y>7</y>
+            </sideBEntryPos>
+        </door>
+        <door id="od1">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Outside</sideA>
+            <tokenA>w10</tokenA>
+            <sideAPos>
+                <x>18</x>
+                <y>8</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>17</x>
+                <y>8</y>
+            </sideAEntryPos>
+            <sideB>Staff_room</sideB>
+            <tokenB>w30</tokenB>
+            <sideBPos>
+                <x>0</x>
+                <y>3</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>1</x>
+                <y>3</y>
+            </sideBEntryPos>
+        </door>
+        <door id="od2">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Outside</sideA>
+            <tokenA>d30</tokenA>
+            <sideAPos>
+                <x>5</x>
+                <y>11</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>6</x>
+                <y>11</y>
+            </sideAEntryPos>
+            <sideB>Room_to_nowhere</sideB>
+            <tokenB>d10</tokenB>
+            <sideBPos>
+                <x>5</x>
+                <y>3</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>4</x>
+                <y>3</y>
+            </sideBEntryPos>
+        </door>
     </room>
     <room>
         <height>9</height>
@@ -6933,7 +7230,7 @@
                         <x>1</x>
                         <y>1</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>furniture1</id>
                         <token>x3</token>
                         <pos>
@@ -7104,7 +7401,7 @@
                         <x>6</x>
                         <y>3</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>desk</id>
                         <token>pd1</token>
                         <pos>
@@ -7143,7 +7440,7 @@
                         <x>1</x>
                         <y>4</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>furniture1</id>
                         <token>x3</token>
                         <pos>
@@ -7188,7 +7485,7 @@
                         <x>6</x>
                         <y>4</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>desk</id>
                         <token>pd1</token>
                         <pos>
@@ -7323,6 +7620,33 @@
             </tile>
             <tile tileType="black">null</tile>
         </area>
+        <door id="pw1">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Principles_office</sideA>
+            <tokenA>w20</tokenA>
+            <sideAPos>
+                <x>5</x>
+                <y>6</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>5</x>
+                <y>5</y>
+            </sideAEntryPos>
+            <sideB>Outside</sideB>
+            <tokenB>w00</tokenB>
+            <sideBPos>
+                <x>21</x>
+                <y>14</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>21</x>
+                <y>15</y>
+            </sideBEntryPos>
+        </door>
     </room>
     <room>
         <height>17</height>
@@ -7448,7 +7772,7 @@
                         <x>2</x>
                         <y>1</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>table2</id>
                         <token>tL0</token>
                         <pos>
@@ -7469,7 +7793,7 @@
                         <x>3</x>
                         <y>1</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>table2</id>
                         <token>tL0</token>
                         <pos>
@@ -7490,7 +7814,7 @@
                         <x>4</x>
                         <y>1</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>table2</id>
                         <token>tL0</token>
                         <pos>
@@ -7511,7 +7835,7 @@
                         <x>5</x>
                         <y>1</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>table2</id>
                         <token>tL0</token>
                         <pos>
@@ -8388,7 +8712,7 @@
                         <x>13</x>
                         <y>9</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>couch</id>
                         <token>co3</token>
                         <pos>
@@ -8586,6 +8910,195 @@
             </tile>
             <tile tileType="black">null</tile>
         </area>
+        <door id="dd1">
+            <id/>
+            <open>false</open>
+            <locked>false</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Dorm_room</sideA>
+            <tokenA>d00</tokenA>
+            <sideAPos>
+                <x>7</x>
+                <y>0</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>7</x>
+                <y>1</y>
+            </sideAEntryPos>
+            <sideB>Dorm_storage</sideB>
+            <tokenB>d20</tokenB>
+            <sideBPos>
+                <x>5</x>
+                <y>6</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>5</x>
+                <y>5</y>
+            </sideBEntryPos>
+        </door>
+        <door id="dd4">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Dorm_room</sideA>
+            <tokenA>d20</tokenA>
+            <sideAPos>
+                <x>2</x>
+                <y>8</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>2</x>
+                <y>7</y>
+            </sideAEntryPos>
+            <sideB>Room_to_nowhere</sideB>
+            <tokenB>d30</tokenB>
+            <sideBPos>
+                <x>0</x>
+                <y>2</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>1</x>
+                <y>2</y>
+            </sideBEntryPos>
+        </door>
+        <door id="dw1">
+            <id/>
+            <open>false</open>
+            <locked>false</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Dorm_room</sideA>
+            <tokenA>w30</tokenA>
+            <sideAPos>
+                <x>0</x>
+                <y>4</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>1</x>
+                <y>4</y>
+            </sideAEntryPos>
+            <sideB>Outside</sideB>
+            <tokenB>w10</tokenB>
+            <sideBPos>
+                <x>5</x>
+                <y>3</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>4</x>
+                <y>3</y>
+            </sideBEntryPos>
+        </door>
+        <door id="dd2">
+            <id/>
+            <open>false</open>
+            <locked>false</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Dorm_room</sideA>
+            <tokenA>d00</tokenA>
+            <sideAPos>
+                <x>13</x>
+                <y>0</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>13</x>
+                <y>1</y>
+            </sideAEntryPos>
+            <sideB>Dorm_toilet</sideB>
+            <tokenB>d20</tokenB>
+            <sideBPos>
+                <x>2</x>
+                <y>6</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>2</x>
+                <y>5</y>
+            </sideBEntryPos>
+        </door>
+        <door id="dd3">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Dorm_room</sideA>
+            <tokenA>d20</tokenA>
+            <sideAPos>
+                <x>9</x>
+                <y>11</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>9</x>
+                <y>10</y>
+            </sideAEntryPos>
+            <sideB>Outside</sideB>
+            <tokenB>d00</tokenB>
+            <sideBPos>
+                <x>9</x>
+                <y>5</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>9</x>
+                <y>6</y>
+            </sideBEntryPos>
+        </door>
+        <door id="dd4">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Dorm_room</sideA>
+            <tokenA>w20</tokenA>
+            <sideAPos>
+                <x>6</x>
+                <y>11</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>6</x>
+                <y>10</y>
+            </sideAEntryPos>
+            <sideB>Outside</sideB>
+            <tokenB>w00</tokenB>
+            <sideBPos>
+                <x>7</x>
+                <y>5</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>7</x>
+                <y>6</y>
+            </sideBEntryPos>
+        </door>
+        <door id="dd5">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Dorm_room</sideA>
+            <tokenA>w20</tokenA>
+            <sideAPos>
+                <x>12</x>
+                <y>11</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>12</x>
+                <y>10</y>
+            </sideAEntryPos>
+            <sideB>Outside</sideB>
+            <tokenB>w00</tokenB>
+            <sideBPos>
+                <x>11</x>
+                <y>5</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>11</x>
+                <y>6</y>
+            </sideBEntryPos>
+        </door>
     </room>
     <room>
         <height>8</height>
@@ -9447,7 +9960,7 @@
                         <x>3</x>
                         <y>4</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>bed1</id>
                         <token>o3</token>
                         <pos>
@@ -9636,7 +10149,7 @@
                         <x>6</x>
                         <y>7</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>furniture1</id>
                         <token>x2</token>
                         <pos>
@@ -9825,6 +10338,33 @@
             <tile tileType="black">null</tile>
             <tile tileType="black">null</tile>
         </area>
+        <door id="sh2">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Spawn_2</sideA>
+            <tokenA>d20</tokenA>
+            <sideAPos>
+                <x>4</x>
+                <y>11</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>4</x>
+                <y>10</y>
+            </sideAEntryPos>
+            <sideB>Hallway</sideB>
+            <tokenB>d00</tokenB>
+            <sideBPos>
+                <x>10</x>
+                <y>0</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>10</x>
+                <y>1</y>
+            </sideBEntryPos>
+        </door>
     </room>
     <room>
         <height>5</height>
@@ -10082,6 +10622,87 @@
             </tile>
             <tile tileType="black">null</tile>
         </area>
+        <door id="Shd1">
+            <id/>
+            <open>false</open>
+            <locked>false</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Staff_hallway</sideA>
+            <tokenA>d20</tokenA>
+            <sideAPos>
+                <x>2</x>
+                <y>8</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>2</x>
+                <y>7</y>
+            </sideAEntryPos>
+            <sideB>Principles_office</sideB>
+            <tokenB>d00</tokenB>
+            <sideBPos>
+                <x>2</x>
+                <y>0</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>2</x>
+                <y>1</y>
+            </sideBEntryPos>
+        </door>
+        <door id="Shd2">
+            <id/>
+            <open>false</open>
+            <locked>false</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Staff_hallway</sideA>
+            <tokenA>d10</tokenA>
+            <sideAPos>
+                <x>4</x>
+                <y>3</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>3</x>
+                <y>3</y>
+            </sideAEntryPos>
+            <sideB>Staff_toilet</sideB>
+            <tokenB>d30</tokenB>
+            <sideBPos>
+                <x>0</x>
+                <y>2</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>1</x>
+                <y>2</y>
+            </sideBEntryPos>
+        </door>
+        <door id="Shd3">
+            <id/>
+            <open>false</open>
+            <locked>false</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Staff_hallway</sideA>
+            <tokenA>d10</tokenA>
+            <sideAPos>
+                <x>4</x>
+                <y>5</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>3</x>
+                <y>5</y>
+            </sideAEntryPos>
+            <sideB>Staff_toilet2</sideB>
+            <tokenB>d30</tokenB>
+            <sideBPos>
+                <x>0</x>
+                <y>2</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>1</x>
+                <y>2</y>
+            </sideBEntryPos>
+        </door>
     </room>
     <room>
         <height>11</height>
@@ -10250,7 +10871,7 @@
                         <x>3</x>
                         <y>4</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>bed1</id>
                         <token>o3</token>
                         <pos>
@@ -10439,7 +11060,7 @@
                         <x>6</x>
                         <y>7</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>furniture1</id>
                         <token>x2</token>
                         <pos>
@@ -10628,6 +11249,33 @@
             <tile tileType="black">null</tile>
             <tile tileType="black">null</tile>
         </area>
+        <door id="sh3">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Spawn_3</sideA>
+            <tokenA>d20</tokenA>
+            <sideAPos>
+                <x>4</x>
+                <y>11</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>4</x>
+                <y>10</y>
+            </sideAEntryPos>
+            <sideB>Hallway</sideB>
+            <tokenB>d00</tokenB>
+            <sideBPos>
+                <x>15</x>
+                <y>0</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>15</x>
+                <y>1</y>
+            </sideBEntryPos>
+        </door>
     </room>
     <room>
         <height>26</height>
@@ -11395,6 +12043,60 @@
             </tile>
             <tile tileType="black">null</tile>
         </area>
+        <door id="hd1">
+            <id/>
+            <open>false</open>
+            <locked>false</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Hallway</sideA>
+            <tokenA>d30</tokenA>
+            <sideAPos>
+                <x>0</x>
+                <y>2</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>1</x>
+                <y>2</y>
+            </sideAEntryPos>
+            <sideB>Dorm_room</sideB>
+            <tokenB>d10</tokenB>
+            <sideBPos>
+                <x>16</x>
+                <y>4</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>15</x>
+                <y>4</y>
+            </sideBEntryPos>
+        </door>
+        <door id="hw1">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Hallway</sideA>
+            <tokenA>w10</tokenA>
+            <sideAPos>
+                <x>25</x>
+                <y>2</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>24</x>
+                <y>2</y>
+            </sideAEntryPos>
+            <sideB>Outside</sideB>
+            <tokenB>w30</tokenB>
+            <sideBPos>
+                <x>14</x>
+                <y>2</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>15</x>
+                <y>2</y>
+            </sideBEntryPos>
+        </door>
     </room>
     <room>
         <height>11</height>
@@ -11563,7 +12265,7 @@
                         <x>3</x>
                         <y>4</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>bed1</id>
                         <token>o3</token>
                         <pos>
@@ -11752,7 +12454,7 @@
                         <x>6</x>
                         <y>7</y>
                     </pos>
-                    <base>
+                    <base objectType="FixedGO">
                         <id>furniture1</id>
                         <token>x2</token>
                         <pos>
@@ -11941,5 +12643,32 @@
             <tile tileType="black">null</tile>
             <tile tileType="black">null</tile>
         </area>
+        <door id="sh1">
+            <id/>
+            <open>false</open>
+            <locked>true</locked>
+            <id/>
+            <description>This is a Door.</description>
+            <sideA>Spawn_1</sideA>
+            <tokenA>d20</tokenA>
+            <sideAPos>
+                <x>4</x>
+                <y>11</y>
+            </sideAPos>
+            <sideAEntryPos>
+                <x>4</x>
+                <y>10</y>
+            </sideAEntryPos>
+            <sideB>Hallway</sideB>
+            <tokenB>d00</tokenB>
+            <sideBPos>
+                <x>5</x>
+                <y>0</y>
+            </sideBPos>
+            <sideBEntryPos>
+                <x>5</x>
+                <y>1</y>
+            </sideBEntryPos>
+        </door>
     </room>
 </game>

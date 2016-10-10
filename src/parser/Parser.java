@@ -13,6 +13,7 @@ import game.InventoryGO;
 import game.MarkerGO;
 import game.MovableGO;
 import game.Player;
+import game.Position;
 import game.SpookySchool;
 import game.Tile;
 import game.WallTile;
@@ -64,7 +65,7 @@ public class Parser {
 		Map<String, Area> areas = game.getAreas();
 		List<Player> players = game.getPlayers();
 		Map<String, InventoryGO> inventObjects = game.getInventoryObjects();
-		List<DoorGO> doors = game.getDoorObjects();
+		this.doors = game.getDoorObjects();
 		
 		saveMap(areas);
 		
@@ -200,13 +201,75 @@ public class Parser {
 	}
 	
 	public Element saveSideA(DoorGO door){
-		Text value = save.createTextNode("");
 		Element sideA = save.createElement("sideA");
-		
-		
-		
-		
+		Text value = save.createTextNode(door.getSideA());
+		sideA.appendChild(value);
 		return sideA;
+	}
+	
+	public Element saveSideB(DoorGO door){
+		Element sideB = save.createElement("sideB");
+		Text value = save.createTextNode(door.getSideB());
+		sideB.appendChild(value);
+		return sideB;
+	}
+	
+	public Element saveTokenA(DoorGO door){
+		Element tokenA = save.createElement("tokenA");
+		Text value = save.createTextNode(door.getTokenA());
+		tokenA.appendChild(value);
+		return tokenA;
+	}
+	
+	public Element saveTokenB(DoorGO door){
+		Element tokenB = save.createElement("tokenB");
+		Text value = save.createTextNode(door.getTokenB());
+		tokenB.appendChild(value);
+		return tokenB;
+	}
+	
+	public Element saveSideAPos(DoorGO door){
+		Element sideAPos = save.createElement("sideAPos");
+		Element x = save.createElement("x");
+		Element y = save.createElement("y");
+		x.appendChild(save.createTextNode("" + door.getSideAPos().getPosX()));
+		y.appendChild(save.createTextNode("" + door.getSideAPos().getPosY()));
+		sideAPos.appendChild(x);
+		sideAPos.appendChild(y);
+		return sideAPos;
+	}
+	
+	public Element saveSideBPos(DoorGO door){
+		Element sideBPos = save.createElement("sideBPos");
+		Element x = save.createElement("x");
+		Element y = save.createElement("y");
+		x.appendChild(save.createTextNode("" + door.getSideBPos().getPosX()));
+		y.appendChild(save.createTextNode("" + door.getSideBPos().getPosY()));
+		sideBPos.appendChild(x);
+		sideBPos.appendChild(y);
+		return sideBPos;
+	}
+	
+	public Element saveSideAEntryPos(DoorGO door){
+		Element sideAEntryPos = save.createElement("sideAEntryPos");
+		Element x = save.createElement("x");
+		Element y = save.createElement("y");
+		x.appendChild(save.createTextNode("" + door.getSideAEntryPos().getPosX()));
+		y.appendChild(save.createTextNode("" + door.getSideAEntryPos().getPosY()));
+		sideAEntryPos.appendChild(x);
+		sideAEntryPos.appendChild(y);
+		return sideAEntryPos;
+	}
+	
+	public Element saveSideBEntryPos(DoorGO door){
+		Element sideBEntryPos = save.createElement("sideBEntryPos");
+		Element x = save.createElement("x");
+		Element y = save.createElement("y");
+		x.appendChild(save.createTextNode("" + door.getSideBEntryPos().getPosX()));
+		y.appendChild(save.createTextNode("" + door.getSideBEntryPos().getPosY()));
+		sideBEntryPos.appendChild(x);
+		sideBEntryPos.appendChild(y);
+		return sideBEntryPos;
 	}
 	
 	
