@@ -223,31 +223,27 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 						if (currentObj.getPosition().getPosX() > previousObj.getPosition().getPosX()) {
 
-							int toMove = currentObj.getPosition().getPosX() - previousObj.getPosition().getPosX();
-
 							aObj = new AnimationObject(this, currentObj, isMain, "EAST", startX, startY, aimX, aimY);
 
 						} else if (currentObj.getPosition().getPosX() < previousObj.getPosition().getPosX()) {
-							int toMove = previousObj.getPosition().getPosX() - currentObj.getPosition().getPosX();
 
 							aObj = new AnimationObject(this, currentObj, isMain, "WEST", startX, startY, aimX, aimY);
 
 						} else if (currentObj.getPosition().getPosY() > previousObj.getPosition().getPosY()) {
 
-							int toMove = currentObj.getPosition().getPosY() - previousObj.getPosition().getPosY();
-
 							aObj = new AnimationObject(this, currentObj, isMain, "SOUTH", startX, startY, aimX, aimY);
 
 						} else {
 
-							int toMove = previousObj.getPosition().getPosY() - currentObj.getPosition().getPosY();
 							aObj = new AnimationObject(this, currentObj, isMain, "NORTH", startX, startY, aimX, aimY);
 						}
 
 						//Player is animating.
+
 						if (aObj.isMainPlayer()) {
 							this.animating = true;
 						}
+
 
 						this.toAnimate.add(aObj);
 
@@ -282,6 +278,15 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	 */
 	public void updateDisplay() {
 		this.repaint(); //Repaint either way!
+
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
 	}
 
 
