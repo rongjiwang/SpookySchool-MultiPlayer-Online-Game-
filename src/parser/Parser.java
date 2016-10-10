@@ -12,6 +12,7 @@ import game.GameObject;
 import game.InventoryGO;
 import game.MarkerGO;
 import game.MovableGO;
+import game.NonHumanPlayer;
 import game.Player;
 import game.Position;
 import game.SpookySchool;
@@ -41,6 +42,7 @@ public class Parser {
 	private List<DoorGO> doors; 
 	private Player saver;
 	private List<MovableGO> movables;
+	private List<NonHumanPlayer> nonHumans;
 	
 	public Parser(){
 		
@@ -71,6 +73,7 @@ public class Parser {
 		this.doors = game.getDoorObjects();
 		this.saver = determinePlayer(playerName, players);
 		this.movables = game.getMovableObjects();
+		//this.saveNonHumans;
 		
 		
 		saveMap(areas);
@@ -129,7 +132,7 @@ public class Parser {
 		saveTiles(currentArea, areaNode);
 		saveDoors(currentArea, roomNode);
 		saveMovables(currentArea, roomNode);
-		//saveNonHumans(currentArea, areaNode);
+		saveNonHumans(currentArea, roomNode);
 		//saveInventoryObjects(currentArea, areaNode);
 		//saveFixedContainers(currentArea, areaNode);
 		//saveFillContainers(currentArea, areaNode);
@@ -186,6 +189,10 @@ public class Parser {
 				
 			}
 		}	
+	}
+	
+	public void saveNonHumans(Area currentArea, Element roomNode){
+	
 	}
 	
 	public void saveMovables(Area currentArea, Element roomNode){

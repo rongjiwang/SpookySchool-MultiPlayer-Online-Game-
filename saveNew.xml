@@ -3077,6 +3077,56 @@
                 <y>5</y>
             </sideBEntryPos>
         </door>
+        <movableGO>
+            <id/>
+            <token>Ch0</token>
+            <areaName>Staff_room</areaName>
+            <pos>
+                <x>5</x>
+                <y>2</y>
+            </pos>
+            <description/>
+        </movableGO>
+        <movableGO>
+            <id/>
+            <token>Ch2</token>
+            <areaName>Staff_room</areaName>
+            <pos>
+                <x>5</x>
+                <y>4</y>
+            </pos>
+            <description/>
+        </movableGO>
+        <movableGO>
+            <id/>
+            <token>ch3</token>
+            <areaName>Staff_room</areaName>
+            <pos>
+                <x>6</x>
+                <y>7</y>
+            </pos>
+            <description/>
+        </movableGO>
+        <movableGO>
+            <id/>
+            <token>ch1</token>
+            <areaName>Staff_room</areaName>
+            <pos>
+                <x>8</x>
+                <y>7</y>
+            </pos>
+            <description/>
+        </movableGO>
+        <movableGO>
+            <id/>
+            <token>ch2</token>
+            <areaName>Staff_room</areaName>
+            <pos>
+                <x>7</x>
+                <y>8</y>
+            </pos>
+            <description/>
+        </movableGO>
     </room>
     <room>
         <height>11</height>
@@ -7647,6 +7697,16 @@
                 <y>15</y>
             </sideBEntryPos>
         </door>
+        <movableGO>
+            <id/>
+            <token>pc1</token>
+            <areaName>Principles_office</areaName>
+            <pos>
+                <x>7</x>
+                <y>3</y>
+            </pos>
+            <description/>
+        </movableGO>
     </room>
     <room>
         <height>17</height>
@@ -9099,6 +9159,76 @@
                 <y>6</y>
             </sideBEntryPos>
         </door>
+        <movableGO>
+            <id/>
+            <token>ch3</token>
+            <areaName>Dorm_room</areaName>
+            <pos>
+                <x>5</x>
+                <y>8</y>
+            </pos>
+            <description/>
+        </movableGO>
+        <movableGO>
+            <id/>
+            <token>ch0</token>
+            <areaName>Dorm_room</areaName>
+            <pos>
+                <x>6</x>
+                <y>7</y>
+            </pos>
+            <description/>
+        </movableGO>
+        <movableGO>
+            <id/>
+            <token>ch2</token>
+            <areaName>Dorm_room</areaName>
+            <pos>
+                <x>6</x>
+                <y>9</y>
+            </pos>
+            <description/>
+        </movableGO>
+        <movableGO>
+            <id/>
+            <token>ch1</token>
+            <areaName>Dorm_room</areaName>
+            <pos>
+                <x>7</x>
+                <y>8</y>
+            </pos>
+            <description/>
+        </movableGO>
+        <movableGO>
+            <id/>
+            <token>Ch2</token>
+            <areaName>Dorm_room</areaName>
+            <pos>
+                <x>2</x>
+                <y>2</y>
+            </pos>
+            <description/>
+        </movableGO>
+        <movableGO>
+            <id/>
+            <token>Ch2</token>
+            <areaName>Dorm_room</areaName>
+            <pos>
+                <x>4</x>
+                <y>2</y>
+            </pos>
+            <description/>
+        </movableGO>
+        <movableGO>
+            <id/>
+            <token>t0</token>
+            <areaName>Dorm_room</areaName>
+            <pos>
+                <x>13</x>
+                <y>7</y>
+            </pos>
+            <description/>
+        </movableGO>
     </room>
     <room>
         <height>8</height>
@@ -12670,5 +12800,15 @@
                 <y>1</y>
             </sideBEntryPos>
         </door>
+        <movableGO>
+            <id/>
+            <token>t0</token>
+            <areaName>Spawn_1</areaName>
+            <pos>
+                <x>4</x>
+                <y>9</y>
+            </pos>
+            <description/>
+        </movableGO>
     </room>
 </game>
