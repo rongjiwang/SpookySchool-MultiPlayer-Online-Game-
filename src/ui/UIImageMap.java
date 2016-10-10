@@ -65,10 +65,6 @@ public class UIImageMap {
 		spriteMap.put("sabhi", loadImage("savehighlight.png"));
 		spriteMap.put("ib",loadImage("info.png"));
 		spriteMap.put("ibhi",loadImage("infohighlight.png"));
-		spriteMap.put("pb",loadImage("players.png"));
-		spriteMap.put("pbhi",loadImage("playershighlight.png"));
-		spriteMap.put("qb",loadImage("quit.png"));
-		spriteMap.put("qbhi",loadImage("quithighlight.png"));
 		spriteMap.put("sb",loadImage("send.png"));
 		spriteMap.put("sbhi",loadImage("sendhighlight.png"));
 		spriteMap.put("ub", loadImage("uparrow.png"));

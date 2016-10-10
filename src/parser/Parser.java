@@ -1,6 +1,7 @@
 package parser;
 
 import org.w3c.dom.*;
+import org.xml.sax.SAXException;
 
 import game.Area;
 import game.ContainerGO;
@@ -36,22 +37,40 @@ import java.util.Map;
 
 public class Parser {
 	
+	//Load related Fields
 	private Document load;
-	private Document save;
-	private Element root;
+	private List <MovableGO> movablesToLoad;	//List of MovableGameObjects that need to be loaded
+	private List <DoorGO> doorsToLoad;		//List of DoorGameObjects that need to be loaded
+	private List <InventoryGO> inventsToLoad;		//List of InventoryGameObjects that need to be loaded
+	private List <FixedContainerGO> fixedContsToLoad;	//List of FixedContainerGameObjects to be loaded
 	
-	private List<DoorGO> doors; 
-	private Player saver;
-	private List<MovableGO> movables;
-	private List<NonHumanPlayer> nonHumans;
-	private Map<String, InventoryGO> inventObjects;
-	List<InventoryGO> saversInvent;
-	List<InventoryGO> itemsInContainers;
+	//Save related Fields
+	private Document save;		//DOM structure for saving
+	private Element root;	//root Node for the save file
+	private List<DoorGO> doors; 	//list of Door objects that are currently in the Game
+	private Player saver;		//The Player that requested the Save operation
+	private List<MovableGO> movables; //list of MovableGameObjects that are currently in the Game
+	private List<NonHumanPlayer> nonHumans;		//List of NonHumanPlayer Objects currently in the Game
+	private Map<String, InventoryGO> inventObjects;		//Map of all InventoryGameObjects currently in the Game. Map is name of the item to the Item itself
+	private List<InventoryGO> saversInvent;		//List of InventoryItems that the Player that requested the save holds
+	private List<InventoryGO> itemsInContainers;	//List of all the items held in Containers in the game
+	private Map<String, FixedContainerGO> fixedContainers;	//Map of all fixedContainers in the Game. Map is the name of the Container to the Container.
 	
+	/**
+	 * COnstructor for the XML Parser which will handle the saving and loading of save states for the Game.
+	 * 
+	 * @author Chethana Wijesekera
+	 * 
+	 */
 	public Parser(){
 		
 	}
-	
+	/**
+	 * Creates a DOM document structure in memory for the program. 
+	 * This is for saving the game state to an XML file.
+	 * 
+	 * @return Document -- the DOM Document structure to be Saved
+	 */
 	public Document createDocument(){
 		try{
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -78,22 +97,96 @@ public class Parser {
 		this.saver = determinePlayer(playerName, players);
 		this.movables = game.getMovableObjects();
 		this.nonHumans = game.getNonHumanPlayers();
+		this.fixedContainers = game.getFixedContainerObjects();
 		
 		
 		saveMap(areas);
-		
-		//when saving areas, only save the WallTiles, FloorTiles, and nulltiles
-		// before closing each room, save the moveables, nonhumans, and inventory obejcts on the map
-		//
-		//
-		
 		
 		createXML();
 		
 		
 	}
 	
+	
 	public void load(){
+		load = loadXML();
+		
+		Node loadRoot = load.getDocumentElement();
+		
+		iterate();
+		
+		
+	}
+	
+	public void iterate(){
+		NodeList nodeList = load.getElementsByTagName("*");
+		String content = "";
+        String nodeName = "";
+	    for (int i = 0; i < nodeList.getLength(); i++) {
+	        Node node = nodeList.item(i);
+	        if (node.getNodeType() == Node.ELEMENT_NODE) {
+	            // do something with the current element
+	            nodeName = node.getNodeName();
+	            //System.err.println(nodeName);
+	            if (nodeName.equals("movableGO")){
+		        	NodeList children = node.getChildNodes();
+		        	//System.err.println(children.getLength());
+		        	createMovableGO(children);
+	            }if (nodeName.equals("door")){
+	            	NodeList children = node.getChildNodes();
+		        	//System.err.println(children.getLength());
+		        	createDoorGO(children);
+	            }if (nodeName.equals("inventoryObject")){
+	            	NodeList children = node.getChildNodes();
+		        	//System.err.println(children.getLength());
+		        	createInventoryGO(children);
+	            }if (nodeName.equals("fixedContainer")){
+	            	NodeList children = node.getChildNodes();
+		        	//System.err.println(children.getLength());
+		        	createFixedContainerGO(children);
+	            }
+	        } 
+	    }
+	}
+	
+		
+	public void createMovableGO(NodeList feilds){
+		System.out.println(feilds.getLength());
+//		String id = feilds.item(1).getTextContent();
+//		String token = feilds.item(3).getTextContent();
+//		String description = feilds.item(9).getTextContent();
+//		String areaName = feilds.item(5).getTextContent();
+//		feilds.item(6).get().replaceAll(" ", "");
+//		feilds.item(7).getTextContent().replaceAll(" ", "");
+		//Position pos = new Position(x, y);
+		
+		//movablesToLoad.add(new MovableGO(id, token, areaName, pos));
+		
+		
+		
+	}
+	
+	public void createDoorGO(NodeList feilds){
+			
+		}
+	
+	public void createInventoryGO(NodeList feilds){
+		
+	}
+	
+	public void createFixedContainerGO(NodeList feilds){
+		
+	}
+			
+			
+	
+			
+			
+			
+			
+		
+	
+	public void loadAreas(){
 		
 	}
 	
@@ -112,6 +205,7 @@ public class Parser {
 			Area currentArea = areas.get(key);
 			root.appendChild(saveArea(currentArea));
 		}
+		root.appendChild(savePlayer());
 		save.appendChild(root);
 	}
 	
@@ -138,8 +232,9 @@ public class Parser {
 		saveMovables(currentArea, roomNode);
 		saveNonHumans(currentArea, roomNode);
 		saveInventoryGameObjects(currentArea, roomNode);
-		//saveFixedContainers(currentArea, areaNode);
-		//saveFillContainers(currentArea, areaNode);
+		saveFixedContainers(currentArea, roomNode);
+		saveFillContainers(currentArea, roomNode);
+		//savePlayerInventory(currentArea);
 			//gets the inventory items that 
 		
 		return roomNode;
@@ -189,10 +284,59 @@ public class Parser {
 					tileNode.appendChild(savePosition(currentTile));
 					currentParent.appendChild(tileNode);	
 				}
-					//currentParent.appendChild(tileNode);
+					
 				
 			}
 		}	
+	}
+	
+	public Element savePlayer(){
+		Element player = save.createElement("player");
+		player.appendChild(saveName(saver));
+		player.appendChild(saveAreaName(saver));
+		//player.appendChild(saveSpawnName(saver));
+		player.appendChild(savePosition(saver));
+		//player.appendChild(saveInventory(saver));
+		//player.appendChild(saveDirection(saver));
+		player.appendChild(saveToken(saver));
+		player.appendChild(saveDescription(saver));
+		
+		
+		return player;
+	}
+	
+	public void saveFillContainers(Area currentArea, Element roomNode){
+		for(InventoryGO item : itemsInContainers){
+			
+		}
+	}
+	
+	
+	public void saveFixedContainers(Area currentArea, Element roomNode){
+		
+		for(String key : fixedContainers.keySet()){
+			FixedContainerGO currentFixedContainer = fixedContainers.get(key);
+			
+			if(currentFixedContainer.getArea().equals(currentArea.getAreaName())){
+				Element fixedContainerNode = save.createElement("fixedContainer");
+				fixedContainerNode.setAttribute("id", currentFixedContainer.getId());
+				
+				fixedContainerNode.appendChild(saveName(currentFixedContainer));
+				fixedContainerNode.appendChild(saveAreaName(currentFixedContainer));
+				fixedContainerNode.appendChild(saveID(currentFixedContainer));
+				fixedContainerNode.appendChild(saveToken(currentFixedContainer));
+				fixedContainerNode.appendChild(saveOpen(currentFixedContainer));
+				fixedContainerNode.appendChild(saveLocked(currentFixedContainer));
+				fixedContainerNode.appendChild(saveKeyID(currentFixedContainer));
+				fixedContainerNode.appendChild(savePosition(currentFixedContainer));
+				fixedContainerNode.appendChild(saveSize(currentFixedContainer));
+				fixedContainerNode.appendChild(saveContents(currentFixedContainer));
+				fixedContainerNode.appendChild(saveSizeRemaining(currentFixedContainer));
+				
+				roomNode.appendChild(fixedContainerNode);
+			}
+		}
+		
 	}
 	
 	public void saveInventoryGameObjects(Area currentArea, Element roomNode){
@@ -222,7 +366,7 @@ public class Parser {
 				if(!saversInvent.contains(currentObject)){
 					itemsInContainers.add(currentObject);
 				}
-			}
+			}//STILL NEED TO FILL CONTAINERS
 		}
 	}
 	
@@ -434,7 +578,12 @@ public class Parser {
 			value = save.createTextNode(((InventoryGO) occupant).getName());
 		} else if(occupant instanceof NonHumanPlayer){
 			value = save.createTextNode(((NonHumanPlayer) occupant).getPlayerName());
+		} else if(occupant instanceof FixedContainerGO){
+			value = save.createTextNode(((FixedContainerGO) occupant).getName());
+		} else if(occupant instanceof Player){
+			value = save.createTextNode(((Player) occupant).getPlayerName());
 		}
+		
 		name.appendChild(value);
 		return name;
 	}
@@ -446,6 +595,10 @@ public class Parser {
 			value = save.createTextNode(((InventoryGO) occupant).getId());
 		}else if(occupant instanceof FixedGO){
 			value = save.createTextNode(((FixedGO) occupant).getId());
+		}else if(occupant instanceof FixedContainerGO){
+			value = save.createTextNode(((FixedContainerGO) occupant).getId());
+		}else if(occupant instanceof MovableGO){
+			value = save.createTextNode(((MovableGO) occupant).getId());
 		}
 		id.appendChild(value);
 		return id;
@@ -455,7 +608,12 @@ public class Parser {
 		Text value = save.createTextNode("");
 		Element keyID = save.createElement("id");
 		if(occupant instanceof FixedContainerGO){
-			value = save.createTextNode(((FixedContainerGO) occupant).getKeyID());
+			if(((FixedContainerGO) occupant).getKeyID() == null){
+				value = save.createTextNode("null");
+			}else{
+				value = save.createTextNode(((FixedContainerGO) occupant).getKeyID());
+			}
+			
 		}
 		keyID.appendChild(value);
 		return keyID;
@@ -535,6 +693,10 @@ public class Parser {
 			value = save.createTextNode(((FixedGO) occupant).getDescription());			
 		}else if (occupant instanceof MarkerGO){
 			value = save.createTextNode(((MarkerGO) occupant).getDescription());			
+		}else if (occupant instanceof Player){
+			value = save.createTextNode(((Player) occupant).getDescription());			
+		}else if (occupant instanceof MovableGO){
+			value = save.createTextNode(((MovableGO) occupant).getDescription());			
 		}
 		
 		Element description = save.createElement("description");
@@ -562,11 +724,31 @@ public class Parser {
 			value = save.createTextNode(((MovableGO) occupant).getAreaName());
 		}else if (occupant instanceof NonHumanPlayer){
 			value = save.createTextNode((((NonHumanPlayer) occupant).getCurrentArea().getAreaName()));
+		}else if (occupant instanceof FixedContainerGO){
+			value = save.createTextNode((((FixedContainerGO) occupant).getArea()));
+		}else if (occupant instanceof Player){
+			value = save.createTextNode((((Player) occupant).getCurrentArea().getAreaName()));
 		}
 		Element areaName = save.createElement("areaName");
 		areaName.appendChild(value);
 		return areaName;
 
+	}
+	
+	public Document loadXML(){
+		try{
+			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+		    DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+		    Document document = docBuilder.parse(new File("saveNew.xml"));
+		    return document;
+		}catch(SAXException ex){
+			ex.printStackTrace();
+		}catch(IOException ex){
+			ex.printStackTrace();
+		}catch(ParserConfigurationException ex){
+			ex.printStackTrace();
+		}
+		return null;
 	}
 	
 
@@ -577,7 +759,7 @@ public class Parser {
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-			transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "save.dtd");
+			//transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "save.dtd");
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 			DOMSource source = new DOMSource(save);
 			StreamResult result = new StreamResult(new File("saveNew.xml"));
@@ -585,6 +767,8 @@ public class Parser {
 			// Output to console for testing
 			StreamResult consoleResult =new StreamResult(System.out);
 			transformer.transform(source, consoleResult);
+			
+			load();
 		}catch(TransformerException e){
 			e.printStackTrace();
 		}
