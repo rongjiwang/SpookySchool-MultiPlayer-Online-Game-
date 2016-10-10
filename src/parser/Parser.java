@@ -120,64 +120,43 @@ public class Parser {
 				Tile currentTile = currentArea.getArea()[i][j];
 				
 				if (currentTile == null){
+					tileNode.setAttribute("tileType", "black");
 					tileNode.appendChild(save.createTextNode("null"));
 					currentParent.appendChild(tileNode);
 				}else{
-				
 					if(currentTile instanceof WallTile){
-						savePosition(currentTile);
-						saveToken(currentTile);
-						//set occupant to null
-					}else if (currentTile instanceof FloorTile && currentTile.getOccupant() != null){
+						tileNode.setAttribute("tileType", "WallTile");
+						
+					}else if(currentTile instanceof FloorTile){
+						tileNode.setAttribute("tileType", "FloorTile");
 						GameObject occupant = currentTile.getOccupant();
 						Element occupantNode = save.createElement("occupant");
-						occupantNode.setAttribute("objectType", occupant.getClass().toString());
-						//tileNode.appendChild(occupantNode);
 						
-						
-						if(occupant instanceof DoorGO){
-								
-							
-						}else if(occupant instanceof FixedContainerGO){
-							occupantNode.appendChild(saveName(occupant));
-							occupantNode.appendChild(saveAreaName(occupant));
+						if(occupant instanceof FixedGO){
 							occupantNode.appendChild(saveID(occupant));
 							occupantNode.appendChild(saveToken(occupant));
-							occupantNode.appendChild(saveOpen(occupant));
-							occupantNode.appendChild(saveLocked(occupant));
-							occupantNode.appendChild(saveKeyID(occupant));
-							occupantNode.appendChild(savePosition(occupant));
-							occupantNode.appendChild(saveContents(occupant));
-							occupantNode.appendChild(saveSize(occupant));
-							occupantNode.appendChild(saveSizeRemaining(occupant));
-							occupantNode.appendChild(saveDescription(occupant));
-							
-						}else if(occupant instanceof FixedGO){
-							
-							
-							
-						}else if(occupant instanceof InventoryGO){
-							occupantNode.appendChild(saveName(occupant));
-							occupantNode.appendChild(saveID(occupant));
-							occupantNode.appendChild(saveToken(occupant));
-							occupantNode.appendChild(saveSize(occupant));
-							occupantNode.appendChild(saveAreaName(occupant));
 							occupantNode.appendChild(savePosition(occupant));
 							occupantNode.appendChild(saveDescription(occupant));
+							
 							tileNode.appendChild(occupantNode);
+							
 							
 						}else if(occupant instanceof MarkerGO){
 							
-							
-						}else if(occupant instanceof MovableGO){
-							
-					}
+						}
 						
+						
+						
+						
+					}
+					tileNode.appendChild(savePosition(currentTile));
+					currentParent.appendChild(tileNode);	
 				}
-					currentParent.appendChild(tileNode);
+					//currentParent.appendChild(tileNode);
+				
 			}
 		}
-		}
+		
 		
 	}
 	
