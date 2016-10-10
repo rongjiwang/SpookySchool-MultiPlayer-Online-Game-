@@ -63,15 +63,8 @@ public class AnimationObject {
 
 	}
 
-	public boolean incrementCurrent() {
-		now = System.currentTimeMillis();
-		boolean change = false;
-		if(now > then){
-			this.current++;
-			change = true;
-		then = System.currentTimeMillis() + 5;
-		}
-		return change;
+	public void incrementCurrent() {
+		current++;
 	}
 
 	public void changeBuffs() {

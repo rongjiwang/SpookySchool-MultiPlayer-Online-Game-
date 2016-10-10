@@ -106,7 +106,13 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			@Override
 			public void run() {
 				while (true) {
-					tick();
+				tick();
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				}
 			}
 		};
@@ -130,6 +136,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			this.currentArea = this.mainPlayer.getCurrentArea();
 			this.currentAreaObjects = bundle.getAreaObjects();
 			this.displayRoomName();
+			this.centerPlayer();
 
 			//Set the footer message if there is one in the bundle.
 			if (bundle.getMessage() != null) {
@@ -278,13 +285,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	 */
 	public void updateDisplay() {
 		this.repaint(); //Repaint either way!
-
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 
 	}
@@ -485,19 +485,16 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 						tileImage = spriteMap.getImage(getRotatedAnimatedToken(ao.getNextImgToken(), p.getDirection()));
 
-
-
-						Position posToDraw = ao.getPosition(); //Dont need to worry since its main player.
-						boolean change = ao.incrementCurrent();
-
-
 						if (ao.isMainPlayer()) {
 							this.animating = true;
-							if(change){
-								ao.changeBuffs();
-								this.centerPlayerAnimation(ao.getStartX(), ao.getStartY()); //Center the player now that it has moved position...
-							}
+							ao.changeBuffs();
+							this.centerPlayerAnimation(ao.getStartX(), ao.getStartY()); //Center the player now that it has moved position...
+
 						}
+
+						Position posToDraw = ao.getPosition(); //Dont need to worry since its main player.
+						ao.incrementCurrent();
+
 
 						finalX = posToDraw.getPosX();
 						finalY = posToDraw.getPosY();
