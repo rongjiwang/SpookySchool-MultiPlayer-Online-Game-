@@ -131,6 +131,10 @@ public class Parser {
 						tileNode.setAttribute("tileType", "FloorTile");
 						GameObject occupant = currentTile.getOccupant();
 						Element occupantNode = save.createElement("occupant");
+						if(occupant != null){
+							occupantNode.setAttribute("objectType", occupant.getClass().toString().substring(11));
+
+						}
 						
 						if(occupant instanceof FixedGO){
 							occupantNode.appendChild(saveID(occupant));
@@ -142,8 +146,10 @@ public class Parser {
 							
 							
 						}else if(occupant instanceof MarkerGO){
+							occupantNode.appendChild(savePosition(occupant));
+							occupantNode.appendChild(saveBaseGameObject(occupant));
 							
-						}
+							tileNode.appendChild(occupantNode);						}
 						
 						
 						
@@ -157,6 +163,23 @@ public class Parser {
 			}
 		}
 		
+		
+	}
+	
+	public Element saveBaseGameObject(GameObject occupant){
+		
+		Element base = save.createElement("base");
+		GameObject baseObject = ((MarkerGO)occupant).getBaseGO();
+		base.setAttribute("objectType", baseObject.getClass().toString().substring(11));
+		
+		if(baseObject instanceof FixedGO){
+			base.appendChild(saveID(baseObject));
+			base.appendChild(saveToken(baseObject));
+			base.appendChild(savePosition(baseObject));
+			base.appendChild(saveDescription(baseObject));
+		}
+		
+		return base;
 		
 	}
 	
@@ -216,6 +239,8 @@ public class Parser {
 		Element id = save.createElement("id");
 		if(occupant instanceof InventoryGO){
 			value = save.createTextNode(((InventoryGO) occupant).getId());
+		}else if(occupant instanceof FixedGO){
+			value = save.createTextNode(((FixedGO) occupant).getId());
 		}
 		id.appendChild(value);
 		return id;

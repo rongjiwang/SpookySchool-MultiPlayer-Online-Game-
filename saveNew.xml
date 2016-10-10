@@ -165,12 +165,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>furniture1</id>
+                    <token>x0</token>
+                    <pos>
+                        <x>3</x>
+                        <y>5</y>
+                    </pos>
+                    <description> This is a book case.</description>
+                </occupant>
                 <pos>
                     <x>3</x>
                     <y>5</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>4</x>
+                        <y>5</y>
+                    </pos>
+                    <base>
+                        <id>furniture1</id>
+                        <token>x0</token>
+                        <pos>
+                            <x>3</x>
+                            <y>5</y>
+                        </pos>
+                        <description> This is a book case.</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>4</x>
                     <y>5</y>
@@ -309,6 +333,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table1</id>
+                    <token>T0</token>
+                    <pos>
+                        <x>4</x>
+                        <y>8</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>4</x>
                     <y>8</y>
@@ -321,12 +354,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>bed1</id>
+                    <token>o1</token>
+                    <pos>
+                        <x>6</x>
+                        <y>8</y>
+                    </pos>
+                    <description> This is a bed</description>
+                </occupant>
                 <pos>
                     <x>6</x>
                     <y>8</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>7</x>
+                        <y>8</y>
+                    </pos>
+                    <base>
+                        <id>bed1</id>
+                        <token>o1</token>
+                        <pos>
+                            <x>6</x>
+                            <y>8</y>
+                        </pos>
+                        <description> This is a bed</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>7</x>
                     <y>8</y>
@@ -373,6 +430,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table2</id>
+                    <token>t0</token>
+                    <pos>
+                        <x>7</x>
+                        <y>9</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>7</x>
                     <y>9</y>
@@ -645,12 +711,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>furniture1</id>
+                    <token>x0</token>
+                    <pos>
+                        <x>3</x>
+                        <y>5</y>
+                    </pos>
+                    <description> This is a book case.</description>
+                </occupant>
                 <pos>
                     <x>3</x>
                     <y>5</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>4</x>
+                        <y>5</y>
+                    </pos>
+                    <base>
+                        <id>furniture1</id>
+                        <token>x0</token>
+                        <pos>
+                            <x>3</x>
+                            <y>5</y>
+                        </pos>
+                        <description> This is a book case.</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>4</x>
                     <y>5</y>
@@ -789,6 +879,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table1</id>
+                    <token>T0</token>
+                    <pos>
+                        <x>4</x>
+                        <y>8</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>4</x>
                     <y>8</y>
@@ -801,12 +900,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>bed1</id>
+                    <token>o1</token>
+                    <pos>
+                        <x>6</x>
+                        <y>8</y>
+                    </pos>
+                    <description> This is a bed</description>
+                </occupant>
                 <pos>
                     <x>6</x>
                     <y>8</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>7</x>
+                        <y>8</y>
+                    </pos>
+                    <base>
+                        <id>bed1</id>
+                        <token>o1</token>
+                        <pos>
+                            <x>6</x>
+                            <y>8</y>
+                        </pos>
+                        <description> This is a bed</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>7</x>
                     <y>8</y>
@@ -853,6 +976,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table2</id>
+                    <token>t0</token>
+                    <pos>
+                        <x>7</x>
+                        <y>9</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>7</x>
                     <y>9</y>
@@ -1068,6 +1200,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table2</id>
+                    <token>t0</token>
+                    <pos>
+                        <x>3</x>
+                        <y>3</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>3</x>
                     <y>3</y>
@@ -1114,12 +1255,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>3</x>
+                        <y>4</y>
+                    </pos>
+                    <base>
+                        <id>bed1</id>
+                        <token>o3</token>
+                        <pos>
+                            <x>4</x>
+                            <y>4</y>
+                        </pos>
+                        <description> This is a bed</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>3</x>
                     <y>4</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>bed1</id>
+                    <token>o3</token>
+                    <pos>
+                        <x>4</x>
+                        <y>4</y>
+                    </pos>
+                    <description> This is a bed</description>
+                </occupant>
                 <pos>
                     <x>4</x>
                     <y>4</y>
@@ -1132,6 +1297,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table1</id>
+                    <token>T0</token>
+                    <pos>
+                        <x>6</x>
+                        <y>4</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>6</x>
                     <y>4</y>
@@ -1270,12 +1444,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>6</x>
+                        <y>7</y>
+                    </pos>
+                    <base>
+                        <id>furniture1</id>
+                        <token>x2</token>
+                        <pos>
+                            <x>7</x>
+                            <y>7</y>
+                        </pos>
+                        <description> This is a book case.</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>6</x>
                     <y>7</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>furniture1</id>
+                    <token>x2</token>
+                    <pos>
+                        <x>7</x>
+                        <y>7</y>
+                    </pos>
+                    <description> This is a book case.</description>
+                </occupant>
                 <pos>
                     <x>7</x>
                     <y>7</y>
@@ -1605,12 +1803,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>furniture1</id>
+                    <token>x0</token>
+                    <pos>
+                        <x>3</x>
+                        <y>5</y>
+                    </pos>
+                    <description> This is a book case.</description>
+                </occupant>
                 <pos>
                     <x>3</x>
                     <y>5</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>4</x>
+                        <y>5</y>
+                    </pos>
+                    <base>
+                        <id>furniture1</id>
+                        <token>x0</token>
+                        <pos>
+                            <x>3</x>
+                            <y>5</y>
+                        </pos>
+                        <description> This is a book case.</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>4</x>
                     <y>5</y>
@@ -1749,6 +1971,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table1</id>
+                    <token>T0</token>
+                    <pos>
+                        <x>4</x>
+                        <y>8</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>4</x>
                     <y>8</y>
@@ -1761,12 +1992,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>bed1</id>
+                    <token>o1</token>
+                    <pos>
+                        <x>6</x>
+                        <y>8</y>
+                    </pos>
+                    <description> This is a bed</description>
+                </occupant>
                 <pos>
                     <x>6</x>
                     <y>8</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>7</x>
+                        <y>8</y>
+                    </pos>
+                    <base>
+                        <id>bed1</id>
+                        <token>o1</token>
+                        <pos>
+                            <x>6</x>
+                            <y>8</y>
+                        </pos>
+                        <description> This is a bed</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>7</x>
                     <y>8</y>
@@ -1813,6 +2068,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table2</id>
+                    <token>t0</token>
+                    <pos>
+                        <x>7</x>
+                        <y>9</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>7</x>
                     <y>9</y>
@@ -2091,6 +2355,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>couch2</id>
+                    <token>co3</token>
+                    <pos>
+                        <x>7</x>
+                        <y>2</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>7</x>
                     <y>2</y>
@@ -2103,6 +2376,21 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>9</x>
+                        <y>2</y>
+                    </pos>
+                    <base>
+                        <id>couch1</id>
+                        <token>co1</token>
+                        <pos>
+                            <x>9</x>
+                            <y>3</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>9</x>
                     <y>2</y>
@@ -2145,6 +2433,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table10</id>
+                    <token>T0</token>
+                    <pos>
+                        <x>5</x>
+                        <y>3</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>5</x>
                     <y>3</y>
@@ -2157,6 +2454,21 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>7</x>
+                        <y>3</y>
+                    </pos>
+                    <base>
+                        <id>couch2</id>
+                        <token>co3</token>
+                        <pos>
+                            <x>7</x>
+                            <y>2</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>7</x>
                     <y>3</y>
@@ -2169,6 +2481,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>couch1</id>
+                    <token>co1</token>
+                    <pos>
+                        <x>9</x>
+                        <y>3</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>9</x>
                     <y>3</y>
@@ -2732,12 +3053,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>furniture1</id>
+                    <token>x0</token>
+                    <pos>
+                        <x>3</x>
+                        <y>5</y>
+                    </pos>
+                    <description> This is a book case.</description>
+                </occupant>
                 <pos>
                     <x>3</x>
                     <y>5</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>4</x>
+                        <y>5</y>
+                    </pos>
+                    <base>
+                        <id>furniture1</id>
+                        <token>x0</token>
+                        <pos>
+                            <x>3</x>
+                            <y>5</y>
+                        </pos>
+                        <description> This is a book case.</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>4</x>
                     <y>5</y>
@@ -2876,6 +3221,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table1</id>
+                    <token>T0</token>
+                    <pos>
+                        <x>4</x>
+                        <y>8</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>4</x>
                     <y>8</y>
@@ -2888,12 +3242,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>bed1</id>
+                    <token>o1</token>
+                    <pos>
+                        <x>6</x>
+                        <y>8</y>
+                    </pos>
+                    <description> This is a bed</description>
+                </occupant>
                 <pos>
                     <x>6</x>
                     <y>8</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>7</x>
+                        <y>8</y>
+                    </pos>
+                    <base>
+                        <id>bed1</id>
+                        <token>o1</token>
+                        <pos>
+                            <x>6</x>
+                            <y>8</y>
+                        </pos>
+                        <description> This is a bed</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>7</x>
                     <y>8</y>
@@ -2940,6 +3318,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table2</id>
+                    <token>t0</token>
+                    <pos>
+                        <x>7</x>
+                        <y>9</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>7</x>
                     <y>9</y>
@@ -3832,6 +4219,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>treeTwo1</id>
+                    <token>e0</token>
+                    <pos>
+                        <x>2</x>
+                        <y>2</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>2</x>
                     <y>2</y>
@@ -3916,12 +4312,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>treeOne1</id>
+                    <token>v0</token>
+                    <pos>
+                        <x>16</x>
+                        <y>2</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>16</x>
                     <y>2</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>17</x>
+                        <y>2</y>
+                    </pos>
+                    <base>
+                        <id>treeOne1</id>
+                        <token>v0</token>
+                        <pos>
+                            <x>16</x>
+                            <y>2</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>17</x>
                     <y>2</y>
@@ -3934,12 +4354,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>treeOne2</id>
+                    <token>v0</token>
+                    <pos>
+                        <x>19</x>
+                        <y>2</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>19</x>
                     <y>2</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>20</x>
+                        <y>2</y>
+                    </pos>
+                    <base>
+                        <id>treeOne2</id>
+                        <token>v0</token>
+                        <pos>
+                            <x>19</x>
+                            <y>2</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>20</x>
                     <y>2</y>
@@ -4054,12 +4498,42 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>16</x>
+                        <y>3</y>
+                    </pos>
+                    <base>
+                        <id>treeOne1</id>
+                        <token>v0</token>
+                        <pos>
+                            <x>16</x>
+                            <y>2</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>16</x>
                     <y>3</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>17</x>
+                        <y>3</y>
+                    </pos>
+                    <base>
+                        <id>treeOne1</id>
+                        <token>v0</token>
+                        <pos>
+                            <x>16</x>
+                            <y>2</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>17</x>
                     <y>3</y>
@@ -4072,12 +4546,42 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>19</x>
+                        <y>3</y>
+                    </pos>
+                    <base>
+                        <id>treeOne2</id>
+                        <token>v0</token>
+                        <pos>
+                            <x>19</x>
+                            <y>2</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>19</x>
                     <y>3</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>20</x>
+                        <y>3</y>
+                    </pos>
+                    <base>
+                        <id>treeOne2</id>
+                        <token>v0</token>
+                        <pos>
+                            <x>19</x>
+                            <y>2</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>20</x>
                     <y>3</y>
@@ -4606,6 +5110,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>light1</id>
+                    <token>li0</token>
+                    <pos>
+                        <x>16</x>
+                        <y>7</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>16</x>
                     <y>7</y>
@@ -5128,12 +5641,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>11</x>
+                        <y>11</y>
+                    </pos>
+                    <base>
+                        <id>treeThree1</id>
+                        <token>l0</token>
+                        <pos>
+                            <x>12</x>
+                            <y>11</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>11</x>
                     <y>11</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>treeThree1</id>
+                    <token>l0</token>
+                    <pos>
+                        <x>12</x>
+                        <y>11</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>12</x>
                     <y>11</y>
@@ -5266,12 +5803,42 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>11</x>
+                        <y>12</y>
+                    </pos>
+                    <base>
+                        <id>treeThree1</id>
+                        <token>l0</token>
+                        <pos>
+                            <x>12</x>
+                            <y>11</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>11</x>
                     <y>12</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>12</x>
+                        <y>12</y>
+                    </pos>
+                    <base>
+                        <id>treeThree1</id>
+                        <token>l0</token>
+                        <pos>
+                            <x>12</x>
+                            <y>11</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>12</x>
                     <y>12</y>
@@ -6361,6 +6928,21 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>1</x>
+                        <y>1</y>
+                    </pos>
+                    <base>
+                        <id>furniture1</id>
+                        <token>x3</token>
+                        <pos>
+                            <x>1</x>
+                            <y>2</y>
+                        </pos>
+                        <description> This is a book case.</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>1</x>
                     <y>1</y>
@@ -6415,6 +6997,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>furniture1</id>
+                    <token>x3</token>
+                    <pos>
+                        <x>1</x>
+                        <y>2</y>
+                    </pos>
+                    <description> This is a book case.</description>
+                </occupant>
                 <pos>
                     <x>1</x>
                     <y>2</y>
@@ -6445,6 +7036,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>desk</id>
+                    <token>pd1</token>
+                    <pos>
+                        <x>6</x>
+                        <y>2</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>6</x>
                     <y>2</y>
@@ -6499,6 +7099,21 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>6</x>
+                        <y>3</y>
+                    </pos>
+                    <base>
+                        <id>desk</id>
+                        <token>pd1</token>
+                        <pos>
+                            <x>6</x>
+                            <y>2</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>6</x>
                     <y>3</y>
@@ -6523,6 +7138,21 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>1</x>
+                        <y>4</y>
+                    </pos>
+                    <base>
+                        <id>furniture1</id>
+                        <token>x3</token>
+                        <pos>
+                            <x>1</x>
+                            <y>5</y>
+                        </pos>
+                        <description> This is a book case.</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>1</x>
                     <y>4</y>
@@ -6553,6 +7183,21 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>6</x>
+                        <y>4</y>
+                    </pos>
+                    <base>
+                        <id>desk</id>
+                        <token>pd1</token>
+                        <pos>
+                            <x>6</x>
+                            <y>2</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>6</x>
                     <y>4</y>
@@ -6577,6 +7222,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>furniture1</id>
+                    <token>x3</token>
+                    <pos>
+                        <x>1</x>
+                        <y>5</y>
+                    </pos>
+                    <description> This is a book case.</description>
+                </occupant>
                 <pos>
                     <x>1</x>
                     <y>5</y>
@@ -6774,30 +7428,99 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table2</id>
+                    <token>tL0</token>
+                    <pos>
+                        <x>1</x>
+                        <y>1</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>1</x>
                     <y>1</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>2</x>
+                        <y>1</y>
+                    </pos>
+                    <base>
+                        <id>table2</id>
+                        <token>tL0</token>
+                        <pos>
+                            <x>1</x>
+                            <y>1</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>2</x>
                     <y>1</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>3</x>
+                        <y>1</y>
+                    </pos>
+                    <base>
+                        <id>table2</id>
+                        <token>tL0</token>
+                        <pos>
+                            <x>1</x>
+                            <y>1</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>3</x>
                     <y>1</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>4</x>
+                        <y>1</y>
+                    </pos>
+                    <base>
+                        <id>table2</id>
+                        <token>tL0</token>
+                        <pos>
+                            <x>1</x>
+                            <y>1</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>4</x>
                     <y>1</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>5</x>
+                        <y>1</y>
+                    </pos>
+                    <base>
+                        <id>table2</id>
+                        <token>tL0</token>
+                        <pos>
+                            <x>1</x>
+                            <y>1</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>5</x>
                     <y>1</y>
@@ -7513,6 +8236,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table9</id>
+                    <token>T0</token>
+                    <pos>
+                        <x>6</x>
+                        <y>8</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>6</x>
                     <y>8</y>
@@ -7555,6 +8287,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>couch</id>
+                    <token>co3</token>
+                    <pos>
+                        <x>13</x>
+                        <y>8</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>13</x>
                     <y>8</y>
@@ -7642,6 +8383,21 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>13</x>
+                        <y>9</y>
+                    </pos>
+                    <base>
+                        <id>couch</id>
+                        <token>co3</token>
+                        <pos>
+                            <x>13</x>
+                            <y>8</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>13</x>
                     <y>9</y>
@@ -8631,6 +9387,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table2</id>
+                    <token>t0</token>
+                    <pos>
+                        <x>3</x>
+                        <y>3</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>3</x>
                     <y>3</y>
@@ -8677,12 +9442,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>3</x>
+                        <y>4</y>
+                    </pos>
+                    <base>
+                        <id>bed1</id>
+                        <token>o3</token>
+                        <pos>
+                            <x>4</x>
+                            <y>4</y>
+                        </pos>
+                        <description> This is a bed</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>3</x>
                     <y>4</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>bed1</id>
+                    <token>o3</token>
+                    <pos>
+                        <x>4</x>
+                        <y>4</y>
+                    </pos>
+                    <description> This is a bed</description>
+                </occupant>
                 <pos>
                     <x>4</x>
                     <y>4</y>
@@ -8695,6 +9484,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table1</id>
+                    <token>T0</token>
+                    <pos>
+                        <x>6</x>
+                        <y>4</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>6</x>
                     <y>4</y>
@@ -8833,12 +9631,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>6</x>
+                        <y>7</y>
+                    </pos>
+                    <base>
+                        <id>furniture1</id>
+                        <token>x2</token>
+                        <pos>
+                            <x>7</x>
+                            <y>7</y>
+                        </pos>
+                        <description> This is a book case.</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>6</x>
                     <y>7</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>furniture1</id>
+                    <token>x2</token>
+                    <pos>
+                        <x>7</x>
+                        <y>7</y>
+                    </pos>
+                    <description> This is a book case.</description>
+                </occupant>
                 <pos>
                     <x>7</x>
                     <y>7</y>
@@ -9368,6 +10190,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table2</id>
+                    <token>t0</token>
+                    <pos>
+                        <x>3</x>
+                        <y>3</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>3</x>
                     <y>3</y>
@@ -9414,12 +10245,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>3</x>
+                        <y>4</y>
+                    </pos>
+                    <base>
+                        <id>bed1</id>
+                        <token>o3</token>
+                        <pos>
+                            <x>4</x>
+                            <y>4</y>
+                        </pos>
+                        <description> This is a bed</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>3</x>
                     <y>4</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>bed1</id>
+                    <token>o3</token>
+                    <pos>
+                        <x>4</x>
+                        <y>4</y>
+                    </pos>
+                    <description> This is a bed</description>
+                </occupant>
                 <pos>
                     <x>4</x>
                     <y>4</y>
@@ -9432,6 +10287,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table1</id>
+                    <token>T0</token>
+                    <pos>
+                        <x>6</x>
+                        <y>4</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>6</x>
                     <y>4</y>
@@ -9570,12 +10434,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>6</x>
+                        <y>7</y>
+                    </pos>
+                    <base>
+                        <id>furniture1</id>
+                        <token>x2</token>
+                        <pos>
+                            <x>7</x>
+                            <y>7</y>
+                        </pos>
+                        <description> This is a book case.</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>6</x>
                     <y>7</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>furniture1</id>
+                    <token>x2</token>
+                    <pos>
+                        <x>7</x>
+                        <y>7</y>
+                    </pos>
+                    <description> This is a book case.</description>
+                </occupant>
                 <pos>
                     <x>7</x>
                     <y>7</y>
@@ -10615,6 +11503,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table2</id>
+                    <token>t0</token>
+                    <pos>
+                        <x>3</x>
+                        <y>3</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>3</x>
                     <y>3</y>
@@ -10661,12 +11558,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>3</x>
+                        <y>4</y>
+                    </pos>
+                    <base>
+                        <id>bed1</id>
+                        <token>o3</token>
+                        <pos>
+                            <x>4</x>
+                            <y>4</y>
+                        </pos>
+                        <description> This is a bed.</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>3</x>
                     <y>4</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>bed1</id>
+                    <token>o3</token>
+                    <pos>
+                        <x>4</x>
+                        <y>4</y>
+                    </pos>
+                    <description> This is a bed.</description>
+                </occupant>
                 <pos>
                     <x>4</x>
                     <y>4</y>
@@ -10679,6 +11600,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>table1</id>
+                    <token>T0</token>
+                    <pos>
+                        <x>6</x>
+                        <y>4</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>6</x>
                     <y>4</y>
@@ -10817,12 +11747,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>6</x>
+                        <y>7</y>
+                    </pos>
+                    <base>
+                        <id>furniture1</id>
+                        <token>x2</token>
+                        <pos>
+                            <x>7</x>
+                            <y>7</y>
+                        </pos>
+                        <description> This is a book case.</description>
+                    </base>
+                </occupant>
                 <pos>
                     <x>6</x>
                     <y>7</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>furniture1</id>
+                    <token>x2</token>
+                    <pos>
+                        <x>7</x>
+                        <y>7</y>
+                    </pos>
+                    <description> This is a book case.</description>
+                </occupant>
                 <pos>
                     <x>7</x>
                     <y>7</y>
