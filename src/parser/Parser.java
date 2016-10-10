@@ -43,6 +43,7 @@ public class Parser {
 	private Player saver;
 	private List<MovableGO> movables;
 	private List<NonHumanPlayer> nonHumans;
+	private Map<String, InventoryGO> inventObjects;
 	
 	public Parser(){
 		
@@ -69,7 +70,7 @@ public class Parser {
 		
 		Map<String, Area> areas = game.getAreas();
 		List<Player> players = game.getPlayers();
-		Map<String, InventoryGO> inventObjects = game.getInventoryObjects();
+		this.inventObjects = game.getInventoryObjects();
 		this.doors = game.getDoorObjects();
 		this.saver = determinePlayer(playerName, players);
 		this.movables = game.getMovableObjects();
@@ -133,7 +134,7 @@ public class Parser {
 		saveDoors(currentArea, roomNode);
 		saveMovables(currentArea, roomNode);
 		saveNonHumans(currentArea, roomNode);
-		//saveInventoryObjects(currentArea, areaNode);
+		saveInventoryGameObjects(currentArea, roomNode);
 		//saveFixedContainers(currentArea, areaNode);
 		//saveFillContainers(currentArea, areaNode);
 			//gets the inventory items that 
@@ -189,6 +190,29 @@ public class Parser {
 				
 			}
 		}	
+	}
+	
+	public void saveInventoryGameObjects(Area currentArea, Element roomNode){
+		for (String key : inventObjects.keySet()){
+			InventoryGO currentObject = inventObjects.get(key);
+			
+			if(currentObject.getPosition() != null){
+				//inventory item is on the floor
+				Element inventoryObject = save.createElement("inventoryObject");
+				inventoryObject.setAttribute("id", currentObject.getId());
+				
+				inventoryObject.appendChild(saveName(currentObject));
+				inventoryObject.appendChild(saveID(currentObject));
+				inventoryObject.appendChild(saveToken(currentObject));
+				inventoryObject.appendChild(saveAreaName(currentObject));
+				inventoryObject.appendChild(saveSize(currentObject));
+				inventoryObject.appendChild(savePosition(currentObject));
+				inventoryObject.appendChild(saveDescription(currentObject));
+				
+				roomNode.appendChild(inventoryObject);
+			}
+		}
+		
 	}
 	
 	public void saveNonHumans(Area currentArea, Element roomNode){
