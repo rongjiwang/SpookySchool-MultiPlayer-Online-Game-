@@ -60,15 +60,12 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	private Area currentArea;
 	private Player mainPlayer;
 
-
 	//For animation.
 	private Thread thread;
 	private List<GameObject> currentAreaObjects = new ArrayList<GameObject>();
 	private List<GameObject> previousAreaObjects = new ArrayList<GameObject>();
 	private List<AnimationObject> toAnimate = new ArrayList<AnimationObject>();
 	//private Map<String, AnimationObject> toAnimate = new HashMap<String, AnimationObject>();
-
-
 
 	// Current Rotational view 0-3
 	private int view;
@@ -77,12 +74,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			|		|
 		3	|		|	1
 			|_______|
-
+	
 				0
 		  Default view */
 
 	private boolean animating = false;
-
 
 	public AreaDisplayPanel(Client client, GameFrame gf, SpriteMap spriteMap) {
 
@@ -101,32 +97,38 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		this.client = client;
 		this.gameFrame = gf;
 
-
+		/*
 		this.thread = new Thread() {
 			@Override
 			public void run() {
 				while (true) {
-				tick();
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		
+					//tick();
+		
+		
+					System.out.println("here");
+		
+					try {
+						this.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		
+		
 				}
 			}
 		};
-
+		
 		thread.start();
+		*/
 
 	}
-
 
 	/**
 	 * Process the received bundle. Display game according to the bundle.
 	 */
 	public void processBundle(Bundle bundle) {
-
 
 		this.mainPlayer = bundle.getPlayerObj();
 
@@ -136,7 +138,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			this.currentArea = this.mainPlayer.getCurrentArea();
 			this.currentAreaObjects = bundle.getAreaObjects();
 			this.displayRoomName();
-			this.centerPlayer();
+			//this.centerPlayer();
 
 			//Set the footer message if there is one in the bundle.
 			if (bundle.getMessage() != null) {
@@ -161,7 +163,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					overlayPanel.setFooterMessage(bundle.getMessage());
 				}
 
-				this.centerPlayer();
+				//this.centerPlayer();
 				return;
 
 				//Dont try to find changes!
@@ -182,11 +184,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	/**
 	 * Redisplay the area.
 	 */
+	/*
 	public void tick() {
 		this.updateDisplay();
 	}
-
-
+	*/
 
 	/**
 	 * Find the changes that have occurred in the area since the last copy of the area was received, and add them to the toAnimate map.
@@ -205,7 +207,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					GameObject previousObj = this.previousAreaObjects.get(j);
 					GameObject currentObj = this.currentAreaObjects.get(i);
 
-
 					//FIXME: Only allowing player animation for now.
 					if (!(previousObj instanceof Player)) {
 						continue;
@@ -214,7 +215,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					//ASSUMING MOVEMENT IN ONLY ONE DIRECTION!!!
 					if (currentObj.getPosition().getPosX() != previousObj.getPosition().getPosX()
 							|| currentObj.getPosition().getPosY() != previousObj.getPosition().getPosY()) {
-
 
 						//Starting position of the animation object.
 						int startX = previousObj.getPosition().getPosX();
@@ -251,7 +251,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 							this.animating = true;
 						}
 
-
 						this.toAnimate.add(aObj);
 
 					}
@@ -278,17 +277,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			overlayPanel.setHeaderMessage(-155, currentArea.getAreaName().replace('_', ' '));
 		}
 	}
-
-
-	/**
-	 * Updates the board.
-	 */
-	public void updateDisplay() {
-		this.repaint(); //Repaint either way!
-
-
-	}
-
 
 	/**
 	 * Centers the player in the window
@@ -330,7 +318,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		this.renderOffSetY = (windowCenterY - playerY) - mainPlayerYBuff;
 
 	}
-
 
 	@Override
 	public void paintComponent(Graphics g) {
@@ -403,7 +390,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		}
 	}
 
-
 	public void renderTile(Graphics g, int layer, int x, int y) {
 
 		Tile tile = currentArea.getTile(new Position(x, y));
@@ -434,11 +420,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 			GameObject roomObj = this.currentArea.getTile(new Position(x, y)).getOccupant();
 
-
 			if (roomObj == null) {
 				return;
 			}
-
 
 			if (roomObj instanceof DoorGO) {
 				DoorGO door = (DoorGO) roomObj;
@@ -469,7 +453,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					adjustX = (tileImage.getWidth(null) - tileWidth);
 					adjustY = (tileImage.getHeight(null) - tileHeight);
 
-
 					AnimationObject ao = null;
 					int index = 0;
 					//Find the animation object that matches the playerObject.
@@ -486,15 +469,14 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 						tileImage = spriteMap.getImage(getRotatedAnimatedToken(ao.getNextImgToken(), p.getDirection()));
 
 						if (ao.isMainPlayer()) {
+							System.out.println("change main player buff");
 							this.animating = true;
 							ao.changeBuffs();
 							this.centerPlayerAnimation(ao.getStartX(), ao.getStartY()); //Center the player now that it has moved position...
-
 						}
 
 						Position posToDraw = ao.getPosition(); //Dont need to worry since its main player.
 						ao.incrementCurrent();
-
 
 						finalX = posToDraw.getPosX();
 						finalY = posToDraw.getPosY();
@@ -505,9 +487,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 								this.animating = false;
 							}
 
-							/*System.out.println("Finished Animation: Start at x: " + ao.getStartX() + " y: "
+							/*
+							System.out.println("Finished Animation: Start at x: " + ao.getStartX() + " y: "
 									+ ao.getStartY() + " Finish at x: " + ao.getAimX() + " y: " + ao.getAimY()
-									+ " main player: " + this.mainPlayer);*/
+									+ " main player: " + this.mainPlayer);
+									*/
 
 							this.mainPlayerXBuff = 0;
 							this.mainPlayerYBuff = 0;
@@ -749,7 +733,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		return null;
 	}
 
-
 	public void setOverLay(OverlayPanel overlayPanel) {
 		this.overlayPanel = overlayPanel;
 		overlayPanel.setOpaque(false);
@@ -772,7 +755,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		this.delay--;
 		return this.nextRain;
 	}
-
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -820,31 +802,27 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			break;
 		case KeyEvent.VK_R:
 			rotate(1);
-			this.updateDisplay();
+			//this.updateDisplay();
 			break;
 		case KeyEvent.VK_L:
 			rotate(-1);
-			this.updateDisplay();
+			//this.updateDisplay();
 			break;
 		}
 	}
-
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 	}
 
-
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
-
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		this.requestFocus();
 	}
-
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -852,20 +830,17 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 	}
 
-
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
-
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
-
 
 	@Override
 	public void mouseReleased(MouseEvent e) {

@@ -52,6 +52,7 @@ public class OverlayPanel extends JPanel {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+
 				}
 			}
 		};
@@ -60,7 +61,6 @@ public class OverlayPanel extends JPanel {
 			font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
 			Graphics2D g2d = (Graphics2D) getGraphics();
 			g2d.setFont(font.deriveFont(Font.TRUETYPE_FONT, 12f));
-
 
 		} catch (Exception e) {
 		}
@@ -101,7 +101,6 @@ public class OverlayPanel extends JPanel {
 				e.printStackTrace();
 			}
 
-
 			//Draw the header message in the center.
 			int stringLen = (int) g2d.getFontMetrics().getStringBounds(headerMessage, g2d).getWidth();
 			int start = headerWidth / 2 - stringLen / 2;
@@ -119,7 +118,7 @@ public class OverlayPanel extends JPanel {
 
 		now = System.currentTimeMillis();
 
-		//Display the header message. The boolean is there so that we don't try to print 
+		//Display the header message. The boolean is there so that we don't try to print
 		//a message when we have never had one before yet as this can cause null pointer.
 		if (firstHeaderReceived) {
 			headerX += headerIncrement;
@@ -135,7 +134,7 @@ public class OverlayPanel extends JPanel {
 			}
 		}
 
-		//Display the footer message. The boolean is there so that we don't try to print 
+		//Display the footer message. The boolean is there so that we don't try to print
 		//a message when we have never had one before yet as this can cause null pointer.
 		if (this.firstFooterReceived) {
 			this.footerY = this.footerY + footerIncrement;
@@ -182,6 +181,5 @@ public class OverlayPanel extends JPanel {
 			}
 		}
 	}
-
 
 }
