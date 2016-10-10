@@ -45,8 +45,9 @@ public class Parser {
 	private List<MovableGO> movables;
 	private List<NonHumanPlayer> nonHumans;
 	private Map<String, InventoryGO> inventObjects;
-	List<InventoryGO> saversInvent;
-	List<InventoryGO> itemsInContainers;
+	private List<InventoryGO> saversInvent;
+	private List<InventoryGO> itemsInContainers;
+	private Map<String, FixedContainerGO> fixedContainers;
 	
 	public Parser(){
 		
@@ -78,6 +79,7 @@ public class Parser {
 		this.saver = determinePlayer(playerName, players);
 		this.movables = game.getMovableObjects();
 		this.nonHumans = game.getNonHumanPlayers();
+		this.fixedContainers = game.getFixedContainerObjects();
 		
 		
 		saveMap(areas);
@@ -189,13 +191,36 @@ public class Parser {
 					tileNode.appendChild(savePosition(currentTile));
 					currentParent.appendChild(tileNode);	
 				}
-					//currentParent.appendChild(tileNode);
+					
 				
 			}
 		}	
 	}
 	
 	public void saveFixedContainers(Area currentArea, Element roomNode){
+		
+		for(String key : fixedContainers.keySet()){
+			FixedContainerGO currentFixedContainer = fixedContainers.get(key);
+			
+			if(currentFixedContainer.getArea().equals(currentArea.getAreaName())){
+				Element fixedContainerNode = save.createElement("fixedContainer");
+				fixedContainerNode.setAttribute("id", currentFixedContainer.getId());
+				
+				fixedContainerNode.appendChild(saveName(currentFixedContainer));
+				fixedContainerNode.appendChild(saveAreaName(currentFixedContainer));
+				fixedContainerNode.appendChild(saveID(currentFixedContainer));
+				fixedContainerNode.appendChild(saveToken(currentFixedContainer));
+				fixedContainerNode.appendChild(saveOpen(currentFixedContainer));
+				fixedContainerNode.appendChild(saveLocked(currentFixedContainer));
+				fixedContainerNode.appendChild(saveKeyID(currentFixedContainer));
+				fixedContainerNode.appendChild(savePosition(currentFixedContainer));
+				fixedContainerNode.appendChild(saveSize(currentFixedContainer));
+				fixedContainerNode.appendChild(saveContents(currentFixedContainer));
+				fixedContainerNode.appendChild(saveSizeRemaining(currentFixedContainer));
+				
+				roomNode.appendChild(fixedContainerNode);
+			}
+		}
 		
 	}
 	
@@ -438,6 +463,8 @@ public class Parser {
 			value = save.createTextNode(((InventoryGO) occupant).getName());
 		} else if(occupant instanceof NonHumanPlayer){
 			value = save.createTextNode(((NonHumanPlayer) occupant).getPlayerName());
+		} else if(occupant instanceof FixedContainerGO){
+			value = save.createTextNode(((FixedContainerGO) occupant).getName());
 		}
 		name.appendChild(value);
 		return name;
@@ -450,6 +477,8 @@ public class Parser {
 			value = save.createTextNode(((InventoryGO) occupant).getId());
 		}else if(occupant instanceof FixedGO){
 			value = save.createTextNode(((FixedGO) occupant).getId());
+		}else if(occupant instanceof FixedContainerGO){
+			value = save.createTextNode(((FixedContainerGO) occupant).getId());
 		}
 		id.appendChild(value);
 		return id;
@@ -459,7 +488,12 @@ public class Parser {
 		Text value = save.createTextNode("");
 		Element keyID = save.createElement("id");
 		if(occupant instanceof FixedContainerGO){
-			value = save.createTextNode(((FixedContainerGO) occupant).getKeyID());
+			if(((FixedContainerGO) occupant).getKeyID() == null){
+				value = save.createTextNode("null");
+			}else{
+				value = save.createTextNode(((FixedContainerGO) occupant).getKeyID());
+			}
+			
 		}
 		keyID.appendChild(value);
 		return keyID;
@@ -566,6 +600,8 @@ public class Parser {
 			value = save.createTextNode(((MovableGO) occupant).getAreaName());
 		}else if (occupant instanceof NonHumanPlayer){
 			value = save.createTextNode((((NonHumanPlayer) occupant).getCurrentArea().getAreaName()));
+		}else if (occupant instanceof FixedContainerGO){
+			value = save.createTextNode((((FixedContainerGO) occupant).getArea()));
 		}
 		Element areaName = save.createElement("areaName");
 		areaName.appendChild(value);
