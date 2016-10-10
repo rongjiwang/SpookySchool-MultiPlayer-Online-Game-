@@ -468,7 +468,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 						tileImage = spriteMap.getImage(getRotatedAnimatedToken(ao.getNextImgToken(), p.getDirection()));
 
 						if (ao.isMainPlayer()) {
-							System.out.println("change main player buff");
 							this.animating = true;
 							ao.changeBuffs();
 							this.centerPlayerAnimation(ao.getStartX(), ao.getStartY()); //Center the player now that it has moved position...
@@ -487,12 +486,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 								this.mainPlayerXBuff = 0;
 								this.mainPlayerYBuff = 0;
 							}
-
-							/*
-							System.out.println("Finished Animation: Start at x: " + ao.getStartX() + " y: "
-									+ ao.getStartY() + " Finish at x: " + ao.getAimX() + " y: " + ao.getAimY()
-									+ " main player: " + this.mainPlayer);
-									*/
 
 							this.toAnimate.remove(index); //FIXME: Index may be changed?
 
