@@ -74,7 +74,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			|		|
 		3	|		|	1
 			|_______|
-	
+
 				0
 		  Default view */
 
@@ -102,23 +102,23 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			@Override
 			public void run() {
 				while (true) {
-		
+
 					//tick();
-		
+
 					System.out.println("here");
-		
+
 					try {
 						this.sleep(1000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-		
-		
+
+
 				}
 			}
 		};
-		
+
 		thread.start();
 		*/
 
@@ -514,13 +514,13 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					|| token.equals("u0") || token.equals("L1") || token.equals("Q1") || token.equals("Q2")) {
 
 				if (layer == 1) {
-					g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
+					g.drawImage(tileImage, finalX - adjustX - 1, finalY - adjustY - 1,tileImage.getWidth(null) + 2, tileImage.getHeight(null) + 2, null);
 
 				}
 			} else {
 				if (layer == 3) {
 
-					g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
+					g.drawImage(tileImage, finalX - adjustX - 1, finalY - adjustY - 1,tileImage.getWidth(null) + 2, tileImage.getHeight(null) + 2, null);
 				}
 			}
 		}
