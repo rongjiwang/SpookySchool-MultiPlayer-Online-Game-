@@ -97,9 +97,16 @@ public class Parser {
 	
 	
 	public void load(){
+		load = createDocument();
+		NodeList areas = load.getElementsByTagName("room");
 		
-		
-		
+		for (int i = 0; i < areas.getLength(); i++){
+			//areas.item(i).getNextSibling()
+		}
+		loadAreas();
+	}
+	
+	public void loadAreas(){
 		
 	}
 	
