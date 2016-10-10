@@ -519,7 +519,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 				}
 			} else {
 				if (layer == 3) {
-					g.drawImage(tileImage, finalX - adjustX, finalY - adjustY + 1, null);
+
+					g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
 				}
 			}
 		}
