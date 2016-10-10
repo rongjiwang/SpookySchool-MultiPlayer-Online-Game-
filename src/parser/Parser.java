@@ -138,7 +138,7 @@ public class Parser {
 		saveMovables(currentArea, roomNode);
 		saveNonHumans(currentArea, roomNode);
 		saveInventoryGameObjects(currentArea, roomNode);
-		//saveFixedContainers(currentArea, areaNode);
+		saveFixedContainers(currentArea, roomNode);
 		//saveFillContainers(currentArea, areaNode);
 			//gets the inventory items that 
 		
@@ -195,6 +195,10 @@ public class Parser {
 		}	
 	}
 	
+	public void saveFixedContainers(Area currentArea, Element roomNode){
+		
+	}
+	
 	public void saveInventoryGameObjects(Area currentArea, Element roomNode){
 		
 		saversInvent = saver.getInventory();
@@ -222,7 +226,7 @@ public class Parser {
 				if(!saversInvent.contains(currentObject)){
 					itemsInContainers.add(currentObject);
 				}
-			}
+			}//STILL NEED TO FILL CONTAINERS
 		}
 	}
 	
