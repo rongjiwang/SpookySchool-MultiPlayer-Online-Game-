@@ -14,8 +14,8 @@ table1 t0 Dorm_room 13 7
 chair11 pc1 Principles_office 7 3
 lamp1 la0 Dorm_storage 1 4
 lamp2 la0 Dorm_storage 2 2
-lamp3 la0 Dorm_room 5 5
+lamp3 la0 Dorm_room 8 10
 plantpot1 pp0 Dorm_storage 2 4
 potEmpty1 pe0 Dorm_storage 4 4
-potEmpty2 pe0 Dorm_storage 4 5
+potEmpty2 pe0 Dorm_storage 5 4
 barrel1 ba0 Dorm_storage 6 4
