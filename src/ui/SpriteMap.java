@@ -128,11 +128,17 @@ public class SpriteMap {
 		spriteMap.put("k2", loadImage("key2.png"));
 		spriteMap.put("k3", loadImage("key3.png"));
 
-		// furniture(bookcase)
+		// furniture
 		spriteMap.put("x0", loadImage("furniture0.png"));
 		spriteMap.put("x1", loadImage("furniture1.png"));
 		spriteMap.put("x2", loadImage("furniture2.png"));
 		spriteMap.put("x3", loadImage("furniture3.png"));
+		
+		// furniture
+		spriteMap.put("bo0", loadImage("bookcase0.png"));
+		spriteMap.put("bo1", loadImage("bookcase1.png"));
+		spriteMap.put("bo2", loadImage("bookcase2.png"));
+		spriteMap.put("bo3", loadImage("bookcase3.png"));
 
 		// chair
 		spriteMap.put("ch0", loadImage("chair0.png"));
@@ -184,7 +190,31 @@ public class SpriteMap {
 		spriteMap.put("3P2", loadImage("paintingThree2.png"));
 		spriteMap.put("3P3", loadImage("paintingThree3.png"));
 				
-		
+		// storageRoom items
+		spriteMap.put("ba0", loadImage("barrel0.png"));
+		spriteMap.put("ba1", loadImage("barrel1.png"));
+		spriteMap.put("ba2", loadImage("barrel2.png"));
+		spriteMap.put("ba3", loadImage("barrel3.png"));
+		spriteMap.put("la0", loadImage("lamp0.png"));
+		spriteMap.put("la1", loadImage("lamp1.png"));
+		spriteMap.put("la2", loadImage("lamp2.png"));
+		spriteMap.put("la3", loadImage("lamp3.png"));
+		spriteMap.put("La0", loadImage("laptop0.png"));
+		spriteMap.put("La1", loadImage("laptop1.png"));
+		spriteMap.put("La2", loadImage("laptop2.png"));
+		spriteMap.put("La3", loadImage("laptop3.png"));
+		spriteMap.put("pe0", loadImage("potEmpty0.png"));
+		spriteMap.put("pe1", loadImage("potEmpty1.png"));
+		spriteMap.put("pe2", loadImage("potEmpty2.png"));
+		spriteMap.put("pe3", loadImage("potEmpty3.png"));
+		spriteMap.put("pw0", loadImage("potWater0.png"));
+		spriteMap.put("pw1", loadImage("potWater1.png"));
+		spriteMap.put("pw2", loadImage("potWater2.png"));
+		spriteMap.put("pw3", loadImage("plantPot3.png"));
+		spriteMap.put("pp0", loadImage("plantPot0.png"));
+		spriteMap.put("pp1", loadImage("plantPot1.png"));
+		spriteMap.put("pp2", loadImage("plantPot2.png"));
+		spriteMap.put("pp3", loadImage("plantPot3.png"));
 		
 		
 		// trees
