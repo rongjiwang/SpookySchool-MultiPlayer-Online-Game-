@@ -974,4 +974,8 @@ public class SpookySchool {
 	public List<NonHumanPlayer> getNonHumanPlayers() {
 		return this.nonHumanPlayers;
 	}
+	
+	public Map<String, FixedContainerGO> getFixedContainerObjects(){
+		return this.fixedContainerObjects;
+	}
 }
