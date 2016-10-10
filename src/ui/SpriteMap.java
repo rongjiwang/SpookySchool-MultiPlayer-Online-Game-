@@ -428,7 +428,6 @@ public class SpriteMap {
 		// in a jar or expanded into individual files.
 		java.net.URL imageURL = SpriteMap.class.getResource(IMAGE_PATH + filename);
 		try {
-			System.out.println(filename);
 			Image img = ImageIO.read(imageURL);
 			return img;
 		} catch (IOException e) {
