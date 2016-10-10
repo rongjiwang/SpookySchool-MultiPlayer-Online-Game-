@@ -2,4 +2,3 @@ Chest Dorm_room FixedContainer1 ch00 closed unlocked null 6 9 1
 Chest Dorm_storage FixedContainer2 ch30 closed locked key_o1 6 1 1
 Chest Outside FixedContainer3 ch00 closed locked NULL 6 20 15
 Chest Principles_office FixedContainer4 ch30 closed locked NULL 6 1 3
-
