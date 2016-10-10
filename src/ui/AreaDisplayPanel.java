@@ -105,7 +105,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		
 					//tick();
 		
-		
 					System.out.println("here");
 		
 					try {
@@ -320,7 +319,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	}
 
 	@Override
-	public void paintComponent(Graphics g) {
+	public synchronized void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
 		//Double buffering to reduce flickering.
@@ -468,15 +467,15 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 						tileImage = spriteMap.getImage(getRotatedAnimatedToken(ao.getNextImgToken(), p.getDirection()));
 
-						Position posToDraw = ao.getPosition(); //Dont need to worry since its main player.
-						ao.incrementCurrent();
-
 						if (ao.isMainPlayer()) {
 							System.out.println("change main player buff");
 							this.animating = true;
 							ao.changeBuffs();
 							this.centerPlayerAnimation(ao.getStartX(), ao.getStartY()); //Center the player now that it has moved position...
 						}
+
+						Position posToDraw = ao.getPosition(); //Dont need to worry since its main player.
+						ao.incrementCurrent();
 
 						finalX = posToDraw.getPosX();
 						finalY = posToDraw.getPosY();
@@ -485,6 +484,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 							if (ao.isMainPlayer()) {
 								this.animating = false;
+								this.mainPlayerXBuff = 0;
+								this.mainPlayerYBuff = 0;
 							}
 
 							/*
@@ -493,8 +494,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 									+ " main player: " + this.mainPlayer);
 									*/
 
-							this.mainPlayerXBuff = 0;
-							this.mainPlayerYBuff = 0;
 							this.toAnimate.remove(index); //FIXME: Index may be changed?
 
 						}
