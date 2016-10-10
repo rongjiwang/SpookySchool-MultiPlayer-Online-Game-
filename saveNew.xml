@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE game SYSTEM "save.dtd">
 <game>
     <room>
         <height>11</height>
@@ -3606,54 +3605,54 @@
             </sideBEntryPos>
         </door>
         <movableGO>
-            <id/>
+            <id>chair7</id>
             <token>Ch0</token>
             <areaName>Staff_room</areaName>
             <pos>
                 <x>5</x>
                 <y>2</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <movableGO>
-            <id/>
+            <id>chair8</id>
             <token>Ch2</token>
             <areaName>Staff_room</areaName>
             <pos>
                 <x>5</x>
                 <y>4</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <movableGO>
-            <id/>
+            <id>chair9</id>
             <token>ch3</token>
             <areaName>Staff_room</areaName>
             <pos>
                 <x>6</x>
                 <y>7</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <movableGO>
-            <id/>
+            <id>chair10</id>
             <token>ch1</token>
             <areaName>Staff_room</areaName>
             <pos>
                 <x>8</x>
                 <y>7</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <movableGO>
-            <id/>
+            <id>chair11</id>
             <token>ch2</token>
             <areaName>Staff_room</areaName>
             <pos>
                 <x>7</x>
                 <y>8</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <inventoryObject id="NULL">
             <name>Key</name>
@@ -8280,7 +8279,7 @@
             <areaName>Outside</areaName>
             <pos>
                 <x>16</x>
-                <y>12</y>
+                <y>16</y>
             </pos>
         </nonHumanPlayer>
         <inventoryObject id="NULL">
@@ -8895,14 +8894,14 @@
             </sideBEntryPos>
         </door>
         <movableGO>
-            <id/>
+            <id>chair11</id>
             <token>pc1</token>
             <areaName>Principles_office</areaName>
             <pos>
                 <x>7</x>
                 <y>3</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <inventoryObject id="NULL">
             <name>Key</name>
@@ -10489,84 +10488,84 @@
             </sideBEntryPos>
         </door>
         <movableGO>
-            <id/>
+            <id>chair1</id>
             <token>ch3</token>
             <areaName>Dorm_room</areaName>
             <pos>
                 <x>5</x>
                 <y>8</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <movableGO>
-            <id/>
+            <id>chair2</id>
             <token>ch0</token>
             <areaName>Dorm_room</areaName>
             <pos>
                 <x>6</x>
                 <y>7</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <movableGO>
-            <id/>
+            <id>chair3</id>
             <token>ch2</token>
             <areaName>Dorm_room</areaName>
             <pos>
                 <x>6</x>
                 <y>9</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <movableGO>
-            <id/>
+            <id>chair4</id>
             <token>ch1</token>
             <areaName>Dorm_room</areaName>
             <pos>
                 <x>7</x>
                 <y>8</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <movableGO>
-            <id/>
+            <id>chair5</id>
             <token>Ch2</token>
             <areaName>Dorm_room</areaName>
             <pos>
                 <x>2</x>
                 <y>2</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <movableGO>
-            <id/>
+            <id>chair6</id>
             <token>Ch2</token>
             <areaName>Dorm_room</areaName>
             <pos>
                 <x>4</x>
                 <y>2</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <movableGO>
-            <id/>
+            <id>table1</id>
             <token>t0</token>
             <areaName>Dorm_room</areaName>
             <pos>
                 <x>13</x>
                 <y>7</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <movableGO>
-            <id/>
+            <id>lamp3</id>
             <token>la0</token>
             <areaName>Dorm_room</areaName>
             <pos>
                 <x>5</x>
                 <y>5</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <inventoryObject id="NULL">
             <name>Key</name>
@@ -11091,64 +11090,64 @@
             <tile tileType="black">null</tile>
         </area>
         <movableGO>
-            <id/>
+            <id>lamp1</id>
             <token>la0</token>
             <areaName>Dorm_storage</areaName>
             <pos>
                 <x>1</x>
                 <y>4</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <movableGO>
-            <id/>
+            <id>lamp2</id>
             <token>la0</token>
             <areaName>Dorm_storage</areaName>
             <pos>
                 <x>2</x>
                 <y>2</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <movableGO>
-            <id/>
+            <id>plantpot1</id>
             <token>pp0</token>
             <areaName>Dorm_storage</areaName>
             <pos>
                 <x>2</x>
                 <y>4</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <movableGO>
-            <id/>
+            <id>potEmpty1</id>
             <token>pe0</token>
             <areaName>Dorm_storage</areaName>
             <pos>
                 <x>4</x>
                 <y>4</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <movableGO>
-            <id/>
+            <id>potEmpty2</id>
             <token>pe0</token>
             <areaName>Dorm_storage</areaName>
             <pos>
                 <x>5</x>
                 <y>4</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <movableGO>
-            <id/>
+            <id>barrel1</id>
             <token>ba0</token>
             <areaName>Dorm_storage</areaName>
             <pos>
                 <x>6</x>
                 <y>4</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <inventoryObject id="NULL">
             <name>Key</name>
@@ -15339,14 +15338,14 @@
             </sideBEntryPos>
         </door>
         <movableGO>
-            <id/>
+            <id>testObj</id>
             <token>t0</token>
             <areaName>Spawn_1</areaName>
             <pos>
                 <x>4</x>
                 <y>9</y>
             </pos>
-            <description/>
+            <description>This is a movable object.</description>
         </movableGO>
         <inventoryObject id="NULL">
             <name>Key</name>
@@ -15482,13 +15481,13 @@
         </inventoryObject>
     </room>
     <player>
-        <name>Daniel</name>
+        <name>Bob</name>
         <areaName>Spawn_6</areaName>
         <pos>
             <x>5</x>
             <y>8</y>
         </pos>
         <token>0p20</token>
-        <description>Daniel</description>
+        <description>Bob</description>
     </player>
 </game>

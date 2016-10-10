@@ -1,6 +1,7 @@
 package parser;
 
 import org.w3c.dom.*;
+import org.xml.sax.SAXException;
 
 import game.Area;
 import game.ContainerGO;
@@ -36,10 +37,16 @@ import java.util.Map;
 
 public class Parser {
 	
+	//Load related Fields
 	private Document load;
+	private List <MovableGO> movablesToLoad;
+	private List <DoorGO> doorsToLoad;
+	private List <InventoryGO> inventsToLoad;
+	private List <FixedContainerGO> fixedContsToLoad;
+	
+	//Save related Fields
 	private Document save;
 	private Element root;
-	
 	private List<DoorGO> doors; 
 	private Player saver;
 	private List<MovableGO> movables;
@@ -97,14 +104,82 @@ public class Parser {
 	
 	
 	public void load(){
-		load = createDocument();
-		NodeList areas = load.getElementsByTagName("room");
+		load = loadXML();
 		
-		for (int i = 0; i < areas.getLength(); i++){
-			//areas.item(i).getNextSibling()
-		}
-		loadAreas();
+		Node loadRoot = load.getDocumentElement();
+		
+		iterate();
+		
+		
 	}
+	
+	public void iterate(){
+		NodeList nodeList = load.getElementsByTagName("*");
+		String content = "";
+        String nodeName = "";
+	    for (int i = 0; i < nodeList.getLength(); i++) {
+	        Node node = nodeList.item(i);
+	        if (node.getNodeType() == Node.ELEMENT_NODE) {
+	            // do something with the current element
+	            nodeName = node.getNodeName();
+	            //System.err.println(nodeName);
+	            if (nodeName.equals("movableGO")){
+		        	NodeList children = node.getChildNodes();
+		        	//System.err.println(children.getLength());
+		        	createMovableGO(children);
+	            }if (nodeName.equals("door")){
+	            	NodeList children = node.getChildNodes();
+		        	//System.err.println(children.getLength());
+		        	createDoorGO(children);
+	            }if (nodeName.equals("inventoryObject")){
+	            	NodeList children = node.getChildNodes();
+		        	//System.err.println(children.getLength());
+		        	createInventoryGO(children);
+	            }if (nodeName.equals("fixedContainer")){
+	            	NodeList children = node.getChildNodes();
+		        	//System.err.println(children.getLength());
+		        	createFixedContainerGO(children);
+	            }
+	        } 
+	    }
+	}
+	
+		
+	public void createMovableGO(NodeList feilds){
+		System.out.println(feilds.getLength());
+//		String id = feilds.item(1).getTextContent();
+//		String token = feilds.item(3).getTextContent();
+//		String description = feilds.item(9).getTextContent();
+//		String areaName = feilds.item(5).getTextContent();
+//		feilds.item(6).get().replaceAll(" ", "");
+//		feilds.item(7).getTextContent().replaceAll(" ", "");
+		//Position pos = new Position(x, y);
+		
+		//movablesToLoad.add(new MovableGO(id, token, areaName, pos));
+		
+		
+		
+	}
+	
+	public void createDoorGO(NodeList feilds){
+			
+		}
+	
+	public void createInventoryGO(NodeList feilds){
+		
+	}
+	
+	public void createFixedContainerGO(NodeList feilds){
+		
+	}
+			
+			
+	
+			
+			
+			
+			
+		
 	
 	public void loadAreas(){
 		
@@ -517,6 +592,8 @@ public class Parser {
 			value = save.createTextNode(((FixedGO) occupant).getId());
 		}else if(occupant instanceof FixedContainerGO){
 			value = save.createTextNode(((FixedContainerGO) occupant).getId());
+		}else if(occupant instanceof MovableGO){
+			value = save.createTextNode(((MovableGO) occupant).getId());
 		}
 		id.appendChild(value);
 		return id;
@@ -613,6 +690,8 @@ public class Parser {
 			value = save.createTextNode(((MarkerGO) occupant).getDescription());			
 		}else if (occupant instanceof Player){
 			value = save.createTextNode(((Player) occupant).getDescription());			
+		}else if (occupant instanceof MovableGO){
+			value = save.createTextNode(((MovableGO) occupant).getDescription());			
 		}
 		
 		Element description = save.createElement("description");
@@ -651,6 +730,22 @@ public class Parser {
 
 	}
 	
+	public Document loadXML(){
+		try{
+			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+		    DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+		    Document document = docBuilder.parse(new File("saveNew.xml"));
+		    return document;
+		}catch(SAXException ex){
+			ex.printStackTrace();
+		}catch(IOException ex){
+			ex.printStackTrace();
+		}catch(ParserConfigurationException ex){
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
 
 	public void createXML(){
 		try{
@@ -659,7 +754,7 @@ public class Parser {
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-			transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "save.dtd");
+			//transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "save.dtd");
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 			DOMSource source = new DOMSource(save);
 			StreamResult result = new StreamResult(new File("saveNew.xml"));
@@ -667,6 +762,8 @@ public class Parser {
 			// Output to console for testing
 			StreamResult consoleResult =new StreamResult(System.out);
 			transformer.transform(source, consoleResult);
+			
+			load();
 		}catch(TransformerException e){
 			e.printStackTrace();
 		}
