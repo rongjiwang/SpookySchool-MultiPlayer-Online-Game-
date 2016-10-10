@@ -36,6 +36,8 @@ public class Parser {
 	private Document save;
 	private Element root;
 	
+	private List<DoorGO> doors; 
+	
 	public Parser(){
 		
 	}
@@ -62,13 +64,14 @@ public class Parser {
 		Map<String, Area> areas = game.getAreas();
 		List<Player> players = game.getPlayers();
 		Map<String, InventoryGO> inventObjects = game.getInventoryObjects();
+		List<DoorGO> doors = game.getDoorObjects();
 		
 		saveMap(areas);
 		
 		//when saving areas, only save the WallTiles, FloorTiles, and nulltiles
 		// before closing each room, save the moveables, nonhumans, and inventory obejcts on the map
 		//
-		//nvm
+		//
 		
 		
 		createXML();
@@ -107,6 +110,12 @@ public class Parser {
 		roomNode.appendChild(areaNode);
 		
 		saveTiles(currentArea, areaNode);
+		saveDoors(currentArea, roomNode);
+		//saveMovables(currentArea, areaNode);
+		//saveNonHumans(currentArea, areaNode);
+		//saveInventoryObjects(currentArea, areaNode);
+		//saveFixedContainers(currentArea, areaNode);
+		
 		
 		return roomNode;
 	}
@@ -151,9 +160,6 @@ public class Parser {
 							
 							tileNode.appendChild(occupantNode);						}
 						
-						
-						
-						
 					}
 					tileNode.appendChild(savePosition(currentTile));
 					currentParent.appendChild(tileNode);	
@@ -161,10 +167,48 @@ public class Parser {
 					//currentParent.appendChild(tileNode);
 				
 			}
+		}	
+	}
+	
+	public void saveDoors(Area currentArea, Element roomNode){
+		
+		for(DoorGO door : doors){
+			if (door.getSideA().equals(currentArea.getAreaName())){
+				Element doorNode = save.createElement("door");
+				doorNode.setAttribute("id", door.getId());
+				
+				doorNode.appendChild(saveID(door));
+				doorNode.appendChild(saveOpen(door));
+				doorNode.appendChild(saveLocked(door));
+				doorNode.appendChild(saveKeyID(door));
+				doorNode.appendChild(saveDescription(door));
+				
+				doorNode.appendChild(saveSideA(door));
+				doorNode.appendChild(saveTokenA(door));
+				doorNode.appendChild(saveSideAPos(door));
+				doorNode.appendChild(saveSideAEntryPos(door));
+				
+				doorNode.appendChild(saveSideB(door));
+				doorNode.appendChild(saveTokenB(door));
+				doorNode.appendChild(saveSideBPos(door));
+				doorNode.appendChild(saveSideBEntryPos(door));
+				
+				roomNode.appendChild(doorNode);
+			}
 		}
 		
-		
 	}
+	
+	public Element saveSideA(DoorGO door){
+		Text value = save.createTextNode("");
+		Element sideA = save.createElement("sideA");
+		
+		
+		
+		
+		return sideA;
+	}
+	
 	
 	public Element saveBaseGameObject(GameObject occupant){
 		
