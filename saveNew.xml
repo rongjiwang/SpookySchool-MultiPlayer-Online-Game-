@@ -7218,6 +7218,15 @@
                 <y>3</y>
             </sideBEntryPos>
         </door>
+        <nonHumanPlayer name="Pondy">
+            <name>Pondy</name>
+            <spawnName>null</spawnName>
+            <areaName>Outside</areaName>
+            <pos>
+                <x>16</x>
+                <y>11</y>
+            </pos>
+        </nonHumanPlayer>
     </room>
     <room>
         <height>9</height>

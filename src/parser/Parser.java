@@ -73,7 +73,7 @@ public class Parser {
 		this.doors = game.getDoorObjects();
 		this.saver = determinePlayer(playerName, players);
 		this.movables = game.getMovableObjects();
-		//this.saveNonHumans;
+		this.nonHumans = game.getNonHumanPlayers();
 		
 		
 		saveMap(areas);
@@ -192,7 +192,21 @@ public class Parser {
 	}
 	
 	public void saveNonHumans(Area currentArea, Element roomNode){
-	
+		for (NonHumanPlayer nhp : nonHumans){
+			if (nhp.getCurrentArea().getAreaName().equals(currentArea.getAreaName())){
+				Element nonHumanNode = save.createElement("nonHumanPlayer");
+				nonHumanNode.setAttribute("name", nhp.getPlayerName());
+				
+				nonHumanNode.appendChild(saveName(nhp));	
+				nonHumanNode.appendChild(saveNonHumanSpawnName(nhp));
+				nonHumanNode.appendChild(saveAreaName(nhp));
+				//when loading, load the Area not the areaName.
+				nonHumanNode.appendChild(savePosition(nhp));
+				
+				roomNode.appendChild(nonHumanNode);
+				
+			}
+		}
 	}
 	
 	public void saveMovables(Area currentArea, Element roomNode){
@@ -238,6 +252,13 @@ public class Parser {
 			}
 		}
 		
+	}
+	
+	public Element saveNonHumanSpawnName(NonHumanPlayer nhp){
+		Element spawnName = save.createElement("spawnName");
+		Text value = save.createTextNode("null");
+		spawnName.appendChild(value);
+		return spawnName;
 	}
 	
 	public Element saveSideA(DoorGO door){
@@ -376,6 +397,8 @@ public class Parser {
 		Element name = save.createElement("name");
 		if(occupant instanceof InventoryGO){
 			value = save.createTextNode(((InventoryGO) occupant).getName());
+		} else if(occupant instanceof NonHumanPlayer){
+			value = save.createTextNode(((NonHumanPlayer) occupant).getPlayerName());
 		}
 		name.appendChild(value);
 		return name;
@@ -502,6 +525,8 @@ public class Parser {
 			value = save.createTextNode(((InventoryGO) occupant).getAreaName());
 		}else if (occupant instanceof MovableGO){
 			value = save.createTextNode(((MovableGO) occupant).getAreaName());
+		}else if (occupant instanceof NonHumanPlayer){
+			value = save.createTextNode((((NonHumanPlayer) occupant).getCurrentArea().getAreaName()));
 		}
 		Element areaName = save.createElement("areaName");
 		areaName.appendChild(value);
