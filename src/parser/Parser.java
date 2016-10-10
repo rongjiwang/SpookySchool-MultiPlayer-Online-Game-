@@ -38,6 +38,7 @@ public class Parser {
 	private Element root;
 	
 	private List<DoorGO> doors; 
+	private Player saver;
 	
 	public Parser(){
 		
@@ -66,6 +67,7 @@ public class Parser {
 		List<Player> players = game.getPlayers();
 		Map<String, InventoryGO> inventObjects = game.getInventoryObjects();
 		this.doors = game.getDoorObjects();
+		this.saver = determinePlayer(playerName, players);
 		
 		saveMap(areas);
 		
@@ -82,6 +84,16 @@ public class Parser {
 	
 	public void load(){
 		
+	}
+	
+	public Player determinePlayer(String playerName, List<Player> players){
+		for (Player p : players){
+			if (p.getPlayerName().equals(playerName)){
+				return p;
+			}
+		}
+		
+		return null; //should not get here
 	}
 	
 	public void saveMap(Map<String, Area> areas){
@@ -116,7 +128,8 @@ public class Parser {
 		//saveNonHumans(currentArea, areaNode);
 		//saveInventoryObjects(currentArea, areaNode);
 		//saveFixedContainers(currentArea, areaNode);
-		
+		//saveFillContainers(currentArea, areaNode);
+			//gets the inventory items that 
 		
 		return roomNode;
 	}
