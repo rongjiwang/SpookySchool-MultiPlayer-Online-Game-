@@ -971,4 +971,7 @@ public class SpookySchool {
 		return inventoryObjects;
 	}
 
+	public List<NonHumanPlayer> getNonHumanPlayers() {
+		return this.nonHumanPlayers;
+	}
 }
