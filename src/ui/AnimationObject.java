@@ -30,14 +30,9 @@ public class AnimationObject {
 		this.aimY = aimY;
 		this.rightFoot = Math.random() < 0.5;
 
-		System.out.println(Math.abs((startY - aimY)));
-
-
 		if (Math.abs(startX - aimX) > 1 || (startY - aimY) > 1) {
 			throw new Error("Only allowed movement of ONE position per animation object!");
 		}
-
-
 
 		System.out.println(
 				"New Animation: Starting at x: " + this.startX + " y: " + this.startY + " Finishing: x: " + this.aimX
@@ -70,24 +65,21 @@ public class AnimationObject {
 
 	public void changeBuffs() {
 
-		//this.direction = this.adp.determineDirection(this.direction);
-
 		//If main player, change the main player buff
-		/*
-		if (this.mainPlayer) {
-			if (this.direction.equals("NORTH")) {
-				//System.out.println();
-				adp.mainPlayerYBuff -= 1;
-			} else if (this.direction.equals("SOUTH")) {
-				adp.mainPlayerYBuff += 1;
-			} else if (this.direction.equals("EAST")) {
-				adp.mainPlayerXBuff += 1;
-			} else {
-				adp.mainPlayerXBuff -= 1;
-			}
+
+		if (this.direction.equals("NORTH")) {
+			//System.out.println("Here\n\n");
+			adp.mainPlayerYBuff -= 1;
+		} else if (this.direction.equals("SOUTH")) {
+			adp.mainPlayerYBuff += 1;
+		} else if (this.direction.equals("EAST")) {
+			adp.mainPlayerXBuff += 1;
+		} else {
+			adp.mainPlayerXBuff -= 1;
 		}
-		*/
 	}
+
+
 
 	public String getNextImgToken() {
 

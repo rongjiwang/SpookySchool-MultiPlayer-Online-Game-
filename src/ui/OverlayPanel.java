@@ -45,7 +45,7 @@ public class OverlayPanel extends JPanel {
 					repaint();
 
 					try {
-						sleep(100);
+						sleep(10);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
