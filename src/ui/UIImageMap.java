@@ -8,7 +8,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 /**
- * Similar to SpriteMap, holds a map of all image objects 
+ * Holds a map of all image objects used in creation of UI
  * 
  * @author Andy
  *
@@ -35,7 +35,9 @@ public class UIImageMap {
 		return image;	
 	}
 
-	
+	/**
+	 * Sets up map of images
+	 */
 	public void loadMap(){
 		spriteMap = new HashMap<String, Image>();
 		
@@ -73,7 +75,6 @@ public class UIImageMap {
 		spriteMap.put("ubhi",loadImage("uparrowhigh.png"));
 		spriteMap.put("db",loadImage("downarrow.png"));
 		spriteMap.put("dbhi", loadImage("downarrowhigh.png"));
-		
 		
 		//inv background
 		spriteMap.put("invBack",loadImage("invBackground.png"));

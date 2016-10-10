@@ -12,36 +12,50 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * A simple panel containing arrows that allow the user to control the inventory panel
+ * 
+ * @author Andy
+ *
+ */
 public class ScrollInvPanel extends JPanel{
+	//references to other panels
 	private InventoryPanel invPanel;
+	private UIImageMap imageMap;
+	//icons for buttons
 	private ImageIcon[] icons;
+	//mouse listener
 	private ButtonListen listen;
+	//buttons
 	private JLabel up;
 	private JLabel down;
 
-	private UIImageMap imageMap;
-
 	public ScrollInvPanel(InventoryPanel invPanel, UIImageMap imageMap){
 		super(new BorderLayout());
+		//sets inventory panel
+		this.invPanel = invPanel;
+		//sets image map
+		this.imageMap = imageMap;
 		
+		//allignment of buttons
 		JPanel fit = new JPanel(new FlowLayout());
+		
 		fit.setOpaque(false);
 		fit.setPreferredSize(new Dimension(40, 100));
-		
-
-		this.invPanel = invPanel;
-		this.imageMap = imageMap;
-
+		//sets icons for the buttons
 		setIcons();
-
+		//creates mouse listener
 		listen = new ButtonListen();
 
+		//creates both buttons
 		up = new JLabel(icons[0]);
 		down = new JLabel(icons[2]);
 
+		//adds mouse listeners
 		up.addMouseListener(listen);
 		down.addMouseListener(listen);
 		
+		//adds buttons to panel
 		fit.add(up);
 		fit.add(down);
 		this.add(fit, BorderLayout.EAST);
