@@ -30,6 +30,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +45,8 @@ public class Parser {
 	private List<MovableGO> movables;
 	private List<NonHumanPlayer> nonHumans;
 	private Map<String, InventoryGO> inventObjects;
+	List<InventoryGO> saversInvent;
+	List<InventoryGO> itemsInContainers;
 	
 	public Parser(){
 		
@@ -193,6 +196,11 @@ public class Parser {
 	}
 	
 	public void saveInventoryGameObjects(Area currentArea, Element roomNode){
+		
+		saversInvent = saver.getInventory();
+		itemsInContainers = new ArrayList<>();
+		
+		
 		for (String key : inventObjects.keySet()){
 			InventoryGO currentObject = inventObjects.get(key);
 			
@@ -210,9 +218,12 @@ public class Parser {
 				inventoryObject.appendChild(saveDescription(currentObject));
 				
 				roomNode.appendChild(inventoryObject);
+			}else{
+				if(!saversInvent.contains(currentObject)){
+					itemsInContainers.add(currentObject);
+				}
 			}
 		}
-		
 	}
 	
 	public void saveNonHumans(Area currentArea, Element roomNode){
