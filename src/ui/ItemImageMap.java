@@ -8,7 +8,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 /**
- * Similar to SpriteMap, holds a map of all image objects 
+ * Holds a map of all image objects used in inventory 
  * 
  * @author Andy
  *
@@ -35,7 +35,9 @@ public class ItemImageMap {
 		return image;	
 	}
 
-	
+	/**
+	 * Sets up map of images
+	 */
 	public void loadMap(){
 		spriteMap = new HashMap<String, Image>();
 		

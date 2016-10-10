@@ -18,40 +18,61 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
+/**
+ * InfoPanel is displayed when user selects to display Information or About. It is inserted on the Glasspane of the frame 
+ * 
+ * @author Andy
+ *
+ */
 public class InfoPanel extends JPanel{
+	//references to other panels
 	private Container contentPane;
 	private GameFrame home;
-	private ImageIcon[] icons;
 	private UIImageMap imageMap;
-	
+	//icons for button
+	private ImageIcon[] icons;
+	//OK button
 	private JLabel ok;
+	//textpane
 	private JTextPane infoTest;
+	//button listener
 	private ButtonListen listen;
 
 	public InfoPanel(Container contentPane, GameFrame home, UIImageMap imageMap){
 		super(new BorderLayout(0,0));
-		
+		//sets game frame
 		this.home = home;
+		//sets where this will be displayed
 		this.contentPane = contentPane;
+		//sets imagemap
 		this.imageMap = imageMap;
-		
+		//sets icons for OK button
 		setIcons();
+		//creates new textpane to display information
 		infoTest = new JTextPane();
+		
+		//assigns custom font to the textpane
 		try {
 			Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
 			infoTest.setFont(font.deriveFont(Font.TRUETYPE_FONT, 12f));
 		} catch (Exception e) {}		
 		
+		//sets formatting of text in textpane
 		infoTest.setForeground(Color.WHITE);
+		//ensures text cannot be changed
 		infoTest.setEditable(false);
+		//prevent the default textpane window from being displayed
 		infoTest.setOpaque(false);
-				
+		//listener for OK button
 		listen = new ButtonListen();
 		
+		//creates OK button and assigns it a mouse listener
 		ok = new JLabel(icons[0]);
 		ok.addMouseListener(listen);
 		
+		//adds text to panel
 		this.add(infoTest, BorderLayout.NORTH);
+		//adds ok button to panel
 		this.add(ok, BorderLayout.WEST);
 	}
 	
@@ -78,12 +99,18 @@ public class InfoPanel extends JPanel{
 		}
 	}
 	
+	/**
+	 * Sets text to info window
+	 */
 	public void setAsInfo(){
 		infoTest.setText("Spooky School! \n\nSome information about Spooky School goes here.\n\n"+
 						"Controls: \n\n"+
 						"Use arrow keys to move.\n'l' : rotate screen anti-clockwise\n'r' : rotate screen clockwise\n'z' : perform an action (examine/open a door)");
 	}
 	
+	/**
+	 * Sets text to about window
+	 */
 	public void setAsAbout(){
 		infoTest.setText("SWEN 222 - Assignment 03 - Team 8 - \nSpooky School - Created by:\n\n"+
 				"- Cameron McLachlan ( mclachcame ) \nCameron.McLachlan@ecs.vuw.ac.nz\n\n"+
@@ -93,9 +120,6 @@ public class InfoPanel extends JPanel{
 		        "- Chethana Wijesekera ( wijesechet ) \nChethana.Wijesekera@ecs.vuw.ac.nz");
 	}
 	
-	public void addComponents(){
-		
-	}
 	
 	@Override
 	public void paintComponent(Graphics gr) {
@@ -107,32 +131,39 @@ public class InfoPanel extends JPanel{
 		AlphaComposite transparent = AlphaComposite.getInstance(AlphaComposite.SRC_OVER , .8f);
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING , RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setComposite(transparent);
+		
 		//draw the contents of the JFrame's content pane upon our glass pane.
 		contentPane.paint(gr);
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
 	}
 	
+	/**
+	 * Mouse listener for InfoPanel
+	 * 
+	 * @author Andy
+	 *
+	 */
 	private class ButtonListen implements MouseListener{
 
 		@Override
-		public void mouseClicked(MouseEvent e) {
+		public void mouseClicked(MouseEvent e) { //if user clicks the button
 			if(e.getSource() == ok)
-				setVisible(false);
+				setVisible(false); //hide panel
 		}
 
 
 		@Override
-		public void mouseEntered(MouseEvent e) {
+		public void mouseEntered(MouseEvent e) { //if user highlights OK button
 			if(e.getSource() == ok)
-				ok.setIcon(icons[1]);
+				ok.setIcon(icons[1]); //changes icon
 
 		}
 
 		@Override
-		public void mouseExited(MouseEvent e) {
+		public void mouseExited(MouseEvent e) { //if user unhighlights OK button
 			if(e.getSource() == ok)
-				ok.setIcon(icons[0]);
+				ok.setIcon(icons[0]); //changes icon
 		}
 
 		//UNUSED
