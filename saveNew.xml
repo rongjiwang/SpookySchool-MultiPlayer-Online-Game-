@@ -548,8 +548,8 @@
         </area>
         <door id="sh6">
             <id/>
-            <open>false</open>
-            <locked>true</locked>
+            <open>true</open>
+            <locked>false</locked>
             <id/>
             <description>This is a Door.</description>
             <sideA>Spawn_6</sideA>
@@ -668,30 +668,6 @@
                 <y>2</y>
             </pos>
             <description> The key for Spawn_5 room</description>
-        </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
         </inventoryObject>
     </room>
     <room>
@@ -1362,30 +1338,6 @@
             </pos>
             <description> The key for Spawn_5 room</description>
         </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
-        </inventoryObject>
     </room>
     <room>
         <height>11</height>
@@ -2055,30 +2007,6 @@
             </pos>
             <description> The key for Spawn_5 room</description>
         </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
-        </inventoryObject>
     </room>
     <room>
         <height>11</height>
@@ -2747,30 +2675,6 @@
                 <y>2</y>
             </pos>
             <description> The key for Spawn_5 room</description>
-        </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
         </inventoryObject>
     </room>
     <room>
@@ -3703,30 +3607,6 @@
             </pos>
             <description> The key for Spawn_5 room</description>
         </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
-        </inventoryObject>
     </room>
     <room>
         <height>11</height>
@@ -4396,30 +4276,6 @@
             </pos>
             <description> The key for Spawn_5 room</description>
         </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
-        </inventoryObject>
     </room>
     <room>
         <height>8</height>
@@ -4839,30 +4695,6 @@
             </pos>
             <description> The key for Spawn_5 room</description>
         </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
-        </inventoryObject>
     </room>
     <room>
         <height>6</height>
@@ -5125,30 +4957,6 @@
                 <y>2</y>
             </pos>
             <description> The key for Spawn_5 room</description>
-        </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
         </inventoryObject>
     </room>
     <room>
@@ -8184,7 +7992,7 @@
             <areaName>Outside</areaName>
             <pos>
                 <x>16</x>
-                <y>11</y>
+                <y>8</y>
             </pos>
         </nonHumanPlayer>
         <inventoryObject id="NULL">
@@ -8282,30 +8090,6 @@
                 <y>2</y>
             </pos>
             <description> The key for Spawn_5 room</description>
-        </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
         </inventoryObject>
     </room>
     <room>
@@ -8891,30 +8675,6 @@
                 <y>2</y>
             </pos>
             <description> The key for Spawn_5 room</description>
-        </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
         </inventoryObject>
     </room>
     <room>
@@ -10181,7 +9941,7 @@
         </area>
         <door id="dd1">
             <id/>
-            <open>false</open>
+            <open>true</open>
             <locked>false</locked>
             <id/>
             <description>This is a Door.</description>
@@ -10438,6 +10198,16 @@
             </pos>
             <description/>
         </movableGO>
+        <movableGO>
+            <id/>
+            <token>la0</token>
+            <areaName>Dorm_room</areaName>
+            <pos>
+                <x>5</x>
+                <y>5</y>
+            </pos>
+            <description/>
+        </movableGO>
         <inventoryObject id="NULL">
             <name>Key</name>
             <id>NULL</id>
@@ -10533,30 +10303,6 @@
                 <y>2</y>
             </pos>
             <description> The key for Spawn_5 room</description>
-        </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
         </inventoryObject>
     </room>
     <room>
@@ -10627,12 +10373,36 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>Bookcase1</id>
+                    <token>bo0</token>
+                    <pos>
+                        <x>4</x>
+                        <y>1</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>4</x>
                     <y>1</y>
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="MarkerGO">
+                    <pos>
+                        <x>5</x>
+                        <y>1</y>
+                    </pos>
+                    <base objectType="FixedGO">
+                        <id>Bookcase1</id>
+                        <token>bo0</token>
+                        <pos>
+                            <x>4</x>
+                            <y>1</y>
+                        </pos>
+                        <description/>
+                    </base>
+                </occupant>
                 <pos>
                     <x>5</x>
                     <y>1</y>
@@ -10657,6 +10427,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>potWater3</id>
+                    <token>pw0</token>
+                    <pos>
+                        <x>1</x>
+                        <y>2</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>1</x>
                     <y>2</y>
@@ -10723,6 +10502,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>potWater2</id>
+                    <token>pw0</token>
+                    <pos>
+                        <x>4</x>
+                        <y>3</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>4</x>
                     <y>3</y>
@@ -10813,6 +10601,15 @@
                 </pos>
             </tile>
             <tile tileType="FloorTile">
+                <occupant objectType="FixedGO">
+                    <id>potWater1</id>
+                    <token>pw0</token>
+                    <pos>
+                        <x>3</x>
+                        <y>5</y>
+                    </pos>
+                    <description/>
+                </occupant>
                 <pos>
                     <x>3</x>
                     <y>5</y>
@@ -10881,6 +10678,66 @@
             </tile>
             <tile tileType="black">null</tile>
         </area>
+        <movableGO>
+            <id/>
+            <token>la0</token>
+            <areaName>Dorm_storage</areaName>
+            <pos>
+                <x>1</x>
+                <y>4</y>
+            </pos>
+            <description/>
+        </movableGO>
+        <movableGO>
+            <id/>
+            <token>la0</token>
+            <areaName>Dorm_storage</areaName>
+            <pos>
+                <x>2</x>
+                <y>2</y>
+            </pos>
+            <description/>
+        </movableGO>
+        <movableGO>
+            <id/>
+            <token>pp0</token>
+            <areaName>Dorm_storage</areaName>
+            <pos>
+                <x>2</x>
+                <y>4</y>
+            </pos>
+            <description/>
+        </movableGO>
+        <movableGO>
+            <id/>
+            <token>pe0</token>
+            <areaName>Dorm_storage</areaName>
+            <pos>
+                <x>4</x>
+                <y>4</y>
+            </pos>
+            <description/>
+        </movableGO>
+        <movableGO>
+            <id/>
+            <token>pe0</token>
+            <areaName>Dorm_storage</areaName>
+            <pos>
+                <x>5</x>
+                <y>3</y>
+            </pos>
+            <description/>
+        </movableGO>
+        <movableGO>
+            <id/>
+            <token>ba0</token>
+            <areaName>Dorm_storage</areaName>
+            <pos>
+                <x>6</x>
+                <y>1</y>
+            </pos>
+            <description/>
+        </movableGO>
         <inventoryObject id="NULL">
             <name>Key</name>
             <id>NULL</id>
@@ -10976,30 +10833,6 @@
                 <y>2</y>
             </pos>
             <description> The key for Spawn_5 room</description>
-        </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
         </inventoryObject>
     </room>
     <room>
@@ -11263,30 +11096,6 @@
                 <y>2</y>
             </pos>
             <description> The key for Spawn_5 room</description>
-        </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
         </inventoryObject>
     </room>
     <room>
@@ -11586,30 +11395,6 @@
                 <y>2</y>
             </pos>
             <description> The key for Spawn_5 room</description>
-        </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
         </inventoryObject>
     </room>
     <room>
@@ -12280,30 +12065,6 @@
             </pos>
             <description> The key for Spawn_5 room</description>
         </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
-        </inventoryObject>
     </room>
     <room>
         <height>5</height>
@@ -12737,30 +12498,6 @@
                 <y>2</y>
             </pos>
             <description> The key for Spawn_5 room</description>
-        </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
         </inventoryObject>
     </room>
     <room>
@@ -13430,30 +13167,6 @@
                 <y>2</y>
             </pos>
             <description> The key for Spawn_5 room</description>
-        </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
         </inventoryObject>
     </room>
     <room>
@@ -14224,7 +13937,7 @@
         </area>
         <door id="hd1">
             <id/>
-            <open>false</open>
+            <open>true</open>
             <locked>false</locked>
             <id/>
             <description>This is a Door.</description>
@@ -14371,30 +14084,6 @@
                 <y>2</y>
             </pos>
             <description> The key for Spawn_5 room</description>
-        </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
         </inventoryObject>
     </room>
     <room>
@@ -15074,30 +14763,6 @@
                 <y>2</y>
             </pos>
             <description> The key for Spawn_5 room</description>
-        </inventoryObject>
-        <inventoryObject id="key_sh6">
-            <name>Key</name>
-            <id>key_sh6</id>
-            <token>k0</token>
-            <areaName>Spawn_6</areaName>
-            <size>1</size>
-            <pos>
-                <x>5</x>
-                <y>2</y>
-            </pos>
-            <description> The key for Spawn_6 room</description>
-        </inventoryObject>
-        <inventoryObject id="testBox">
-            <name>Box</name>
-            <id>testBox</id>
-            <token>b0</token>
-            <areaName>Spawn_6</areaName>
-            <size>5</size>
-            <pos>
-                <x>6</x>
-                <y>3</y>
-            </pos>
-            <description> A box that you can put stuff in.</description>
         </inventoryObject>
     </room>
 </game>
