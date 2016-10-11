@@ -138,7 +138,7 @@ public class PlayerThread extends Thread {
 				this.game.movePlayer(game.getPlayer(playerName), nextToken);
 
 			} else if (nextToken.equals("ACTION")) {
-				this.game.processAction(playerName); //
+				this.game.processAction(playerName); 
 
 			} else if (nextToken.equals("DROP")) {
 				this.game.processDrop(playerName, scan.next());

@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import javax.imageio.ImageIO;
@@ -146,11 +147,12 @@ public class JoinServerPanel extends JPanel {
 				try {
 					//Create a client if we haven't already.
 					if (client == null) {
-
-						Socket s = new Socket(ipAddress, port);
+						int timeout = 5000;
+						InetSocketAddress inetAddress = new InetSocketAddress(ipAddress, port);
+//						Socket s = new Socket(ipAddress, port);
+						Socket s = new Socket();
+						s.connect(inetAddress,timeout);
 						updateServerStatusField("Socket created.");
-
-						//FIXME: DISPLAY THAT SERVER IS FULL ON CLIENT SIDE.
 
 						client = new Client(playerName, s, JoinServerPanel.this);
 						client.start();
@@ -161,6 +163,7 @@ public class JoinServerPanel extends JPanel {
 
 				} catch (IOException e) {
 					updateServerStatusField("Failed to connect to server.");
+
 				}
 			}
 		});
