@@ -274,7 +274,7 @@ public class Parser {
 		saveNonHumans(currentArea, roomNode);	//save all the NonHumanPlayers in the room and append it to the roomNode
 		saveInventoryGameObjects(currentArea, roomNode);	//save all the inventoryGOs in the room and append it to the roomNode
 		saveFixedContainers(currentArea, roomNode);		//save all the fixedContainerGOs in the room and append it o the roomNode
-		saveFillContainers(currentArea, roomNode);	//fill all the containers in the room
+		
 				
 		return roomNode;	//return the roomNode with all its children to be appended to the root
 	}
@@ -344,10 +344,7 @@ public class Parser {
 		Element player = save.createElement("player");		//create an element to represent the player who saved the Game
 		player.appendChild(saveName(saver));		//save the name and append it to the playerNode
 		player.appendChild(saveAreaName(saver));		//save the areaName and append it to the playerNode
-		//player.appendChild(saveSpawnName(saver)); 	//save the spawnName and append it to the playerNode
 		player.appendChild(savePosition(saver));		//save the Position and append it to the playerNode
-		//player.appendChild(saveInventory(saver));		//save the inventory and append it to the playerNode
-		//player.appendChild(saveDirection(saver));		//save the direction and append it to the playerNode
 		player.appendChild(saveToken(saver));		//save the token and append it to the playerNode
 		player.appendChild(saveDescription(saver));		//save the description and append it to the playerNode
 	
@@ -545,97 +542,138 @@ public class Parser {
 	/**
 	 * Save the "A side" token of the door.
 	 * 
-     * @param door -- the DoorGO whose side is required
-	 * @return sideB -- the Node containing the DoorGOs sideAToken
+     * @param door -- the DoorGO whose token is required
+	 * @return tokenA -- the Node containing the DoorGOs sideAToken
 	 */
 	public Element saveTokenA(DoorGO door){
-		Element tokenA = save.createElement("tokenA");		//
-		Text value = save.createTextNode(door.getTokenA());
-		tokenA.appendChild(value);
-		return tokenA;
+		Element tokenA = save.createElement("tokenA");		//create a node
+		Text value = save.createTextNode(door.getTokenA());		//create a node to hold the value
+		tokenA.appendChild(value);		//append the two Nodes
+		return tokenA;		//return the final Node
 	}
 	
+	/**
+	 * Save the "B side" token of the door.
+	 * 
+     * @param door -- the DoorGO whose token is required
+	 * @return tokenB -- the Node containing the DoorGOs sideBToken
+	 */
 	public Element saveTokenB(DoorGO door){
-		Element tokenB = save.createElement("tokenB");
-		Text value = save.createTextNode(door.getTokenB());
-		tokenB.appendChild(value);
-		return tokenB;
+		Element tokenB = save.createElement("tokenB");	//create a node
+		Text value = save.createTextNode(door.getTokenB());		//create a node to hold the value
+		tokenB.appendChild(value);		//append the final Node
+		return tokenB;		//return the final Node
 	}
 	
+	/**
+	 * Save the "A side" position of the door.
+	 * 
+     * @param door -- the DoorGO whose position is required
+	 * @return sideAPos -- the Node containing the DoorGOs sideAPosition
+	 */
 	public Element saveSideAPos(DoorGO door){
-		Element sideAPos = save.createElement("sideAPos");
-		Element x = save.createElement("x");
-		Element y = save.createElement("y");
-		x.appendChild(save.createTextNode("" + door.getSideAPos().getPosX()));
-		y.appendChild(save.createTextNode("" + door.getSideAPos().getPosY()));
-		sideAPos.appendChild(x);
-		sideAPos.appendChild(y);
-		return sideAPos;
+		Element sideAPos = save.createElement("sideAPos");	//create a node for the Position
+		Element x = save.createElement("x");		//create a node for x
+		Element y = save.createElement("y");		//create a node for y
+		x.appendChild(save.createTextNode("" + door.getSideAPos().getPosX())); //find and append the value for x
+		y.appendChild(save.createTextNode("" + door.getSideAPos().getPosY())); //find and append the value for y
+		sideAPos.appendChild(x);	//append x to Position
+		sideAPos.appendChild(y);	//append y to Position
+		return sideAPos;		//return the final Node
 	}
 	
+	/**
+	 * Save the "B side" position of the door.
+	 * 
+     * @param door -- the DoorGO whose position is required
+	 * @return sideBPos -- the Node containing the DoorGOs sideBPosition
+	 */
 	public Element saveSideBPos(DoorGO door){
-		Element sideBPos = save.createElement("sideBPos");
-		Element x = save.createElement("x");
-		Element y = save.createElement("y");
-		x.appendChild(save.createTextNode("" + door.getSideBPos().getPosX()));
-		y.appendChild(save.createTextNode("" + door.getSideBPos().getPosY()));
-		sideBPos.appendChild(x);
-		sideBPos.appendChild(y);
-		return sideBPos;
+		Element sideBPos = save.createElement("sideBPos");	//create a node for the Position
+		Element x = save.createElement("x");		//create a node for x
+		Element y = save.createElement("y");		//create a node for y
+		x.appendChild(save.createTextNode("" + door.getSideBPos().getPosX())); //find and append the value for x
+		y.appendChild(save.createTextNode("" + door.getSideBPos().getPosY())); //find and append the value for y
+		sideBPos.appendChild(x);	//append x to Position
+		sideBPos.appendChild(y);	//append y to Position
+		return sideBPos;	//return the final Node
 	}
 	
+	/**
+	 * Save the "A side" entry position of the door.
+	 * 
+     * @param door -- the DoorGO whose position is required
+	 * @return sideAEntryPos -- the Node containing the DoorGOs sideAEntryPosition
+	 */
 	public Element saveSideAEntryPos(DoorGO door){
-		Element sideAEntryPos = save.createElement("sideAEntryPos");
-		Element x = save.createElement("x");
-		Element y = save.createElement("y");
-		x.appendChild(save.createTextNode("" + door.getSideAEntryPos().getPosX()));
-		y.appendChild(save.createTextNode("" + door.getSideAEntryPos().getPosY()));
-		sideAEntryPos.appendChild(x);
-		sideAEntryPos.appendChild(y);
-		return sideAEntryPos;
+		Element sideAEntryPos = save.createElement("sideAEntryPos");	//create a node for the Position
+		Element x = save.createElement("x");	//create a node for x
+		Element y = save.createElement("y");	//create a node for y
+		x.appendChild(save.createTextNode("" + door.getSideAEntryPos().getPosX()));	//find and append value for x
+		y.appendChild(save.createTextNode("" + door.getSideAEntryPos().getPosY()));	//find and append value for y
+		sideAEntryPos.appendChild(x);	//append x to position
+		sideAEntryPos.appendChild(y);	//append y to position
+		return sideAEntryPos;	//return final Node
 	}
 	
+	/**
+	 * Save the "B side" entry position of the door.
+	 * 
+     * @param door -- the DoorGO whose position is required
+	 * @return sideBEntryPos -- the Node containing the DoorGOs sideBEntryPosition
+	 */
 	public Element saveSideBEntryPos(DoorGO door){
-		Element sideBEntryPos = save.createElement("sideBEntryPos");
-		Element x = save.createElement("x");
-		Element y = save.createElement("y");
-		x.appendChild(save.createTextNode("" + door.getSideBEntryPos().getPosX()));
-		y.appendChild(save.createTextNode("" + door.getSideBEntryPos().getPosY()));
-		sideBEntryPos.appendChild(x);
-		sideBEntryPos.appendChild(y);
-		return sideBEntryPos;
+		Element sideBEntryPos = save.createElement("sideBEntryPos");	//create a node for the Position
+		Element x = save.createElement("x");	//create a node for x
+		Element y = save.createElement("y");	//create a node for y
+		x.appendChild(save.createTextNode("" + door.getSideBEntryPos().getPosX()));	//find and append value for x
+		y.appendChild(save.createTextNode("" + door.getSideBEntryPos().getPosY()));	//find and append value for y
+		sideBEntryPos.appendChild(x);	//append x to position
+		sideBEntryPos.appendChild(y);	//append y to position
+		return sideBEntryPos;	//return final Node
 	}
 	
-	
+	/**
+	 * Saves the Base GameObject that the current MarkerGO is surrounding.
+	 * 
+	 * @param occupant -- the MarkerGO whose base is being saved
+	 * @return base -- the Node containing the Base GameObject
+	 */
 	public Element saveBaseGameObject(GameObject occupant){
 		
-		Element base = save.createElement("base");
-		GameObject baseObject = ((MarkerGO)occupant).getBaseGO();
-		base.setAttribute("objectType", baseObject.getClass().toString().substring(11));
+		Element base = save.createElement("base");	//create a node
+		GameObject baseObject = ((MarkerGO)occupant).getBaseGO();	//create a node for the value
+		base.setAttribute("objectType", baseObject.getClass().toString().substring(11)); //set an attribute for the type of the BaseGO
+																					//format the string
 		
-		if(baseObject instanceof FixedGO){
-			base.appendChild(saveID(baseObject));
+		if(baseObject instanceof FixedGO){			//base should always be FixedGO
+			base.appendChild(saveID(baseObject));	//save the fields for the Base and append them to the base Node
 			base.appendChild(saveToken(baseObject));
 			base.appendChild(savePosition(baseObject));
 			base.appendChild(saveDescription(baseObject));
 		}
 		
-		return base;
+		return base; //return the base GameObject
 		
 	}
 	
+	/**
+	 * Saves the contents of the FixedContainerGO
+	 * 
+	 * @param occupant -- GameObject that is on the current Tile
+	 * @return contents -- Element that has all inventory items and their fields as its children
+	 */
 	public Element saveContents(GameObject occupant){
-		Text value = save.createTextNode("");
-		Element contents = save.createElement("contents");
+		Element contents = save.createElement("contents");		//create a node for the contents
 		
-		List<InventoryGO> items = ((FixedContainerGO) occupant).getAllItems();
-		for (InventoryGO i : items){
-			Element item = save.createElement("item");
-			item.setAttribute("objectType", i.getClass().toString());
-			if(i instanceof ContainerGO){
-				contents.appendChild(saveSizeRemaining(i));
+		List<InventoryGO> items = ((FixedContainerGO) occupant).getAllItems(); //make a list of all the items in the container
+		for (InventoryGO i : items){	//iterate through
+			Element item = save.createElement("item");	//make a node to represent a item
+			item.setAttribute("objectType", i.getClass().toString()); //mark it wit its class as an attribute
+			if(i instanceof ContainerGO){		//if item is another container
+				contents.appendChild(saveSizeRemaining(i));	//save its extra field
 			}
-			item.appendChild(saveName(i));
+			item.appendChild(saveName(i));	//save fields for the item and append them to the item node
 			item.appendChild(saveID(i));
 			item.appendChild(saveToken(i));
 			item.appendChild(saveSize(i));
@@ -643,100 +681,134 @@ public class Parser {
 			item.appendChild(savePosition(i));
 			item.appendChild(saveDescription(i));
 			
-			contents.appendChild(item);			
+			contents.appendChild(item);			//append the current item to the contents Node
 		}
 		
-		return contents;
+		return contents; //after all the items are saved, return the contents
 		
 	}
 	
+	/**
+	 * Saves the field "size remaining" for containerGOs and FixedContainerGOs
+	 * 
+	 * @param container -- GameObject whose sizeRemaining is to be found
+	 * @return sizeRemaing -- Node holding the value of sizeRemaining
+	 */
 	public Element saveSizeRemaining(GameObject container){
-		Text value = save.createTextNode("");
-		Element sizeRemaining = save.createElement("sizeRemaining");
+		Text value = save.createTextNode("");	//initialize value node
+		Element sizeRemaining = save.createElement("sizeRemaining"); //create a node to identify the value
 		
 		if(container instanceof ContainerGO){
-			value = save.createTextNode("" + ((ContainerGO)container).getSizeRemaining());
-			sizeRemaining.appendChild(value);
-		}else if(container instanceof FixedContainerGO){
-			value = save.createTextNode("" + ((FixedContainerGO)container).getSizeRemaining());
-			sizeRemaining.appendChild(value);
+			value = save.createTextNode("" + ((ContainerGO)container).getSizeRemaining()); //cast to the appropriate Object, get value
+			sizeRemaining.appendChild(value); //append value
+		}else if(container instanceof FixedContainerGO){ 
+			value = save.createTextNode("" + ((FixedContainerGO)container).getSizeRemaining()); //cast to the appropriate Object, get value
+			sizeRemaining.appendChild(value); //appendValue
 		}
 		
-		return sizeRemaining;
+		return sizeRemaining;	//return final Node
 	}
 	
+	/**
+	 * Saves the field "name" to a Node
+	 * @param occupant -- the GameObject whose name is required
+	 * @return name -- the Node containing the name
+	 */
 	public Element saveName(GameObject occupant){
-		Text value = save.createTextNode("");
-		Element name = save.createElement("name");
+		Text value = save.createTextNode("");	//initialize
+		Element name = save.createElement("name");	//create a node to identify the Node
 		if(occupant instanceof InventoryGO){
-			value = save.createTextNode(((InventoryGO) occupant).getName());
+			value = save.createTextNode(((InventoryGO) occupant).getName());	//cast to the appropriate Object, get value
 		} else if(occupant instanceof NonHumanPlayer){
-			value = save.createTextNode(((NonHumanPlayer) occupant).getPlayerName());
+			value = save.createTextNode(((NonHumanPlayer) occupant).getPlayerName());//cast to the appropriate Object, get value
 		} else if(occupant instanceof FixedContainerGO){
-			value = save.createTextNode(((FixedContainerGO) occupant).getName());
+			value = save.createTextNode(((FixedContainerGO) occupant).getName());//cast to the appropriate Object, get value
 		} else if(occupant instanceof Player){
-			value = save.createTextNode(((Player) occupant).getPlayerName());
+			value = save.createTextNode(((Player) occupant).getPlayerName());//cast to the appropriate Object, get value
 		}
 		
-		name.appendChild(value);
-		return name;
+		name.appendChild(value);	//append value
+		return name;	//return final Node
 	}
 	
+	/**
+	 * Saves the field "id" to a Node
+	 * 
+	 * @param occupant -- the GameObject whose id is required
+	 * @return id -- the Node containing the id
+	 */
 	public Element saveID(GameObject occupant){
-		Text value = save.createTextNode("");
-		Element id = save.createElement("id");
+		Text value = save.createTextNode("");	//initialize
+		Element id = save.createElement("id");	//create a node to identify the value
 		if(occupant instanceof InventoryGO){
-			value = save.createTextNode(((InventoryGO) occupant).getId());
+			value = save.createTextNode(((InventoryGO) occupant).getId()); //cast to the appropriate Object, get value
 		}else if(occupant instanceof FixedGO){
-			value = save.createTextNode(((FixedGO) occupant).getId());
+			value = save.createTextNode(((FixedGO) occupant).getId());//cast to the appropriate Object, get value
 		}else if(occupant instanceof FixedContainerGO){
-			value = save.createTextNode(((FixedContainerGO) occupant).getId());
+			value = save.createTextNode(((FixedContainerGO) occupant).getId());//cast to the appropriate Object, get value
 		}else if(occupant instanceof MovableGO){
-			value = save.createTextNode(((MovableGO) occupant).getId());
+			value = save.createTextNode(((MovableGO) occupant).getId());//cast to the appropriate Object, get value
 		}
-		id.appendChild(value);
-		return id;
+		id.appendChild(value); //append value
+		return id;	//return final Node
 	}
 	
+	/**
+	 * Saves the field "keyID" to a Node
+	 * 
+	 * @param occupant -- the GameObject whose keyId is required
+	 * @return keyID -- the Node containing the keyID
+	 */
 	public Element saveKeyID(GameObject occupant){
-		Text value = save.createTextNode("");
-		Element keyID = save.createElement("id");
+		Text value = save.createTextNode("");	//initialize
+		Element keyID = save.createElement("id");	//create a node to identify the value
 		if(occupant instanceof FixedContainerGO){
 			if(((FixedContainerGO) occupant).getKeyID() == null){
-				value = save.createTextNode("null");
+				value = save.createTextNode("null"); //if a fixedContainer has null key ID, it is unlocked
 			}else{
-				value = save.createTextNode(((FixedContainerGO) occupant).getKeyID());
+				value = save.createTextNode(((FixedContainerGO) occupant).getKeyID()); //cast to the appropriate Object, get value
 			}
 			
 		}
-		keyID.appendChild(value);
-		return keyID;
+		keyID.appendChild(value); //append value
+		return keyID; //return final Node
 	}
 	
+	/**
+	 * Saves the field "position" to a Node
+	 * 
+	 * @param currentTile -- the Tile whose position is required
+	 * @return pos -- the Node containing the Position
+	 */
 	public Element savePosition(Tile currentTile){
-		Element pos = save.createElement("pos");
-		Element x = save.createElement("x");
-		x.appendChild(save.createTextNode("" + currentTile.getPosition().getPosX()));
-		Element y = save.createElement("y");
-		y.appendChild(save.createTextNode("" + currentTile.getPosition().getPosY()));
+		Element pos = save.createElement("pos");	//create a node to identify the position
+		Element x = save.createElement("x");	//create a node for x
+		x.appendChild(save.createTextNode("" + currentTile.getPosition().getPosX())); //find and append x
+		Element y = save.createElement("y");	//create a node for y
+		y.appendChild(save.createTextNode("" + currentTile.getPosition().getPosY())); //find and append y
 		
-		pos.appendChild(x);
-		pos.appendChild(y);
+		pos.appendChild(x);	//append x
+		pos.appendChild(y);	//append y
 		
-		return pos;
+		return pos;	//return final Node
 	}
 	
+	/**
+	 * Saves the field "position" to a Node
+	 * @param occupant -- the GameObject whose position is required
+	 * @return pos -- the Node containing the Position
+	 */
 	public Element savePosition(GameObject occupant){
-		Element pos = save.createElement("pos");
-		Element x = save.createElement("x");
-		Element y = save.createElement("y");
-		Text xVal = save.createTextNode("" + occupant.getPosition().getPosX());
-		Text yVal = save.createTextNode("" + occupant.getPosition().getPosY());
-		x.appendChild(xVal);
-		y.appendChild(yVal);
-		pos.appendChild(x);
-		pos.appendChild(y);
-		return pos;
+		Element pos = save.createElement("pos"); //create a node to identify the position
+		Element x = save.createElement("x");	//create a node for x
+		Element y = save.createElement("y");	//create a node for y
+		Text xVal = save.createTextNode("" + occupant.getPosition().getPosX());	//find x
+		Text yVal = save.createTextNode("" + occupant.getPosition().getPosY());	//find y
+		x.appendChild(xVal); //append xVal
+		y.appendChild(yVal); //append yVal
+		pos.appendChild(x);  //append x
+		pos.appendChild(y);	 //append y
+		return pos;		//return final Node
 	}
 	
 	public Element saveToken(GameObject occupant){
