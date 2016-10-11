@@ -14,12 +14,13 @@ import javax.swing.JPanel;
 
 /**
  * A simple panel containing arrows that allow the user to control the inventory panel
- * 
+ *
  * @author Andy
  *
  */
 public class ScrollInvPanel extends JPanel{
 	//references to other panels
+	private GameFrame home;
 	private InventoryPanel invPanel;
 	private UIImageMap imageMap;
 	//icons for buttons
@@ -30,16 +31,17 @@ public class ScrollInvPanel extends JPanel{
 	private JLabel up;
 	private JLabel down;
 
-	public ScrollInvPanel(InventoryPanel invPanel, UIImageMap imageMap){
+	public ScrollInvPanel(GameFrame home, InventoryPanel invPanel, UIImageMap imageMap){
 		super(new BorderLayout());
+		this.home = home;
 		//sets inventory panel
 		this.invPanel = invPanel;
 		//sets image map
 		this.imageMap = imageMap;
-		
+
 		//allignment of buttons
 		JPanel fit = new JPanel(new FlowLayout());
-		
+
 		fit.setOpaque(false);
 		fit.setPreferredSize(new Dimension(40, 100));
 		//sets icons for the buttons
@@ -54,7 +56,7 @@ public class ScrollInvPanel extends JPanel{
 		//adds mouse listeners
 		up.addMouseListener(listen);
 		down.addMouseListener(listen);
-		
+
 		//adds buttons to panel
 		fit.add(up);
 		fit.add(down);
@@ -78,38 +80,42 @@ public class ScrollInvPanel extends JPanel{
 
 	/**
 	 * This is the buttonListener for the ScrollInvPanel
-	 * 
+	 *
 	 * @author Andy
 	 *
 	 */
 	private class ButtonListen implements MouseListener{
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if(e.getSource() == up){ //up has been pressed
-				invPanel.upOne();
-			} else { //down game has been pressed
-				invPanel.downOne();
+			if(home.getInteract()){
+				if(e.getSource() == up){ //up has been pressed
+					invPanel.upOne();
+				} else { //down game has been pressed
+					invPanel.downOne();
+				}
 			}
 		}
 
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			if(e.getSource() == up){ //up is highlighted
-				up.setIcon(icons[1]);
-			} else { //down  is highlighted
-				down.setIcon(icons[3]);
+			if(home.getInteract()){
+				if(e.getSource() == up){ //up is highlighted
+					up.setIcon(icons[1]);
+				} else { //down  is highlighted
+					down.setIcon(icons[3]);
+				}
 			}
-
 		}
 		@Override
 		public void mouseExited(MouseEvent e) {
-			if(e.getSource() == up){ //up is unhighlighted
-				up.setIcon(icons[0]);
-			} else { //down is highlighted
-				down.setIcon(icons[2]);
+			if(home.getInteract()){
+				if(e.getSource() == up){ //up is unhighlighted
+					up.setIcon(icons[0]);
+				} else { //down is highlighted
+					down.setIcon(icons[2]);
+				}
 			}
-
 		}
 
 		@Override

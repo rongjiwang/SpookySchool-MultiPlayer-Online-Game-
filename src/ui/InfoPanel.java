@@ -34,8 +34,9 @@ public class InfoPanel extends JPanel{
 	private ImageIcon[] icons;
 	//OK button
 	private JLabel ok;
-	//textpane
+	//textpane and storage Panel
 	private JTextPane infoTest;
+	private JPanel textPanel;
 	//button listener
 	private ButtonListen listen;
 
@@ -53,6 +54,10 @@ public class InfoPanel extends JPanel{
 		setIcons();
 		//creates new textpane to display information
 		infoTest = new JTextPane();
+		infoTest.setBackground(new Color(0,0,0,0));
+		textPanel = new JPanel();
+		textPanel.add(infoTest);
+		textPanel.setOpaque(true);
 
 		//assigns custom font to the textpane
 		try {
@@ -74,9 +79,13 @@ public class InfoPanel extends JPanel{
 		ok.addMouseListener(listen);
 		this.setOpaque(false);
 		//adds text to panel
-		this.add(infoTest, BorderLayout.NORTH);
+
+		JPanel storePanels = new JPanel(new BorderLayout());
+		storePanels.setOpaque(false);
+		storePanels.add(new UIPanel(textPanel, 400, 400, imageMap), BorderLayout.NORTH);
 		//adds ok button to panel
-		this.add(ok, BorderLayout.WEST);
+		storePanels.add(ok, BorderLayout.WEST);
+		this.add(storePanels);
 	}
 
 	/**
@@ -129,6 +138,7 @@ public class InfoPanel extends JPanel{
 	public void paintComponent(Graphics gr) {
 		super.paintComponent(gr);//makes sure MyGlass's widgets are drawn automatically
 		gr.drawImage(background, 0, 0, null);
+
 	}
 
 	/**
@@ -141,8 +151,10 @@ public class InfoPanel extends JPanel{
 
 		@Override
 		public void mouseClicked(MouseEvent e) { //if user clicks the button
-			if(e.getSource() == ok)
+			if(e.getSource() == ok){
+				home.toggleButtons();
 				setVisible(false); //hide panel
+			}
 		}
 
 

@@ -25,7 +25,7 @@ import network.Client;
 public class GameFrame extends JFrame implements WindowListener {
 	//main display penels
 	//Main Panel
-	private JPanel mainPanel;
+	private MainPanel mainPanel;
 	//Info Panel
 	private InfoPanel infoPanel;
 	//Inventory Panel
@@ -48,9 +48,11 @@ public class GameFrame extends JFrame implements WindowListener {
 	//Overlay Panel
 	private OverlayPanel overlayPanel;
 
+	private boolean interact;
+
 	public GameFrame(String title, Client client, String name) {
 		super(title); // Set window title.
-
+		this.interact = true;
 		//Creates both image maps
 		this.imageMap = new UIImageMap();
 		this.spriteMap = new SpriteMap();
@@ -68,7 +70,7 @@ public class GameFrame extends JFrame implements WindowListener {
 		this.areaDisplayPanel.setOverLay(this.overlayPanel); //assigns overlay to renderer
 		this.infoPanel = new InfoPanel(getContentPane(), this, imageMap); //InfoPanel
 		this.buttons = new ButtonPanel(this, this.client, imageMap); //button panel
-		this.invPanel = new InventoryPanel(this.imageMap, this.client, this.overlayPanel); //inventory panel
+		this.invPanel = new InventoryPanel(this, this.imageMap, this.client, this.overlayPanel); //inventory panel
 		this.chatPanel = new ChatPanel(this, this.name, this.client, this.imageMap);//chat panel
 
 		//adds all panels to the main Panel;
@@ -93,9 +95,22 @@ public class GameFrame extends JFrame implements WindowListener {
 
 		//Display the window
 		this.setVisible(true);
-		
+
 	}
 
+	/**
+	 * Getter for interact boolean
+	 */
+	public boolean getInteract(){
+		return this.interact;
+	}
+
+	/**
+	 * Toggles if panel interaction is on or off
+	 */
+	public void toggleButtons(){
+		this.interact = !this.interact;
+	}
 
 	/**
 	 * Refocuses on the area display panel

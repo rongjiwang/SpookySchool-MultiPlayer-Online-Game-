@@ -61,6 +61,9 @@ public class ChatPanel extends JPanel{
 	private ButtonListen listen;
 	private KeyListen keyListen;
 
+	//button interaction
+	private boolean interact;
+
 	public ChatPanel(GameFrame display, String playerName, Client client, UIImageMap imageMap) {
 		super(new BorderLayout());
 
@@ -205,17 +208,19 @@ public class ChatPanel extends JPanel{
 	private class KeyListen implements KeyListener{
 		@Override
 		public void keyPressed(KeyEvent e) { //if Key is pressed
-			if(e.getKeyCode() == KeyEvent.VK_ENTER){ //if key is Enter
-				if (typeArea.getText().length() < 1) { //check that an actual message has been entered
-					// do nothing if empty
-				} else {
-					String chat = "CHAT :  " + typeArea.getText(); //gets text from message area
-					typeArea.setText(""); //removes text from message area
-					getClient().sendCommand(chat); //sends Chat command to client with text
+			if(home.getInteract()){
+				if(e.getKeyCode() == KeyEvent.VK_ENTER){ //if key is Enter
+					if (typeArea.getText().length() < 1) { //check that an actual message has been entered
+						// do nothing if empty
+					} else {
+						String chat = "CHAT :  " + typeArea.getText(); //gets text from message area
+						typeArea.setText(""); //removes text from message area
+						getClient().sendCommand(chat); //sends Chat command to client with text
+					}
+					home.refocus(); //refocuses on AreaDisplay Panel
+				} else if(e.getKeyCode() == KeyEvent.VK_ESCAPE){ //if user presses escape
+					home.refocus(); //refocuses on AreaDisplayPanel
 				}
-				home.refocus(); //refocuses on AreaDisplay Panel
-			} else if(e.getKeyCode() == KeyEvent.VK_ESCAPE){ //if user presses escape
-				home.refocus(); //refocuses on AreaDisplayPanel
 			}
 		}
 
@@ -238,25 +243,29 @@ public class ChatPanel extends JPanel{
 
 		@Override
 		public void mouseClicked(MouseEvent e) { //if user clicks send
-			if (typeArea.getText().length() < 1) { //check that an actual message has been entered
-				// do nothing if empty
-			} else {
-				String chat = "CHAT :  " + typeArea.getText(); //gets text from message area
-				typeArea.setText("");//removes text from message area
-				getClient().sendCommand(chat);//sends Chat command to client with text
+			if(home.getInteract()){
+				if (typeArea.getText().length() < 1) { //check that an actual message has been entered
+					// do nothing if empty
+				} else {
+					String chat = "CHAT :  " + typeArea.getText(); //gets text from message area
+					typeArea.setText("");//removes text from message area
+					getClient().sendCommand(chat);//sends Chat command to client with text
+				}
+				home.refocus(); //refocuses on AreaDisplay Panel
 			}
-			home.refocus(); //refocuses on AreaDisplay Panel
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) { //if User highlights Send Button
-			sendButton.setIcon(send[1]); //changes icon to highlighted
+			if(home.getInteract())
+				sendButton.setIcon(send[1]); //changes icon to highlighted
 
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) { //if user unhighlights Send Button
-			sendButton.setIcon(send[0]); //changes icon to unhighlighted
+			if(home.getInteract())
+				sendButton.setIcon(send[0]); //changes icon to unhighlighted
 		}
 
 		//UNUSED
