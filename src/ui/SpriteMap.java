@@ -286,24 +286,24 @@ public class SpriteMap {
 
 		// Pondy
 		spriteMap.put("P00", loadImage("pondy00.png"));
-		//spriteMap.put("0p01", loadImage("0player01.png"));
-		//spriteMap.put("0p02", loadImage("0player02.png"));
-		//spriteMap.put("0p03", loadImage("0player03.png"));
+		spriteMap.put("P01", loadImage("pondy01.png"));
+		spriteMap.put("P02", loadImage("pondy02.png"));
+		spriteMap.put("P03", loadImage("pondy03.png"));
 
 		spriteMap.put("P10", loadImage("pondy10.png"));
-		//spriteMap.put("0p11", loadImage("0player11.png"));
-		//spriteMap.put("0p12", loadImage("0player12.png"));
-		//spriteMap.put("0p13", loadImage("0player13.png"));
+		spriteMap.put("P11", loadImage("pondy11.png"));
+		spriteMap.put("P12", loadImage("pondy12.png"));
+		spriteMap.put("P13", loadImage("pondy13.png"));
 
 		spriteMap.put("P20", loadImage("pondy20.png"));
-		//spriteMap.put("0p21", loadImage("0player21.png"));
-		//spriteMap.put("0p22", loadImage("0player22.png"));
-		//spriteMap.put("0p23", loadImage("0player23.png"));
+		spriteMap.put("P21", loadImage("pondy21.png"));
+		spriteMap.put("P22", loadImage("pondy22.png"));
+		spriteMap.put("P23", loadImage("pondy23.png"));
 
 		spriteMap.put("P30", loadImage("pondy30.png"));
-		//spriteMap.put("0p31", loadImage("0player31.png"));
-		//spriteMap.put("0p32", loadImage("0player32.png"));
-		//spriteMap.put("0p33", loadImage("0player33.png"));
+		spriteMap.put("P31", loadImage("pondy31.png"));
+		spriteMap.put("P32", loadImage("pondy32.png"));
+		spriteMap.put("P33", loadImage("pondy33.png"));
 
 		// player 0
 
