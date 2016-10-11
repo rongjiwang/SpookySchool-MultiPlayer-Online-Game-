@@ -304,88 +304,87 @@ public class SpriteMap {
 
 		// player 0
 
-		spriteMap.put("0p00", loadImage("0player00.png"));
-		spriteMap.put("0p01", loadImage("0player01.png"));
-		spriteMap.put("0p02", loadImage("0player02.png"));
-		spriteMap.put("0p03", loadImage("0player03.png"));
+		spriteMap.put("0p00", loadImage("0Player00.png"));
+		spriteMap.put("0p01", loadImage("0Player01.png"));
+		spriteMap.put("0p02", loadImage("0Player02.png"));
+		spriteMap.put("0p03", loadImage("0Player03.png"));
 
-		spriteMap.put("0p10", loadImage("0player10.png"));
-		spriteMap.put("0p11", loadImage("0player11.png"));
-		spriteMap.put("0p12", loadImage("0player12.png"));
-		spriteMap.put("0p13", loadImage("0player13.png"));
+		spriteMap.put("0p10", loadImage("0Player10.png"));
+		spriteMap.put("0p11", loadImage("0Player11.png"));
+		spriteMap.put("0p12", loadImage("0Player12.png"));
+		spriteMap.put("0p13", loadImage("0Player13.png"));
 
-		spriteMap.put("0p20", loadImage("0player20.png"));
-		spriteMap.put("0p21", loadImage("0player21.png"));
-		spriteMap.put("0p22", loadImage("0player22.png"));
-		spriteMap.put("0p23", loadImage("0player23.png"));
+		spriteMap.put("0p20", loadImage("0Player20.png"));
+		spriteMap.put("0p21", loadImage("0Player21.png"));
+		spriteMap.put("0p22", loadImage("0Player22.png"));
+		spriteMap.put("0p23", loadImage("0Player23.png"));
 
-		spriteMap.put("0p30", loadImage("0player30.png"));
-		spriteMap.put("0p31", loadImage("0player31.png"));
-		spriteMap.put("0p32", loadImage("0player32.png"));
-		spriteMap.put("0p33", loadImage("0player33.png"));
+		spriteMap.put("0p30", loadImage("0Player30.png"));
+		spriteMap.put("0p31", loadImage("0Player31.png"));
+		spriteMap.put("0p32", loadImage("0Player32.png"));
+		spriteMap.put("0p33", loadImage("0Player33.png"));
 
-		// player 1
-		spriteMap.put("1p00", loadImage("1player00.png"));
-		spriteMap.put("1p01", loadImage("1player01.png"));
-		spriteMap.put("1p02", loadImage("1player02.png"));
-		spriteMap.put("1p03", loadImage("1player03.png"));
+		// player 
+		spriteMap.put("1p00", loadImage("1Player00.png"));
+		spriteMap.put("1p01", loadImage("1Player01.png"));
+		spriteMap.put("1p02", loadImage("1Player02.png"));
+		spriteMap.put("1p03", loadImage("1Player03.png"));
 
-		spriteMap.put("1p10", loadImage("1player10.png"));
-		spriteMap.put("1p11", loadImage("1player11.png"));
-		spriteMap.put("1p12", loadImage("1player12.png"));
-		spriteMap.put("1p13", loadImage("1player13.png"));
+		spriteMap.put("1p10", loadImage("1Player10.png"));
+		spriteMap.put("1p11", loadImage("1Player11.png"));
+		spriteMap.put("1p12", loadImage("1Player12.png"));
+		spriteMap.put("1p13", loadImage("1Player13.png"));
 
-		spriteMap.put("1p20", loadImage("1player20.png"));
-		spriteMap.put("1p21", loadImage("1player21.png"));
-		spriteMap.put("1p22", loadImage("1player22.png"));
-		spriteMap.put("1p23", loadImage("1player23.png"));
+		spriteMap.put("1p20", loadImage("1Player20.png"));
+		spriteMap.put("1p21", loadImage("1Player21.png"));
+		spriteMap.put("1p22", loadImage("1Player22.png"));
+		spriteMap.put("1p23", loadImage("1Player23.png"));
 
-		spriteMap.put("1p30", loadImage("1player30.png"));
-		spriteMap.put("1p31", loadImage("1player31.png"));
-		spriteMap.put("1p32", loadImage("1player32.png"));
-		spriteMap.put("1p33", loadImage("1player33.png"));
-
-		// player 2
-		spriteMap.put("2p00", loadImage("2player00.png"));
-		spriteMap.put("2p01", loadImage("2player01.png"));
-		spriteMap.put("2p02", loadImage("2player02.png"));
-		spriteMap.put("2p03", loadImage("2player03.png"));
-
-		spriteMap.put("2p10", loadImage("2player10.png"));
-		spriteMap.put("2p11", loadImage("2player11.png"));
-		spriteMap.put("2p12", loadImage("2player12.png"));
-		spriteMap.put("2p13", loadImage("2player13.png"));
-
-		spriteMap.put("2p20", loadImage("2player20.png"));
-		spriteMap.put("2p21", loadImage("2player21.png"));
-		spriteMap.put("2p22", loadImage("2player22.png"));
-		spriteMap.put("2p23", loadImage("2player23.png"));
-
-		spriteMap.put("2p30", loadImage("2player30.png"));
-		spriteMap.put("2p31", loadImage("2player31.png"));
-		spriteMap.put("2p32", loadImage("2player32.png"));
-		spriteMap.put("2p33", loadImage("2player33.png"));
+		spriteMap.put("1p30", loadImage("1Player30.png"));
+		spriteMap.put("1p31", loadImage("1Player31.png"));
+		spriteMap.put("1p32", loadImage("1Player32.png"));
+		spriteMap.put("1p33", loadImage("1Player33.png"));
 
 		// player 2
-		spriteMap.put("3p00", loadImage("3player00.png"));
-		spriteMap.put("3p01", loadImage("3player01.png"));
-		spriteMap.put("3p02", loadImage("3player02.png"));
-		spriteMap.put("3p03", loadImage("3player03.png"));
+		spriteMap.put("2p00", loadImage("2Player00.png"));
+		spriteMap.put("2p01", loadImage("2Player01.png"));
+		spriteMap.put("2p02", loadImage("2Player02.png"));
+		spriteMap.put("2p03", loadImage("2Player03.png"));
 
-		spriteMap.put("3p10", loadImage("3player10.png"));
-		spriteMap.put("3p11", loadImage("3player11.png"));
-		spriteMap.put("3p12", loadImage("3player12.png"));
-		spriteMap.put("3p13", loadImage("3player13.png"));
+		spriteMap.put("2p10", loadImage("2Player10.png"));
+		spriteMap.put("2p11", loadImage("2Player11.png"));
+		spriteMap.put("2p12", loadImage("2Player12.png"));
+		spriteMap.put("2p13", loadImage("2Player13.png"));
 
-		spriteMap.put("3p20", loadImage("3player20.png"));
-		spriteMap.put("3p21", loadImage("3player21.png"));
-		spriteMap.put("3p22", loadImage("3player22.png"));
-		spriteMap.put("3p23", loadImage("3player23.png"));
+		spriteMap.put("2p20", loadImage("2Player20.png"));
+		spriteMap.put("2p21", loadImage("2Player21.png"));
+		spriteMap.put("2p22", loadImage("2Player22.png"));
+		spriteMap.put("2p23", loadImage("2Player23.png"));
+		
+		spriteMap.put("2p30", loadImage("2Player30.png"));
+		spriteMap.put("2p31", loadImage("2Player31.png"));
+		spriteMap.put("2p32", loadImage("2Player32.png"));
+		spriteMap.put("2p33", loadImage("2Player33.png"));
+		// player 2
+		spriteMap.put("3p00", loadImage("3Player00.png"));
+		spriteMap.put("3p01", loadImage("3Player01.png"));
+		spriteMap.put("3p02", loadImage("3Player02.png"));
+		spriteMap.put("3p03", loadImage("3Player03.png"));
+		
+		spriteMap.put("3p10", loadImage("3Player10.png"));
+		spriteMap.put("3p11", loadImage("3Player11.png"));
+		spriteMap.put("3p12", loadImage("3Player12.png"));
+		spriteMap.put("3p13", loadImage("3Player13.png"));
+		
+		spriteMap.put("3p20", loadImage("3Player20.png"));
+		spriteMap.put("3p21", loadImage("3Player21.png"));
+		spriteMap.put("3p22", loadImage("3Player22.png"));
+		spriteMap.put("3p23", loadImage("3Player23.png"));
 
-		spriteMap.put("3p30", loadImage("3player30.png"));
-		spriteMap.put("3p31", loadImage("3player31.png"));
-		spriteMap.put("3p32", loadImage("3player32.png"));
-		spriteMap.put("3p33", loadImage("3player33.png"));
+		spriteMap.put("3p30", loadImage("3Player30.png"));
+		spriteMap.put("3p31", loadImage("3Player31.png"));
+		spriteMap.put("3p32", loadImage("3Player32.png"));
+		spriteMap.put("3p33", loadImage("3Player33.png"));
 
 		/*       Overlay Window      */
 
@@ -422,8 +421,6 @@ public class SpriteMap {
 		// in a jar or expanded into individual files.
 		java.net.URL imageURL = SpriteMap.class.getResource(IMAGE_PATH + filename);
 		try {
-			System.out.println(filename);
-
 			Image img = ImageIO.read(imageURL);
 			return img;
 		} catch (IOException e) {
