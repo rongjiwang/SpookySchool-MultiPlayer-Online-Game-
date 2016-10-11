@@ -35,7 +35,7 @@ public class CreateServerPanel extends JPanel {
 	private BufferedImage uiBackground;
 	private JTextField serverStatusField;
 	private JTextArea printTextArea;
-	
+
 	private Font customFont;
 
 	public CreateServerPanel(JPanel contentPane) {
@@ -44,7 +44,8 @@ public class CreateServerPanel extends JPanel {
 		this.setBackground(Color.darkGray);
 		try {
 			customFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
-		} catch (Exception e) {}
+		} catch (Exception e) {
+		}
 		this.setupPanel(); //Sets up this panel. Adds various buttons and input fields.
 
 		try {
@@ -61,15 +62,15 @@ public class CreateServerPanel extends JPanel {
 	private void setupPanel() {
 
 		//Server Status field
-		this.serverStatusField = new JTextField("Waiting for Server Creation...", 15);
+		this.serverStatusField = new JTextField(" Waiting for Server Creation...", 15);
 		serverStatusField.setHorizontalAlignment(SwingConstants.CENTER);
 		serverStatusField.setEditable(false);
-		serverStatusField.setBounds(150, 150, 200, 30);
+		serverStatusField.setBounds(100, 150, 300, 30);
 		serverStatusField.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 10f));
 		this.add(serverStatusField);
 
 		//Add print panel.
-		this.printTextArea = new JTextArea("Waiting for Server Creation...", 11, 25);
+		this.printTextArea = new JTextArea("   Waiting for Server Creation...", 15, 35);
 		this.printTextArea.setEditable(false); // set textArea non-editable
 		this.printTextArea.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 10f));
 		JScrollPane scroll = new JScrollPane(this.printTextArea);
@@ -83,7 +84,7 @@ public class CreateServerPanel extends JPanel {
 
 		//port label
 		JLabel portLabel = new JLabel("Create on Port:");
-		portLabel.setForeground(Color.BLACK);
+		portLabel.setForeground(Color.WHITE);
 		portLabel.setFont(new Font("Arial", 1, 15));
 		portLabel.setBounds(100, 420, 200, 30);
 		portLabel.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 12f));
@@ -135,7 +136,7 @@ public class CreateServerPanel extends JPanel {
 	 */
 	public void printToTextPrintArea(String update) {
 		String current = this.printTextArea.getText();
-		this.printTextArea.setText(current + "\n " + update);
+		this.printTextArea.setText(current + "\n    " + update);
 
 	}
 

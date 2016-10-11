@@ -1,6 +1,7 @@
-package game;
+package ui;
 
-import ui.AreaDisplayPanel;
+import game.GameObject;
+import game.Position;
 
 public class AnimationObject {
 
@@ -30,12 +31,8 @@ public class AnimationObject {
 		this.rightFoot = Math.random() < 0.5;
 
 		if (Math.abs(startX - aimX) > 1 || (startY - aimY) > 1) {
-			throw new Error("Only allowed movement of ONE position per animation object!");
+			System.out.println("PC specs too low -> Lag Experienced.");
 		}
-
-		System.out.println(
-				"New Animation: Starting at x: " + this.startX + " y: " + this.startY + " Finishing: x: " + this.aimX
-						+ " y: " + this.aimY + " main player: " + this.mainPlayer + " direction: " + this.direction);
 	}
 
 	public Position getPosition() {

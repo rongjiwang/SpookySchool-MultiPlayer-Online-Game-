@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
-import parser.Parser;
+import parser.Parsernew;
 
 /**
  * This class contains all of the logic Spooky School game. This class controls game state and provides various helper methods
@@ -37,7 +37,7 @@ public class SpookySchool {
 	private List<NonHumanPlayer> nonHumanPlayers = new ArrayList<NonHumanPlayer>();
 
 	//Mainly for XML
-	private Parser parser;
+	private Parsernew parser;
 	private List<MovableGO> movableObjects = new ArrayList<MovableGO>();
 	private List<DoorGO> doorObjects = new ArrayList<DoorGO>();
 	private Map<String, InventoryGO> inventoryObjects = new HashMap<String, InventoryGO>();
@@ -52,7 +52,7 @@ public class SpookySchool {
 		this.loadRemainingGameObjects(); //Load the remaining game objects.
 		this.fillContainers(); //Fill the containers in the rooms.
 
-		this.parser = new Parser();
+		this.parser = new Parsernew();
 
 		//Create a new clock thread and start it. Used for NPCs.
 		Thread clockThread = new ClockThread(this);
@@ -913,7 +913,7 @@ public class SpookySchool {
 	public synchronized void saveGame(String playerName) {
 		System.out.println("Saving game...");
 		this.parser.save(this, playerName);
-		this.getBundle(playerName, false).setMessage("Failed to save game?");
+		this.getBundle(playerName, false).setMessage("Game saved successfully.");
 	}
 
 	/**

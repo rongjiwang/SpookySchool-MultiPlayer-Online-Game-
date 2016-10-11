@@ -13,6 +13,7 @@ public class OverlayPanel extends JPanel {
 	private SpriteMap spriteMap;
 	private Thread thread;
 
+	private final int delay = 8;
 	private long now; //holds time
 
 	//Header box
@@ -39,7 +40,7 @@ public class OverlayPanel extends JPanel {
 
 		this.panel = panel;
 		this.spriteMap = spriteMap;
-		this.mainThen = System.currentTimeMillis() + 5;
+		this.mainThen = System.currentTimeMillis() + delay;
 
 		this.thread = new Thread() {
 			@Override
@@ -48,7 +49,7 @@ public class OverlayPanel extends JPanel {
 					if (System.currentTimeMillis() > mainThen) {
 						tick();
 						repaint();
-						mainThen = System.currentTimeMillis() + 5;
+						mainThen = System.currentTimeMillis() + delay;
 					}
 
 				}
@@ -69,7 +70,7 @@ public class OverlayPanel extends JPanel {
 	public void setHeaderMessage(int x, String name) {
 		this.headerMessage = name;
 		this.headerX = x;
-		headerIncrement = 1;
+		headerIncrement = 2;
 		this.firstHeaderReceived = true;
 	}
 

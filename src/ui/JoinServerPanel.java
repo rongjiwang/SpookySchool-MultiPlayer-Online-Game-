@@ -33,23 +33,24 @@ public class JoinServerPanel extends JPanel {
 	private Integer port = 4444;
 
 	private String[] defaultNames = { "Bob", "Tony", "Sam", "John", "Marcus", "Susan", "Henry", "Bob", "Jill",
-			"Brandon", "Tom", "Adam", "Daniel", "Alan", "Josh", "Rob", "Alex", "Jim", "Jessica" };
+			"Brandon", "Tom", "Adam", "Daniel", "Alan", "Josh", "Rob", "Alex", "Jim", "Jessica", "Dave", "Pondy" };
 
 	private Client client;
 
 	private JTextField serverStatusField;
 	private JButton joinServerBtn;
 	private BufferedImage uiBackground;
-	
+
 	private Font customFont;
 
 	public JoinServerPanel(JPanel contentPane) {
 		this.setLayout(null); //Use no layout manager in this panel.
 		this.setBackground(Color.darkGray);
-		
+
 		try {
 			customFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
-		} catch (Exception e) {}
+		} catch (Exception e) {
+		}
 
 		//Assign a random name from the list of default names.
 		int nameIndex = (int) (Math.random() * defaultNames.length);
@@ -80,7 +81,7 @@ public class JoinServerPanel extends JPanel {
 
 		//PlayerName Label
 		JLabel playerNameLabel = new JLabel("Player Name:");
-		playerNameLabel.setForeground(Color.BLACK);
+		playerNameLabel.setForeground(Color.WHITE);
 		playerNameLabel.setFont(new Font("Arial", 1, 15));
 		playerNameLabel.setBounds(105, 280, 200, 30);
 		playerNameLabel.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 12f));
@@ -95,7 +96,7 @@ public class JoinServerPanel extends JPanel {
 
 		//IP Address Label
 		JLabel ipLabel = new JLabel("IP Address:");
-		ipLabel.setForeground(Color.BLACK);
+		ipLabel.setForeground(Color.WHITE);
 		ipLabel.setFont(new Font("Arial", 1, 15));
 		ipLabel.setBounds(105, 340, 200, 30);
 		ipLabel.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 12f));
@@ -105,13 +106,13 @@ public class JoinServerPanel extends JPanel {
 		//Add ip address field.
 		JTextField ipAddressField = new JTextField(this.ipAddress, 15);
 		ipAddressField.setBounds(225, 340, 200, 30);
-		ipAddressField	.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 11f));
+		ipAddressField.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 11f));
 		this.add(ipAddressField);
 
 
 		//Port label
 		JLabel portLabel = new JLabel("Join on Port:");
-		portLabel.setForeground(Color.BLACK);
+		portLabel.setForeground(Color.WHITE);
 		portLabel.setFont(new Font("Arial", 1, 15));
 		portLabel.setBounds(105, 400, 200, 30);
 		portLabel.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 12f));

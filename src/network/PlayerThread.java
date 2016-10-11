@@ -20,7 +20,7 @@ public class PlayerThread extends Thread {
 	private Socket socket;
 	private String playerName;
 	private final SpookySchool game;
-	private final int broadcastClock = 20;
+	private final int broadcastClock = 15;
 	private DataInputStream input;
 	private ObjectOutputStream objOut;
 	private CreateServerPanel serverPanel;

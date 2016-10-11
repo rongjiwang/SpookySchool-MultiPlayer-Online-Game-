@@ -13,7 +13,6 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import game.AnimationObject;
 import game.Area;
 import game.Bundle;
 import game.DoorGO;
@@ -21,6 +20,7 @@ import game.FixedContainerGO;
 import game.FloorTile;
 import game.GameObject;
 import game.MarkerGO;
+import game.NonHumanPlayer;
 import game.Player;
 import game.Position;
 import game.Tile;
@@ -63,6 +63,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 	//For animation.
 	private boolean animating = false;
+	private boolean rightFoot = true;
 	private List<GameObject> currentAreaObjects = new ArrayList<GameObject>();
 	private List<GameObject> previousAreaObjects = new ArrayList<GameObject>();
 	private List<AnimationObject> toAnimate = new ArrayList<AnimationObject>();
@@ -107,6 +108,12 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	 */
 	public void processBundle(Bundle bundle) {
 
+		//Set the footer message if there is one in the bundle.
+		if (bundle.getMessage() != null) {
+			overlayPanel.setFooterMessage(bundle.getMessage());
+		}
+
+
 		this.mainPlayer = bundle.getPlayerObj();
 
 		this.previousAreaObjects = this.currentAreaObjects;
@@ -116,20 +123,12 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			this.currentAreaObjects = bundle.getAreaObjects();
 			this.displayRoomName();
 			this.centerPlayer();
-
-			//Set the footer message if there is one in the bundle.
-			if (bundle.getMessage() != null) {
-				overlayPanel.setFooterMessage(bundle.getMessage());
-			}
-
 			return;
 
 		} else {
 			String oldArea = currentArea.getAreaName();
 
 			if (!oldArea.equals(this.mainPlayer.getCurrentArea().getAreaName())) {
-				this.displayRoomName();
-
 				this.currentArea = this.mainPlayer.getCurrentArea();
 				this.currentAreaObjects = bundle.getAreaObjects();
 
@@ -138,6 +137,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					overlayPanel.setFooterMessage(bundle.getMessage());
 				}
 
+				this.displayRoomName();
 				this.centerPlayer();
 				return;
 			}
@@ -167,7 +167,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					GameObject currentObj = this.currentAreaObjects.get(i);
 
 					//FIXME: Only allowing player animation for now.
-					if (!(previousObj instanceof Player)) {
+					if (!(previousObj instanceof Player) && !(previousObj instanceof NonHumanPlayer)) {
 						continue;
 					}
 
@@ -241,6 +241,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 						//slower animation.
 						if (aObj.isMainPlayer()) {
 							this.animating = true;
+							this.rightFoot = !this.rightFoot; //Toggle the right foot boolean.
+							aObj.setRightFoot(this.rightFoot); //Set foot as the next foot.
 						}
 						this.toAnimate.add(aObj);
 					}
@@ -464,10 +466,10 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 						tileImage = spriteMap.getImage(getRotatedAnimatedToken(ao.getNextImgToken(), p.getDirection()));
 
+						//Set animating to true, and center the player.
 						if (ao.isMainPlayer()) {
 							this.animating = true;
 							ao.changeBuffs();
-
 							this.centerPlayerAnimation(ao.getStartX(), ao.getStartY());
 						}
 
@@ -483,9 +485,10 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 								this.animating = false;
 								this.setMainPlayerXBuff(0);
 								this.setMainPlayerYBuff(0);
+								//this.centerPlayer(); //Recenter the player.
 							}
 
-							this.toAnimate.remove(index); //Remove the player
+							this.toAnimate.remove(index); //Remove the animation object now that animation is complete
 						}
 					}
 
@@ -782,21 +785,26 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			break;
 
 		case KeyEvent.VK_R:
-			if (this.toAnimate.size() > 0) {
-				this.overlayPanel.setFooterMessage("Cannot rotate while there are moving players.");
+
+			if (this.animating) {
+				this.overlayPanel.setFooterMessage("Cannot rotate while the player is moving.");
 				return;
 			}
+
 			rotate(1);
 			this.centerPlayer();
+			this.repaint();
 			break;
 
 		case KeyEvent.VK_L:
-			if (this.toAnimate.size() > 0) {
-				this.overlayPanel.setFooterMessage("Cannot rotate while there are moving players.");
+			if (this.animating) {
+				this.overlayPanel.setFooterMessage("Cannot rotate while the player is moving.");
 				return;
 			}
+
 			rotate(-1);
 			this.centerPlayer();
+			this.repaint();
 			break;
 		}
 	}
