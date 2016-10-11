@@ -51,7 +51,7 @@ public class Server extends Thread {
 			this.displayAddresses();
 
 
-			while (1 == 1) {
+			while (true) {
 
 				Socket socket = serverSocket.accept(); // Wait for a socket/incoming connection.
 

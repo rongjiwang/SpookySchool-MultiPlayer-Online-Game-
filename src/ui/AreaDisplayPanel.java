@@ -192,8 +192,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 						aimX = view[0];
 						aimY = view[1];
 
-						//System.out.println("startX: " + );
-
 						boolean isMain = currentObj.getId().equals(this.mainPlayer.getId());
 
 						AnimationObject aObj = null;
@@ -239,21 +237,16 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 							}
 						}
 
-						//Player is animating.
-
+						//Player is animating. Maining needed so that the player doesn't "overshoot" due to
+						//slower animation.
 						if (aObj.isMainPlayer()) {
-							//this.mainAo = aObj;
 							this.animating = true;
 						}
-
 						this.toAnimate.add(aObj);
-
 					}
-
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -300,12 +293,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	 * @param startY the main player's actual y position on the panel
 	 */
 	private void centerPlayerAnimation(int startX, int startY) {
-
-		//System.out.println("MainBuffX: " + this.mainPlayerXBuff + "MainBuffY: " + this.mainPlayerYBuff);
-		System.out.println("startX: " + startX + "startY: " + startY);
-		int playerXPos = startX;
-		int playerYPos = startY;
-
 		int viewX = startX;
 		int viewY = startY;
 
@@ -317,7 +304,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		this.renderOffSetX = (windowCenterX - playerX) - getMainPlayerXBuff();
 		this.renderOffSetY = (windowCenterY - playerY) - getMainPlayerYBuff();
-
 	}
 
 	@Override
@@ -499,8 +485,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 								this.setMainPlayerYBuff(0);
 							}
 
-							this.toAnimate.remove(index); //FIXME: Index may be changed?
-
+							this.toAnimate.remove(index); //Remove the player
 						}
 					}
 
@@ -531,7 +516,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 				}
 			} else {
 				if (layer == 3) {
-
 					g.drawImage(tileImage, finalX - adjustX - 1, finalY - adjustY - 1, tileImage.getWidth(null) + 2,
 							tileImage.getHeight(null) + 2, null);
 				}
@@ -817,6 +801,32 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		}
 	}
 
+	/** GETTERS AND SETTERS **/
+
+	public int getTileHeight() {
+		return tileHeight;
+	}
+
+	public int getTileWidth() {
+		return tileWidth;
+	}
+
+	public int getMainPlayerYBuff() {
+		return mainPlayerYBuff;
+	}
+
+	public void setMainPlayerYBuff(int mainPlayerYBuff) {
+		this.mainPlayerYBuff = mainPlayerYBuff;
+	}
+
+	public int getMainPlayerXBuff() {
+		return mainPlayerXBuff;
+	}
+
+	public void setMainPlayerXBuff(int mainPlayerXBuff) {
+		this.mainPlayerXBuff = mainPlayerXBuff;
+	}
+
 	public int getRenderOffSetX() {
 		return this.renderOffSetX;
 	}
@@ -855,29 +865,4 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	@Override
 	public void mouseReleased(MouseEvent e) {
 	}
-
-	public int getTileHeight() {
-		return tileHeight;
-	}
-
-	public int getTileWidth() {
-		return tileWidth;
-	}
-
-	public int getMainPlayerYBuff() {
-		return mainPlayerYBuff;
-	}
-
-	public void setMainPlayerYBuff(int mainPlayerYBuff) {
-		this.mainPlayerYBuff = mainPlayerYBuff;
-	}
-
-	public int getMainPlayerXBuff() {
-		return mainPlayerXBuff;
-	}
-
-	public void setMainPlayerXBuff(int mainPlayerXBuff) {
-		this.mainPlayerXBuff = mainPlayerXBuff;
-	}
-
 }

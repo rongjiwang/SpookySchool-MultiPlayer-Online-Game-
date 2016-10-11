@@ -359,11 +359,11 @@ public class SpookySchool {
 
 	/**
 	 * Remove player from the game
-	 * @param name of the player to remove from the game
-	 * FIXME Ensure everything relevant to the disconnecting player is removed!
+	 * @param name of the player to remove from the game.
 	 */
 	public synchronized void removePlayer(String name) {
 
+		//Player doesnt exist in game, do nothing.
 		if (this.getPlayer(name) == null) {
 			return;
 		}
@@ -614,9 +614,8 @@ public class SpookySchool {
 					}
 
 					//Place the item into the container.
-
 					if (obj.addToContainer(item)) {
-						obj.addToContainer(item);
+						//obj.addToContainer(item);
 						player.removeFromInventory(item);
 						this.getBundle(playerName, false)
 								.setMessage("You placed the " + item.getName() + " into the " + obj.getName());
