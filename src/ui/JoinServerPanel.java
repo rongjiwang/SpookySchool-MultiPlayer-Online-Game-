@@ -22,7 +22,7 @@ import javax.swing.SwingUtilities;
 import network.Client;
 
 /**
- * 
+ *
  * @author Pritesh R. Patel
  *
  */
@@ -74,25 +74,23 @@ public class JoinServerPanel extends JPanel {
 		this.serverStatusField = new JTextField("Waiting to join server...", 15);
 		serverStatusField.setHorizontalAlignment(SwingConstants.CENTER);
 		serverStatusField.setEditable(false);
-		serverStatusField.setBounds(150, 200, 200, 30);
+		serverStatusField.setBounds(105, 200, 295, 30);
 		serverStatusField.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 10f));
 		this.add(serverStatusField);
-
 
 		//PlayerName Label
 		JLabel playerNameLabel = new JLabel("Player Name:");
 		playerNameLabel.setForeground(Color.WHITE);
 		playerNameLabel.setFont(new Font("Arial", 1, 15));
-		playerNameLabel.setBounds(105, 280, 200, 30);
+		playerNameLabel.setBounds(105, 280, 175, 30);
 		playerNameLabel.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 12f));
 		this.add(playerNameLabel);
 
 		//Add playerName text field.
 		JTextField playerNameField = new JTextField(this.playerName, 15);
-		playerNameField.setBounds(225, 280, 200, 30);
+		playerNameField.setBounds(225, 280, 175, 30);
 		playerNameField.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 11f));
 		this.add(playerNameField);
-
 
 		//IP Address Label
 		JLabel ipLabel = new JLabel("IP Address:");
@@ -102,13 +100,11 @@ public class JoinServerPanel extends JPanel {
 		ipLabel.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 12f));
 		this.add(ipLabel);
 
-
 		//Add ip address field.
 		JTextField ipAddressField = new JTextField(this.ipAddress, 15);
-		ipAddressField.setBounds(225, 340, 200, 30);
+		ipAddressField.setBounds(225, 340, 175, 30);
 		ipAddressField.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 11f));
 		this.add(ipAddressField);
-
 
 		//Port label
 		JLabel portLabel = new JLabel("Join on Port:");
@@ -118,10 +114,9 @@ public class JoinServerPanel extends JPanel {
 		portLabel.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 12f));
 		this.add(portLabel);
 
-
 		//Add Port Field
 		JTextField portField = new JTextField(this.port.toString(), 15);
-		portField.setBounds(225, 400, 200, 30);
+		portField.setBounds(225, 400, 175, 30);
 		portField.setFont(customFont.deriveFont(Font.TRUETYPE_FONT, 11f));
 		this.add(portField);
 
@@ -171,7 +166,6 @@ public class JoinServerPanel extends JPanel {
 		});
 	}
 
-
 	/**
 	 * Used by the client to ask user for a new player name as the one given is already being used on the server.
 	 */
@@ -182,12 +176,11 @@ public class JoinServerPanel extends JPanel {
 	}
 
 	/**
-	 * Hide the join server window. 
+	 * Hide the join server window.
 	 */
 	public void hideJoinWindow() {
 		SwingUtilities.windowForComponent(JoinServerPanel.this).setVisible(false);
 	}
-
 
 	/**
 	 * Used by the server to create updates.

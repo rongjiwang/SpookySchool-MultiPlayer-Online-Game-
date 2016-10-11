@@ -21,7 +21,7 @@ import ui.CreateServerPanel;
 public class Server extends Thread {
 
 	private SpookySchool game;
-	private int nclients = 8; //Number of connected that can still connect.
+	private int nclients = 4; //Number of connected that can still connect.
 	private int port;
 	private CreateServerPanel serverPanel;
 
@@ -50,7 +50,6 @@ public class Server extends Thread {
 
 			this.displayAddresses();
 
-
 			while (true) {
 
 				Socket socket = serverSocket.accept(); // Wait for a socket/incoming connection.
@@ -78,7 +77,6 @@ public class Server extends Thread {
 			this.serverPanel.updateServerStatusField("FAILED TO CREATE SERVER");
 		}
 	}
-
 
 	/**
 	 * Remove all players that have been disconnected. This allows more players to join.

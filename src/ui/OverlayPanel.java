@@ -18,12 +18,12 @@ public class OverlayPanel extends JPanel {
 
 	//Header box
 	private String headerMessage;
-	private int headerX;
+	private int headerX = -155;
 	private int headerY = 5;
 	private int headerWidth = 155;
 	private int headerIncrement;
 	private long headerThen; //holds time
-	private boolean firstHeaderReceived = false; //To stop the null pointer at the start of the game.
+	private boolean headerReceived = false; //To stop the null pointer at the start of the game.
 
 	//Footer Message box
 	private int footerX = 50;
@@ -31,7 +31,7 @@ public class OverlayPanel extends JPanel {
 	private String footerMessage;
 	private int footerIncrement;
 	private long footerThen; //holds time
-	private boolean firstFooterReceived = false; //To stop the null pointer at the start of the game.
+	private boolean footerReceived = false; //To stop the null pointer at the start of the game.
 	private Font font;
 
 	long mainThen;
@@ -67,18 +67,18 @@ public class OverlayPanel extends JPanel {
 		thread.start();
 	}
 
-	public void setHeaderMessage(int x, String name) {
+	public void setHeaderMessage(String name) {
 		this.headerMessage = name;
-		this.headerX = x;
+		this.headerX = -155;
 		headerIncrement = 2;
-		this.firstHeaderReceived = true;
+		this.headerReceived = true;
 	}
 
 	public void setFooterMessage(String message) {
 		this.footerMessage = message;
 		this.footerY = 580;
 		this.footerIncrement = -4;
-		this.firstFooterReceived = true;
+		this.footerReceived = true;
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class OverlayPanel extends JPanel {
 
 		//Display the header message. The boolean is there so that we don't try to print
 		//a message when we have never had one before yet as this can cause null pointer.
-		if (firstHeaderReceived) {
+		if (headerReceived) {
 			headerX += headerIncrement;
 			if (headerX == 5) {
 				headerX = 6;
@@ -125,12 +125,15 @@ public class OverlayPanel extends JPanel {
 					headerX = 4;
 					headerIncrement = -2;
 				}
+			} else if (headerX < -160) {
+				headerReceived = false;
 			}
+
 		}
 
 		//Display the footer message. The boolean is there so that we don't try to print
 		//a message when we have never had one before yet as this can cause null pointer.
-		if (this.firstFooterReceived) {
+		if (this.footerReceived) {
 			this.footerY = this.footerY + footerIncrement;
 			if (footerY == 420) {
 				this.footerY = 421;
@@ -141,6 +144,8 @@ public class OverlayPanel extends JPanel {
 					this.footerY = 421;
 					this.footerIncrement = 4;
 				}
+			} else if (footerX > 620) {
+				this.footerReceived = false; //Used
 			}
 		}
 	}

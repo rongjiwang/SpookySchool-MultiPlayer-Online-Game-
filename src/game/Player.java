@@ -21,7 +21,6 @@ public class Player implements GameObject {
 	private String token;
 	private String description;
 
-
 	public Player(String playerName, String spawnName, Area currentArea, Position currentPosition) {
 		this.playerName = playerName;
 		this.spawnName = spawnName;
@@ -70,12 +69,10 @@ public class Player implements GameObject {
 		this.token = token;
 	}
 
-
 	@Override
 	public String getId() {
 		return this.playerName;
 	}
-
 
 	@Override
 	public Position getPosition() {

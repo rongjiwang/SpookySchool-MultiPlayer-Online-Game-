@@ -256,13 +256,13 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		if (this.currentArea.getAreaName().contains("Spawn")) {
 			if (this.currentArea.hasOwner()) {
-				overlayPanel.setHeaderMessage(-155, currentArea.getOwner().getPlayerName() + "'s Room");
+				overlayPanel.setHeaderMessage(currentArea.getOwner().getPlayerName() + "'s Room");
 			} else {
-				overlayPanel.setHeaderMessage(-155, currentArea.getAreaName().replace('_', ' '));
+				overlayPanel.setHeaderMessage(currentArea.getAreaName().replace('_', ' '));
 			}
 
 		} else {
-			overlayPanel.setHeaderMessage(-155, currentArea.getAreaName().replace('_', ' '));
+			overlayPanel.setHeaderMessage(currentArea.getAreaName().replace('_', ' '));
 		}
 	}
 
@@ -483,7 +483,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 								this.animating = false;
 								this.setMainPlayerXBuff(0);
 								this.setMainPlayerYBuff(0);
-								//this.centerPlayer(); //Recenter the player.
+								//this.repaint();
 							}
 
 							this.toAnimate.remove(index); //Remove the animation object now that animation is complete
@@ -791,7 +791,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 			rotate(1);
 			this.centerPlayer();
-			this.repaint();
+			//this.repaint();
 			break;
 
 		case KeyEvent.VK_L:
@@ -802,7 +802,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 			rotate(-1);
 			this.centerPlayer();
-			this.repaint();
+			//this.repaint();
 			break;
 		}
 	}

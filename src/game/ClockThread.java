@@ -1,14 +1,14 @@
 package game;
 
 /**
- * Clock Thread is a thread that is run in conjunction with the game. It is used to periodically call the tick method in the game 
+ * Clock Thread is a thread that is run in conjunction with the game. It is used to periodically call the tick method in the game
  * object which can make necessary changes such as movements of NPCs.
  * @author Pritesh R. Patel
  *
  */
 public class ClockThread extends Thread {
 
-	private final int delay = 200; //How often (in miliseconds) to move an npc.
+	private final int delay = 300; //How often (in miliseconds) to move an npc.
 	private final SpookySchool game;
 
 	public ClockThread(SpookySchool game) {
@@ -23,7 +23,7 @@ public class ClockThread extends Thread {
 		//Loop for ever.
 		while (true) {
 
-			//Delay each move by npc by 300ms
+			//Delay each move by npc by 3delay ms
 			if (System.currentTimeMillis() > then) {
 				game.moveNPC();
 				then = System.currentTimeMillis() + delay;
@@ -37,8 +37,6 @@ public class ClockThread extends Thread {
 			} catch (InterruptedException e) {
 				//Should never happen.
 			}
-
-
 
 		}
 	}

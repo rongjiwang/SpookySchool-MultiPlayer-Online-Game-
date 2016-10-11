@@ -45,7 +45,7 @@ public class Client extends Thread {
 				objInput = new ObjectInputStream(socket.getInputStream());
 				Bundle bundle = (Bundle) objInput.readObject();
 
-				//Bundle can only be null if a player doesn't exist in the game on the server. 
+				//Bundle can only be null if a player doesn't exist in the game on the server.
 				//Try to send playerName to get added into the game on the server. Bundle received will be null until player is added.
 				if (bundle == null) {
 					this.joinServerPanel.updateServerStatusField("Player Name Already Taken");
@@ -87,7 +87,7 @@ public class Client extends Thread {
 	/**
 	 * Send a command to the Server which will then process it.
 	 * @param command that the sever needs to process.
-	 * 
+	 *
 	 */
 	public void sendCommand(String command) {
 		try {
@@ -96,11 +96,10 @@ public class Client extends Thread {
 			this.output.flush();
 
 		} catch (IOException e) {
-			this.joinServerPanel.updateServerStatusField("Error sending command!");
+			this.joinServerPanel.updateServerStatusField("Server is full. Restart to try again.");
+			//System.exit(0);
 		}
 	}
-
-
 
 	/**
 	 * Set the player name. Should be used when server already has player name.
@@ -110,7 +109,6 @@ public class Client extends Thread {
 
 		this.playerName = name;
 	}
-
 
 	/**
 	 * Closes the socket connected to the server. Used to close socket when closing client ui window.

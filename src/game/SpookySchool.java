@@ -20,8 +20,10 @@ import parser.Parsernew;
 public class SpookySchool {
 
 	private final Position defaultSpawnPosition = new Position(5, 8); //Default position that a player spawns in, in a spawn room.
-
+	private final int maxPlayers = 4;
 	private List<Player> players = new ArrayList<Player>(); //List of players in the game.
+	private String[] defaultPlayerTokens = { "0p20", "1p20", "2p20", "3p20" };
+	private List<String> usedTokens = new ArrayList<String>();
 
 	//Should make xml implementation easier?!
 	private String areasFileLoc = "src/areas/areas.txt";
@@ -331,7 +333,7 @@ public class SpookySchool {
 	*/
 	public synchronized boolean addPlayer(String name) {
 
-		if (this.players.size() < 8 && this.getPlayer(name) == null) {
+		if (this.players.size() < this.maxPlayers && this.getPlayer(name) == null) {
 			Area spawnRoom = this.findEmptySpawnRoom();
 			Player newPlayer = new Player(name, spawnRoom.getAreaName(), spawnRoom, this.defaultSpawnPosition);
 			spawnRoom.setOwner(newPlayer); //Set player as the owner of the spawn room.
@@ -342,6 +344,15 @@ public class SpookySchool {
 			assert spawnTile != null;
 
 			spawnTile.setOccupant(newPlayer);
+
+			outer: for (String token : this.defaultPlayerTokens) {
+				if (!this.usedTokens.contains(token)) {
+					newPlayer.setToken(token);
+					this.usedTokens.add(token);
+					break outer;
+				}
+			}
+
 			this.players.add(newPlayer); //Add the player to the list of players in the game.
 			this.addChatLogItemToAllBundles(name + " entered the game.");
 
@@ -375,6 +386,7 @@ public class SpookySchool {
 
 		this.getPlayer(name).getCurrentArea().getTile(this.getPlayer(name).getCurrentPosition()).removeOccupant(); //Remove player from the tile
 
+		this.usedTokens.remove(this.getPlayer(name).getToken());
 		this.players.remove(this.getPlayer(name)); //Remove the player from this game by removing them from players list.
 		this.playerBundles.remove(name); //Remove this player's bundle.
 
@@ -880,7 +892,7 @@ public class SpookySchool {
 		Bundle bundle = this.playerBundles.get(playerName);
 
 		//If the bundle is about to get transmitted, then add all of the game objects in the players current area to the bundle.
-		if (transmitting) {
+		if (transmitting && bundle != null) {
 			Area area = this.getPlayer(playerName).getCurrentArea();
 			for (int y = 0; y < area.height; y++) {
 				for (int x = 0; x < area.width; x++) {
