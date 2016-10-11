@@ -71,7 +71,7 @@ public class Parser {
 	 * 
 	 * @return Document -- the DOM Document structure to be Saved
 	 */
-	public Document createDocument(){
+	private Document createDocument(){
 		try{
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();	//create an instance of the DocumentBuilderFactory
 			DocumentBuilder builder = factory.newDocumentBuilder();		//use the factory to make a builder to create a Document
@@ -89,7 +89,7 @@ public class Parser {
 	 * Main method for saving the game state of the SpookySchool game. From this method, relevant details about the Game are stored and then 
 	 * recorded onto an XML file through extra modular methods.
 	 * 
-	 * Holds a public nature as this is the method called from the SpookySchool class to initiate the saving command.
+	 * Holds a private nature as this is the method called from the SpookySchool class to initiate the saving command.
 	 * 
 	 * @param game -- The current instance of the running SpookySchool game
 	 * @param playerName -- Name of the player that requested the save command. This players details are what will be saved, along with 
@@ -123,93 +123,6 @@ public class Parser {
 	public void load(){
 		load = loadXML();		//Load the Save file as an XML, and extract the workable DOM strcuture from it
 		
-		Node loadRoot = load.getDocumentElement();	//Determines the root Node of the saved state
-		iterate();	//iterates through each of the children nodes of the root	
-	}
-	
-	/**
-	 * Iterates over the elements in the loaded DOM structure starting from the root node. If a Node is found of a particular variety, then
-	 * its child nodes are recorded and used to create objects corresponding to the name of the head Node.
-	 */
-	public void iterate(){
-		NodeList nodeList = load.getElementsByTagName("*");		//create a list of all Nodes in teh DOM structure
-		String content = "";	//initialize text value for the Node
-        String nodeName = "";	//initialize the name of the Node
-	    for (int i = 0; i < nodeList.getLength(); i++) {	//iterate through every Node in the structure
-	        Node node = nodeList.item(i);		//the current Node
-	        if (node.getNodeType() == Node.ELEMENT_NODE) {
-	            nodeName = node.getNodeName();		//get the name of the current Node
-	            
-	            if (nodeName.equals("movableGO")){		//if its for a MovableGO,  
-		        	NodeList children = node.getChildNodes(); //then save the child nodes of this and create an instance
-		        	createMovableGO(children);
-		        	
-	            }if (nodeName.equals("door")){ 		//if its for a DoorGO,
-	            	NodeList children = node.getChildNodes(); //save the child nodes of this and create an instance
-		        	createDoorGO(children);		
-		        	
-	            }if (nodeName.equals("inventoryObject")){ //if its for a InventoryGO,
-	            	NodeList children = node.getChildNodes();	//save the child nodes of this and create an instance
-		        	createInventoryGO(children);
-		        	
-	            }if (nodeName.equals("fixedContainer")){	//if its for a FixedContainerGO
-	            	NodeList children = node.getChildNodes();	//save the child nodes of this and create an instance
-		        	createFixedContainerGO(children);
-	            }
-	        } 
-	    }
-	}
-	
-	/**
-	 * Creates an instance of a MovableGO using the List of child nodes which represent the field values of the saved instance
-	 * 
-	 * @param fields -- NodeList of child nodes representing the fields for a MovableGO Object
-	 */
-	public void createMovableGO(NodeList fields){
-		System.out.println(fields.getLength());
-//		String id = fields.item(1).getTextContent();
-//		String token = fields.item(3).getTextContent();
-//		String description = fields.item(9).getTextContent();
-//		String areaName = fields.item(5).getTextContent();
-//		fields.item(6).get().replaceAll(" ", "");
-//		fields.item(7).getTextContent().replaceAll(" ", "");
-		//Position pos = new Position(x, y);
-		
-		//movablesToLoad.add(new MovableGO(id, token, areaName, pos));
-	
-	}
-	
-	/**
-	 * Creates an instance of a DoorGO using the List of child nodes which represent the field values of the saved instance
-	 * 
-	 * @param fields -- NodeList of child nodes representing the fields for a DoorGO Object
-	 */
-	public void createDoorGO(NodeList fields){
-			
-	}
-	
-	/**
-	 * Creates an instance of a InventoryGO using the List of child nodes which represent the field values of the saved instance
-	 * 
-	 * @param fields -- NodeList of child nodes representing the fields for a InventoryGO Object
-	 */
-	public void createInventoryGO(NodeList fields){
-		
-	}
-	
-	/**
-	 * Creates an instance of a FixedContainerGO using the List of child nodes which represent the field values of the saved instance
-	 * 
-	 * @param fields -- NodeList of child nodes representing the fields for a FixedContainerGO Object
-	 */
-	public void createFixedContainerGO(NodeList fields){
-		
-	}
-	
-	/**
-	 * Loads each room stored in the XML file by saving all Tile nodes held in a parent Room node
-	 */
-	public void loadAreas(){
 		
 	}
 	
@@ -220,7 +133,7 @@ public class Parser {
 	 * @param players -- List of all the Player objects held in the current Game.
 	 * @return p -- the Player object whose name matches the given playerName
 	 */
-	public Player determinePlayer(String playerName, List<Player> players){
+	private Player determinePlayer(String playerName, List<Player> players){
 		for (Player p : players){		//iterate through each Player in the list of players
 			if (p.getPlayerName().equals(playerName)){	//if the Player's name matches the given playerName
 				return p;		//return this player
@@ -234,7 +147,7 @@ public class Parser {
 	 * 
 	 * @param areas -- Map of all the rooms in the Game. Map is from areaName to the Area itself
 	 */
-	public void saveMap(Map<String, Area> areas){
+	private void saveMap(Map<String, Area> areas){
 		for (String key : areas.keySet()){		//iterate through each areaName in the Map
 			Area currentArea = areas.get(key);		//the area to work with
 			root.appendChild(saveArea(currentArea));	//get the grid of the Area as a Node with children, and append it to the root.
@@ -250,7 +163,7 @@ public class Parser {
 	 * @param currentArea -- the current Area that is to be saved 
 	 * @return -- the Element roomNode with all relevant data for the room saved as its children
 	 */
-	public Element saveArea(Area currentArea){
+	private Element saveArea(Area currentArea){
 		Element roomNode = save.createElement("room");		//create the node "room". Holds all subsequent data in this method as a child
 		Element heightNode = save.createElement("height");		//create node "height"
 		Element widthNode = save.createElement("width");		//create the node "width"
@@ -287,7 +200,7 @@ public class Parser {
 	 * @param currentArea -- The current Area object that is being saved.
 	 * @param currentParent -- The parent Node to be attached.
 	 */
-	public void saveTiles(Area currentArea, Element currentParent){
+	private void saveTiles(Area currentArea, Element currentParent){
 		
 		for(int i = 0; i < currentArea.getArea().length; i++){		//iterate through the 2D-array, so essentially iterate through every Tile
 			for (int j = 0; j < currentArea.getArea()[i].length; j++){
@@ -340,7 +253,7 @@ public class Parser {
 	 * 
 	 * @return	player -- Element that represents the player, with child nodes representing the fields.
 	 */
-	public Element savePlayer(){
+	private Element savePlayer(){
 		Element player = save.createElement("player");		//create an element to represent the player who saved the Game
 		player.appendChild(saveName(saver));		//save the name and append it to the playerNode
 		player.appendChild(saveAreaName(saver));		//save the areaName and append it to the playerNode
@@ -358,7 +271,7 @@ public class Parser {
 	 * @param currentArea -- the current Area that is being saved
 	 * @param roomNode -- the parent Element that represents the room being saved.
 	 */
-	public void saveFixedContainers(Area currentArea, Element roomNode){
+	private void saveFixedContainers(Area currentArea, Element roomNode){
 		
 		for(String key : fixedContainers.keySet()){		//iterate over the keys for the Map of fixedContainers
 			FixedContainerGO currentFixedContainer = fixedContainers.get(key);		//establish a currentContainter
@@ -391,7 +304,7 @@ public class Parser {
 	 * @param currentArea -- the current Area where the items are checked to exist.
 	 * @param roomNode -- the Node to which each item will be appended to.
 	 */
-	public void saveInventoryGameObjects(Area currentArea, Element roomNode){
+	private void saveInventoryGameObjects(Area currentArea, Element roomNode){
 		
 		saversInvent = saver.getInventory();		//get the Player who saved the game's inventory
 		itemsInContainers = new ArrayList<>();		//initialize the list to remember which items remain in containers
@@ -427,7 +340,7 @@ public class Parser {
 	 * @param currentArea -- the current Area where the NonHumanPlayer is checked to exist in
 	 * @param roomNode -- the Node to which each NonHumnPlayer will be appended to
 	 */
-	public void saveNonHumans(Area currentArea, Element roomNode){
+	private void saveNonHumans(Area currentArea, Element roomNode){
 		for (NonHumanPlayer nhp : nonHumans){		//iterate through the list of NonHumans
 			if (nhp.getCurrentArea().getAreaName().equals(currentArea.getAreaName())){	//if their name matches the name of the Area,
 																						//then it should be saved here
@@ -450,7 +363,7 @@ public class Parser {
 	 * @param currentArea -- the current Area where the NonHumanPlayer is checked to exist in
 	 * @param roomNode -- the Node to which each NonHumnPlayer will be appended to
 	 */
-	public void saveMovables(Area currentArea, Element roomNode){
+	private void saveMovables(Area currentArea, Element roomNode){
 		for (MovableGO object : movables){		//iterate through the list of movableObjects
 			if(object.getAreaName().equals(currentArea.getAreaName())){		//if the areaName of the object matches the name of the current Area
 				Element movableNode = save.createElement("movableGO");	//create a node to represent it
@@ -472,7 +385,7 @@ public class Parser {
 	 * @param currentArea -- the current Area where the NonHumanPlayer is checked to exist in
 	 * @param roomNode -- the Node to which each NonHumnPlayer will be appended to
 	 */
-	public void saveDoors(Area currentArea, Element roomNode){
+	private void saveDoors(Area currentArea, Element roomNode){
 		
 		for(DoorGO door : doors){			//iterate through the list of Doors
 			if (door.getSideA().equals(currentArea.getAreaName())){ 	//if the door is in the currentArea
@@ -506,7 +419,7 @@ public class Parser {
 	 * @param nhp -- the NonHumanPlayer whose name is required
 	 * @return spawnName -- the Node with the NonHumanPlayers spawnName
 	 */
-	public Element saveNonHumanSpawnName(NonHumanPlayer nhp){
+	private Element saveNonHumanSpawnName(NonHumanPlayer nhp){
 		Element spawnName = save.createElement("spawnName");	//create a node called spawnName
 		Text value = save.createTextNode("null");	//NonHumans do not have a spawn name, so append the String "null" to avoid NullPointers
 		spawnName.appendChild(value);	//append the two Nodes
@@ -519,7 +432,7 @@ public class Parser {
 	 * @param door -- the DoorGO whose side is required
 	 * @return sideA -- the Node containing the DoorGOs sideA
 	 */
-	public Element saveSideA(DoorGO door){
+	private Element saveSideA(DoorGO door){
 		Element sideA = save.createElement("sideA");	//create a node called sideA
 		Text value = save.createTextNode(door.getSideA());		//create a node with the doors sideA value
 		sideA.appendChild(value);	//append the two Nodes
@@ -532,7 +445,7 @@ public class Parser {
 	 * @param door -- the DoorGO whose side is required
 	 * @return sideB -- the Node containing the DoorGOs sideB
 	 */
-	public Element saveSideB(DoorGO door){
+	private Element saveSideB(DoorGO door){
 		Element sideB = save.createElement("sideB");	//create a node called sideB
 		Text value = save.createTextNode(door.getSideB());		//create a node with the doors sideB value
 		sideB.appendChild(value);	//append the two Nodes
@@ -545,7 +458,7 @@ public class Parser {
      * @param door -- the DoorGO whose token is required
 	 * @return tokenA -- the Node containing the DoorGOs sideAToken
 	 */
-	public Element saveTokenA(DoorGO door){
+	private Element saveTokenA(DoorGO door){
 		Element tokenA = save.createElement("tokenA");		//create a node
 		Text value = save.createTextNode(door.getTokenA());		//create a node to hold the value
 		tokenA.appendChild(value);		//append the two Nodes
@@ -558,7 +471,7 @@ public class Parser {
      * @param door -- the DoorGO whose token is required
 	 * @return tokenB -- the Node containing the DoorGOs sideBToken
 	 */
-	public Element saveTokenB(DoorGO door){
+	private Element saveTokenB(DoorGO door){
 		Element tokenB = save.createElement("tokenB");	//create a node
 		Text value = save.createTextNode(door.getTokenB());		//create a node to hold the value
 		tokenB.appendChild(value);		//append the final Node
@@ -571,7 +484,7 @@ public class Parser {
      * @param door -- the DoorGO whose position is required
 	 * @return sideAPos -- the Node containing the DoorGOs sideAPosition
 	 */
-	public Element saveSideAPos(DoorGO door){
+	private Element saveSideAPos(DoorGO door){
 		Element sideAPos = save.createElement("sideAPos");	//create a node for the Position
 		Element x = save.createElement("x");		//create a node for x
 		Element y = save.createElement("y");		//create a node for y
@@ -588,7 +501,7 @@ public class Parser {
      * @param door -- the DoorGO whose position is required
 	 * @return sideBPos -- the Node containing the DoorGOs sideBPosition
 	 */
-	public Element saveSideBPos(DoorGO door){
+	private Element saveSideBPos(DoorGO door){
 		Element sideBPos = save.createElement("sideBPos");	//create a node for the Position
 		Element x = save.createElement("x");		//create a node for x
 		Element y = save.createElement("y");		//create a node for y
@@ -605,7 +518,7 @@ public class Parser {
      * @param door -- the DoorGO whose position is required
 	 * @return sideAEntryPos -- the Node containing the DoorGOs sideAEntryPosition
 	 */
-	public Element saveSideAEntryPos(DoorGO door){
+	private Element saveSideAEntryPos(DoorGO door){
 		Element sideAEntryPos = save.createElement("sideAEntryPos");	//create a node for the Position
 		Element x = save.createElement("x");	//create a node for x
 		Element y = save.createElement("y");	//create a node for y
@@ -622,7 +535,7 @@ public class Parser {
      * @param door -- the DoorGO whose position is required
 	 * @return sideBEntryPos -- the Node containing the DoorGOs sideBEntryPosition
 	 */
-	public Element saveSideBEntryPos(DoorGO door){
+	private Element saveSideBEntryPos(DoorGO door){
 		Element sideBEntryPos = save.createElement("sideBEntryPos");	//create a node for the Position
 		Element x = save.createElement("x");	//create a node for x
 		Element y = save.createElement("y");	//create a node for y
@@ -639,7 +552,7 @@ public class Parser {
 	 * @param occupant -- the MarkerGO whose base is being saved
 	 * @return base -- the Node containing the Base GameObject
 	 */
-	public Element saveBaseGameObject(GameObject occupant){
+	private Element saveBaseGameObject(GameObject occupant){
 		
 		Element base = save.createElement("base");	//create a node
 		GameObject baseObject = ((MarkerGO)occupant).getBaseGO();	//create a node for the value
@@ -663,7 +576,7 @@ public class Parser {
 	 * @param occupant -- GameObject that is on the current Tile
 	 * @return contents -- Element that has all inventory items and their fields as its children
 	 */
-	public Element saveContents(GameObject occupant){
+	private Element saveContents(GameObject occupant){
 		Element contents = save.createElement("contents");		//create a node for the contents
 		
 		List<InventoryGO> items = ((FixedContainerGO) occupant).getAllItems(); //make a list of all the items in the container
@@ -694,7 +607,7 @@ public class Parser {
 	 * @param container -- GameObject whose sizeRemaining is to be found
 	 * @return sizeRemaing -- Node holding the value of sizeRemaining
 	 */
-	public Element saveSizeRemaining(GameObject container){
+	private Element saveSizeRemaining(GameObject container){
 		Text value = save.createTextNode("");	//initialize value node
 		Element sizeRemaining = save.createElement("sizeRemaining"); //create a node to identify the value
 		
@@ -714,7 +627,7 @@ public class Parser {
 	 * @param occupant -- the GameObject whose name is required
 	 * @return name -- the Node containing the name
 	 */
-	public Element saveName(GameObject occupant){
+	private Element saveName(GameObject occupant){
 		Text value = save.createTextNode("");	//initialize
 		Element name = save.createElement("name");	//create a node to identify the Node
 		if(occupant instanceof InventoryGO){
@@ -737,7 +650,7 @@ public class Parser {
 	 * @param occupant -- the GameObject whose id is required
 	 * @return id -- the Node containing the id
 	 */
-	public Element saveID(GameObject occupant){
+	private Element saveID(GameObject occupant){
 		Text value = save.createTextNode("");	//initialize
 		Element id = save.createElement("id");	//create a node to identify the value
 		if(occupant instanceof InventoryGO){
@@ -759,7 +672,7 @@ public class Parser {
 	 * @param occupant -- the GameObject whose keyId is required
 	 * @return keyID -- the Node containing the keyID
 	 */
-	public Element saveKeyID(GameObject occupant){
+	private Element saveKeyID(GameObject occupant){
 		Text value = save.createTextNode("");	//initialize
 		Element keyID = save.createElement("id");	//create a node to identify the value
 		if(occupant instanceof FixedContainerGO){
@@ -780,7 +693,7 @@ public class Parser {
 	 * @param currentTile -- the Tile whose position is required
 	 * @return pos -- the Node containing the Position
 	 */
-	public Element savePosition(Tile currentTile){
+	private Element savePosition(Tile currentTile){
 		Element pos = save.createElement("pos");	//create a node to identify the position
 		Element x = save.createElement("x");	//create a node for x
 		x.appendChild(save.createTextNode("" + currentTile.getPosition().getPosX())); //find and append x
@@ -795,10 +708,11 @@ public class Parser {
 	
 	/**
 	 * Saves the field "position" to a Node
+	 * 
 	 * @param occupant -- the GameObject whose position is required
 	 * @return pos -- the Node containing the Position
 	 */
-	public Element savePosition(GameObject occupant){
+	private Element savePosition(GameObject occupant){
 		Element pos = save.createElement("pos"); //create a node to identify the position
 		Element x = save.createElement("x");	//create a node for x
 		Element y = save.createElement("y");	//create a node for y
@@ -811,131 +725,179 @@ public class Parser {
 		return pos;		//return final Node
 	}
 	
-	public Element saveToken(GameObject occupant){
-		Element token = save.createElement("token");
-		token.appendChild(save.createTextNode(occupant.getToken()));
-		return token;
+	/**
+	 * Saves the field "token" to a Node
+	 * @param occupant -- The GameObject whose token is required
+	 * @return token -- the Node containing the token
+	 */
+	private Element saveToken(GameObject occupant){
+		Element token = save.createElement("token");	//create a node for token
+		token.appendChild(save.createTextNode(occupant.getToken())); //find and append token
+		return token; //return final Node
 	}
 	
-	public Element saveToken(Tile currentTile){
-		Element token = save.createElement("token");
-		token.appendChild(save.createTextNode(currentTile.getToken()));
-		return token;
+	/**
+	 * Saves the field "token" to a Node
+	 * 
+	 * @param currentTile -- The Tile whose token is required
+	 * @return token -- the Node containing the token
+	 */
+	private Element saveToken(Tile currentTile){
+		Element token = save.createElement("token"); //create a node for token
+		token.appendChild(save.createTextNode(currentTile.getToken())); //find and append token
+		return token; //return final Node
 	}
 	
-	public Element saveOpen(GameObject occupant){
-		Text value = save.createTextNode("");
+	/**
+	 * Saves the field "open" to a Node
+	 * 
+	 * @param occupant -- the GameObject that is required to know whether it is open or not
+	 * @return open -- Node containing whether the Object is open or not
+	 */
+	private Element saveOpen(GameObject occupant){
+		Text value = save.createTextNode("");	//initialize
 		if(occupant instanceof DoorGO){
-			 value = save.createTextNode("" + ((DoorGO) occupant).isOpen());	
+			 value = save.createTextNode("" + ((DoorGO) occupant).isOpen()); //cast to appropriate class and get value
 		}else if(occupant instanceof FixedContainerGO){
-			 value = save.createTextNode("" + ((FixedContainerGO) occupant).isOpen());	
+			 value = save.createTextNode("" + ((FixedContainerGO) occupant).isOpen());	//cast to appropriate class and get value
 		}
-		Element open = save.createElement("open");
-		open.appendChild(value);
-		return open;
+		Element open = save.createElement("open"); //create node 
+		open.appendChild(value); //append value to node
+		return open; //return final node
 	
 	}
 	
-	public Element saveLocked(GameObject occupant){
-		Text value = save.createTextNode("");
+	/**
+	 * Saves the field "locked" to a Node
+	 * 
+	 * @param occupant -- the GameObject that is required to know whether it is locked or not
+	 * @return locked -- Node containing whether the Object is locked or not
+	 */
+	private Element saveLocked(GameObject occupant){
+		Text value = save.createTextNode("");	//initialize
 		if(occupant instanceof DoorGO){
-			value = save.createTextNode("" + ((DoorGO) occupant).isLocked());
+			value = save.createTextNode("" + ((DoorGO) occupant).isLocked()); //cast to appropriate class and get value
 		}else if (occupant instanceof FixedContainerGO){
-			value = save.createTextNode("" + ((FixedContainerGO) occupant).isLocked());
+			value = save.createTextNode("" + ((FixedContainerGO) occupant).isLocked()); //cast to appropriate class and get value
 		}
-		Element locked = save.createElement("locked");
-		locked.appendChild(value);
-		return locked;
+		Element locked = save.createElement("locked"); //create node
+		locked.appendChild(value); //append value to node
+		return locked; //return final Node
 		
 	}
 	
-	public Element saveDescription(GameObject occupant){
-		Text value = save.createTextNode("");
+	/**
+	 * Save the field "description" to a Node
+	 * 
+	 * @param occupant -- the GameObject whose description is required
+	 * @return description -- Node containing the description
+	 */
+	private Element saveDescription(GameObject occupant){
+		Text value = save.createTextNode("");	//initialize
 		if(occupant instanceof InventoryGO){
-			value = save.createTextNode(((InventoryGO) occupant).getDescription());
+			value = save.createTextNode(((InventoryGO) occupant).getDescription());	//cast to appropriate class and get value
 		}else if (occupant instanceof DoorGO){
-			value = save.createTextNode(((DoorGO) occupant).getDescription());
+			value = save.createTextNode(((DoorGO) occupant).getDescription()); //cast to appropriate class and get value
 		}else if (occupant instanceof FixedGO){
-			value = save.createTextNode(((FixedGO) occupant).getDescription());			
+			value = save.createTextNode(((FixedGO) occupant).getDescription());	 //cast to appropriate class and get value	
 		}else if (occupant instanceof MarkerGO){
-			value = save.createTextNode(((MarkerGO) occupant).getDescription());			
+			value = save.createTextNode(((MarkerGO) occupant).getDescription());	 //cast to appropriate class and get value		
 		}else if (occupant instanceof Player){
-			value = save.createTextNode(((Player) occupant).getDescription());			
+			value = save.createTextNode(((Player) occupant).getDescription());		//cast to appropriate class and get value	
 		}else if (occupant instanceof MovableGO){
-			value = save.createTextNode(((MovableGO) occupant).getDescription());			
+			value = save.createTextNode(((MovableGO) occupant).getDescription());	//cast to appropriate class and get value		
 		}
 		
-		Element description = save.createElement("description");
-		description.appendChild(value);
-		return description;
+		Element description = save.createElement("description"); //create node to identify description
+		description.appendChild(value); 	//append value
+		return description;		//return final Node
 	}
 	
-	public Element saveSize(GameObject occupant){
-		Text value = save.createTextNode("");
+	/**
+	 * Save the field "size" to a Node
+	 * 
+	 * @param occupant -- the GameObject whose size is required
+	 * @return size -- Node containing the field size
+	 */
+	private Element saveSize(GameObject occupant){
+		Text value = save.createTextNode("");	//initialize
 		if(occupant instanceof InventoryGO){
-			value = save.createTextNode("" + ((InventoryGO) occupant).getSize());
+			value = save.createTextNode("" + ((InventoryGO) occupant).getSize()); //cast to appropriate class and get value
 		}else if (occupant instanceof FixedContainerGO){
-			value = save.createTextNode("" + ((FixedContainerGO) occupant).getSize());
+			value = save.createTextNode("" + ((FixedContainerGO) occupant).getSize()); //cast to appropriate class and get value
 		}
-			Element size = save.createElement("size");
-			size.appendChild(value);
-			return size;
+			Element size = save.createElement("size");	//create node to identify size
+			size.appendChild(value);	//append value to node
+			return size;		//return final Node
 	}
 	
-	public Element saveAreaName(GameObject occupant){
-		Text value = save.createTextNode("");
+	/**
+	 * Save the field "areaName" to a Node
+	 * @param occupant -- the GameObject whose areaName is required
+	 * @return areaName -- Node containing the field areaName
+	 */
+	private Element saveAreaName(GameObject occupant){
+		Text value = save.createTextNode("");	//initialize
 		if(occupant instanceof InventoryGO){
-			value = save.createTextNode(((InventoryGO) occupant).getAreaName());
+			value = save.createTextNode(((InventoryGO) occupant).getAreaName()); //cast to appropriate class and get value
 		}else if (occupant instanceof MovableGO){
-			value = save.createTextNode(((MovableGO) occupant).getAreaName());
+			value = save.createTextNode(((MovableGO) occupant).getAreaName());	//cast to appropriate class and get value
 		}else if (occupant instanceof NonHumanPlayer){
-			value = save.createTextNode((((NonHumanPlayer) occupant).getCurrentArea().getAreaName()));
+			value = save.createTextNode((((NonHumanPlayer) occupant).getCurrentArea().getAreaName()));	//cast to appropriate class and get value
 		}else if (occupant instanceof FixedContainerGO){
-			value = save.createTextNode((((FixedContainerGO) occupant).getArea()));
+			value = save.createTextNode((((FixedContainerGO) occupant).getArea()));	//cast to appropriate class and get value
 		}else if (occupant instanceof Player){
-			value = save.createTextNode((((Player) occupant).getCurrentArea().getAreaName()));
+			value = save.createTextNode((((Player) occupant).getCurrentArea().getAreaName()));	//cast to appropriate class and get value
 		}
-		Element areaName = save.createElement("areaName");
-		areaName.appendChild(value);
-		return areaName;
+		Element areaName = save.createElement("areaName"); //create node to identify areaName value
+		areaName.appendChild(value);		//append value
+		return areaName;	//return final Node
 
 	}
 	
-	public Document loadXML(){
+	/**
+	 * Loads a given XML file as a DOM Structure into memory so that it can be parse and have information read
+	 * from it. 
+	 * 
+	 * @return document -- the DOM Structure of the saved XML file
+	 */
+	private Document loadXML(){
 		try{
-			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-		    DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-		    Document document = docBuilder.parse(new File("saveNew.xml"));
+			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();	//Create a builder factory instance
+		    DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();	//create a document builder to construct the Document
+		    Document document = docBuilder.parse(new File("saveNew.xml")); 		//create the document by parsing the XML File
 		    return document;
-		}catch(SAXException ex){
+		}catch(SAXException ex){	//catch exception
 			ex.printStackTrace();
-		}catch(IOException ex){
+		}catch(IOException ex){		//catch exception
 			ex.printStackTrace();
-		}catch(ParserConfigurationException ex){
+		}catch(ParserConfigurationException ex){	//catch exception
 			ex.printStackTrace();
 		}
-		return null;
+		return null;	//should never reach here, just to keep the compiler happy
 	}
 	
-
-	public void createXML(){
+	/**
+	 * Creates a new XML File by transforming the DOM Structure "save" into a new File
+	 */
+	private void createXML(){
 		try{
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			Transformer transformer = transformerFactory.newTransformer();
-			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();	//creates a transformer factory instance
+			Transformer transformer = transformerFactory.newTransformer();	//create a new transformer
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");		//set Output Properties
 			transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 			//transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "save.dtd");
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-			DOMSource source = new DOMSource(save);
-			StreamResult result = new StreamResult(new File("saveNew.xml"));
-			transformer.transform(source, result);
+			DOMSource source = new DOMSource(save);		//select the sourse document
+			StreamResult result = new StreamResult(new File("saveNew.xml"));	//select the output File
+			transformer.transform(source, result);	//transform
 			// Output to console for testing
 			StreamResult consoleResult =new StreamResult(System.out);
 			transformer.transform(source, consoleResult);
 			
 			load();
-		}catch(TransformerException e){
+		}catch(TransformerException e){	//catch Exception
 			e.printStackTrace();
 		}
 	}
