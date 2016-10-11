@@ -65,17 +65,21 @@ public class UIPanel extends JPanel {
 		top.add(topLeft, BorderLayout.WEST);
 		top.add(topBorder, BorderLayout.CENTER);
 		top.add(topRight, BorderLayout.EAST);
+		top.setOpaque(false);
 
 		//side borders
 		JPanel mid = new JPanel(new BorderLayout(0,0));
 		mid.add(leftBorder, BorderLayout.WEST);
 		mid.add(rightBorder, BorderLayout.EAST);
+		mid.setBackground(Color.BLACK);
+		mid.setOpaque(true);
 
 		//bottom border
 		JPanel bottom = new JPanel(new BorderLayout(0,0));
 		bottom.add(bottomLeft, BorderLayout.WEST);
 		bottom.add(bottomBorder, BorderLayout.CENTER);
 		bottom.add(bottomRight, BorderLayout.EAST);
+		bottom.setOpaque(false);
 
 		//adds top border to  background
 		background.add(top, BorderLayout.NORTH);
@@ -91,6 +95,7 @@ public class UIPanel extends JPanel {
 
 		//assigns coordinates for panel to be displayed
 		this.panel.setBounds(6,6,(width-12),(height-12));
+		this.panel.setOpaque(false);
 		//adds panel over top background panel
 		layers.add(this.panel, new Integer(1), 0);
 

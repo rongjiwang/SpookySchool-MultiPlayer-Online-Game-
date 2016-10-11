@@ -4,6 +4,8 @@ import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,6 +14,7 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -43,7 +46,8 @@ public class InfoPanel extends JPanel{
 	private Image background;
 
 	public InfoPanel(Container contentPane, GameFrame home, UIImageMap imageMap){
-		super(new BorderLayout(0,0));
+		super();
+		
 		//sets game frame
 		this.home = home;
 		//sets where this will be displayed
@@ -76,16 +80,19 @@ public class InfoPanel extends JPanel{
 
 		//creates OK button and assigns it a mouse listener
 		ok = new JLabel(icons[0]);
+		ok.setPreferredSize(new Dimension(icons[0].getIconWidth(), icons[0].getIconHeight()));
 		ok.addMouseListener(listen);
 		this.setOpaque(false);
 		//adds text to panel
 
-		JPanel storePanels = new JPanel(new BorderLayout());
-		storePanels.setOpaque(false);
-		storePanels.add(new UIPanel(textPanel, 400, 400, imageMap), BorderLayout.NORTH);
+		
+		this.add(Box.createRigidArea(new Dimension(160,1)));
+		this.add(new UIPanel(textPanel, 400, 350, imageMap));
+		this.add(Box.createRigidArea(new Dimension(160,1)));
+		//this.add(Box.createRigidArea(new Dimension(200,1)));
 		//adds ok button to panel
-		storePanels.add(ok, BorderLayout.WEST);
-		this.add(storePanels);
+		this.add(ok);
+		
 	}
 
 	/**
