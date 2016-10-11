@@ -531,7 +531,12 @@ public class SpookySchool {
 					}
 				}
 
-				this.getBundle(playerName).setMessage("The door is locked. You dont have the key to open this door.");
+				if (door.getTokenA().contains("w")) {
+					this.getBundle(playerName).setMessage("The window is locked.");
+				} else {
+					this.getBundle(playerName)
+							.setMessage("The door is locked. You dont have the key to open this door.");
+				}
 
 				return; //Couldnt unlock door.
 			}
@@ -974,8 +979,8 @@ public class SpookySchool {
 	public List<NonHumanPlayer> getNonHumanPlayers() {
 		return this.nonHumanPlayers;
 	}
-	
-	public Map<String, FixedContainerGO> getFixedContainerObjects(){
+
+	public Map<String, FixedContainerGO> getFixedContainerObjects() {
 		return this.fixedContainerObjects;
 	}
 }

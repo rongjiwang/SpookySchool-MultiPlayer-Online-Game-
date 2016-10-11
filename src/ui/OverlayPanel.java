@@ -1,11 +1,9 @@
 package ui;
 
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.io.IOException;
 
 import javax.swing.JPanel;
 
@@ -60,8 +58,6 @@ public class OverlayPanel extends JPanel {
 			font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
 			Graphics2D g2d = (Graphics2D) getGraphics();
 			g2d.setFont(font.deriveFont(Font.TRUETYPE_FONT, 12f));
-
-
 		} catch (Exception e) {
 		}
 
@@ -92,14 +88,9 @@ public class OverlayPanel extends JPanel {
 			g2d.drawImage(spriteMap.getImage("H0"), headerX, headerY, null);
 
 			//Set the font.
-			try {
-				font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
-				g2d.setFont(font.deriveFont(Font.TRUETYPE_FONT, 12f));
-			} catch (FontFormatException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			//font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
+			g2d.setFont(font.deriveFont(Font.TRUETYPE_FONT, 12f));
+
 
 
 			//Draw the header message in the center.
