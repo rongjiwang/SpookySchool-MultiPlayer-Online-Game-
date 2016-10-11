@@ -20,7 +20,6 @@ import game.FixedContainerGO;
 import game.FloorTile;
 import game.GameObject;
 import game.MarkerGO;
-import game.NonHumanPlayer;
 import game.Player;
 import game.Position;
 import game.Tile;
@@ -113,7 +112,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			overlayPanel.setFooterMessage(bundle.getMessage());
 		}
 
-
 		this.mainPlayer = bundle.getPlayerObj();
 
 		this.previousAreaObjects = this.currentAreaObjects;
@@ -167,7 +165,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					GameObject currentObj = this.currentAreaObjects.get(i);
 
 					//FIXME: Only allowing player animation for now.
-					if (!(previousObj instanceof Player) && !(previousObj instanceof NonHumanPlayer)) {
+					if (!(previousObj instanceof Player)) {
 						continue;
 					}
 
