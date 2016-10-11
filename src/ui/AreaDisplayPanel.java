@@ -26,6 +26,12 @@ import game.Tile;
 import game.WallTile;
 import network.Client;
 
+/**
+ * The window where the game is rendered
+ * 
+ * @author cameronmclachlan
+ *
+ */
 public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListener {
 
 	private OverlayPanel overlayPanel;
@@ -40,8 +46,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	private final int tileWidth = 32;
 	private final int tileHeight = 25;
 
-	private int mainPlayerXBuff;
-	private int mainPlayerYBuff;
+	// x and Y buff when inbetween tiles 
+	private int mainPlayerXBuff; // 0 >= xBuff <= 32
+	private int mainPlayerYBuff; // 0 >= xBuff <= 32
 
 	// Map Offset
 	private int renderOffSetX;
@@ -80,6 +87,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 	public AreaDisplayPanel(Client client, GameFrame gf, SpriteMap spriteMap) {
 
+		// setup panel
 		this.setBackground(Color.darkGray);
 		this.setFocusable(true);
 		this.requestFocus();
@@ -96,6 +104,10 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		this.gameFrame = gf;
 	}
 
+	/**
+	 * Creates a 
+	 * @param overlayPanel
+	 */
 	public void setOverLay(OverlayPanel overlayPanel) {
 		this.overlayPanel = overlayPanel;
 		overlayPanel.setOpaque(false);
@@ -418,7 +430,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			if (roomObj == null) {
 				return;
 			}
-
+			
+			// if object is a door/window
 			if (roomObj instanceof DoorGO) {
 				DoorGO door = (DoorGO) roomObj;
 				Position doorPos = door.getPosition(this.mainPlayer.getCurrentArea().getAreaName());
@@ -429,6 +442,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					adjustY = (tileImage.getHeight(null) / 2);
 				}
 
+
+			// if object is a container(chest)
 			} else if (roomObj instanceof FixedContainerGO) {
 				FixedContainerGO container = (FixedContainerGO) roomObj;
 				Position containerPos = container.getPosition();
@@ -438,6 +453,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 					adjustY = (tileImage.getHeight(null) / 2);
 				}
 
+			// maker is a game
 			} else if ((!(roomObj instanceof MarkerGO)) && roomObj.getPosition().getPosX() == x
 					&& roomObj.getPosition().getPosY() == y) {
 
@@ -572,6 +588,14 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			view = 0;
 	}
 
+	/**
+	 * Gets the appropriate token for an doors/windows/chests dpending on the current view,
+	 * the way its facing, and if its unlocked or locked
+	 * 
+	 * @param token - original token
+	 * @param unlocked
+	 * @return - new token
+	 */
 	public String getAnimatedDoorToken(String token, boolean unlocked) {
 		if (token == null) {
 			return null;
@@ -791,7 +815,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 			rotate(1);
 			this.centerPlayer();
-			//this.repaint();
 			break;
 
 		case KeyEvent.VK_L:
@@ -802,7 +825,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 			rotate(-1);
 			this.centerPlayer();
-			//this.repaint();
 			break;
 		}
 	}
