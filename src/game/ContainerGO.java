@@ -3,6 +3,11 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents a container inventory object.
+ * @author Pritesh R. Patel
+ *
+ */
 public class ContainerGO extends InventoryGO {
 
 	private static final long serialVersionUID = 5250695679285364004L;
@@ -10,7 +15,6 @@ public class ContainerGO extends InventoryGO {
 	private List<InventoryGO> contents = new ArrayList<InventoryGO>();
 	private final int size;
 	private int sizeRemaining;
-
 
 	public ContainerGO(String name, String id, String token, int size, String areaName, Position pos,
 			String description) {
@@ -22,7 +26,6 @@ public class ContainerGO extends InventoryGO {
 		this.sizeRemaining = size;
 
 	}
-
 
 	/**
 	 * Attempt to add the given item to the container.
@@ -38,7 +41,6 @@ public class ContainerGO extends InventoryGO {
 		this.sizeRemaining = this.sizeRemaining - item.getSize();
 		return true;
 	}
-
 
 	/**
 	 * Get all of the items in the inventory. ClearContainer() method should be called after using/calling this method.
@@ -59,7 +61,7 @@ public class ContainerGO extends InventoryGO {
 	}
 
 	/**
-	 * Clear the contents of this container. 
+	 * Clear the contents of this container.
 	 * Note, calling this method will mean you lose all inventory items that may be in the container.
 	 */
 	public void clearContainer() {
@@ -67,14 +69,12 @@ public class ContainerGO extends InventoryGO {
 		this.contents.clear();
 	}
 
-
 	/**
 	 * @return true if the container is empty and false otherwise.
 	 */
 	public boolean isEmpty() {
 		return this.size == this.sizeRemaining;
 	}
-
 
 	/**
 	 * The space that is left in the container..
@@ -84,11 +84,9 @@ public class ContainerGO extends InventoryGO {
 		return sizeRemaining;
 	}
 
-
 	@Override
 	public int getSize() {
 		return size;
 	}
-
 
 }

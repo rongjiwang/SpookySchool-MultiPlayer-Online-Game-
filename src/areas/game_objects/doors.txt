@@ -19,7 +19,7 @@ dd4 closed locked NULL Dorm_room w20 6 11 6 10 Outside w00 7 5 7 6
 dd5 closed locked NULL Dorm_room w20 12 11 12 10 Outside w00 11 5 11 6
 hw1 closed locked NULL Hallway w10 25 2 24 2 Outside w30 14 2 15 2
 od2 closed locked NULL Outside d30 5 11 6 11 Room_to_nowhere d10 5 3 4 3
-Shd1 closed unlocked null Staff_hallway d20 2 8 2 7 Principles_office d00 2 0 2 1
+Shd1 closed locked key_5 Staff_hallway d20 2 8 2 7 Principles_office d00 2 0 2 1
 Shd2 closed unlocked null Staff_hallway d10 4 3 3 3 Staff_toilet d30 0 2 1 2
 Shd3 closed unlocked null Staff_hallway d10 4 5 3 5 Staff_toilet2 d30 0 2 1 2
 Sw1 closed locked NULL Staff_room w00 3 0 3 1 Outside w20 19 6 19 5

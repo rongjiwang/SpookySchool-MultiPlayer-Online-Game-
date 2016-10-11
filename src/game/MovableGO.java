@@ -1,5 +1,10 @@
 package game;
 
+/**
+ * THis class represents a game object that can be pushed by a player.
+ * @author Pritesh R. Patel
+ *
+ */
 public class MovableGO implements GameObject {
 
 	private static final long serialVersionUID = 4547800855384957101L;
@@ -17,7 +22,6 @@ public class MovableGO implements GameObject {
 		this.areaName = area;
 		this.position = position;
 	}
-
 
 	/** GETTERS AND SETTERS **/
 
@@ -49,7 +53,6 @@ public class MovableGO implements GameObject {
 	public String getDescription() {
 		return this.description;
 	}
-
 
 	@Override
 	public void setDescription(String desc) {

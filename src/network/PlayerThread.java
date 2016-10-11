@@ -11,7 +11,7 @@ import game.SpookySchool;
 import ui.CreateServerPanel;
 
 /**
- *
+ * A player thread is a thread that is created on the server for each player that connects and joins the game.
  * @author Rongji Wang
  * @author Pritesh R. Patel
  */

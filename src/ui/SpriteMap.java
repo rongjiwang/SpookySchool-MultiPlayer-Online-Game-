@@ -156,37 +156,42 @@ public class SpriteMap {
 		spriteMap.put("pc1", loadImage("principleChair1.png"));
 		spriteMap.put("pc2", loadImage("principleChair2.png"));
 		spriteMap.put("pc3", loadImage("principleChair3.png"));
-		
+
+		//principle desk
+		spriteMap.put("pd0", loadImage("principleDesk0.png"));
+		spriteMap.put("pd1", loadImage("principleDesk1.png"));
+		spriteMap.put("pd2", loadImage("principleDesk2.png"));
+		spriteMap.put("pd3", loadImage("principleDesk3.png"));
+
 		// pizza
 		spriteMap.put("pi0", loadImage("pizza0.png"));
 		spriteMap.put("pi1", loadImage("pizza1.png"));
 		spriteMap.put("pi2", loadImage("pizza2.png"));
 		spriteMap.put("pi3", loadImage("pizza3.png"));
-		
+
 		// pizza
 		spriteMap.put("ep0", loadImage("examPaper0.png"));
 		spriteMap.put("ep1", loadImage("examPaper1.png"));
 		spriteMap.put("ep2", loadImage("examPaper2.png"));
 		spriteMap.put("ep3", loadImage("examPaper3.png"));
-		
 
 		//book
 		spriteMap.put("bO0", loadImage("book0.png"));
 		spriteMap.put("bO1", loadImage("book1.png"));
 		spriteMap.put("bO2", loadImage("book2.png"));
 		spriteMap.put("bO3", loadImage("book3.png"));
-		
+
 		//Burger
 		spriteMap.put("bu0", loadImage("burger0.png"));
 		spriteMap.put("bu1", loadImage("burger1.png"));
 		spriteMap.put("bu2", loadImage("burger2.png"));
 		spriteMap.put("bu3", loadImage("burger3.png"));
-		
+
 		//waterBottle
-		spriteMap.put("bu0", loadImage("waterBottle0.png"));
-		spriteMap.put("bu1", loadImage("waterBottle1.png"));
-		spriteMap.put("bu2", loadImage("waterBottle2.png"));
-		spriteMap.put("bu3", loadImage("waterBottle3.png"));
+		spriteMap.put("bu0", loadImage("waterbottle0.png"));
+		spriteMap.put("bu1", loadImage("waterbottle1.png"));
+		spriteMap.put("bu2", loadImage("waterbottle2.png"));
+		spriteMap.put("bu3", loadImage("waterbottle3.png"));
 
 		// tv
 		spriteMap.put("tv0", loadImage("tv0.png"));
@@ -223,10 +228,10 @@ public class SpriteMap {
 		spriteMap.put("la1", loadImage("lamp1.png"));
 		spriteMap.put("la2", loadImage("lamp2.png"));
 		spriteMap.put("la3", loadImage("lamp3.png"));
-		//spriteMap.put("La0", loadImage("laptop0.png"));
-		//spriteMap.put("La1", loadImage("laptop1.png"));
-		//spriteMap.put("La2", loadImage("laptop2.png"));
-		//spriteMap.put("La3", loadImage("laptop3.png"));
+		spriteMap.put("La0", loadImage("Laptop0.png"));
+		spriteMap.put("La1", loadImage("Laptop1.png"));
+		spriteMap.put("La2", loadImage("Laptop2.png"));
+		spriteMap.put("La3", loadImage("Laptop3.png"));
 		spriteMap.put("pe0", loadImage("potEmpty0.png"));
 		spriteMap.put("pe1", loadImage("potEmpty1.png"));
 		spriteMap.put("pe2", loadImage("potEmpty2.png"));
@@ -349,7 +354,7 @@ public class SpriteMap {
 		spriteMap.put("0p32", loadImage("0Player32.png"));
 		spriteMap.put("0p33", loadImage("0Player33.png"));
 
-		// player 
+		// player
 		spriteMap.put("1p00", loadImage("1Player00.png"));
 		spriteMap.put("1p01", loadImage("1Player01.png"));
 		spriteMap.put("1p02", loadImage("1Player02.png"));
@@ -385,7 +390,7 @@ public class SpriteMap {
 		spriteMap.put("2p21", loadImage("2Player21.png"));
 		spriteMap.put("2p22", loadImage("2Player22.png"));
 		spriteMap.put("2p23", loadImage("2Player23.png"));
-		
+
 		spriteMap.put("2p30", loadImage("2Player30.png"));
 		spriteMap.put("2p31", loadImage("2Player31.png"));
 		spriteMap.put("2p32", loadImage("2Player32.png"));
@@ -395,12 +400,12 @@ public class SpriteMap {
 		spriteMap.put("3p01", loadImage("3Player01.png"));
 		spriteMap.put("3p02", loadImage("3Player02.png"));
 		spriteMap.put("3p03", loadImage("3Player03.png"));
-		
+
 		spriteMap.put("3p10", loadImage("3Player10.png"));
 		spriteMap.put("3p11", loadImage("3Player11.png"));
 		spriteMap.put("3p12", loadImage("3Player12.png"));
 		spriteMap.put("3p13", loadImage("3Player13.png"));
-		
+
 		spriteMap.put("3p20", loadImage("3Player20.png"));
 		spriteMap.put("3p21", loadImage("3Player21.png"));
 		spriteMap.put("3p22", loadImage("3Player22.png"));

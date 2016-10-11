@@ -1,5 +1,10 @@
 package game;
 
+/**
+ * This class represents a game object that is an inventory object. This means players can hold this type of object in their inventory.
+ * @author Pritesh R. Patel
+ *
+ */
 public class InventoryGO implements GameObject {
 
 	private static final long serialVersionUID = -1272721150110182719L;
@@ -25,7 +30,6 @@ public class InventoryGO implements GameObject {
 		this.position = pos;
 		this.description = description;
 	}
-
 
 	/** GETTERS AND SETTERS **/
 
@@ -68,16 +72,13 @@ public class InventoryGO implements GameObject {
 
 	}
 
-
 	public String getAreaName() {
 		return areaName;
 	}
 
-
 	public void setAreaName(String areaName) {
 		this.areaName = areaName;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -88,7 +89,6 @@ public class InventoryGO implements GameObject {
 		result = prime * result + ((token == null) ? 0 : token.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {

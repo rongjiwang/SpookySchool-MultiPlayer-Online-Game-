@@ -2,6 +2,11 @@ package game;
 
 import java.util.List;
 
+/**
+ * This class represents an NPC player.
+ * @author Pritesh R. Patel
+ *
+ */
 public class NonHumanPlayer extends Player {
 
 	private List<String> directions; //Holds the list of directions the player will move.

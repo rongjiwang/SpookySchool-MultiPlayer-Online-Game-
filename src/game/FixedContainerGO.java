@@ -3,6 +3,11 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a container object that is fixed on the map.
+ * @author Pritesh R. Patel
+ *
+ */
 public class FixedContainerGO implements GameObject {
 
 	private static final long serialVersionUID = 118153527696427133L;
@@ -131,7 +136,7 @@ public class FixedContainerGO implements GameObject {
 	}
 
 	/**
-	 * Clear the contents of this container. 
+	 * Clear the contents of this container.
 	 * Note, calling this method will mean you lose all inventory items that may be in the container.
 	 */
 	public void clearContainer() {
@@ -145,7 +150,6 @@ public class FixedContainerGO implements GameObject {
 	public boolean isEmpty() {
 		return this.size == this.sizeRemaining;
 	}
-
 
 	/**
 	 * The space that is left in the container..
