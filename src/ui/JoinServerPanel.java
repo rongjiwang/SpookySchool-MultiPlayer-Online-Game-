@@ -147,7 +147,7 @@ public class JoinServerPanel extends JPanel {
 				try {
 					//Create a client if we haven't already.
 					if (client == null) {
-						int timeout = 4000;
+						int timeout = 5000;
 						InetSocketAddress inetAddress = new InetSocketAddress(ipAddress, port);
 //						Socket s = new Socket(ipAddress, port);
 						Socket s = new Socket();
