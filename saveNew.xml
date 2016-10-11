@@ -704,6 +704,22 @@
             </pos>
             <description> The key for storage chest</description>
         </inventoryObject>
+        <fixedContainer id="FixedContainer10">
+            <name>Chest</name>
+            <areaName>Spawn_6</areaName>
+            <id>FixedContainer10</id>
+            <token>ch30</token>
+            <open>false</open>
+            <locked>false</locked>
+            <id>null</id>
+            <pos>
+                <x>3</x>
+                <y>10</y>
+            </pos>
+            <size>6</size>
+            <contents/>
+            <sizeRemaining>6</sizeRemaining>
+        </fixedContainer>
     </room>
     <room>
         <height>11</height>
@@ -1409,6 +1425,22 @@
             </pos>
             <description> The key for storage chest</description>
         </inventoryObject>
+        <fixedContainer id="FixedContainer11">
+            <name>Chest</name>
+            <areaName>Spawn_7</areaName>
+            <id>FixedContainer11</id>
+            <token>ch30</token>
+            <open>false</open>
+            <locked>false</locked>
+            <id>null</id>
+            <pos>
+                <x>3</x>
+                <y>10</y>
+            </pos>
+            <size>6</size>
+            <contents/>
+            <sizeRemaining>6</sizeRemaining>
+        </fixedContainer>
     </room>
     <room>
         <height>11</height>
@@ -2114,6 +2146,22 @@
             </pos>
             <description> The key for storage chest</description>
         </inventoryObject>
+        <fixedContainer id="FixedContainer8">
+            <name>Chest</name>
+            <areaName>Spawn_4</areaName>
+            <id>FixedContainer8</id>
+            <token>ch30</token>
+            <open>false</open>
+            <locked>false</locked>
+            <id>null</id>
+            <pos>
+                <x>7</x>
+                <y>2</y>
+            </pos>
+            <size>6</size>
+            <contents/>
+            <sizeRemaining>6</sizeRemaining>
+        </fixedContainer>
     </room>
     <room>
         <height>11</height>
@@ -2819,6 +2867,22 @@
             </pos>
             <description> The key for storage chest</description>
         </inventoryObject>
+        <fixedContainer id="FixedContainer9">
+            <name>Chest</name>
+            <areaName>Spawn_5</areaName>
+            <id>FixedContainer9</id>
+            <token>ch30</token>
+            <open>false</open>
+            <locked>false</locked>
+            <id>null</id>
+            <pos>
+                <x>3</x>
+                <y>10</y>
+            </pos>
+            <size>6</size>
+            <contents/>
+            <sizeRemaining>6</sizeRemaining>
+        </fixedContainer>
     </room>
     <room>
         <height>11</height>
@@ -4491,6 +4555,22 @@
             </pos>
             <description> The key for storage chest</description>
         </inventoryObject>
+        <fixedContainer id="FixedContainer12">
+            <name>Chest</name>
+            <areaName>Spawn_8</areaName>
+            <id>FixedContainer12</id>
+            <token>ch30</token>
+            <open>false</open>
+            <locked>false</locked>
+            <id>null</id>
+            <pos>
+                <x>3</x>
+                <y>10</y>
+            </pos>
+            <size>6</size>
+            <contents/>
+            <sizeRemaining>6</sizeRemaining>
+        </fixedContainer>
     </room>
     <room>
         <height>8</height>
@@ -8279,7 +8359,7 @@
             <areaName>Outside</areaName>
             <pos>
                 <x>16</x>
-                <y>16</y>
+                <y>11</y>
             </pos>
         </nonHumanPlayer>
         <inventoryObject id="NULL">
@@ -8414,6 +8494,22 @@
             </pos>
             <description> The key for storage chest</description>
         </inventoryObject>
+        <fixedContainer id="FixedContainer3">
+            <name>Chest</name>
+            <areaName>Outside</areaName>
+            <id>FixedContainer3</id>
+            <token>ch00</token>
+            <open>false</open>
+            <locked>true</locked>
+            <id>NULL</id>
+            <pos>
+                <x>20</x>
+                <y>15</y>
+            </pos>
+            <size>6</size>
+            <contents/>
+            <sizeRemaining>6</sizeRemaining>
+        </fixedContainer>
     </room>
     <room>
         <height>9</height>
@@ -9035,6 +9131,22 @@
             </pos>
             <description> The key for storage chest</description>
         </inventoryObject>
+        <fixedContainer id="FixedContainer4">
+            <name>Chest</name>
+            <areaName>Principles_office</areaName>
+            <id>FixedContainer4</id>
+            <token>ch30</token>
+            <open>false</open>
+            <locked>true</locked>
+            <id>NULL</id>
+            <pos>
+                <x>1</x>
+                <y>3</y>
+            </pos>
+            <size>6</size>
+            <contents/>
+            <sizeRemaining>6</sizeRemaining>
+        </fixedContainer>
     </room>
     <room>
         <height>17</height>
@@ -10562,8 +10674,8 @@
             <token>la0</token>
             <areaName>Dorm_room</areaName>
             <pos>
-                <x>5</x>
-                <y>5</y>
+                <x>8</x>
+                <y>10</y>
             </pos>
             <description>This is a movable object.</description>
         </movableGO>
@@ -12636,6 +12748,22 @@
             </pos>
             <description> The key for storage chest</description>
         </inventoryObject>
+        <fixedContainer id="FixedContainer6">
+            <name>Chest</name>
+            <areaName>Spawn_2</areaName>
+            <id>FixedContainer6</id>
+            <token>ch30</token>
+            <open>false</open>
+            <locked>false</locked>
+            <id>null</id>
+            <pos>
+                <x>7</x>
+                <y>2</y>
+            </pos>
+            <size>6</size>
+            <contents/>
+            <sizeRemaining>6</sizeRemaining>
+        </fixedContainer>
     </room>
     <room>
         <height>5</height>
@@ -13811,6 +13939,22 @@
             </pos>
             <description> The key for storage chest</description>
         </inventoryObject>
+        <fixedContainer id="FixedContainer7">
+            <name>Chest</name>
+            <areaName>Spawn_3</areaName>
+            <id>FixedContainer7</id>
+            <token>ch30</token>
+            <open>false</open>
+            <locked>false</locked>
+            <id>null</id>
+            <pos>
+                <x>7</x>
+                <y>2</y>
+            </pos>
+            <size>6</size>
+            <contents/>
+            <sizeRemaining>6</sizeRemaining>
+        </fixedContainer>
     </room>
     <room>
         <height>26</height>
@@ -15479,15 +15623,31 @@
             </pos>
             <description> The key for storage chest</description>
         </inventoryObject>
+        <fixedContainer id="FixedContainer5">
+            <name>Chest</name>
+            <areaName>Spawn_1</areaName>
+            <id>FixedContainer5</id>
+            <token>ch30</token>
+            <open>false</open>
+            <locked>false</locked>
+            <id>null</id>
+            <pos>
+                <x>7</x>
+                <y>2</y>
+            </pos>
+            <size>6</size>
+            <contents/>
+            <sizeRemaining>6</sizeRemaining>
+        </fixedContainer>
     </room>
     <player>
-        <name>Bob</name>
+        <name>Marcus</name>
         <areaName>Spawn_6</areaName>
         <pos>
             <x>5</x>
             <y>8</y>
         </pos>
         <token>0p20</token>
-        <description>Bob</description>
+        <description>Marcus</description>
     </player>
 </game>

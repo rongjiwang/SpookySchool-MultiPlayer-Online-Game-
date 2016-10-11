@@ -9,21 +9,21 @@ import javax.imageio.ImageIO;
 
 /**
  * Holds a map of all image objects used in creation of UI
- * 
+ *
  * @author Andy
  *
  */
 public class UIImageMap {
 	private static final String IMAGE_PATH = "UIimages/";
 	private HashMap<String, Image> spriteMap;
-	
+
 	public UIImageMap(){
 		loadMap();
 	}
-	
+
 	/**
 	 * Returns corresponding image object from given token string
-	 * 
+	 *
 	 * @param - token
 	 * @return - Image
 	 */
@@ -32,7 +32,7 @@ public class UIImageMap {
 		if(image == null){
 			System.out.println("null image on input " + token);
 		}
-		return image;	
+		return image;
 	}
 
 	/**
@@ -40,22 +40,22 @@ public class UIImageMap {
 	 */
 	public void loadMap(){
 		spriteMap = new HashMap<String, Image>();
-		
+
 		//borders
 		spriteMap.put("bB",loadImage("bottomBorder.png"));
 		spriteMap.put("lB",loadImage("leftBorder.png"));
 		spriteMap.put("rB",loadImage("rightBorder.png"));
 		spriteMap.put("tB",loadImage("topBorder.png"));
-		
+
 		//corner
 		spriteMap.put("tL",loadImage("topLeft.png"));
 		spriteMap.put("tR",loadImage("topRight.png"));
 		spriteMap.put("bL",loadImage("bottomLeft.png"));
 		spriteMap.put("bR",loadImage("bottomRight.png"));
-		
+
 		//highlight
 		spriteMap.put("hi",loadImage("highlight.png"));
-		
+
 		//buttons
 		spriteMap.put("ab",loadImage("about.png"));
 		spriteMap.put("abhi",loadImage("abouthighlight.png"));
@@ -71,18 +71,18 @@ public class UIImageMap {
 		spriteMap.put("ubhi",loadImage("uparrowhigh.png"));
 		spriteMap.put("db",loadImage("downarrow.png"));
 		spriteMap.put("dbhi", loadImage("downarrowhigh.png"));
-		
+
 		//inv background
 		spriteMap.put("invBack",loadImage("invBackground.png"));
 		spriteMap.put("invPanel", loadImage("invPanel.png"));
 		spriteMap.put("invPanel2", loadImage("invPanel2.png"));
-		
-		
+		spriteMap.put("infBack", loadImage("infobackground.png"));
+
 	}
 
 	/**
 	 * Load an image from the file system, using a given filename.
-	 * 
+	 *
 	 * @param filename
 	 * @return
 	 */
