@@ -7,6 +7,7 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -19,8 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 /**
- * InfoPanel is displayed when user selects to display Information or About. It is inserted on the Glasspane of the frame 
- * 
+ * InfoPanel is displayed when user selects to display Information or About. It is inserted on the Glasspane of the frame
+ *
  * @author Andy
  *
  */
@@ -38,6 +39,8 @@ public class InfoPanel extends JPanel{
 	//button listener
 	private ButtonListen listen;
 
+	private Image background;
+
 	public InfoPanel(Container contentPane, GameFrame home, UIImageMap imageMap){
 		super(new BorderLayout(0,0));
 		//sets game frame
@@ -50,13 +53,13 @@ public class InfoPanel extends JPanel{
 		setIcons();
 		//creates new textpane to display information
 		infoTest = new JTextPane();
-		
+
 		//assigns custom font to the textpane
 		try {
 			Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("slkscr.ttf"));
 			infoTest.setFont(font.deriveFont(Font.TRUETYPE_FONT, 12f));
-		} catch (Exception e) {}		
-		
+		} catch (Exception e) {}
+
 		//sets formatting of text in textpane
 		infoTest.setForeground(Color.WHITE);
 		//ensures text cannot be changed
@@ -65,17 +68,17 @@ public class InfoPanel extends JPanel{
 		infoTest.setOpaque(false);
 		//listener for OK button
 		listen = new ButtonListen();
-		
+
 		//creates OK button and assigns it a mouse listener
 		ok = new JLabel(icons[0]);
 		ok.addMouseListener(listen);
-		
+		this.setOpaque(false);
 		//adds text to panel
 		this.add(infoTest, BorderLayout.NORTH);
 		//adds ok button to panel
 		this.add(ok, BorderLayout.WEST);
 	}
-	
+
 	/**
 	 * Sets the default and highlighted states for each button
 	 */
@@ -84,21 +87,22 @@ public class InfoPanel extends JPanel{
 
 		icons[0] = new ImageIcon(imageMap.getImage("ob"));
 		icons[1] = new ImageIcon(imageMap.getImage("obhi"));
-		
+		background = imageMap.getImage("infBack");
+
 	}
 	/**
 	 * Determines if this panel should display Info or About
-	 * 
+	 *
 	 * @param info if panel will be Info Panel or not
 	 */
 	public void setInfo(boolean info){
-		if(info){ 
+		if(info){
 			setAsInfo();
 		} else {
 			setAsAbout();
 		}
 	}
-	
+
 	/**
 	 * Sets text to info window
 	 */
@@ -107,7 +111,7 @@ public class InfoPanel extends JPanel{
 						"Controls: \n\n"+
 						"Use arrow keys to move.\n'l' : rotate screen anti-clockwise\n'r' : rotate screen clockwise\n'z' : perform an action (examine/open a door)");
 	}
-	
+
 	/**
 	 * Sets text to about window
 	 */
@@ -119,28 +123,17 @@ public class InfoPanel extends JPanel{
 				"- Rong Wang ( wangrong ) \nRong.Wang@ecs.vuw.ac.nz\n\n"+
 		        "- Chethana Wijesekera ( wijesechet ) \nChethana.Wijesekera@ecs.vuw.ac.nz");
 	}
-	
-	
+
+
 	@Override
 	public void paintComponent(Graphics gr) {
 		super.paintComponent(gr);//makes sure MyGlass's widgets are drawn automatically
-		
-		Graphics2D g = (Graphics2D) gr;
-				
-		//create (fake) transparency
-		AlphaComposite transparent = AlphaComposite.getInstance(AlphaComposite.SRC_OVER , .8f);
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING , RenderingHints.VALUE_ANTIALIAS_ON);
-		g.setComposite(transparent);
-		
-		//draw the contents of the JFrame's content pane upon our glass pane.
-		contentPane.paint(gr);
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, getWidth(), getHeight());
+		gr.drawImage(background, 0, 0, null);
 	}
-	
+
 	/**
 	 * Mouse listener for InfoPanel
-	 * 
+	 *
 	 * @author Andy
 	 *
 	 */

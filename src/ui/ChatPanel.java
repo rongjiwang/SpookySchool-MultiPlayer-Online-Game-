@@ -33,7 +33,7 @@ import network.Client;
 /**
  * ChatPanel is a jpanel that contains the chat window. This window displays any chat messages or system messages received
  * in the bundle, and displays them. The user can also send chat messages to the server to be displayed
- * 
+ *
  * @author Andy
  *
  */
@@ -43,12 +43,12 @@ public class ChatPanel extends JPanel{
 	private String playerName;
 	private Client client;
 	private UIImageMap imageMap;
-	
+
 	//Text area and message area
 	private JTextField typeArea;
 	private JTextPane messageList;
-		
-	//Text style 
+
+	//Text style
 	private StyledDocument styled;
 	private Style message;
 	private Style systemMessage;
@@ -56,15 +56,15 @@ public class ChatPanel extends JPanel{
 	//Send Button
 	private ImageIcon[] send;
 	private JLabel sendButton;
-	
+
 	//listeners
 	private ButtonListen listen;
 	private KeyListen keyListen;
-	
+
 	public ChatPanel(GameFrame display, String playerName, Client client, UIImageMap imageMap) {
 		super(new BorderLayout());
-		
-		//sets gameframe 
+
+		//sets gameframe
 		home = display;
 		//sets playername
 		this.playerName = playerName;
@@ -72,7 +72,7 @@ public class ChatPanel extends JPanel{
 		this.client = client;
 		//sets ImageMap
 		this.imageMap = imageMap;
-				
+
 		//Panel to hold message area and send button
 		JPanel southPanel = new JPanel();
 		Color newGrey = new Color(49, 45, 43);
@@ -89,7 +89,7 @@ public class ChatPanel extends JPanel{
 		//creates type area with keylistener
 		typeArea = new JTextField(30);
 		typeArea.addKeyListener(keyListen);
-		
+
 		//creates text button with mouselistener
 		sendButton = new JLabel(send[0]);
 		sendButton.addMouseListener(listen);
@@ -98,7 +98,7 @@ public class ChatPanel extends JPanel{
 		messageList = new JTextPane();
 		messageList.setEditable(false);
 		messageList.setOpaque(true);
-		
+
 		//ensure text area scrolls down when a new message is received
 		DefaultCaret caret = (DefaultCaret)messageList.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
@@ -108,8 +108,8 @@ public class ChatPanel extends JPanel{
 
 		//message style
 		message = messageList.addStyle("Message Style", null);
-		StyleConstants.setForeground(message, Color.BLACK);
-		
+		StyleConstants.setForeground(message, Color.darkGray);
+
 		//system message style
 		systemMessage = messageList.addStyle("System Message", null);
 		StyleConstants.setForeground(systemMessage, Color.RED);
@@ -150,15 +150,15 @@ public class ChatPanel extends JPanel{
 
 		//add south panel to panel
 		this.add(BorderLayout.SOUTH, southPanel);
-		
+
 		//visibility
 		this.setOpaque(true);
 		this.setVisible(true);
-	}	
+	}
 
 	/**
 	 * Adds a received message to the chat window, and applies a style based on what kind of message it is
-	 * 
+	 *
 	 * @param changes List of messages to add
 	 */
 	public void addChange(List<String> changes){
@@ -189,7 +189,7 @@ public class ChatPanel extends JPanel{
 
 	/**
 	 * This message gets the client
-	 * 
+	 *
 	 * @return client
 	 */
 	public Client getClient(){
@@ -198,7 +198,7 @@ public class ChatPanel extends JPanel{
 
 	/**
 	 * Key Listener for the Chat panel
-	 * 
+	 *
 	 * @author Andy
 	 *
 	 */
@@ -207,11 +207,11 @@ public class ChatPanel extends JPanel{
 		public void keyPressed(KeyEvent e) { //if Key is pressed
 			if(e.getKeyCode() == KeyEvent.VK_ENTER){ //if key is Enter
 				if (typeArea.getText().length() < 1) { //check that an actual message has been entered
-					// do nothing if empty 
+					// do nothing if empty
 				} else {
 					String chat = "CHAT :  " + typeArea.getText(); //gets text from message area
 					typeArea.setText(""); //removes text from message area
-					getClient().sendCommand(chat); //sends Chat command to client with text 
+					getClient().sendCommand(chat); //sends Chat command to client with text
 				}
 				home.refocus(); //refocuses on AreaDisplay Panel
 			} else if(e.getKeyCode() == KeyEvent.VK_ESCAPE){ //if user presses escape
@@ -230,7 +230,7 @@ public class ChatPanel extends JPanel{
 
 	/**
 	 * Button Listener for Chat panel
-	 * 
+	 *
 	 * @author Andy
 	 *
 	 */
@@ -239,18 +239,18 @@ public class ChatPanel extends JPanel{
 		@Override
 		public void mouseClicked(MouseEvent e) { //if user clicks send
 			if (typeArea.getText().length() < 1) { //check that an actual message has been entered
-				// do nothing if empty 
+				// do nothing if empty
 			} else {
 				String chat = "CHAT :  " + typeArea.getText(); //gets text from message area
 				typeArea.setText("");//removes text from message area
-				getClient().sendCommand(chat);//sends Chat command to client with text 
+				getClient().sendCommand(chat);//sends Chat command to client with text
 			}
 			home.refocus(); //refocuses on AreaDisplay Panel
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) { //if User highlights Send Button
-			sendButton.setIcon(send[1]); //changes icon to highlighted 
+			sendButton.setIcon(send[1]); //changes icon to highlighted
 
 		}
 

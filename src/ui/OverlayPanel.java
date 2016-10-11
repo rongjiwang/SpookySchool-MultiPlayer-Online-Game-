@@ -59,7 +59,6 @@ public class OverlayPanel extends JPanel {
 			Graphics2D g2d = (Graphics2D) getGraphics();
 			g2d.setFont(font.deriveFont(Font.TRUETYPE_FONT, 12f));
 		} catch (Exception e) {
-			System.out.println("Failed to load font.");
 		}
 
 		thread.start();
