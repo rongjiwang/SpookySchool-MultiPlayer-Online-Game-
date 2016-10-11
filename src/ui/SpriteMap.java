@@ -328,7 +328,7 @@ public class SpriteMap {
 		spriteMap.put("0p33", loadImage("0player33.png"));
 
 		// player 1
-		/*spriteMap.put("1p00",loadImage("1player00.png"));
+		spriteMap.put("1p00",loadImage("1player00.png"));
 		spriteMap.put("1p01",loadImage("1player01.png"));
 		spriteMap.put("1p02",loadImage("1player02.png"));
 		spriteMap.put("1p03",loadImage("1player03.png"));
@@ -389,7 +389,7 @@ public class SpriteMap {
 		spriteMap.put("3p30",loadImage("3player30.png"));
 		spriteMap.put("3p31",loadImage("3player31.png"));
 		spriteMap.put("3p32",loadImage("3player32.png"));
-		spriteMap.put("3p33",loadImage("3player33.png"));*/
+		spriteMap.put("3p33",loadImage("3player33.png"));
 
 		/*       Overlay Window      */
 
