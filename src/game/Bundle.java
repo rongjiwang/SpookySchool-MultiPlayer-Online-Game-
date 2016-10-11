@@ -11,12 +11,12 @@ import java.util.List;
  */
 public class Bundle implements Serializable {
 
-
 	private static final long serialVersionUID = 4395316495298730037L;
 	private String playerName;
 	private String message; //Message to be displayed onto the game screen.
 	private Player playerObj;
 	private List<String> chatLogChanges = new ArrayList<String>();
+	private List<GameObject> areaObjects = new ArrayList<GameObject>(); //Objects in the players current area.
 
 	public Bundle(String playerName) {
 		this.playerName = playerName;
@@ -26,6 +26,7 @@ public class Bundle implements Serializable {
 	 * Clear relevant fields of this bundle. THis should be called once the bundle has been sent to the respective client.
 	 */
 	public void clearBundle() {
+		this.areaObjects.clear();
 		this.setMessage(null);
 		this.chatLogChanges = new ArrayList<String>();
 	}
@@ -63,6 +64,12 @@ public class Bundle implements Serializable {
 		this.message = message;
 	}
 
+	public void addMapObject(GameObject obj) {
+		this.areaObjects.add(obj);
+	}
 
+	public List<GameObject> getAreaObjects() {
+		return this.areaObjects;
+	}
 
 }

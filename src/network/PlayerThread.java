@@ -11,7 +11,7 @@ import game.SpookySchool;
 import ui.CreateServerPanel;
 
 /**
- * 
+ *
  * @author Rongji Wang
  * @author Pritesh R. Patel
  */
@@ -92,7 +92,7 @@ public class PlayerThread extends Thread {
 	public void transmitBundle() {
 		try {
 			this.objOut = new ObjectOutputStream(socket.getOutputStream());
-			Bundle bundle = game.getBundle(playerName);
+			Bundle bundle = game.getBundle(playerName, true);
 			objOut.writeObject(bundle);
 			objOut.flush();
 
@@ -111,7 +111,6 @@ public class PlayerThread extends Thread {
 			}
 		}
 	}
-
 
 	/**
 	 * Process the command that is received from the client by calling the respective method on the game.
@@ -162,6 +161,5 @@ public class PlayerThread extends Thread {
 			}
 		}
 	}
-
 
 }

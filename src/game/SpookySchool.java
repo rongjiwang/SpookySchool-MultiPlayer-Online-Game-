@@ -11,7 +11,6 @@ import java.util.Scanner;
 
 import parser.Parser;
 
-
 /**
  * This class contains all of the logic Spooky School game. This class controls game state and provides various helper methods
  * for the server.
@@ -47,8 +46,6 @@ public class SpookySchool {
 	//For networking
 	private Map<String, Bundle> playerBundles = new HashMap<String, Bundle>();
 
-
-
 	public SpookySchool() {
 		this.loadAreas(); //Load maps
 		this.setDoors(); //Sets up doors on the areas.
@@ -63,7 +60,6 @@ public class SpookySchool {
 
 		System.out.println("Game Loaded.");
 	}
-
 
 	/**
 	 * Load all of the "areas" of the game into the list of areas.
@@ -82,7 +78,6 @@ public class SpookySchool {
 			e.printStackTrace();
 		}
 	}
-
 
 	/**
 	 * Sets up the doors in the areas.
@@ -155,7 +150,7 @@ public class SpookySchool {
 				MovableGO movableGO = new MovableGO(id, token, areaName, objPosition);
 
 				Area area = this.areas.get(areaName);
-				Tile tile = area.getTile(objPosition); //Get the tile of 
+				Tile tile = area.getTile(objPosition); //Get the tile of
 
 				tile.setOccupant(movableGO);
 
@@ -279,7 +274,7 @@ public class SpookySchool {
 	}
 
 	/**
-	 * Fill the containers in the game where required. 
+	 * Fill the containers in the game where required.
 	 */
 	public void fillContainers() {
 		Scanner scan = null;
@@ -362,7 +357,6 @@ public class SpookySchool {
 		return false;
 	}
 
-
 	/**
 	 * Remove player from the game
 	 * @param name of the player to remove from the game
@@ -388,7 +382,6 @@ public class SpookySchool {
 		this.addChatLogItemToAllBundles(name + " has left the game.");
 	}
 
-
 	/**
 	 * Finds and returns a spawn area that is currently not owned by a player.
 	 * @return a spawn area that is currently not owned by a player.
@@ -403,7 +396,6 @@ public class SpookySchool {
 
 		throw new Error("Error: Could not find an empty spawn room. This should not be possible.");
 	}
-
 
 	/**
 	 * This is called when a player presses the action button. This method makes any changes that are required to the game state and
@@ -440,13 +432,13 @@ public class SpookySchool {
 			item.setAreaName(null);
 			item.setCurrentPosition(null);
 
-			this.getBundle(playerName).setMessage("You picked up a " + item.getName() + ".");
+			this.getBundle(playerName, false).setMessage("You picked up a " + item.getName() + ".");
 			player.addToInventory(item);
 
 			return;
 		}
 
-		//If its a marker tile to a fixedContainer, set the game object to fixed container.. As if YOU are 
+		//If its a marker tile to a fixedContainer, set the game object to fixed container.. As if YOU are
 		if (gameObj instanceof MarkerGO && ((MarkerGO) gameObj).getBaseGO() instanceof FixedContainerGO) {
 			gameObj = ((MarkerGO) gameObj).getBaseGO();
 		}
@@ -460,13 +452,13 @@ public class SpookySchool {
 				for (InventoryGO item : player.getInventory()) {
 					if (fixedContainer.getKeyID().equals(item.getId())) {
 						fixedContainer.setLocked(false); //Unlock the door.
-						this.getBundle(playerName).setMessage(
+						this.getBundle(playerName, false).setMessage(
 								"You unlocked the " + fixedContainer.getName() + " using the key in your inventory");
 						return;
 					}
 				}
 
-				this.getBundle(playerName).setMessage(
+				this.getBundle(playerName, false).setMessage(
 						"The " + fixedContainer.getName() + " is locked. You don't seem to have the key to open it.");
 
 				return; //Couldn't unlock chest.
@@ -483,7 +475,7 @@ public class SpookySchool {
 						player.addToInventory(item);
 					}
 					fixedContainer.clearContainer(); //Clear the container now that the player has its contents.
-					this.getBundle(playerName)
+					this.getBundle(playerName, false)
 							.setMessage("Items found in the container have been added to your inventory.");
 				}
 			} else {
@@ -511,9 +503,9 @@ public class SpookySchool {
 				objDescription = "Nothing to see here.";
 			}
 
-			this.getBundle(playerName).setMessage(objDescription);
+			this.getBundle(playerName, false).setMessage(objDescription);
 
-			return; //Finished 
+			return; //Finished
 
 		}
 
@@ -526,15 +518,16 @@ public class SpookySchool {
 				for (InventoryGO item : player.getInventory()) {
 					if (door.getKeyID().equals(item.getId())) {
 						door.setLocked(false); //Unlock the door.
-						this.getBundle(playerName).setMessage("You unlocked the door using the key in your inventory");
+						this.getBundle(playerName, false)
+								.setMessage("You unlocked the door using the key in your inventory");
 						return;
 					}
 				}
 
 				if (door.getTokenA().contains("w")) {
-					this.getBundle(playerName).setMessage("The window is locked.");
+					this.getBundle(playerName, false).setMessage("The window is locked.");
 				} else {
-					this.getBundle(playerName)
+					this.getBundle(playerName, false)
 							.setMessage("The door is locked. You dont have the key to open this door.");
 				}
 
@@ -558,7 +551,7 @@ public class SpookySchool {
 				}
 				*/
 
-				//Open the door if player does not have the key. 
+				//Open the door if player does not have the key.
 				door.setOpen(true);
 			}
 
@@ -567,7 +560,7 @@ public class SpookySchool {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param playerName name of the player who would like to drop an inventory GO.
 	 * @param itemID the id of the item the player wishes to drop.
 	 */
@@ -588,17 +581,17 @@ public class SpookySchool {
 					item.setCurrentPosition(potentialTile.getPosition());
 					potentialTile.setOccupant(item);
 					player.getInventory().remove(item);
-					this.getBundle(playerName).setMessage("You dropped the item.");
+					this.getBundle(playerName, false).setMessage("You dropped the item.");
 					return;
 
 				} else if (potentialTile != null && potentialTile instanceof FloorTile
 						&& (potentialTile.getOccupant() instanceof FixedContainerGO
 								|| potentialTile.getOccupant() instanceof MarkerGO)) {
 
-					//If potential tile is a marker object of 
+					//If potential tile is a marker object of
 					if (potentialTile.getOccupant() instanceof MarkerGO
 							&& !(((MarkerGO) potentialTile.getOccupant()).getBaseGO() instanceof FixedContainerGO)) {
-						this.getBundle(playerName).setMessage("You cannot drop the item here.");
+						this.getBundle(playerName, false).setMessage("You cannot drop the item here.");
 						return;
 					}
 
@@ -611,11 +604,11 @@ public class SpookySchool {
 					}
 
 					if (!obj.isOpen()) {
-						this.getBundle(playerName)
+						this.getBundle(playerName, false)
 								.setMessage("The " + obj.getName() + " must be open to place items inside.");
 						return;
 					} else if (obj.isLocked()) {
-						this.getBundle(playerName)
+						this.getBundle(playerName, false)
 								.setMessage("The " + obj.getName() + " is locked. Cannot place anything inside.");
 						return;
 					}
@@ -625,10 +618,11 @@ public class SpookySchool {
 					if (obj.addToContainer(item)) {
 						obj.addToContainer(item);
 						player.removeFromInventory(item);
-						this.getBundle(playerName)
+						this.getBundle(playerName, false)
 								.setMessage("You placed the " + item.getName() + " into the " + obj.getName());
 					} else {
-						this.getBundle(playerName).setMessage("There is not enough space in the " + obj.getName());
+						this.getBundle(playerName, false)
+								.setMessage("There is not enough space in the " + obj.getName());
 					}
 
 					return; //Finished.
@@ -636,7 +630,7 @@ public class SpookySchool {
 			}
 		}
 
-		this.getBundle(playerName).setMessage("The item you tried to drop is no longer in your inventory.");
+		this.getBundle(playerName, false).setMessage("The item you tried to drop is no longer in your inventory.");
 
 	}
 
@@ -653,7 +647,7 @@ public class SpookySchool {
 		}
 
 		if (!(this.inventoryObjects.get(containerID) instanceof ContainerGO)) {
-			this.getBundle(playerName).setMessage(this.inventoryObjects.get(containerID).getName()
+			this.getBundle(playerName, false).setMessage(this.inventoryObjects.get(containerID).getName()
 					+ " is not a container. You cannot place items in it.");
 			return;
 		}
@@ -663,13 +657,13 @@ public class SpookySchool {
 		if (container.addToContainer(this.getInventoryObjects().get(itemID))) {
 			//Add the item to the container and remove from the player's inventory.
 			this.getPlayer(playerName).removeFromInventory(this.getInventoryObjects().get(itemID));
-			this.getBundle(playerName).setMessage("You packed the " + this.getInventoryObjects().get(itemID).getName()
-					+ " to the " + container.getName() + ".");
+			this.getBundle(playerName, false).setMessage("You packed the "
+					+ this.getInventoryObjects().get(itemID).getName() + " to the " + container.getName() + ".");
 		} else {
-			this.getBundle(playerName).setMessage("There is not enough space in the " + container.getName() + ".");
+			this.getBundle(playerName, false)
+					.setMessage("There is not enough space in the " + container.getName() + ".");
 		}
 	}
-
 
 	/**
 	 * Unpack the container given the id. Removes the items from the container and places them in the inventory.
@@ -686,7 +680,7 @@ public class SpookySchool {
 		ContainerGO container = (ContainerGO) this.getInventoryObjects().get(itemID);
 
 		if (container.isEmpty()) {
-			this.getBundle(playerName).setMessage("The " + container.getName() + " is empty.");
+			this.getBundle(playerName, false).setMessage("The " + container.getName() + " is empty.");
 		}
 
 		//Add all items in the container to the players's inventory.
@@ -698,7 +692,7 @@ public class SpookySchool {
 	}
 
 	/**
-	 * This method "passes" the given item to the player in front of them. 
+	 * This method "passes" the given item to the player in front of them.
 	 * If there is no player in front of them, a message is displayed and the item stays in the players inventory.
 	 * @param playerName
 	 * @param itemID id of the item the player wishes to pass.
@@ -715,15 +709,14 @@ public class SpookySchool {
 			Player receiver = (Player) tile.getOccupant();
 			receiver.addToInventory(item);
 			player.removeFromInventory(item);
-			this.getBundle(playerName)
+			this.getBundle(playerName, false)
 					.setMessage("You passed the " + item.getName() + " to " + receiver.getPlayerName());
-			this.getBundle(receiver.getPlayerName())
+			this.getBundle(receiver.getPlayerName(), false)
 					.setMessage("You received a " + item.getName() + " from " + player.getPlayerName());
 		} else {
-			this.getBundle(playerName).setMessage("The player must be in front of you to pass an item");
+			this.getBundle(playerName, false).setMessage("The player must be in front of you to pass an item");
 		}
 	}
-
 
 	/**
 	 * Moves player in a given direction if possible.
@@ -803,7 +796,7 @@ public class SpookySchool {
 
 				player.getCurrentArea().getTile(player.getCurrentPosition()).removeOccupant(); //Remove player from this tile.
 				player.setCurrentArea(this.areas.get(otherSide)); //Set the player's new area.
-				this.getBundle(playerName).setPlayerObj(player); //Add the player object to the bundle.
+				this.getBundle(playerName, false).setPlayerObj(player); //Add the player object to the bundle.
 				this.moveGOToTile(player, otherSideTile); //Add player to the new tile.
 
 				//Add movement to new room to the log.
@@ -830,7 +823,7 @@ public class SpookySchool {
 	}
 
 	/**
-	 * 
+	 *
 	 * Get the tile that in front of the player given a distance.
 	 * @param area the area that the game object is in.
 	 * @param gameObj the game object that you want to move.
@@ -884,14 +877,30 @@ public class SpookySchool {
 	 * @param playerName of the player we are getting the bundle for.
 	 * @return bundle of the playerName given.
 	 */
-	public Bundle getBundle(String playerName) {
-		return this.playerBundles.get(playerName);
+	public Bundle getBundle(String playerName, boolean transmitting) {
+		Bundle bundle = this.playerBundles.get(playerName);
+
+		//If the bundle is about to get transmitted, then add all of the game objects in the players current area to the bundle.
+		if (transmitting) {
+			Area area = this.getPlayer(playerName).getCurrentArea();
+			for (int y = 0; y < area.height; y++) {
+				for (int x = 0; x < area.width; x++) {
+					Tile tile = area.getTile(new Position(x, y));
+					if (tile instanceof FloorTile && tile.getOccupant() instanceof Player) {
+						bundle.addMapObject(tile.getOccupant());
+					}
+				}
+			}
+		}
+
+		return bundle;
 	}
 
-
 	/**
-	 * Add chat string to all bundles so everyone can display the latest chat log.
-	 * @param addition the item to add to the chat log
+	 *  * Returns the bundle of the given player name.
+	 * @param playerName of the player we are getting the bundle for.
+	 * @param transmitting if you are getting the bundle to transmit to client.
+	 * @return  bundle of the playerName given.
 	 */
 	public synchronized void addChatLogItemToAllBundles(String addition) {
 		for (Bundle b : this.playerBundles.values()) {
@@ -905,9 +914,8 @@ public class SpookySchool {
 	public synchronized void saveGame(String playerName) {
 		System.out.println("Saving game...");
 		this.parser.save(this, playerName);
-		this.getBundle(playerName).setMessage("Failed to save game?");
+		this.getBundle(playerName, false).setMessage("Failed to save game?");
 	}
-
 
 	/**
 	 * This method is called periodically by the Clock Thread and is used to move NPC objects.
@@ -922,7 +930,6 @@ public class SpookySchool {
 		}
 	}
 
-
 	/**
 	 * Goes through each NPC in game, and checks if there is a player in front of them. If there is, it kicks them to their room.
 	 */
@@ -931,7 +938,7 @@ public class SpookySchool {
 		int tilesToCheck = 3; //Number of tiles the npc needs to check in front of them for a player.
 
 		outer: for (NonHumanPlayer npc : this.nonHumanPlayers) {
-			//Check one tile at a tile, "tilesToCheck" number of times. 
+			//Check one tile at a tile, "tilesToCheck" number of times.
 			//If a player is found, teleport them back to their spawn room!
 			for (int i = 1; i <= tilesToCheck; i++) {
 				Tile tile = this.getPotentialTile(npc.getCurrentArea(), npc, npc.getCurrentDirection(), i);
@@ -944,7 +951,7 @@ public class SpookySchool {
 					this.moveGOToTile(player, player.getCurrentArea().getTile(this.defaultSpawnPosition)); //Move player back to original spawn position.
 
 					//Add message to the bundle about what just happened to the player
-					this.getBundle(player.getId())
+					this.getBundle(player.getId(), false)
 							.setMessage("You were caught by a teacher and sent back to your spawn room!");
 
 					continue outer; //Exit to the outer loop.
@@ -952,7 +959,6 @@ public class SpookySchool {
 			}
 		}
 	}
-
 
 	/** GETTERS AND SETTERS FOR XML **/
 

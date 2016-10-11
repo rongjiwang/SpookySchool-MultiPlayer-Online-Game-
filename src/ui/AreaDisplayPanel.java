@@ -8,9 +8,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
+import game.AnimationObject;
 import game.Area;
 import game.Bundle;
 import game.DoorGO;
@@ -58,7 +61,11 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	private Area currentArea;
 	private Player mainPlayer;
 
-
+	//For animation.
+	private boolean animating = false;
+	private List<GameObject> currentAreaObjects = new ArrayList<GameObject>();
+	private List<GameObject> previousAreaObjects = new ArrayList<GameObject>();
+	private List<AnimationObject> toAnimate = new ArrayList<AnimationObject>();
 
 	// Current Rotational view 0-3
 	private int view;
@@ -67,10 +74,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			|		|
 		3	|		|	1
 			|_______|
-			
+	
 				0
 		  Default view */
-
 
 	public AreaDisplayPanel(Client client, GameFrame gf, SpriteMap spriteMap) {
 
@@ -85,11 +91,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		this.spriteMap = spriteMap;
 		this.setLayout(new BorderLayout());
 
-
 		validate();
-
 		this.client = client;
-
 		this.gameFrame = gf;
 	}
 
@@ -106,24 +109,151 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 		this.mainPlayer = bundle.getPlayerObj();
 
+		this.previousAreaObjects = this.currentAreaObjects;
+
 		if (currentArea == null) {
 			this.currentArea = this.mainPlayer.getCurrentArea();
+			this.currentAreaObjects = bundle.getAreaObjects();
 			this.displayRoomName();
+			this.centerPlayer();
+
+			//Set the footer message if there is one in the bundle.
+			if (bundle.getMessage() != null) {
+				overlayPanel.setFooterMessage(bundle.getMessage());
+			}
+
+			return;
+
 		} else {
 			String oldArea = currentArea.getAreaName();
+
 			if (!oldArea.equals(this.mainPlayer.getCurrentArea().getAreaName())) {
-				this.currentArea = this.mainPlayer.getCurrentArea();
 				this.displayRoomName();
+
+				this.currentArea = this.mainPlayer.getCurrentArea();
+				this.currentAreaObjects = bundle.getAreaObjects();
+
+				//Set the footer message if there is one in the bundle.
+				if (bundle.getMessage() != null) {
+					overlayPanel.setFooterMessage(bundle.getMessage());
+				}
+
+				this.centerPlayer();
+				return;
 			}
+
+			this.currentAreaObjects = bundle.getAreaObjects();
 			this.currentArea = this.mainPlayer.getCurrentArea();
 		}
 
-		//Set the footer message if there is one in the bundle.
-		if (bundle.getMessage() != null) {
-			overlayPanel.setFooterMessage(bundle.getMessage());
+		this.addChanges();
+	}
+
+	/**
+	 * Find the changes that have occurred in the area since the last copy of the area was received, and add them to the toAnimate map.
+	 */
+	private void addChanges() {
+
+		if (this.previousAreaObjects == null) {
+			//Nothing to animate!
+			return;
 		}
 
-		this.updateDisplay();
+		for (int i = 0; i < this.currentAreaObjects.size(); i++) {
+			for (int j = 0; j < this.previousAreaObjects.size(); j++) {
+				if (this.previousAreaObjects.get(j).getId().equals(this.currentAreaObjects.get(i).getId())) {
+
+					GameObject previousObj = this.previousAreaObjects.get(j);
+					GameObject currentObj = this.currentAreaObjects.get(i);
+
+					//FIXME: Only allowing player animation for now.
+					if (!(previousObj instanceof Player)) {
+						continue;
+					}
+
+					//ASSUMING MOVEMENT IN ONLY ONE DIRECTION!!!
+					if (currentObj.getPosition().getPosX() != previousObj.getPosition().getPosX()
+							|| currentObj.getPosition().getPosY() != previousObj.getPosition().getPosY()) {
+
+						//Starting position of the animation object.
+						int startX = previousObj.getPosition().getPosX();
+						int startY = previousObj.getPosition().getPosY();
+
+						//Finishing position of the animation object.
+						int aimX = currentObj.getPosition().getPosX();
+						int aimY = currentObj.getPosition().getPosY();
+
+						int[] view = this.getRotatedView(startX, startY, this.currentArea.width,
+								this.currentArea.height);
+						startX = view[0];
+						startY = view[1];
+
+						view = this.getRotatedView(aimX, aimY, this.currentArea.width, this.currentArea.height);
+						aimX = view[0];
+						aimY = view[1];
+
+						//System.out.println("startX: " + );
+
+						boolean isMain = currentObj.getId().equals(this.mainPlayer.getId());
+
+						AnimationObject aObj = null;
+
+						if (currentObj.getPosition().getPosX() > previousObj.getPosition().getPosX()) {
+
+							if (this.view == 0 || this.view == 2) {
+								aObj = new AnimationObject(this, currentObj, isMain, this.determineDirection("EAST"),
+										startX, startY, aimX, aimY);
+							} else {
+								aObj = new AnimationObject(this, currentObj, isMain, this.determineDirection("WEST"),
+										startX, startY, aimX, aimY);
+							}
+
+						} else if (currentObj.getPosition().getPosX() < previousObj.getPosition().getPosX()) {
+
+							if (this.view == 0 || this.view == 2) {
+								aObj = new AnimationObject(this, currentObj, isMain, this.determineDirection("WEST"),
+										startX, startY, aimX, aimY);
+							} else {
+								aObj = new AnimationObject(this, currentObj, isMain, this.determineDirection("EAST"),
+										startX, startY, aimX, aimY);
+							}
+
+						} else if (currentObj.getPosition().getPosY() > previousObj.getPosition().getPosY()) {
+
+							if (this.view == 0 || this.view == 2) {
+								aObj = new AnimationObject(this, currentObj, isMain, this.determineDirection("SOUTH"),
+										startX, startY, aimX, aimY);
+							} else {
+								aObj = new AnimationObject(this, currentObj, isMain, this.determineDirection("NORTH"),
+										startX, startY, aimX, aimY);
+							}
+
+						} else {
+
+							if (this.view == 0 || this.view == 2) {
+								aObj = new AnimationObject(this, currentObj, isMain, this.determineDirection("NORTH"),
+										startX, startY, aimX, aimY);
+							} else {
+								aObj = new AnimationObject(this, currentObj, isMain, this.determineDirection("SOUTH"),
+										startX, startY, aimX, aimY);
+							}
+						}
+
+						//Player is animating.
+
+						if (aObj.isMainPlayer()) {
+							//this.mainAo = aObj;
+							this.animating = true;
+						}
+
+						this.toAnimate.add(aObj);
+
+					}
+
+				}
+			}
+		}
+
 	}
 
 	/**
@@ -143,16 +273,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		}
 	}
 
-
-	/**
-	 * Updates the board.
-	 */
-	public void updateDisplay() {
-		centerPlayer();
-		this.repaint();
-	}
-
-
 	/**
 	 * Centers the player in the window
 	 */
@@ -164,17 +284,41 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		int viewX = view[0];
 		int viewY = view[1];
 
-		int playerX = (viewX * tileWidth) + tileWidth / 2;
-		int playerY = (viewY * tileHeight) + tileHeight / 2;
+		int playerX = (viewX * getTileWidth()) + getTileWidth() / 2;
+		int playerY = (viewY * getTileHeight()) + getTileHeight() / 2;
 
 		int windowCenterX = (this.windowWidth / 2) + this.windowOffSetX;
 		int windowCenterY = (this.windowHeight / 2) + this.windowOffSetY;
 
-		this.renderOffSetX = (windowCenterX - playerX) - mainPlayerXBuff;
-		this.renderOffSetY = (windowCenterY - playerY) - mainPlayerYBuff;
+		this.renderOffSetX = (windowCenterX - playerX) - getMainPlayerXBuff();
+		this.renderOffSetY = (windowCenterY - playerY) - getMainPlayerYBuff();
 	}
 
+	/**
+	 * Centers the player during the animation.
+	 * @param startX the main player's actual x position on the panel
+	 * @param startY the main player's actual y position on the panel
+	 */
+	private void centerPlayerAnimation(int startX, int startY) {
 
+		//System.out.println("MainBuffX: " + this.mainPlayerXBuff + "MainBuffY: " + this.mainPlayerYBuff);
+		System.out.println("startX: " + startX + "startY: " + startY);
+		int playerXPos = startX;
+		int playerYPos = startY;
+
+		int viewX = startX;
+		int viewY = startY;
+
+		int playerX = (viewX * getTileWidth()) + getTileWidth() / 2;
+		int playerY = (viewY * getTileHeight()) + getTileHeight() / 2;
+
+		int windowCenterX = (this.windowWidth / 2) + this.windowOffSetX;
+		int windowCenterY = (this.windowHeight / 2) + this.windowOffSetY;
+
+		this.renderOffSetX = (windowCenterX - playerX) - getMainPlayerXBuff();
+		this.renderOffSetY = (windowCenterY - playerY) - getMainPlayerYBuff();
+
+	}
 
 	@Override
 	public void paintComponent(Graphics g) {
@@ -195,13 +339,13 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 						this.renderOffSetY - ((image.getHeight(null) - this.windowHeight) / 2), null);
 			}
 
-		renderArray(offgc, 0); // render floor tiles		
+		renderArray(offgc, 0); // render floor tiles
 		renderArray(offgc, 1); // render far walls
 		renderArray(offgc, 2); // render gameObjects
 		renderArray(offgc, 3); // render close and side walls
 
 		if (currentArea != null && currentArea.getAreaName().equals("Outside")) {
-			if (Math.random() < 0.96) {
+			if (Math.random() < 0.98) {
 				Image image = spriteMap.getImage(getRotatedToken("N0"));
 				offgc.drawImage(image, this.renderOffSetX - ((image.getWidth(null) - this.windowWidth) / 2),
 						this.renderOffSetY - ((image.getHeight(null) - this.windowHeight) / 2), null);
@@ -215,10 +359,10 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	}
 
 	/**
-	 * Iterates through the array in the appropriate direction 
+	 * Iterates through the array in the appropriate direction
 	 * depending on the current view. Only renders the suggested layer
-	 * 
-	 * @param g - graphics 
+	 *
+	 * @param g - graphics
 	 * @param layer - layer to render
 	 */
 	public void renderArray(Graphics g, int layer) {
@@ -248,7 +392,13 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		}
 	}
 
-
+	/**
+	 * Render the the tile and its occupant
+	 * @param g Graphics
+	 * @param layer which layer to draw. E.g. far walls, close walls, game objects etc.
+	 * @param x position on the area 2d array
+	 * @param y position on the area 2d array
+	 */
 	public void renderTile(Graphics g, int layer, int x, int y) {
 
 		Tile tile = currentArea.getTile(new Position(x, y));
@@ -257,8 +407,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		int viewX = view[0];
 		int viewY = view[1];
 
-		int finalX = this.renderOffSetX + viewX * tileWidth;
-		int finalY = this.renderOffSetY + viewY * tileHeight;
+		int finalX = this.renderOffSetX + viewX * getTileWidth();
+		int finalY = this.renderOffSetY + viewY * getTileHeight();
 
 		if (tile == null)
 			return;
@@ -279,11 +429,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 			GameObject roomObj = this.currentArea.getTile(new Position(x, y)).getOccupant();
 
-
 			if (roomObj == null) {
 				return;
 			}
-
 
 			if (roomObj instanceof DoorGO) {
 				DoorGO door = (DoorGO) roomObj;
@@ -307,11 +455,55 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 			} else if ((!(roomObj instanceof MarkerGO)) && roomObj.getPosition().getPosX() == x
 					&& roomObj.getPosition().getPosY() == y) {
 
-				if (roomObj instanceof Player /*&& roomObj.getId().equals(this.mainPlayer.getId())*/) {
+				if (roomObj instanceof Player) {
 					Player p = (Player) roomObj;
+
 					tileImage = spriteMap.getImage(getRotatedAnimatedToken(roomObj.getToken(), p.getDirection()));
-					adjustX = (tileImage.getWidth(null) - tileWidth);
-					adjustY = (tileImage.getHeight(null) - tileHeight);
+
+					adjustX = (tileImage.getWidth(null) - getTileWidth());
+					adjustY = (tileImage.getHeight(null) - getTileHeight());
+
+					AnimationObject ao = null;
+					int index;
+					//Find the animation object that matches the playerObject.
+					outer: for (index = 0; index < this.toAnimate.size(); index++) {
+						if (this.toAnimate.get(index).getGameObj().getId().equals(p.getId())) {
+							ao = this.toAnimate.get(index);
+							break outer;
+						}
+					}
+
+					//If this player needs to be animated, change final x and final y for animation.
+					if (ao != null) {
+
+						tileImage = spriteMap.getImage(getRotatedAnimatedToken(ao.getNextImgToken(), p.getDirection()));
+
+						if (ao.isMainPlayer()) {
+							this.animating = true;
+							ao.changeBuffs();
+
+							this.centerPlayerAnimation(ao.getStartX(), ao.getStartY());
+						}
+
+						Position posToDraw = ao.getPosition(); //Dont need to worry since its main player.
+						ao.incrementCurrent();
+
+						finalX = posToDraw.getPosX();
+						finalY = posToDraw.getPosY();
+
+						//If the animation is complete, reset the buffer back to zero.
+						if (ao.animationComplete()) {
+							if (ao.isMainPlayer()) {
+								this.animating = false;
+								this.setMainPlayerXBuff(0);
+								this.setMainPlayerYBuff(0);
+							}
+
+							this.toAnimate.remove(index); //FIXME: Index may be changed?
+
+						}
+					}
+
 				} else {
 					tileImage = spriteMap.getImage(getRotatedToken(roomObj.getToken()));
 					adjustX = (tileImage.getWidth(null) / 2);
@@ -325,46 +517,33 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		// Draw Walls(Back and side walls with layer 1, front with layer 3)
 		if (tile instanceof WallTile) {
 			Image tileImage = spriteMap.getImage(token);
-			int adjustX = tileImage.getWidth(null) - tileWidth;
-			int adjustY = tileImage.getHeight(null) - tileHeight;
+			int adjustX = tileImage.getWidth(null) - getTileWidth();
+			int adjustY = tileImage.getHeight(null) - getTileHeight();
 
 			if (token.equals("w0") || token.equals("L2") || token.equals("W1") || token.equals("W2")
 					|| token.equals("F2") || token.equals("F1") || token.equals("f2") || token.equals("B0")
 					|| token.equals("u0") || token.equals("L1") || token.equals("Q1") || token.equals("Q2")) {
 
 				if (layer == 1) {
-					g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
+					g.drawImage(tileImage, finalX - adjustX - 1, finalY - adjustY - 1, tileImage.getWidth(null) + 2,
+							tileImage.getHeight(null) + 2, null);
 
 				}
 			} else {
 				if (layer == 3) {
-					g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
+
+					g.drawImage(tileImage, finalX - adjustX - 1, finalY - adjustY - 1, tileImage.getWidth(null) + 2,
+							tileImage.getHeight(null) + 2, null);
 				}
 			}
 		}
 
-		/*if (((token.equals("w0") || token.equals("W1") || token.equals("F2") || token.equals("F1") || token.equals("f2")
-				|| token.equals("B0") || token.equals("Q1") || token.equals("Q2")) && layer == 1)
-				
-				
-				|| ((!(token.equals("w0") || token.equals("W1") || token.equals("W2") || token.equals("f2")
-						|| token.equals("F1") || token.equals("F2") || token.equals("B0") || token.equals("Q1")
-						|| token.equals("Q2"))) && layer == 3)) {
-			if (token.contains("w") || token.contains("W") || token.contains("B") || token.contains("Q")
-					|| token.contains("f") || token.contains("F")) {
-				Image tileImage = spriteMap.getImage(token);
-				int adjustX = tileImage.getWidth(null) - tileWidth;
-				int adjustY = tileImage.getHeight(null) - tileHeight;
-				g.drawImage(tileImage, finalX - adjustX, finalY - adjustY, null);
-			}
-		}*/
-
 	}
 
 	/**
-	 * Determines the new x,y position(where the tile will be drawn) 
+	 * Determines the new x,y position(where the tile will be drawn)
 	 * of a tile from it logical position and the current view
-	 * 
+	 *
 	 * @param x - player x position
 	 * @param y - player y position
 	 * @param width - width of the area array
@@ -394,7 +573,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	/**
 	 *  Iterate the view field approriately,
 	 *  must be 0 >= x >= 3
-	 * 
+	 *
 	 * @param r - particular rotation,
 	 * 			  either 1 (anti-clockwise)
 	 * 			  or -1 (clockwise)
@@ -436,8 +615,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 	/**
 	 * Determine the approriate token string depending on the view
-	 * e.g. "w1" when rotate = 1 should be "w0" 
-	 * 
+	 * e.g. "w1" when rotate = 1 should be "w0"
+	 *
 	 * @param token
 	 * @return
 	 */
@@ -463,8 +642,8 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 
 	/**
 	 * Determine the approriate token string depending on the view
-	 * e.g. "w1" when rotate = 1 should be "w0" 
-	 * 
+	 * e.g. "w1" when rotate = 1 should be "w0"
+	 *
 	 * @param token
 	 * @return
 	 */
@@ -509,9 +688,9 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	}
 
 	/**
-	 * Determine the correct direction depending on the 
+	 * Determine the correct direction depending on the
 	 * current rotation of the display
-	 * 
+	 *
 	 * @param direction - 2d direction
 	 * @return direction - direction the user will see
 	 */
@@ -523,7 +702,7 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 	}
 
 	/**
-	 * Determine the direction in 90 degree rotation 
+	 * Determine the direction in 90 degree rotation
 	 * either left of right
 	 *
 	 * @param direction
@@ -561,7 +740,6 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		return null;
 	}
 
-
 	/**
 	 * Used for getting the next frame of the rain images. Delay is used to make sure, rain frames are not changes
 	 * too fast.
@@ -579,81 +757,127 @@ public class AreaDisplayPanel extends JPanel implements KeyListener, MouseListen
 		return this.nextRain;
 	}
 
-
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 
 		switch (keyCode) {
 		case KeyEvent.VK_UP:
+			if (this.animating) {
+				return;
+			}
 			this.client.sendCommand(determineDirection("NORTH"));
 			break;
+
 		case KeyEvent.VK_DOWN:
+			if (this.animating) {
+				return;
+			}
 			this.client.sendCommand(determineDirection("SOUTH"));
 			break;
+
 		case KeyEvent.VK_LEFT:
+			if (this.animating) {
+				return;
+			}
 			this.client.sendCommand(determineDirection("WEST"));
 			break;
+
 		case KeyEvent.VK_RIGHT:
+			if (this.animating) {
+				return;
+			}
 			this.client.sendCommand(determineDirection("EAST"));
 			break;
+
 		case KeyEvent.VK_Z:
+			if (this.animating) {
+				return;
+			}
 			this.client.sendCommand("ACTION");
 			break;
-		case KeyEvent.VK_S:
-			this.client.sendCommand("SAVE");
-			break;
+
 		case KeyEvent.VK_R:
+			if (this.toAnimate.size() > 0) {
+				this.overlayPanel.setFooterMessage("Cannot rotate while there are moving players.");
+				return;
+			}
 			rotate(1);
-			this.updateDisplay();
+			this.centerPlayer();
 			break;
+
 		case KeyEvent.VK_L:
+			if (this.toAnimate.size() > 0) {
+				this.overlayPanel.setFooterMessage("Cannot rotate while there are moving players.");
+				return;
+			}
 			rotate(-1);
-			this.updateDisplay();
+			this.centerPlayer();
 			break;
 		}
 	}
 
+	public int getRenderOffSetX() {
+		return this.renderOffSetX;
+	}
+
+	public int getRenderOffSetY() {
+		return this.renderOffSetY;
+	}
+
+	/** UNUSED LISTENER METHODS **/
 
 	@Override
-	public void keyReleased(KeyEvent e) {}
-
+	public void keyReleased(KeyEvent e) {
+	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {}
-
+	public void keyTyped(KeyEvent e) {
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		this.requestFocus();
 	}
 
-
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
-
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
-
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
-
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+	}
 
+	public int getTileHeight() {
+		return tileHeight;
+	}
+
+	public int getTileWidth() {
+		return tileWidth;
+	}
+
+	public int getMainPlayerYBuff() {
+		return mainPlayerYBuff;
+	}
+
+	public void setMainPlayerYBuff(int mainPlayerYBuff) {
+		this.mainPlayerYBuff = mainPlayerYBuff;
+	}
+
+	public int getMainPlayerXBuff() {
+		return mainPlayerXBuff;
+	}
+
+	public void setMainPlayerXBuff(int mainPlayerXBuff) {
+		this.mainPlayerXBuff = mainPlayerXBuff;
 	}
 
 }
