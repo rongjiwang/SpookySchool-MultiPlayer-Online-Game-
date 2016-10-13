@@ -5,6 +5,8 @@ Pseudo 3D Online Game(Multi-players)
  
  It is a 6 weeks project, and it distributes into 5 parts, game logic, server&client, UI, render and store&load.
  
- I am responsible for Client&Server, GameLogic testing, Debugging and documentations(CRC CARD, UML CLASS DIAGRAM, AND DESIGN HIERARCHY DIAGRAM). 
+ I am responsible for Client&Server, GameLogic testing, Debugging and documentations(CRC card, UML class diagram, and design
+ 
+ hierarchy diagram). 
  
  ENJOY OUR CREATION! LEAVE COMMANDS.
